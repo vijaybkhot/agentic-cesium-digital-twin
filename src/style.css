@@ -1,0 +1,245 @@
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+#app {
+  position: relative;
+}
+
+#cesiumContainer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+#infoPanel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 20px;
+  background: rgba(247, 248, 251, 0.96);
+  border: 1px solid #d7dbe5;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+}
+
+#infoPanel.is-hidden {
+  display: none;
+}
+
+#infoPanel h1,
+#infoPanel h2 {
+  margin-top: 0;
+  color: #1d2736;
+}
+
+#infoPanel h1 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+#infoPanel h2 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: grab;
+}
+
+.panel-kicker {
+  margin: 0 0 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.panel-controls {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.panel-button,
+.floating-button {
+  border: 1px solid #c6d0e1;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1d2736;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.panel-button:hover,
+.floating-button:hover {
+  background: #eef3fb;
+}
+
+.floating-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 11;
+  display: none;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+}
+
+.floating-button.is-visible {
+  display: inline-flex;
+}
+
+#infoPanel.is-dragging .panel-header {
+  cursor: grabbing;
+}
+
+.panel-intro,
+#infoPanel p,
+#auditLog {
+  color: #334155;
+  line-height: 1.5;
+}
+
+.panel-helper {
+  margin-bottom: 12px;
+  font-size: 0.92rem;
+  color: #475569;
+}
+
+.panel-section {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #d7dbe5;
+}
+
+.field-label {
+  display: block;
+  margin: 12px 0 6px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1d2736;
+}
+
+.panel-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #c6d0e1;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #1d2736;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+}
+
+.panel-input:disabled {
+  background: #eef2f7;
+  color: #64748b;
+}
+
+.belief-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.belief-button {
+  border: 1px solid #c6d0e1;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1d2736;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.belief-button:hover:enabled {
+  background: #eef3fb;
+}
+
+.belief-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.belief-button.is-active {
+  border-color: #1d4ed8;
+  background: #dbeafe;
+  font-weight: 700;
+}
+
+.panel-action {
+  margin-top: 14px;
+}
+
+.panel-action:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.threshold-guide {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.threshold-row {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #d7dbe5;
+  font-size: 0.9rem;
+}
+
+.threshold-row strong {
+  color: #1d2736;
+}
+
+.threshold-low {
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.threshold-medium {
+  background: rgba(234, 179, 8, 0.12);
+}
+
+.threshold-high {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+#auditLog {
+  margin: 0;
+  padding-left: 18px;
+}
+
+#auditLog li + li {
+  margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+  #infoPanel {
+    width: min(320px, calc(100vw - 32px));
+  }
+}
