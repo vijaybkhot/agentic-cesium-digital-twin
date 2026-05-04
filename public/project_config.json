@@ -1,0 +1,91 @@
+{
+  "projectId": "mock-dnd-facility",
+  "projectName": "My Test Facility",
+  "description": "Config-driven Cesium decision-support POC",
+  "scene": {
+    "center": {
+      "lat": 40.03883,
+      "lon": -75.59777,
+      "height": 1500
+    },
+    "camera": {
+      "heading": 0,
+      "pitch": -1.5707963267948966,
+      "range": 1500
+    }
+  },
+  "facility": {
+    "name": "Controlled Facility A",
+    "building": {
+      "lat": 40.03883,
+      "lon": -75.59777,
+      "height": 20,
+      "dimensions": {
+        "length": 80,
+        "width": 50,
+        "height": 40
+      }
+    },
+    "boundary": [
+      { "lat": 40.0393, "lon": -75.5985 },
+      { "lat": 40.0393, "lon": -75.5969 },
+      { "lat": 40.0383, "lon": -75.5969 },
+      { "lat": 40.0383, "lon": -75.5985 }
+    ]
+  },
+  "beliefRules": {
+    "doseRate": {
+      "lowMax": 0.24,
+      "mediumMax": 0.99
+    },
+    "contamination": {
+      "lowMax": 49,
+      "mediumMax": 149
+    }
+  },
+  "measurementPoints": [
+    {
+      "id": "MP-01",
+      "name": "North Gate Monitor",
+      "lat": 40.03915,
+      "lon": -75.5979,
+      "height": 8,
+      "sensorType": "Gamma",
+      "doseRate": 0.08,
+      "doseRateUnit": "uSv/h",
+      "contamination": 14,
+      "contaminationUnit": "cpm",
+      "lastReading": "08:15",
+      "belief": "Low"
+    },
+    {
+      "id": "MP-02",
+      "name": "Vent Stack Sensor",
+      "lat": 40.03895,
+      "lon": -75.5972,
+      "height": 8,
+      "sensorType": "Air Sample",
+      "doseRate": 0.46,
+      "doseRateUnit": "uSv/h",
+      "contamination": 63,
+      "contaminationUnit": "cpm",
+      "lastReading": "08:17",
+      "belief": "Medium"
+    },
+    {
+      "id": "MP-03",
+      "name": "Waste Pad Checkpoint",
+      "lat": 40.03855,
+      "lon": -75.5981,
+      "height": 8,
+      "sensorType": "Surface Check",
+      "doseRate": 1.28,
+      "doseRateUnit": "uSv/h",
+      "contamination": 186,
+      "contaminationUnit": "cpm",
+      "lastReading": "08:19",
+      "belief": "High"
+    }
+  ],
+  "annotations": []
+}

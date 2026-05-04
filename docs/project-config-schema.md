@@ -1,0 +1,71 @@
+# Project Config Schema
+
+The app loads `public/project_config.json`.
+
+## Top-Level Fields
+
+- `projectId`: Stable machine-readable project identifier.
+- `projectName`: Human-readable project name.
+- `description`: Short project description.
+- `scene`: Scene center and camera settings.
+- `facility`: Facility building and boundary.
+- `beliefRules`: Thresholds used to calculate Low / Medium / High belief states.
+- `measurementPoints`: Sensor or measurement points rendered in Cesium.
+- `annotations`: Future annotation list.
+
+## Measurement Point
+
+Each measurement point includes:
+
+- `id`
+- `name`
+- `lat`
+- `lon`
+- `height`
+- `sensorType`
+- `doseRate`
+- `doseRateUnit`
+- `contamination`
+- `contaminationUnit`
+- `lastReading`
+- `belief`
+
+`belief` must be one of:
+
+```text
+Low
+Medium
+High
+```
+
+## Belief Rules
+
+The current rule is intentionally simple:
+
+- High if dose rate is greater than `doseRate.mediumMax` or contamination is greater than `contamination.mediumMax`.
+- Medium if dose rate is greater than `doseRate.lowMax` or contamination is greater than `contamination.lowMax`.
+- Low otherwise.
+
+The default config preserves the original thresholds:
+
+- Low: dose rate below `0.25 uSv/h` and contamination below `50 cpm`
+- Medium: dose rate `0.25` to `0.99 uSv/h` or contamination `50` to `149 cpm`
+- High: dose rate `1.00+ uSv/h` or contamination `150+ cpm`
+
+On app load, the viewer normalizes each measurement point belief from the
+configured readings and `beliefRules`. In other words, the measurement values are
+authoritative for the initial live state. If you edit only a point's `belief` in
+JSON but leave the readings unchanged, the calculated belief will win after
+refresh.
+
+## Trying Config Changes Locally
+
+Edit:
+
+```text
+public/project_config.json
+```
+
+Then refresh the browser tab running the Vite app. The app fetches the config at
+startup, so a normal browser refresh is the simplest way to reload the latest
+JSON.

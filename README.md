@@ -1,0 +1,200 @@
+# Agent-Assisted Cesium Digital Twin POC
+
+This repository contains an early Cesium-based proof of concept for an interactive geospatial viewer and decision-support interface for digital twin research. The current application presents a mock decommissioning or controlled-facility site in a 3D/map scene, supports inspection and editing of mock measurement points, and demonstrates how belief-state updates and audit logging could support a future research workflow.
+
+## Current Purpose
+
+This version demonstrates the Cesium visualization and interaction layer. It is not yet the full agent-assisted intake, image assessment, or reconstruction pipeline. The immediate goal is to validate a reusable geospatial viewer pattern that can later render structured project configuration data produced or updated by an agent-assisted workflow.
+
+## Demo Features
+
+- Cesium globe scene centered on a mock facility area
+- Simple facility building
+- Controlled-area boundary
+- Three measurement/sensor points
+- Color-coded belief states: Low, Medium, High
+- Draggable side panel for inspecting selected points
+- Editable mock readings for dose rate, contamination, and last reading time
+- Automatic belief-state recalculation from thresholds
+- Manual belief override buttons
+- Recommendation text based on current belief state
+- Audit log of selections, updates, and overrides
+
+## Why This Matters
+
+Cesium provides the geospatial visualization layer for viewing facility context, spatial measurements, and, in later versions, reconstructed or imported 3D assets. The mock belief-state and audit-log workflow represents a small decision-support loop: a user selects a point, reviews readings, changes values or assumptions, and the interface records what changed.
+
+This viewer can later be connected to agent-generated project configurations, image intake, and reconstruction outputs. The key design direction is to avoid asking an LLM to generate Cesium code directly. Instead, a future agent should generate or update a structured `project_config.json`, while the Cesium viewer remains reusable and renders whatever valid project configuration it receives.
+
+## Proposed Future Architecture
+
+```text
+User Inputs / Images
+  -> Agent Intake Layer
+  -> Project Config JSON
+  -> Cesium Viewer Adapter
+  -> Interactive Geospatial Twin
+```
+
+```text
+Images
+  -> Image Sufficiency Check
+  -> Reconstruction Pipeline
+  -> GLB / 3D Tiles
+  -> Cesium Visualization
+```
+
+## Current Technical Stack
+
+- Vite
+- React
+- TypeScript
+- CesiumJS
+- Frontend-only prototype
+
+The current repository uses a React/TypeScript structure. It also includes an early static mock configuration path through `public/project_config.json`, loaded by the frontend at runtime.
+
+## How To Run Locally
+
+Use Node.js `22.12.0` or newer. If you use `nvm`, run:
+
+```bash
+nvm use
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the local development server:
+
+```bash
+npm run dev
+```
+
+Open the local URL printed by Vite, usually:
+
+```text
+http://localhost:5173/
+```
+
+In the browser, the Cesium viewer should show the mock facility area with the building, controlled-area boundary, and three measurement points. Select a measurement point to open the side panel, edit mock readings, apply belief overrides, and review the audit log.
+
+Build the project:
+
+```bash
+npm run build
+```
+
+Preview a production build:
+
+```bash
+npm run preview
+```
+
+Cesium static assets are handled through `vite.config.js` using `vite-plugin-static-copy`. The config copies Cesium `ThirdParty`, `Workers`, `Assets`, and `Widgets` files from `node_modules/cesium/Build/Cesium` into the Vite-served static asset path.
+
+During local development, the app reads mock project data from `public/project_config.json`. To demo the config-driven workflow, edit values such as `projectName`, facility coordinates, boundary coordinates, measurement point readings, or belief thresholds in that JSON file, then refresh the browser to reload the configuration and see the updated viewer state.
+
+## Current Project Status
+
+Status: Early POC / research prototype
+
+Completed:
+
+- Cesium viewer
+- Mock facility
+- Mock measurement points
+- Belief state UI
+- Editable readings
+- Audit log
+- Early static mock `project_config.json` loading
+- Initial React/TypeScript ports-and-adapters structure
+
+In progress / planned:
+
+- More complete and validated config-driven `project_config.json`
+- Agent-assisted project configuration
+- Image intake and audit
+- Reconstruction pipeline integration
+- Support for GLB / 3D Tiles output
+- Backend services
+
+## Roadmap
+
+- POC 0: Cesium decision-support viewer, current baseline
+- POC 1: Config-driven Cesium viewer
+- POC 2: Image intake and audit agent
+- POC 3: 3D reconstruction integration
+- POC 4: Research extensions such as uncertainty, multi-digital-twin interaction, and decision support
+
+The current codebase is between POC 0 and POC 1: the decision-support viewer exists, and an initial static mock `project_config.json` loading path is already present.
+
+## Research Direction
+
+This project may support research around:
+
+- Agent-assisted digital twin generation
+- Structured project configuration for digital twins
+- Image intake sufficiency assessment
+- 3D reconstruction-to-Cesium workflows
+- Digital twin decision support
+- Future interaction among multiple digital twins
+
+These are intended research directions, not claims about completed system capabilities.
+
+## Known Limitations
+
+- Frontend-only
+- Data is mock, hardcoded, or only partially config-driven
+- No backend yet
+- No database yet
+- No authentication
+- No real sensor integration
+- No real image upload yet
+- No real LLM agent yet
+- No real 3D reconstruction pipeline yet
+- No persisted state yet
+- Not a production decommissioning system
+
+## Repository Structure
+
+The project is being organized into a cleaner viewer architecture:
+
+```text
+public/
+  project_config.json        Static mock project configuration
+
+src/
+  app/                       Application state and shell composition
+  adapters/                  Implementations for project config, mock agent, and viewer ports
+  cesium/                    Cesium viewer creation and entity helpers
+  components/                React UI components
+  config/                    Project config loading and validation
+  domain/                    Belief, audit, and project mapping logic
+  ports/                     Interfaces for external providers and viewer adapters
+  types/                     Shared TypeScript types
+  styles/                    Global styles
+
+docs/
+  architecture.md            Architecture notes
+  project-config-schema.md   Project configuration schema notes
+  decisions/                 Lightweight design decision records
+```
+
+Some structure is still evolving as the prototype moves from a hardcoded viewer toward a more complete config-driven system.
+
+## Advisor / Context Note
+
+This prototype is part of an exploratory research direction under discussion with Professor Yong-Cheol Lee at LSU, focused on rapid digital twin generation, Cesium-based visualization, and agent-assisted workflows.
+
+## Feedback Requested
+
+I would appreciate feedback on:
+
+- Whether Cesium should remain the primary visualization layer
+- Whether the `project_config.json` abstraction is suitable for agent-generated digital twin views
+- How this viewer can connect with the current rapid digital twin / NeRF / image-to-3D workflow
+- Which part of this direction has the strongest research contribution potential
