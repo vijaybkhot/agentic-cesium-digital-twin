@@ -67,12 +67,65 @@ export interface AnnotationConfig {
   description?: string;
 }
 
+export interface ImageIntakeConfig {
+  status: "draft_not_implemented" | "not_started" | "in_review" | "ready";
+  imageCount: number;
+  hasGpsMetadata: boolean;
+  hasMinimumImageCount: boolean;
+  hasSufficientResolution: boolean | null;
+  coverageStatus: "unknown" | "insufficient" | "partial" | "sufficient";
+  missingInputs: string[];
+}
+
+export interface AgentAssessmentConfig {
+  agentProvider: string;
+  reconstructionReadiness:
+    | "not_ready"
+    | "needs_more_input"
+    | "ready_for_test"
+    | "ready";
+  reason: string;
+  recommendedNextAction: string;
+}
+
+export interface SpatialAnchor {
+  lat: number;
+  lon: number;
+  height: number;
+}
+
+export interface ModelOrientation {
+  heading: number;
+  pitch: number;
+  roll: number;
+}
+
+export interface ModelAssetConfig {
+  assetId: string;
+  assetType: "glb" | "3d-tiles" | "point-cloud" | "mesh";
+  assetUrl: string;
+  sourcePipeline: string;
+  status: "placeholder" | "processing" | "ready" | "failed";
+  spatialAnchor: SpatialAnchor;
+  scale: number;
+  orientation: ModelOrientation;
+  quality?: {
+    status: "unknown" | "low" | "medium" | "high";
+    confidence?: number;
+    notes?: string;
+  };
+}
+
 export interface ProjectConfig {
+  schemaVersion?: string;
   projectId: string;
   projectName: string;
   description: string;
   scene: SceneConfig;
   facility: FacilityConfig;
+  imageIntake?: ImageIntakeConfig;
+  agentAssessment?: AgentAssessmentConfig;
+  modelAssets?: ModelAssetConfig[];
   beliefRules: BeliefRules;
   measurementPoints: MeasurementPointConfig[];
   annotations: AnnotationConfig[];

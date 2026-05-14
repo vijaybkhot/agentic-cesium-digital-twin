@@ -50,13 +50,7 @@ export function AppShell() {
   }, []);
 
   const resetPanelPosition = useCallback(() => {
-    const panel = panelRef.current;
-
-    if (!panel) {
-      return;
-    }
-
-    placePanel(window.innerWidth - panel.offsetWidth - 16, 16);
+    placePanel(16, 16);
   }, [placePanel]);
 
   useEffect(() => {
@@ -143,6 +137,7 @@ export function AppShell() {
         Show panel
       </button>
       <SidePanel
+        project={config}
         selectedPoint={selectedPoint}
         beliefRules={config?.beliefRules ?? null}
         auditEvents={auditEvents}

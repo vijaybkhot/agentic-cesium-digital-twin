@@ -69,7 +69,7 @@ input {
 .info-panel {
   position: absolute;
   top: 16px;
-  right: 16px;
+  left: 16px;
   z-index: 10;
   width: 320px;
   max-width: calc(100vw - 32px);

@@ -1,7 +1,8 @@
 {
-  "projectId": "mock-dnd-facility-I",
-  "projectName": "My Updated Test Facility",
-  "description": "Config-driven Cesium decision-support POC",
+  "schemaVersion": "0.2-draft",
+  "projectId": "mock-dnd-facility",
+  "projectName": "My Test Facility",
+  "description": "Config-driven Cesium decision-support POC with future agent/reconstruction fields",
   "scene": {
     "center": {
       "lat": 40.03883,
@@ -33,6 +34,45 @@
       { "lat": 40.0383, "lon": -75.5985 }
     ]
   },
+  "imageIntake": {
+    "status": "draft_not_implemented",
+    "imageCount": 0,
+    "hasGpsMetadata": false,
+    "hasMinimumImageCount": false,
+    "hasSufficientResolution": null,
+    "coverageStatus": "unknown",
+    "missingInputs": [
+      "uploaded image set",
+      "reconstruction output asset",
+      "model origin / spatial anchor"
+    ]
+  },
+  "agentAssessment": {
+    "agentProvider": "mock-agent",
+    "reconstructionReadiness": "not_ready",
+    "reason": "No uploaded images or reconstruction output are connected yet.",
+    "recommendedNextAction": "Upload images or connect reconstruction pipeline output."
+  },
+  "modelAssets": [
+    {
+      "assetId": "future-reconstructed-model-001",
+      "assetType": "3d-tiles",
+      "assetUrl": "/tilesets/future-model/tileset.json",
+      "sourcePipeline": "ihsan-reconstruction-pipeline",
+      "status": "placeholder",
+      "spatialAnchor": {
+        "lat": 40.03883,
+        "lon": -75.59777,
+        "height": 0
+      },
+      "scale": 1,
+      "orientation": {
+        "heading": 0,
+        "pitch": 0,
+        "roll": 0
+      }
+    }
+  ],
   "beliefRules": {
     "doseRate": {
       "lowMax": 0.24,

@@ -69,3 +69,25 @@ public/project_config.json
 Then refresh the browser tab running the Vite app. The app fetches the config at
 startup, so a normal browser refresh is the simplest way to reload the latest
 JSON.
+
+## Future Draft Fields
+
+The current runtime config is still `public/project_config.json`. The current
+viewer does not require or fully render the future fields below.
+
+A draft discussion example lives at:
+
+```text
+docs/examples/project_config.future.example.json
+```
+
+Planned optional fields:
+
+- `schemaVersion`: Draft schema identifier, such as `0.2-draft`, so future tools can understand which config shape they are reading.
+- `imageIntake`: Future metadata about uploaded images, GPS/EXIF availability, minimum image count checks, coverage status, and missing inputs.
+- `agentAssessment`: Future assistant output summarizing reconstruction readiness, reasoning, and the next recommended action.
+- `modelAssets`: Future reconstruction or asset handoff references, including asset type, asset URL/path, source pipeline, spatial anchor, scale, orientation, status, and optional quality/confidence.
+
+These fields are intentionally optional in TypeScript and are not required by
+runtime validation yet. They are meant to support discussion and future provider
+integration without breaking the current Cesium viewer.

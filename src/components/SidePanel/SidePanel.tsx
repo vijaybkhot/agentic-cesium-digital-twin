@@ -2,12 +2,17 @@ import { useEffect, useMemo, useState } from "react";
 import { formatReadingTimestamp, getCurrentReadingTimestamp, normalizeReadingTimestamp } from "../../app/appState";
 import { getRecommendationForPoint } from "../../domain/belief/recommendationService";
 import type { BeliefState } from "../../types/belief";
-import type { BeliefRules, MeasurementPointConfig } from "../../types/projectConfig";
+import type {
+  BeliefRules,
+  MeasurementPointConfig,
+  ProjectConfig,
+} from "../../types/projectConfig";
 import { AuditLog } from "../AuditLog/AuditLog";
 import type { AuditEvent } from "../../types/audit";
 import { ThresholdGuide } from "./ThresholdGuide";
 
 interface SidePanelProps {
+  project: ProjectConfig | null;
   selectedPoint: MeasurementPointConfig | null;
   beliefRules: BeliefRules | null;
   auditEvents: AuditEvent[];
@@ -26,6 +31,7 @@ interface SidePanelProps {
 const beliefStates: BeliefState[] = ["Low", "Medium", "High"];
 
 export function SidePanel({
+  project,
   selectedPoint,
   beliefRules,
   auditEvents,
@@ -102,6 +108,13 @@ export function SidePanel({
         Click a measurement point on the map to inspect its current belief state.
         Drag this panel by the header if it covers the scene.
       </p>
+
+      <section className="panel-section">
+        <h2>Project</h2>
+        <p><strong>ID:</strong> {project?.projectId ?? "-"}</p>
+        <p><strong>Name:</strong> {project?.projectName ?? "-"}</p>
+        <p><strong>Description:</strong> {project?.description ?? "-"}</p>
+      </section>
 
       <section className="panel-section">
         <h2>Selected Point</h2>
