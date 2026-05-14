@@ -47,16 +47,10 @@ Example readiness output:
 
 ```json
 {
-  "status": "needs_more_input",
-  "reasons": [
-    "Only 18 images were provided.",
-    "No GPS metadata found.",
-    "Manual site location is missing."
-  ],
-  "recommendedActions": [
-    "Upload more images from multiple angles.",
-    "Provide approximate site latitude and longitude."
-  ]
+  "agentProvider": "mock-agent",
+  "reconstructionReadiness": "needs_more_input",
+  "reason": "Only 18 images were provided, and no GPS metadata or manual site location was supplied.",
+  "recommendedNextAction": "Upload more images from multiple angles and provide an approximate site latitude and longitude."
 }
 ```
 
@@ -70,8 +64,8 @@ Later versions can test OpenAI, Gemini, Azure OpenAI, local models, or custom mo
 
 ## Handshake with Reconstruction Pipeline
 
-- My side collects project data/images and prepares draft config.
-- Ihsan's side runs the reconstruction pipeline.
+- The AI intake assistant collects project data/images and prepares draft config.
+- The reconstruction pipeline runs the reconstruction workflow.
 - Shared output should include asset type, asset URL/path, model origin/spatial anchor, scale/orientation, status, and optional quality/confidence.
 - The final asset reference is written into `project_config.json`.
 - Cesium viewer loads the asset from the config without new viewer code.

@@ -189,8 +189,8 @@ src/
 
 docs/
   architecture.md            Architecture notes
-  ai-intake-assistant-scope.md
-  reconstruction-pipeline-handshake.md
+  ai-intake-assistant-scope.md            AI intake assistant scope notes
+  reconstruction-pipeline-handshake.md    Reconstruction pipeline integration notes
   project-config-schema.md   Project configuration schema notes
   examples/                  Future draft config examples
   decisions/                 Lightweight design decision records

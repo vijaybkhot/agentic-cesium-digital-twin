@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This defines how the Cesium/config side can connect with Ihsan's NeRF/COLMAP/image-to-3D pipeline without tightly coupling the systems. The goal is a small shared contract: the intake side prepares project data and consumes model asset references; the reconstruction side produces model assets and metadata.
+This defines how the Cesium/config side can connect with an external NeRF/COLMAP/image-to-3D reconstruction pipeline without tightly coupling the systems. The goal is a small shared contract: the intake side prepares project data and consumes model asset references; the reconstruction side produces model assets and metadata.
 
 ## Responsibilities
 
@@ -30,9 +30,10 @@ This defines how the Cesium/config side can connect with Ihsan's NeRF/COLMAP/ima
   "jobId": "recon-job-001",
   "status": "completed",
   "asset": {
+    "assetId": "mock-dnd-facility-recon-001",
     "assetType": "3d-tiles",
     "assetUrl": "/tilesets/mock-dnd-facility/tileset.json",
-    "sourcePipeline": "ihsan-reconstruction-pipeline",
+    "sourcePipeline": "external-reconstruction-pipeline",
     "createdAt": "2026-05-20"
   },
   "spatialAnchor": {
@@ -63,7 +64,7 @@ The architecture should support both through `modelAssets` in config.
 
 ## Open Questions
 
-- What format does Ihsan's current pipeline output?
+- What format does the current reconstruction pipeline output?
 - Does the output have scale/orientation/location metadata?
 - Can output be converted to GLB or 3D Tiles?
 - Should Cesium load assets directly from local storage first or from cloud storage later?

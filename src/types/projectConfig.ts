@@ -95,8 +95,11 @@ export interface SpatialAnchor {
 }
 
 export interface ModelOrientation {
+  /** Heading angle in degrees. */
   heading: number;
+  /** Pitch angle in degrees. */
   pitch: number;
+  /** Roll angle in degrees. */
   roll: number;
 }
 
@@ -111,6 +114,7 @@ export interface ModelAssetConfig {
   orientation: ModelOrientation;
   quality?: {
     status: "unknown" | "low" | "medium" | "high";
+    /** Confidence score from 0 to 1, where 1 is highest confidence. */
     confidence?: number;
     notes?: string;
   };
