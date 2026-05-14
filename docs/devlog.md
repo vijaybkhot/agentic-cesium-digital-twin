@@ -1,5 +1,13 @@
 # Devlog
 
+## 2026-05-14
+
+- Added future project config example.
+- Documented AI intake assistant scope.
+- Documented proposed handshake with reconstruction pipeline.
+- Added optional future config types for image intake, agent assessment, and model assets.
+- No real backend, LLM, upload, or reconstruction implemented yet.
+
 ## 2026-04-30
 
 - Migrated the frontend from plain Vite JavaScript to React + TypeScript.

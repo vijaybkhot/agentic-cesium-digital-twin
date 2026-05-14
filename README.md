@@ -122,6 +122,15 @@ In progress / planned:
 - Support for GLB / 3D Tiles output
 - Backend services
 
+Future contract examples:
+
+- `docs/examples/project_config.future.example.json`
+- `docs/ai-intake-assistant-scope.md`
+- `docs/reconstruction-pipeline-handshake.md`
+
+These describe planned agent intake and reconstruction integration contracts.
+They are discussion artifacts only; they are not implemented runtime features.
+
 ## Roadmap
 
 - POC 0: Cesium decision-support viewer, current baseline
@@ -180,7 +189,10 @@ src/
 
 docs/
   architecture.md            Architecture notes
+  ai-intake-assistant-scope.md
+  reconstruction-pipeline-handshake.md
   project-config-schema.md   Project configuration schema notes
+  examples/                  Future draft config examples
   decisions/                 Lightweight design decision records
 ```
 
