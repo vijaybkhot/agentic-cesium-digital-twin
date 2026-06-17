@@ -9,6 +9,7 @@ The app loads `public/project_config.json`.
 - `description`: Short project description.
 - `scene`: Scene center and camera settings.
 - `facility`: Facility building and boundary.
+- `modelAssets`: Optional reconstructed or placeholder model assets rendered by the Cesium viewer.
 - `beliefRules`: Thresholds used to calculate Low / Medium / High belief states.
 - `measurementPoints`: Sensor or measurement points rendered in Cesium.
 - `annotations`: Future annotation list.
@@ -58,6 +59,25 @@ authoritative for the initial live state. If you edit only a point's `belief` in
 JSON but leave the readings unchanged, the calculated belief will win after
 refresh.
 
+## Model Assets
+
+`modelAssets` is optional. In POC 3A, the viewer renders local GLB assets with
+`assetType: "glb"` and `status: "ready"`.
+
+Each rendered GLB model asset includes:
+
+- `assetId`: Stable model identifier.
+- `assetType`: Currently `glb` for rendered local GLB assets.
+- `assetUrl`: Public URL for the model, such as `/models/CesiumMilkTruck.glb`.
+- `sourcePipeline`: Name of the mock or future reconstruction source.
+- `status`: Use `ready` for assets that should render.
+- `spatialAnchor`: Latitude, longitude, and height for placement.
+- `scale`: Model scale multiplier.
+- `orientation`: Heading, pitch, and roll in degrees.
+
+GLB is the first supported model format because it is simple to test. 3D Tiles
+remains the preferred future target for larger geospatial reconstructions.
+
 ## Trying Config Changes Locally
 
 Edit:
@@ -86,7 +106,7 @@ Planned optional fields:
 - `schemaVersion`: Draft schema identifier, such as `0.2-draft`, so future tools can understand which config shape they are reading.
 - `imageIntake`: Future metadata about uploaded images, GPS/EXIF availability, minimum image count checks, coverage status, and missing inputs.
 - `agentAssessment`: Future assistant output summarizing reconstruction readiness, reasoning, and the next recommended action.
-- `modelAssets`: Future reconstruction or asset handoff references, including asset type, asset URL/path, source pipeline, spatial anchor, scale, orientation, status, and optional quality/confidence.
+- `modelAssets`: Reconstruction or asset handoff references. POC 3A renders ready GLB assets; other asset types remain planned.
 
 These fields are intentionally optional in TypeScript and are not required by
 runtime validation yet. They are meant to support discussion and future provider

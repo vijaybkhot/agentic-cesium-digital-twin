@@ -2,6 +2,8 @@ import type { ProjectConfig } from "../types/projectConfig";
 import type { BeliefState } from "../types/belief";
 
 const beliefStates: BeliefState[] = ["Low", "Medium", "High"];
+const modelAssetTypes = ["glb", "3d-tiles", "point-cloud", "mesh"];
+const modelAssetStatuses = ["placeholder", "processing", "ready", "failed"];
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -17,6 +19,10 @@ function hasString(value: Record<string, unknown>, key: string): boolean {
 
 function isBeliefState(value: unknown): value is BeliefState {
   return typeof value === "string" && beliefStates.includes(value as BeliefState);
+}
+
+function isOneOf(value: unknown, options: string[]): boolean {
+  return typeof value === "string" && options.includes(value);
 }
 
 function validateNumberField(
@@ -211,6 +217,62 @@ export function validateProjectConfig(value: unknown): ProjectConfig {
         errors.push(`annotations[${index}].description must be a string`);
       }
     });
+  }
+
+  if (value.modelAssets !== undefined) {
+    if (!Array.isArray(value.modelAssets)) {
+      errors.push("modelAssets must be an array when provided");
+    } else {
+      value.modelAssets.forEach((asset, index) => {
+        if (!isObject(asset)) {
+          errors.push(`modelAssets[${index}] must be an object`);
+          return;
+        }
+
+        ["assetId", "assetUrl", "sourcePipeline"].forEach((key) =>
+          validateStringField(asset, key, `modelAssets[${index}]`, errors),
+        );
+
+        if (!isOneOf(asset.assetType, modelAssetTypes)) {
+          errors.push(
+            `modelAssets[${index}].assetType must be glb, 3d-tiles, point-cloud, or mesh`,
+          );
+        }
+
+        if (!isOneOf(asset.status, modelAssetStatuses)) {
+          errors.push(
+            `modelAssets[${index}].status must be placeholder, processing, ready, or failed`,
+          );
+        }
+
+        validateCoordinate(
+          asset.spatialAnchor,
+          `modelAssets[${index}].spatialAnchor`,
+          errors,
+          { requireHeight: true },
+        );
+        validateNumberField(asset, "scale", `modelAssets[${index}]`, errors);
+
+        const orientation = isObject(asset.orientation)
+          ? asset.orientation
+          : null;
+
+        if (!orientation) {
+          errors.push(`modelAssets[${index}].orientation must be an object`);
+        }
+
+        if (orientation) {
+          ["heading", "pitch", "roll"].forEach((key) =>
+            validateNumberField(
+              orientation,
+              key,
+              `modelAssets[${index}].orientation`,
+              errors,
+            ),
+          );
+        }
+      });
+    }
   }
 
   if (errors.length > 0) {

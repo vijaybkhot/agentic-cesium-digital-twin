@@ -87,4 +87,4 @@ http://127.0.0.1:5173/
 - No database.
 - No real sensor feed.
 - Config reload currently requires a browser refresh.
-- Reconstructed model assets are documented but not rendered yet.
+- Local GLB model assets are handled in POC 3A; real reconstruction outputs are not integrated yet.

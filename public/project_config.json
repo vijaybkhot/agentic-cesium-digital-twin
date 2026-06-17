@@ -43,6 +43,30 @@
       "mediumMax": 149
     }
   },
+  "modelAssets": [
+    {
+      "assetId": "mock-reconstruction-milk-truck",
+      "assetType": "glb",
+      "assetUrl": "/models/CesiumMilkTruck.glb",
+      "sourcePipeline": "mock-reconstruction-placeholder",
+      "status": "ready",
+      "spatialAnchor": {
+        "lat": 40.03818,
+        "lon": -75.59755,
+        "height": 2
+      },
+      "scale": 2,
+      "orientation": {
+        "heading": 90,
+        "pitch": 0,
+        "roll": 0
+      },
+      "quality": {
+        "status": "unknown",
+        "notes": "Sample GLB used to validate config-driven model asset rendering."
+      }
+    }
+  ],
   "measurementPoints": [
     {
       "id": "MP-01",

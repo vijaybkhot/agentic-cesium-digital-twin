@@ -2,6 +2,9 @@
 
 ## 2026-05-14
 
+- Added POC 3A GLB model asset rendering from `project_config.json`.
+- Added a Cesium Milk Truck sample model as a mock reconstruction placeholder.
+- Documented local GLB model asset testing and current limits.
 - Added future project config example.
 - Documented AI intake assistant scope.
 - Documented proposed handshake with reconstruction pipeline.
