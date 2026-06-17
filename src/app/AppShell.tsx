@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CesiumScene } from "../components/CesiumScene/CesiumScene";
+import { ImageIntakePanel } from "../components/ImageIntakePanel/ImageIntakePanel";
 import { SidePanel } from "../components/SidePanel/SidePanel";
 import { StatusPanel } from "../components/StatusPanel/StatusPanel";
 import { Toolbar } from "../components/Toolbar/Toolbar";
@@ -129,6 +130,12 @@ export function AppShell() {
       )}
       <Toolbar config={config} />
       <StatusPanel isLoading={isLoading} error={error} />
+      <ImageIntakePanel
+        hasProjectLocation={
+          Number.isFinite(config?.scene.center.lat) &&
+          Number.isFinite(config?.scene.center.lon)
+        }
+      />
       <button
         className={`floating-button ${isPanelVisible ? "" : "is-visible"}`}
         type="button"

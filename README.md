@@ -19,6 +19,7 @@ This version demonstrates the Cesium visualization and interaction layer. It is 
 - Manual belief override buttons
 - Recommendation text based on current belief state
 - Audit log of selections, updates, and overrides
+- Browser-only image intake panel with rule-based mock reconstruction readiness feedback
 
 ## Why This Matters
 
@@ -118,12 +119,15 @@ In progress / planned:
 - More complete and validated config-driven `project_config.json`
 - Agent-assisted project configuration
 - Image intake and audit
+- Browser-only image intake and mock readiness assessment
 - Reconstruction pipeline integration
 - Support for GLB / 3D Tiles output
 - Backend services
 
 Future contract examples:
 
+- `docs/poc-1-config-driven-viewer.md`
+- `docs/poc-2a-image-intake.md`
 - `docs/examples/project_config.future.example.json`
 - `docs/ai-intake-assistant-scope.md`
 - `docs/reconstruction-pipeline-handshake.md`
@@ -136,6 +140,7 @@ They are discussion artifacts only; they are not implemented runtime features.
 - POC 0: Cesium decision-support viewer, current baseline
 - POC 1: Config-driven Cesium viewer
 - POC 2: Image intake and audit agent
+- POC 2A: Browser-only image intake and mock readiness assessment
 - POC 3: 3D reconstruction integration
 - POC 4: Research extensions such as uncertainty, multi-digital-twin interaction, and decision support
 
@@ -165,6 +170,7 @@ These are intended research directions, not claims about completed system capabi
 - No real image upload yet
 - No real LLM agent yet
 - No real 3D reconstruction pipeline yet
+- Image intake readiness is rule-based and local-only
 - No persisted state yet
 - Not a production decommissioning system
 
@@ -183,12 +189,15 @@ src/
   components/                React UI components
   config/                    Project config loading and validation
   domain/                    Belief, audit, and project mapping logic
+  domain/imageIntake/        Browser-only image inspection and readiness rules
   ports/                     Interfaces for external providers and viewer adapters
   types/                     Shared TypeScript types
   styles/                    Global styles
 
 docs/
   architecture.md            Architecture notes
+  poc-1-config-driven-viewer.md           POC 1 run and test notes
+  poc-2a-image-intake.md                  POC 2A run and test notes
   ai-intake-assistant-scope.md            AI intake assistant scope notes
   reconstruction-pipeline-handshake.md    Reconstruction pipeline integration notes
   project-config-schema.md   Project configuration schema notes
