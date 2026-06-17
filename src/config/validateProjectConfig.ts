@@ -253,7 +253,13 @@ export function validateProjectConfig(value: unknown): ProjectConfig {
         );
         validateNumberField(asset, "scale", `modelAssets[${index}]`, errors);
 
-        const orientation = requireObject(asset, "orientation", errors);
+        const orientation = isObject(asset.orientation)
+          ? asset.orientation
+          : null;
+
+        if (!orientation) {
+          errors.push(`modelAssets[${index}].orientation must be an object`);
+        }
 
         if (orientation) {
           ["heading", "pitch", "roll"].forEach((key) =>

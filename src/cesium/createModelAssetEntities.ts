@@ -1,13 +1,22 @@
 import * as Cesium from "cesium";
 import type { ModelAssetConfig } from "../types/projectConfig";
 
+function escapeHtml(value: unknown): string {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function buildModelDescription(asset: ModelAssetConfig): string {
   return `
-    <strong>${asset.assetId}</strong><br />
-    Type: ${asset.assetType}<br />
-    Source: ${asset.sourcePipeline}<br />
-    Status: ${asset.status}<br />
-    Scale: ${asset.scale}
+    <strong>${escapeHtml(asset.assetId)}</strong><br />
+    Type: ${escapeHtml(asset.assetType)}<br />
+    Source: ${escapeHtml(asset.sourcePipeline)}<br />
+    Status: ${escapeHtml(asset.status)}<br />
+    Scale: ${escapeHtml(asset.scale)}
   `;
 }
 
@@ -34,7 +43,7 @@ export function createModelAssetEntity(
   );
 
   return viewer.entities.add({
-    id: asset.assetId,
+    id: `modelAsset:${asset.assetId}`,
     name: asset.assetId,
     position,
     orientation,
