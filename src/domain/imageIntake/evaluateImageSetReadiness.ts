@@ -27,7 +27,7 @@ function createSummary(
     averageHeight: average(images.map((image) => image.height)),
     averageMegapixels: average(images.map((image) => image.megapixels)),
     lowResolutionCount: images.filter((image) => image.isLowResolution).length,
-    supportedImageCount: images.length,
+    supportedImageCount: images.length + failedImageCount,
     unsupportedFileCount,
     failedImageCount,
   };

@@ -224,8 +224,8 @@ function ResultList({ title, values }: { title: string; values: string[] }) {
       <h3>{title}</h3>
       {values.length > 0 ? (
         <ul>
-          {values.map((value) => (
-            <li key={value}>{value}</li>
+          {values.map((value, index) => (
+            <li key={`${title}-${index}-${value}`}>{value}</li>
           ))}
         </ul>
       ) : (
