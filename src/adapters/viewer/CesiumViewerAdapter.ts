@@ -9,6 +9,7 @@ import { flyToProject as flyViewerToProject } from "../../cesium/cameraControls"
 import { createCesiumViewer } from "../../cesium/createCesiumViewer";
 import { createFacilityBoundary } from "../../cesium/createFacilityBoundary";
 import { createFacilityBuilding } from "../../cesium/createFacilityBuilding";
+import { createModelAssetEntity } from "../../cesium/createModelAssetEntities";
 import {
   createMeasurementPointEntity,
   updateMeasurementPointEntity,
@@ -20,6 +21,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
   private viewer: Cesium.Viewer | null = null;
   private clickHandler: Cesium.ScreenSpaceEventHandler | null = null;
   private readonly pointEntities = new Map<string, Cesium.Entity>();
+  private readonly modelAssetEntities = new Map<string, Cesium.Entity>();
 
   constructor(
     private readonly onMeasurementPointSelected: MeasurementPointSelectionHandler,
@@ -41,9 +43,18 @@ export class CesiumViewerAdapter implements ViewerAdapter {
 
     this.viewer.entities.removeAll();
     this.pointEntities.clear();
+    this.modelAssetEntities.clear();
 
     createFacilityBuilding(this.viewer, config.facility);
     createFacilityBoundary(this.viewer, config.facility);
+
+    config.modelAssets?.forEach((asset) => {
+      const entity = createModelAssetEntity(this.viewer!, asset);
+
+      if (entity) {
+        this.modelAssetEntities.set(asset.assetId, entity);
+      }
+    });
 
     config.measurementPoints.forEach((point) => {
       const entity = createMeasurementPointEntity(this.viewer!, point);
@@ -79,6 +90,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.clickHandler = null;
     this.viewer = null;
     this.pointEntities.clear();
+    this.modelAssetEntities.clear();
   }
 
   private attachSelectionHandler(): void {

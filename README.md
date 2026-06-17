@@ -20,6 +20,7 @@ This version demonstrates the Cesium visualization and interaction layer. It is 
 - Recommendation text based on current belief state
 - Audit log of selections, updates, and overrides
 - Browser-only image intake panel with rule-based mock reconstruction readiness feedback
+- Config-driven GLB model asset rendering
 
 ## Why This Matters
 
@@ -120,6 +121,7 @@ In progress / planned:
 - Agent-assisted project configuration
 - Image intake and audit
 - Browser-only image intake and mock readiness assessment
+- Local GLB model asset rendering from `project_config.json`
 - Reconstruction pipeline integration
 - Support for GLB / 3D Tiles output
 - Backend services
@@ -141,6 +143,7 @@ They are discussion artifacts only; they are not implemented runtime features.
 - POC 1: Config-driven Cesium viewer
 - POC 2: Image intake and audit agent
 - POC 2A: Browser-only image intake and mock readiness assessment
+- POC 3A: Render local GLB model assets from config
 - POC 3: 3D reconstruction integration
 - POC 4: Research extensions such as uncertainty, multi-digital-twin interaction, and decision support
 
@@ -198,6 +201,7 @@ docs/
   architecture.md            Architecture notes
   poc-1-config-driven-viewer.md           POC 1 run and test notes
   poc-2a-image-intake.md                  POC 2A run and test notes
+  poc-3a-glb-model-assets.md              POC 3A GLB model asset notes
   ai-intake-assistant-scope.md            AI intake assistant scope notes
   reconstruction-pipeline-handshake.md    Reconstruction pipeline integration notes
   project-config-schema.md   Project configuration schema notes
