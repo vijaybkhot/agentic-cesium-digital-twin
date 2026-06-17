@@ -7,6 +7,11 @@
 - Documented proposed handshake with reconstruction pipeline.
 - Added optional future config types for image intake, agent assessment, and model assets.
 - No real backend, LLM, upload, or reconstruction implemented yet.
+- Added browser-only image intake panel.
+- Added image metadata inspection for count, size, dimensions, and resolution.
+- Added rule-based mock reconstruction readiness assessment.
+- Added concise local run/test notes for POC 1 and POC 2A.
+- No backend, LLM, cloud upload, EXIF extraction, or reconstruction pipeline implemented yet.
 
 ## 2026-04-30
 
