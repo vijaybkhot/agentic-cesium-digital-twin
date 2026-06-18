@@ -20,11 +20,18 @@
 - Add agent-assisted completeness checks for image sets and project metadata.
 - Keep provider implementations behind `AgentProvider`.
 
+## POC 2A: Browser Image Readiness Review
+
+- Inspect local image dimensions and sizes without uploading files.
+- Apply deterministic readiness rules.
+- Present mock assistant guidance for an initial reconstruction trial.
+
 ## POC 3: Reconstruction Integration
 
 - POC 3A: Render a local GLB model asset from `project_config.json`.
 - POC 3B: Add model-local inspection annotations using standardized ENU coordinates.
-- Add reconstruction job orchestration.
+- POC 3D: Simulate project setup, image readiness, reconstruction job states, and model handoff in the browser.
+- Add real backend reconstruction job orchestration.
 - Implement a real `ReconstructionProvider`.
 - Visualize reconstruction outputs as tilesets/models in Cesium.
 - Track reconstruction state and provenance in the project audit trail.

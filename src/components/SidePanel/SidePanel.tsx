@@ -22,6 +22,7 @@ interface SidePanelProps {
   auditEvents: AuditEvent[];
   isVisible: boolean;
   onHide: () => void;
+  onNewProject: () => void;
   onClearSelection: () => void;
   onResetPosition: () => void;
   onApplyMeasurementUpdate: (
@@ -44,6 +45,7 @@ export function SidePanel({
   auditEvents,
   isVisible,
   onHide,
+  onNewProject,
   onClearSelection,
   onResetPosition,
   onApplyMeasurementUpdate,
@@ -108,6 +110,9 @@ export function SidePanel({
           </button>
           <button className="panel-button" type="button" onClick={onClearSelection}>
             Clear selection
+          </button>
+          <button className="panel-button" type="button" onClick={onNewProject}>
+            New project
           </button>
           <button className="panel-button" type="button" onClick={onHide}>
             Hide

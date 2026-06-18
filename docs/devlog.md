@@ -2,6 +2,12 @@
 
 ## 2026-06-18
 
+- Added browser-only project setup with typed or globe-picked site coordinates.
+- Added an in-memory draft project config with a temporary site marker.
+- Added a mock COLMAP provider with queued, running, and completed job states.
+- Added readiness-gated reconstruction and model display after completion.
+- Preserved the full static config demo behind `Open existing demo`.
+- No backend, upload, database, real COLMAP process, or LLM was added.
 - Added model-local inspection annotations using standardized ENU meter coordinates.
 - Added three clickable milk-truck inspection points for roof, front, and side.
 - Added read-only annotation details and annotation selection audit logging.

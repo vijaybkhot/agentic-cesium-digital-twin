@@ -8,7 +8,8 @@ The app loads `public/project_config.json`.
 - `projectName`: Human-readable project name.
 - `description`: Short project description.
 - `scene`: Scene center and camera settings.
-- `facility`: Facility building and boundary.
+- `facility`: Optional facility building and boundary.
+- `siteMarker`: Optional temporary project-site marker.
 - `modelAssets`: Optional reconstructed or placeholder model assets rendered by the Cesium viewer.
 - `modelAnnotations`: Optional inspection points attached to model assets.
 - `beliefRules`: Thresholds used to calculate Low / Medium / High belief states.
@@ -80,6 +81,21 @@ Each rendered GLB model asset includes:
 GLB is the first supported model format because it is simple to test. 3D Tiles
 remains the preferred future target for larger geospatial reconstructions.
 
+## Draft Projects
+
+POC 3D creates an in-memory `ProjectConfig` before reconstruction. A draft
+project can omit `facility` and contain:
+
+- a scene center and camera
+- a `siteMarker`
+- default belief rules
+- empty `measurementPoints`, `annotations`, `modelAssets`, and
+  `modelAnnotations`
+
+When the mock reconstruction completes, the returned asset is added to
+`modelAssets` and the temporary `siteMarker` is removed. The runtime draft is
+not written to `public/project_config.json`.
+
 ## Model Annotations
 
 `modelAnnotations` contains read-only inspection points attached to model assets.
@@ -113,9 +129,8 @@ Edit:
 public/project_config.json
 ```
 
-Then refresh the browser tab running the Vite app. The app fetches the config at
-startup, so a normal browser refresh is the simplest way to reload the latest
-JSON.
+Then refresh the browser tab and select `Open existing demo`. The new-project
+workflow uses an in-memory config instead of this file.
 
 ## Future Draft Fields
 

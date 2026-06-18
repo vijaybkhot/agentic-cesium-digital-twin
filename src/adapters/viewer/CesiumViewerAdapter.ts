@@ -14,6 +14,7 @@ import { createFacilityBoundary } from "../../cesium/createFacilityBoundary";
 import { createFacilityBuilding } from "../../cesium/createFacilityBuilding";
 import { createModelAnnotationEntity } from "../../cesium/createModelAnnotationEntities";
 import { createModelAssetEntity } from "../../cesium/createModelAssetEntities";
+import { createSiteMarker } from "../../cesium/createSiteMarker";
 import {
   createMeasurementPointEntity,
   updateMeasurementPointEntity,
@@ -24,6 +25,7 @@ type SelectionHandler = (selection: ViewerSelection) => void;
 export class CesiumViewerAdapter implements ViewerAdapter {
   private viewer: Cesium.Viewer | null = null;
   private clickHandler: Cesium.ScreenSpaceEventHandler | null = null;
+  private locationPickMode = false;
   private readonly pointEntities = new Map<string, Cesium.Entity>();
   private readonly modelAssetEntities = new Map<string, Cesium.Entity>();
   private readonly modelAnnotationEntities = new Map<string, Cesium.Entity>();
@@ -51,8 +53,14 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.modelAssetEntities.clear();
     this.modelAnnotationEntities.clear();
 
-    createFacilityBuilding(this.viewer, config.facility);
-    createFacilityBoundary(this.viewer, config.facility);
+    if (config.facility) {
+      createFacilityBuilding(this.viewer, config.facility);
+      createFacilityBoundary(this.viewer, config.facility);
+    }
+
+    if (config.siteMarker) {
+      createSiteMarker(this.viewer, config.siteMarker);
+    }
 
     const modelAssetsById = new Map(
       config.modelAssets?.map((asset) => [asset.assetId, asset]) ?? [],
@@ -103,6 +111,20 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     }
   }
 
+  flyToModelAsset(assetId: string): void {
+    const entity = this.modelAssetEntities.get(assetId);
+
+    if (this.viewer && entity) {
+      void this.viewer.flyTo(entity, {
+        duration: 1,
+      });
+    }
+  }
+
+  setLocationPickMode(enabled: boolean): void {
+    this.locationPickMode = enabled;
+  }
+
   destroy(): void {
     if (this.clickHandler && !this.clickHandler.isDestroyed()) {
       this.clickHandler.destroy();
@@ -114,6 +136,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
 
     this.clickHandler = null;
     this.viewer = null;
+    this.locationPickMode = false;
     this.pointEntities.clear();
     this.modelAssetEntities.clear();
     this.modelAnnotationEntities.clear();
@@ -130,6 +153,27 @@ export class CesiumViewerAdapter implements ViewerAdapter {
 
     this.clickHandler.setInputAction((event: Cesium.ScreenSpaceEventHandler.PositionedEvent) => {
       if (!this.viewer) {
+        return;
+      }
+
+      if (this.locationPickMode) {
+        const ray = this.viewer.camera.getPickRay(event.position);
+        const worldPosition = ray
+          ? this.viewer.scene.globe.pick(ray, this.viewer.scene)
+          : undefined;
+
+        if (!worldPosition) {
+          return;
+        }
+
+        const cartographic = Cesium.Cartographic.fromCartesian(worldPosition);
+
+        this.locationPickMode = false;
+        this.onEntitySelected({
+          type: "globeLocation",
+          lat: Cesium.Math.toDegrees(cartographic.latitude),
+          lon: Cesium.Math.toDegrees(cartographic.longitude),
+        });
         return;
       }
 

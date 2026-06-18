@@ -1,7 +1,19 @@
-export interface ImageInspectionResult {
-  imageCount: number;
-  warnings: string[];
-  recommendedNextStep: string;
+import type {
+  ModelAssetConfig,
+  SpatialAnchor,
+} from "./projectConfig";
+
+export type ReconstructionStatus =
+  | "queued"
+  | "running"
+  | "completed"
+  | "failed";
+
+export interface ReconstructionRequest {
+  projectId: string;
+  files: File[];
+  siteAnchor: SpatialAnchor;
+  requestedOutput: "glb";
 }
 
 export interface ReconstructionJob {
@@ -10,8 +22,8 @@ export interface ReconstructionJob {
   status: ReconstructionStatus;
 }
 
-export type ReconstructionStatus =
-  | "Queued"
-  | "Running"
-  | "Completed"
-  | "Failed";
+export interface ReconstructionOutput {
+  jobId: string;
+  projectId: string;
+  asset: ModelAssetConfig;
+}

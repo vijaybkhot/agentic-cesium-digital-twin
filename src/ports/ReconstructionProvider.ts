@@ -1,15 +1,12 @@
 import type {
-  ImageInspectionResult,
   ReconstructionJob,
+  ReconstructionOutput,
+  ReconstructionRequest,
   ReconstructionStatus,
 } from "../types/reconstruction";
 
 export interface ReconstructionProvider {
-  inspectImageSet(files: File[]): Promise<ImageInspectionResult>;
-  startReconstruction(
-    projectId: string,
-    files: File[],
-  ): Promise<ReconstructionJob>;
+  startReconstruction(request: ReconstructionRequest): Promise<ReconstructionJob>;
   getReconstructionStatus(jobId: string): Promise<ReconstructionStatus>;
-  getReconstructionOutput(jobId: string): Promise<unknown>;
+  getReconstructionOutput(jobId: string): Promise<ReconstructionOutput>;
 }

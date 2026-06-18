@@ -32,6 +32,13 @@ export interface FacilityConfig {
   boundary: Coordinate[];
 }
 
+export interface SiteMarkerConfig {
+  lat: number;
+  lon: number;
+  height: number;
+  label: string;
+}
+
 export interface BeliefRules {
   doseRate: {
     lowMax: number;
@@ -150,7 +157,8 @@ export interface ProjectConfig {
   projectName: string;
   description: string;
   scene: SceneConfig;
-  facility: FacilityConfig;
+  facility?: FacilityConfig;
+  siteMarker?: SiteMarkerConfig;
   imageIntake?: ImageIntakeConfig;
   agentAssessment?: AgentAssessmentConfig;
   modelAssets?: ModelAssetConfig[];

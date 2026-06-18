@@ -104,7 +104,10 @@ export function validateProjectConfig(value: unknown): ProjectConfig {
     );
   }
 
-  const facility = requireObject(value, "facility", errors);
+  const facility =
+    value.facility === undefined
+      ? null
+      : requireObject(value, "facility", errors);
   const building = facility ? requireObject(facility, "building", errors) : null;
 
   if (facility) {
@@ -135,6 +138,17 @@ export function validateProjectConfig(value: unknown): ProjectConfig {
           errors,
         ),
       );
+    }
+  }
+
+  if (value.siteMarker !== undefined) {
+    if (!isObject(value.siteMarker)) {
+      errors.push("siteMarker must be an object when provided");
+    } else {
+      validateCoordinate(value.siteMarker, "siteMarker", errors, {
+        requireHeight: true,
+      });
+      validateStringField(value.siteMarker, "label", "siteMarker", errors);
     }
   }
 
