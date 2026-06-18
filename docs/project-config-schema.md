@@ -10,6 +10,7 @@ The app loads `public/project_config.json`.
 - `scene`: Scene center and camera settings.
 - `facility`: Facility building and boundary.
 - `modelAssets`: Optional reconstructed or placeholder model assets rendered by the Cesium viewer.
+- `modelAnnotations`: Optional inspection points attached to model assets.
 - `beliefRules`: Thresholds used to calculate Low / Medium / High belief states.
 - `measurementPoints`: Sensor or measurement points rendered in Cesium.
 - `annotations`: Future annotation list.
@@ -74,9 +75,35 @@ Each rendered GLB model asset includes:
 - `spatialAnchor`: Latitude, longitude, and height for placement.
 - `scale`: Model scale multiplier.
 - `orientation`: Heading, pitch, and roll in degrees.
+- `coordinateFrame`: Standard local coordinate convention used by attached annotations.
 
 GLB is the first supported model format because it is simple to test. 3D Tiles
 remains the preferred future target for larger geospatial reconstructions.
+
+## Model Annotations
+
+`modelAnnotations` contains read-only inspection points attached to model assets.
+Each annotation includes:
+
+- `id`: Unique annotation identifier.
+- `modelAssetId`: ID of the related model asset.
+- `label`: Human-readable marker label.
+- `description`: Optional inspection note.
+- `localPosition`: Local `x`, `y`, and `z` offsets.
+
+The referenced asset must declare:
+
+```json
+{
+  "convention": "local-enu",
+  "unit": "meters",
+  "origin": "spatialAnchor"
+}
+```
+
+The local axes mean east/right, north/forward, and up. The viewer applies asset
+scale and orientation before translating the marker to the asset's geographic
+anchor.
 
 ## Trying Config Changes Locally
 
@@ -107,7 +134,8 @@ Planned optional fields:
 - `imageIntake`: Future metadata about uploaded images, GPS/EXIF availability, minimum image count checks, coverage status, and missing inputs.
 - `agentAssessment`: Future assistant output summarizing reconstruction readiness, reasoning, and the next recommended action.
 - `modelAssets`: Reconstruction or asset handoff references. POC 3A renders ready GLB assets; other asset types remain planned.
+- `modelAnnotations`: Model-local inspection points. POC 3B renders these for ready GLB assets.
 
-These fields are intentionally optional in TypeScript and are not required by
-runtime validation yet. They are meant to support discussion and future provider
-integration without breaking the current Cesium viewer.
+These top-level fields remain optional so older runtime configs continue to
+load. When `modelAssets` or `modelAnnotations` are provided, their current POC
+fields and cross-references are validated at runtime.

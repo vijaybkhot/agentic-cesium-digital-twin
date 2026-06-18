@@ -1,5 +1,14 @@
 # Devlog
 
+## 2026-06-18
+
+- Added model-local inspection annotations using standardized ENU meter coordinates.
+- Added three clickable milk-truck inspection points for roof, front, and side.
+- Added read-only annotation details and annotation selection audit logging.
+- Preserved camera position during selection and clarified panel movement/selection controls.
+- Enabled normal depth testing so model annotations behave as anchored 3D points.
+- Documented the coordinate normalization expected from future reconstruction providers.
+
 ## 2026-05-14
 
 - Added POC 3A GLB model asset rendering from `project_config.json`.

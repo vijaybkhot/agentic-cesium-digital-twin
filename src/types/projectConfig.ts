@@ -103,6 +103,12 @@ export interface ModelOrientation {
   roll: number;
 }
 
+export interface ModelCoordinateFrame {
+  convention: "local-enu";
+  unit: "meters";
+  origin: "spatialAnchor";
+}
+
 export interface ModelAssetConfig {
   assetId: string;
   assetType: "glb" | "3d-tiles" | "point-cloud" | "mesh";
@@ -112,12 +118,30 @@ export interface ModelAssetConfig {
   spatialAnchor: SpatialAnchor;
   scale: number;
   orientation: ModelOrientation;
+  coordinateFrame?: ModelCoordinateFrame;
   quality?: {
     status: "unknown" | "low" | "medium" | "high";
     /** Confidence score from 0 to 1, where 1 is highest confidence. */
     confidence?: number;
     notes?: string;
   };
+}
+
+export interface LocalModelPosition {
+  /** East/right offset from the asset origin, before asset scale is applied. */
+  x: number;
+  /** North/forward offset from the asset origin, before asset scale is applied. */
+  y: number;
+  /** Up offset from the asset origin, before asset scale is applied. */
+  z: number;
+}
+
+export interface ModelAnnotationConfig {
+  id: string;
+  modelAssetId: string;
+  label: string;
+  description?: string;
+  localPosition: LocalModelPosition;
 }
 
 export interface ProjectConfig {
@@ -130,6 +154,7 @@ export interface ProjectConfig {
   imageIntake?: ImageIntakeConfig;
   agentAssessment?: AgentAssessmentConfig;
   modelAssets?: ModelAssetConfig[];
+  modelAnnotations?: ModelAnnotationConfig[];
   beliefRules: BeliefRules;
   measurementPoints: MeasurementPointConfig[];
   annotations: AnnotationConfig[];

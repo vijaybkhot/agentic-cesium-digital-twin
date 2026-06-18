@@ -1,5 +1,9 @@
 import * as Cesium from "cesium";
 import type { ModelAssetConfig } from "../types/projectConfig";
+import {
+  createModelAssetOrientation,
+  createModelAssetPosition,
+} from "./modelAssetTransforms";
 
 function escapeHtml(value: unknown): string {
   return String(value)
@@ -28,19 +32,8 @@ export function createModelAssetEntity(
     return null;
   }
 
-  const position = Cesium.Cartesian3.fromDegrees(
-    asset.spatialAnchor.lon,
-    asset.spatialAnchor.lat,
-    asset.spatialAnchor.height,
-  );
-  const orientation = Cesium.Transforms.headingPitchRollQuaternion(
-    position,
-    Cesium.HeadingPitchRoll.fromDegrees(
-      asset.orientation.heading,
-      asset.orientation.pitch,
-      asset.orientation.roll,
-    ),
-  );
+  const position = createModelAssetPosition(asset);
+  const orientation = createModelAssetOrientation(asset, position);
 
   return viewer.entities.add({
     id: `modelAsset:${asset.assetId}`,
@@ -50,7 +43,6 @@ export function createModelAssetEntity(
     model: {
       uri: asset.assetUrl,
       scale: asset.scale,
-      minimumPixelSize: 64,
     },
     description: buildModelDescription(asset),
     properties: {

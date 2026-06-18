@@ -1,6 +1,9 @@
 import "cesium/Build/Cesium/Widgets/widgets.css";
 import * as Cesium from "cesium";
-import type { ViewerAdapter } from "../../ports/ViewerAdapter";
+import type {
+  ViewerAdapter,
+  ViewerSelection,
+} from "../../ports/ViewerAdapter";
 import type {
   MeasurementPointConfig,
   ProjectConfig,
@@ -9,22 +12,24 @@ import { flyToProject as flyViewerToProject } from "../../cesium/cameraControls"
 import { createCesiumViewer } from "../../cesium/createCesiumViewer";
 import { createFacilityBoundary } from "../../cesium/createFacilityBoundary";
 import { createFacilityBuilding } from "../../cesium/createFacilityBuilding";
+import { createModelAnnotationEntity } from "../../cesium/createModelAnnotationEntities";
 import { createModelAssetEntity } from "../../cesium/createModelAssetEntities";
 import {
   createMeasurementPointEntity,
   updateMeasurementPointEntity,
 } from "../../cesium/createMeasurementPointEntities";
 
-type MeasurementPointSelectionHandler = (pointId: string) => void;
+type SelectionHandler = (selection: ViewerSelection) => void;
 
 export class CesiumViewerAdapter implements ViewerAdapter {
   private viewer: Cesium.Viewer | null = null;
   private clickHandler: Cesium.ScreenSpaceEventHandler | null = null;
   private readonly pointEntities = new Map<string, Cesium.Entity>();
   private readonly modelAssetEntities = new Map<string, Cesium.Entity>();
+  private readonly modelAnnotationEntities = new Map<string, Cesium.Entity>();
 
   constructor(
-    private readonly onMeasurementPointSelected: MeasurementPointSelectionHandler,
+    private readonly onEntitySelected: SelectionHandler,
   ) {}
 
   initialize(container: HTMLElement, config: ProjectConfig): void {
@@ -44,6 +49,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.viewer.entities.removeAll();
     this.pointEntities.clear();
     this.modelAssetEntities.clear();
+    this.modelAnnotationEntities.clear();
 
     createFacilityBuilding(this.viewer, config.facility);
     createFacilityBoundary(this.viewer, config.facility);
@@ -54,6 +60,23 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       if (entity) {
         this.modelAssetEntities.set(asset.assetId, entity);
       }
+    });
+
+    config.modelAnnotations?.forEach((annotation) => {
+      const asset = config.modelAssets?.find(
+        (candidate) => candidate.assetId === annotation.modelAssetId,
+      );
+
+      if (!asset || asset.assetType !== "glb" || asset.status !== "ready") {
+        return;
+      }
+
+      const entity = createModelAnnotationEntity(
+        this.viewer!,
+        annotation,
+        asset,
+      );
+      this.modelAnnotationEntities.set(annotation.id, entity);
     });
 
     config.measurementPoints.forEach((point) => {
@@ -91,6 +114,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.viewer = null;
     this.pointEntities.clear();
     this.modelAssetEntities.clear();
+    this.modelAnnotationEntities.clear();
   }
 
   private attachSelectionHandler(): void {
@@ -116,9 +140,17 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       const entity = pickedObject.id as Cesium.Entity;
       const entityType = entity.properties?.entityType?.getValue();
       const pointId = entity.properties?.pointId?.getValue();
+      const annotationId = entity.properties?.annotationId?.getValue();
 
       if (entityType === "measurementPoint" && typeof pointId === "string") {
-        this.onMeasurementPointSelected(pointId);
+        this.onEntitySelected({ type: "measurementPoint", id: pointId });
+      }
+
+      if (
+        entityType === "modelAnnotation" &&
+        typeof annotationId === "string"
+      ) {
+        this.onEntitySelected({ type: "modelAnnotation", id: annotationId });
       }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
   }

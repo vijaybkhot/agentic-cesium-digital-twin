@@ -20,10 +20,14 @@ export function AppShell() {
   const {
     config,
     selectedPoint,
+    selectedModelAnnotation,
+    selectedModelAsset,
     auditEvents,
     isLoading,
     error,
     selectPoint,
+    selectModelAnnotation,
+    clearSelection,
     applyMeasurementUpdate,
     applyManualOverride,
   } = useProjectState();
@@ -52,6 +56,7 @@ export function AppShell() {
 
   const resetPanelPosition = useCallback(() => {
     placePanel(16, 16);
+    panelRef.current?.scrollTo({ top: 0 });
   }, [placePanel]);
 
   useEffect(() => {
@@ -122,9 +127,14 @@ export function AppShell() {
       {config && (
         <CesiumScene
           config={config}
-          onMeasurementPointSelected={(pointId) => {
+          onEntitySelected={(selection) => {
             setIsPanelVisible(true);
-            selectPoint(pointId);
+
+            if (selection.type === "measurementPoint") {
+              selectPoint(selection.id);
+            } else {
+              selectModelAnnotation(selection.id);
+            }
           }}
         />
       )}
@@ -146,10 +156,13 @@ export function AppShell() {
       <SidePanel
         project={config}
         selectedPoint={selectedPoint}
+        selectedModelAnnotation={selectedModelAnnotation}
+        selectedModelAsset={selectedModelAsset}
         beliefRules={config?.beliefRules ?? null}
         auditEvents={auditEvents}
         isVisible={isPanelVisible}
         onHide={() => setIsPanelVisible(false)}
+        onClearSelection={clearSelection}
         onResetPosition={() => {
           setIsPanelVisible(true);
           resetPanelPosition();

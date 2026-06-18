@@ -253,6 +253,32 @@ export function validateProjectConfig(value: unknown): ProjectConfig {
         );
         validateNumberField(asset, "scale", `modelAssets[${index}]`, errors);
 
+        if (asset.coordinateFrame !== undefined) {
+          if (!isObject(asset.coordinateFrame)) {
+            errors.push(
+              `modelAssets[${index}].coordinateFrame must be an object`,
+            );
+          } else {
+            if (asset.coordinateFrame.convention !== "local-enu") {
+              errors.push(
+                `modelAssets[${index}].coordinateFrame.convention must be local-enu`,
+              );
+            }
+
+            if (asset.coordinateFrame.unit !== "meters") {
+              errors.push(
+                `modelAssets[${index}].coordinateFrame.unit must be meters`,
+              );
+            }
+
+            if (asset.coordinateFrame.origin !== "spatialAnchor") {
+              errors.push(
+                `modelAssets[${index}].coordinateFrame.origin must be spatialAnchor`,
+              );
+            }
+          }
+        }
+
         const orientation = isObject(asset.orientation)
           ? asset.orientation
           : null;
@@ -269,6 +295,82 @@ export function validateProjectConfig(value: unknown): ProjectConfig {
               `modelAssets[${index}].orientation`,
               errors,
             ),
+          );
+        }
+      });
+    }
+  }
+
+  if (value.modelAnnotations !== undefined) {
+    if (!Array.isArray(value.modelAnnotations)) {
+      errors.push("modelAnnotations must be an array when provided");
+    } else {
+      const annotationIds = new Set<string>();
+      const modelAssets = Array.isArray(value.modelAssets)
+        ? value.modelAssets.filter(isObject)
+        : [];
+
+      value.modelAnnotations.forEach((annotation, index) => {
+        const path = `modelAnnotations[${index}]`;
+
+        if (!isObject(annotation)) {
+          errors.push(`${path} must be an object`);
+          return;
+        }
+
+        ["id", "modelAssetId", "label"].forEach((key) =>
+          validateStringField(annotation, key, path, errors),
+        );
+
+        if (typeof annotation.id === "string") {
+          if (annotationIds.has(annotation.id)) {
+            errors.push(`${path}.id must be unique`);
+          }
+
+          annotationIds.add(annotation.id);
+        }
+
+        if (
+          annotation.description !== undefined &&
+          typeof annotation.description !== "string"
+        ) {
+          errors.push(`${path}.description must be a string`);
+        }
+
+        if (!isObject(annotation.localPosition)) {
+          errors.push(`${path}.localPosition must be an object`);
+        } else {
+          ["x", "y", "z"].forEach((key) =>
+            validateNumberField(
+              annotation.localPosition as Record<string, unknown>,
+              key,
+              `${path}.localPosition`,
+              errors,
+            ),
+          );
+        }
+
+        const referencedAsset = modelAssets.find(
+          (asset) => asset.assetId === annotation.modelAssetId,
+        );
+
+        if (!referencedAsset) {
+          errors.push(
+            `${path}.modelAssetId must reference an existing model asset`,
+          );
+          return;
+        }
+
+        const coordinateFrame = referencedAsset.coordinateFrame;
+
+        if (
+          !isObject(coordinateFrame) ||
+          coordinateFrame.convention !== "local-enu" ||
+          coordinateFrame.unit !== "meters" ||
+          coordinateFrame.origin !== "spatialAnchor"
+        ) {
+          errors.push(
+            `${path}.modelAssetId must reference an asset with a local-enu meter coordinate frame`,
           );
         }
       });

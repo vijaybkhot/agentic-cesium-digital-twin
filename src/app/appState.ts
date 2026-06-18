@@ -4,6 +4,7 @@ import type { MeasurementPointConfig, ProjectConfig } from "../types/projectConf
 export interface ProjectState {
   config: ProjectConfig | null;
   selectedPointId: string | null;
+  selectedModelAnnotationId: string | null;
   auditEvents: AuditEvent[];
   isLoading: boolean;
   error: string | null;

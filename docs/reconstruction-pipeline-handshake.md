@@ -50,9 +50,28 @@ This defines how the Cesium/config side can connect with an external NeRF/COLMAP
   "quality": {
     "status": "unknown",
     "notes": "Placeholder until reconstruction quality metrics are available."
+  },
+  "coordinateFrame": {
+    "convention": "local-enu",
+    "unit": "meters",
+    "origin": "spatialAnchor"
   }
 }
 ```
+
+## Coordinate Normalization
+
+Reconstruction providers should normalize model handoff metadata to:
+
+- meters
+- local east/right (`x`)
+- local north/forward (`y`)
+- local up (`z`)
+- a documented origin represented by `spatialAnchor`
+
+If a pipeline produces a different internal frame, it should convert the asset
+or provide the transform into this standard frame. This lets GLB and future 3D
+Tiles assets use the same model-local annotation contract.
 
 ## GLB vs 3D Tiles
 
@@ -66,5 +85,6 @@ The architecture should support both through `modelAssets` in config.
 
 - What format does the current reconstruction pipeline output?
 - Does the output have scale/orientation/location metadata?
+- Can the pipeline normalize scale, axes, and origin into local ENU meters?
 - Can output be converted to GLB or 3D Tiles?
 - Should Cesium load assets directly from local storage first or from cloud storage later?
