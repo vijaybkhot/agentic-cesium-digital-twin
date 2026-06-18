@@ -61,9 +61,49 @@
         "pitch": 0,
         "roll": 0
       },
+      "coordinateFrame": {
+        "convention": "local-enu",
+        "unit": "meters",
+        "origin": "spatialAnchor"
+      },
       "quality": {
         "status": "unknown",
         "notes": "Sample GLB used to validate config-driven model asset rendering."
+      }
+    }
+  ],
+  "modelAnnotations": [
+    {
+      "id": "truck-roof",
+      "modelAssetId": "mock-reconstruction-milk-truck",
+      "label": "Roof inspection",
+      "description": "Mock inspection point above the truck roof.",
+      "localPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 3
+      }
+    },
+    {
+      "id": "truck-front",
+      "modelAssetId": "mock-reconstruction-milk-truck",
+      "label": "Front inspection",
+      "description": "Mock inspection point near the front of the truck.",
+      "localPosition": {
+        "x": 3,
+        "y": 0,
+        "z": 0.8
+      }
+    },
+    {
+      "id": "truck-side",
+      "modelAssetId": "mock-reconstruction-milk-truck",
+      "label": "Side inspection",
+      "description": "Mock inspection point near the side service area.",
+      "localPosition": {
+        "x": 0,
+        "y": 1.75,
+        "z": 0.8
       }
     }
   ],

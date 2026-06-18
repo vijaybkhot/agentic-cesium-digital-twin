@@ -1,6 +1,9 @@
 import type { AuditEvent } from "../../types/audit";
 import type { BeliefState } from "../../types/belief";
-import type { MeasurementPointConfig } from "../../types/projectConfig";
+import type {
+  MeasurementPointConfig,
+  ModelAnnotationConfig,
+} from "../../types/projectConfig";
 
 function createId(): string {
   return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
@@ -17,6 +20,14 @@ export function createAuditEvent(message: string): AuditEvent {
 export function createSelectionLog(point: MeasurementPointConfig): AuditEvent {
   return createAuditEvent(
     `Selected ${point.id} (${point.name}) with belief ${point.belief}.`,
+  );
+}
+
+export function createModelAnnotationSelectionLog(
+  annotation: ModelAnnotationConfig,
+): AuditEvent {
+  return createAuditEvent(
+    `Selected model annotation ${annotation.id} (${annotation.label}) on ${annotation.modelAssetId}.`,
   );
 }
 

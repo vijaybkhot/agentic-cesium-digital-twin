@@ -1,37 +1,45 @@
 import { useEffect, useRef } from "react";
 import { CesiumViewerAdapter } from "../../adapters/viewer/CesiumViewerAdapter";
-import type { ViewerAdapter } from "../../ports/ViewerAdapter";
+import type {
+  ViewerAdapter,
+  ViewerSelection,
+} from "../../ports/ViewerAdapter";
 import type { ProjectConfig } from "../../types/projectConfig";
 
 interface CesiumSceneProps {
   config: ProjectConfig;
-  onMeasurementPointSelected: (pointId: string) => void;
+  onEntitySelected: (selection: ViewerSelection) => void;
   createViewerAdapter?: (
-    onMeasurementPointSelected: (pointId: string) => void,
+    onEntitySelected: (selection: ViewerSelection) => void,
   ) => ViewerAdapter;
+}
+
+function createDefaultViewerAdapter(
+  selectionHandler: (selection: ViewerSelection) => void,
+): ViewerAdapter {
+  return new CesiumViewerAdapter(selectionHandler);
 }
 
 export function CesiumScene({
   config,
-  onMeasurementPointSelected,
-  createViewerAdapter = (selectionHandler) =>
-    new CesiumViewerAdapter(selectionHandler),
+  onEntitySelected,
+  createViewerAdapter = createDefaultViewerAdapter,
 }: CesiumSceneProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const adapterRef = useRef<ViewerAdapter | null>(null);
-  const selectionHandlerRef = useRef(onMeasurementPointSelected);
+  const selectionHandlerRef = useRef(onEntitySelected);
 
   useEffect(() => {
-    selectionHandlerRef.current = onMeasurementPointSelected;
-  }, [onMeasurementPointSelected]);
+    selectionHandlerRef.current = onEntitySelected;
+  }, [onEntitySelected]);
 
   useEffect(() => {
     if (!containerRef.current) {
       return;
     }
 
-    const adapter = createViewerAdapter((pointId) =>
-      selectionHandlerRef.current(pointId),
+    const adapter = createViewerAdapter((selection) =>
+      selectionHandlerRef.current(selection),
     );
     adapter.initialize(containerRef.current, config);
     adapterRef.current = adapter;

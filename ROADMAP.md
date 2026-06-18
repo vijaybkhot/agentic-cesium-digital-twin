@@ -23,6 +23,7 @@
 ## POC 3: Reconstruction Integration
 
 - POC 3A: Render a local GLB model asset from `project_config.json`.
+- POC 3B: Add model-local inspection annotations using standardized ENU coordinates.
 - Add reconstruction job orchestration.
 - Implement a real `ReconstructionProvider`.
 - Visualize reconstruction outputs as tilesets/models in Cesium.
