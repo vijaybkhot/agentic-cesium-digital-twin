@@ -54,7 +54,11 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     createFacilityBuilding(this.viewer, config.facility);
     createFacilityBoundary(this.viewer, config.facility);
 
-    config.modelAssets?.forEach((asset) => {
+    const modelAssetsById = new Map(
+      config.modelAssets?.map((asset) => [asset.assetId, asset]) ?? [],
+    );
+
+    modelAssetsById.forEach((asset) => {
       const entity = createModelAssetEntity(this.viewer!, asset);
 
       if (entity) {
@@ -63,9 +67,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     });
 
     config.modelAnnotations?.forEach((annotation) => {
-      const asset = config.modelAssets?.find(
-        (candidate) => candidate.assetId === annotation.modelAssetId,
-      );
+      const asset = modelAssetsById.get(annotation.modelAssetId);
 
       if (!asset || asset.assetType !== "glb" || asset.status !== "ready") {
         return;
