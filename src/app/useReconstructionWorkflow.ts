@@ -70,11 +70,16 @@ export function useReconstructionWorkflow() {
     validLatitude !== null && validLongitude !== null;
 
   useEffect(() => {
-    if (
-      step !== "setup" ||
-      validLatitude === null ||
-      validLongitude === null
-    ) {
+    if (step !== "setup") {
+      return;
+    }
+
+    if (validLatitude === null || validLongitude === null) {
+      setConfig((currentConfig) =>
+        currentConfig.siteMarker
+          ? { ...currentConfig, siteMarker: undefined }
+          : currentConfig,
+      );
       return;
     }
 

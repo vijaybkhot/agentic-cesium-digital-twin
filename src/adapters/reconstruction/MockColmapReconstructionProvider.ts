@@ -5,9 +5,11 @@ import type {
   ReconstructionRequest,
   ReconstructionStatus,
 } from "../../types/reconstruction";
+import type { SpatialAnchor } from "../../types/projectConfig";
 
 interface MockJobRecord {
-  request: ReconstructionRequest;
+  projectId: string;
+  siteAnchor: SpatialAnchor;
   startedAt: number;
 }
 
@@ -18,14 +20,16 @@ export class MockColmapReconstructionProvider
   implements ReconstructionProvider
 {
   private readonly jobs = new Map<string, MockJobRecord>();
+  private fallbackJobSequence = 0;
 
   async startReconstruction(
     request: ReconstructionRequest,
   ): Promise<ReconstructionJob> {
-    const jobId = `mock-colmap-${Date.now()}`;
+    const jobId = this.createJobId();
 
     this.jobs.set(jobId, {
-      request,
+      projectId: request.projectId,
+      siteAnchor: { ...request.siteAnchor },
       startedAt: Date.now(),
     });
 
@@ -65,14 +69,14 @@ export class MockColmapReconstructionProvider
 
     return {
       jobId,
-      projectId: job.request.projectId,
+      projectId: job.projectId,
       asset: {
-        assetId: `${job.request.projectId}-mock-colmap-model`,
+        assetId: `${job.projectId}-mock-colmap-model`,
         assetType: "glb",
         assetUrl: "/models/CesiumMilkTruck.glb",
         sourcePipeline: "mock-colmap",
         status: "ready",
-        spatialAnchor: job.request.siteAnchor,
+        spatialAnchor: job.siteAnchor,
         scale: 2,
         orientation: {
           heading: 90,
@@ -101,5 +105,14 @@ export class MockColmapReconstructionProvider
     }
 
     return job;
+  }
+
+  private createJobId(): string {
+    if (typeof globalThis.crypto?.randomUUID === "function") {
+      return `mock-colmap-${globalThis.crypto.randomUUID()}`;
+    }
+
+    this.fallbackJobSequence += 1;
+    return `mock-colmap-${Date.now()}-${this.fallbackJobSequence}`;
   }
 }
