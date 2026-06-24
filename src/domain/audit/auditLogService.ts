@@ -25,7 +25,14 @@ export function createSelectionLog(point: MeasurementPointConfig): AuditEvent {
 
 export function createModelAnnotationSelectionLog(
   annotation: ModelAnnotationConfig,
+  linkedPoint?: MeasurementPointConfig | null,
 ): AuditEvent {
+  if (linkedPoint) {
+    return createAuditEvent(
+      `Selected model annotation ${annotation.id} (${annotation.label}) linked to ${linkedPoint.id} (${linkedPoint.name}) with belief ${linkedPoint.belief}.`,
+    );
+  }
+
   return createAuditEvent(
     `Selected model annotation ${annotation.id} (${annotation.label}) on ${annotation.modelAssetId}.`,
   );

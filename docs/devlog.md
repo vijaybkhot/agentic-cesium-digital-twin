@@ -2,6 +2,12 @@
 
 ## 2026-06-24
 
+- Added POC 4E model-linked sensors for existing demo annotations.
+- Linked milk-truck annotation points to existing measurement points.
+- Reused current measurement editing, belief recalculation, manual override, recommendation, and audit log behavior for linked model annotations.
+- Highlighted the selected measurement point or model annotation in the Cesium scene.
+- Added linked sensor readings to model annotation labels.
+- Kept this version limited to existing measurement points; no generic sensor-type engine was added.
 - Added POC 4A reconstruction handoff contract documentation.
 - Added example reconstruction request, status, output, and error JSON payloads.
 - Documented questions for Ehsan about input format, output format, scale, orientation, location, and job status.

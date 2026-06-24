@@ -22,6 +22,7 @@ This version demonstrates the Cesium visualization and interaction layer. It is 
 - Browser-only image intake panel with rule-based mock reconstruction readiness feedback
 - Config-driven GLB model asset rendering
 - Clickable model-local inspection annotations
+- Model annotations linked to existing sensor/measurement data
 - Browser-only project setup and mock COLMAP reconstruction workflow
 - Reconstruction handoff contract examples for future pipeline integration
 
@@ -130,6 +131,7 @@ Completed:
 - Browser-only image intake and rule-based readiness assessment
 - Local GLB model asset rendering from config
 - Model-local inspection annotations using standardized ENU coordinates
+- Model-linked sensors that reuse existing measurement editing controls
 - Browser-only mock COLMAP workflow from project setup to model display
 - POC 4A reconstruction handoff contract for discussion with the reconstruction pipeline owner
 
@@ -164,6 +166,7 @@ They are discussion artifacts only; they are not implemented runtime features.
 - POC 2A: Browser-only image intake and mock readiness assessment
 - POC 3A: Render local GLB model assets from config
 - POC 3B: Attach inspection annotations to model assets
+- POC 4E: Link model annotations to existing sensor measurements
 - POC 3D: Browser-only mock COLMAP reconstruction workflow
 - POC 4A: Reconstruction handoff contract and examples
 - POC 3: 3D reconstruction integration
@@ -171,8 +174,9 @@ They are discussion artifacts only; they are not implemented runtime features.
 
 The current codebase includes the POC 1 viewer, POC 2A image readiness review,
 POC 3A/3B model rendering and annotations, and the POC 3D mock reconstruction
-workflow. POC 4A documents the proposed real reconstruction handoff, but a real
-reconstruction service is not connected.
+workflow. POC 4E links model annotations to existing measurement data. POC 4A
+documents the proposed real reconstruction handoff, but a real reconstruction
+service is not connected.
 
 ## Research Direction
 
@@ -231,6 +235,7 @@ docs/
   poc-3b-model-local-annotations.md       POC 3B model annotation notes
   poc-3d-mock-colmap-workflow.md          POC 3D run and test notes
   poc-4a-reconstruction-handoff-contract.md  POC 4A pipeline handoff contract
+  poc-4e-model-linked-sensors.md          POC 4E model-linked sensor notes
   ai-intake-assistant-scope.md            AI intake assistant scope notes
   reconstruction-pipeline-handshake.md    Reconstruction pipeline integration notes
   project-config-schema.md   Project configuration schema notes

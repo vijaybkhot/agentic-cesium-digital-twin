@@ -24,8 +24,11 @@ export function AppShell() {
   const {
     config,
     selectedPoint,
+    selectedPointId,
     selectedModelAnnotation,
+    selectedModelAnnotationId,
     selectedModelAsset,
+    selectedLinkedMeasurementPoint,
     auditEvents,
     isLoading,
     error,
@@ -169,6 +172,12 @@ export function AppShell() {
           focusModelVersion={
             mode === "workflow" ? workflow.focusModelVersion : 0
           }
+          selectedMeasurementPointId={
+            mode === "existing-demo" ? selectedPointId : null
+          }
+          selectedModelAnnotationId={
+            mode === "existing-demo" ? selectedModelAnnotationId : null
+          }
           onEntitySelected={(selection) => {
             if (
               mode === "workflow" &&
@@ -244,6 +253,7 @@ export function AppShell() {
             selectedPoint={selectedPoint}
             selectedModelAnnotation={selectedModelAnnotation}
             selectedModelAsset={selectedModelAsset}
+            selectedLinkedMeasurementPoint={selectedLinkedMeasurementPoint}
             beliefRules={config?.beliefRules ?? null}
             auditEvents={auditEvents}
             isVisible={isPanelVisible}

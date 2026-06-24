@@ -10,6 +10,8 @@ interface CesiumSceneProps {
   config: ProjectConfig;
   onEntitySelected: (selection: ViewerSelection) => void;
   locationPickEnabled?: boolean;
+  selectedMeasurementPointId?: string | null;
+  selectedModelAnnotationId?: string | null;
   focusProjectVersion?: number;
   focusModelAssetId?: string | null;
   focusModelVersion?: number;
@@ -28,6 +30,8 @@ export function CesiumScene({
   config,
   onEntitySelected,
   locationPickEnabled = false,
+  selectedMeasurementPointId = null,
+  selectedModelAnnotationId = null,
   focusProjectVersion = 0,
   focusModelAssetId = null,
   focusModelVersion = 0,
@@ -76,11 +80,19 @@ export function CesiumScene({
     config.siteMarker,
     config.modelAssets,
     config.modelAnnotations,
+    config.measurementPoints,
   ]);
 
   useEffect(() => {
     adapterRef.current?.setLocationPickMode(locationPickEnabled);
   }, [locationPickEnabled]);
+
+  useEffect(() => {
+    adapterRef.current?.setSelectedEntityIds({
+      measurementPointId: selectedMeasurementPointId,
+      modelAnnotationId: selectedModelAnnotationId,
+    });
+  }, [selectedMeasurementPointId, selectedModelAnnotationId]);
 
   useEffect(() => {
     if (focusProjectVersion > 0) {

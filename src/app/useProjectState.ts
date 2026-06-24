@@ -104,6 +104,18 @@ export function useProjectState() {
     );
   }, [config, selectedModelAnnotation]);
 
+  const selectedLinkedMeasurementPoint = useMemo(() => {
+    if (!config || !selectedModelAnnotation?.measurementPointId) {
+      return null;
+    }
+
+    return (
+      config.measurementPoints.find(
+        (point) => point.id === selectedModelAnnotation.measurementPointId,
+      ) ?? null
+    );
+  }, [config, selectedModelAnnotation]);
+
   const prependAuditEvent = useCallback((event: AuditEvent) => {
     setAuditEvents((currentEvents) => [event, ...currentEvents]);
   }, []);
@@ -143,9 +155,15 @@ export function useProjectState() {
         return;
       }
 
+      const linkedPoint = annotation.measurementPointId
+        ? config.measurementPoints.find(
+            (point) => point.id === annotation.measurementPointId,
+          ) ?? null
+        : null;
+
       setSelectedPointId(null);
       setSelectedModelAnnotationId(annotationId);
-      prependAuditEvent(createModelAnnotationSelectionLog(annotation));
+      prependAuditEvent(createModelAnnotationSelectionLog(annotation, linkedPoint));
     },
     [config, prependAuditEvent],
   );
@@ -231,6 +249,7 @@ export function useProjectState() {
     selectedModelAnnotation,
     selectedModelAnnotationId,
     selectedModelAsset,
+    selectedLinkedMeasurementPoint,
     auditEvents,
     isLoading,
     error,

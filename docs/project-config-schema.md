@@ -103,6 +103,7 @@ Each annotation includes:
 
 - `id`: Unique annotation identifier.
 - `modelAssetId`: ID of the related model asset.
+- `measurementPointId`: Optional ID of a linked measurement point.
 - `label`: Human-readable marker label.
 - `description`: Optional inspection note.
 - `localPosition`: Local `x`, `y`, and `z` offsets.
@@ -120,6 +121,10 @@ The referenced asset must declare:
 The local axes mean east/right, north/forward, and up. The viewer applies asset
 scale and orientation before translating the marker to the asset's geographic
 anchor.
+
+If `measurementPointId` is provided, it must reference an existing
+`measurementPoints[].id`. The side panel then shows the linked sensor readings
+and reuses the existing measurement editing behavior.
 
 ## Trying Config Changes Locally
 

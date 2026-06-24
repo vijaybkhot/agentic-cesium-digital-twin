@@ -76,6 +76,7 @@
     {
       "id": "truck-roof",
       "modelAssetId": "mock-reconstruction-milk-truck",
+      "measurementPointId": "MP-01",
       "label": "Roof inspection",
       "description": "Mock inspection point above the truck roof.",
       "localPosition": {
@@ -87,6 +88,7 @@
     {
       "id": "truck-front",
       "modelAssetId": "mock-reconstruction-milk-truck",
+      "measurementPointId": "MP-02",
       "label": "Front inspection",
       "description": "Mock inspection point near the front of the truck.",
       "localPosition": {
@@ -98,6 +100,7 @@
     {
       "id": "truck-side",
       "modelAssetId": "mock-reconstruction-milk-truck",
+      "measurementPointId": "MP-03",
       "label": "Side inspection",
       "description": "Mock inspection point near the side service area.",
       "localPosition": {

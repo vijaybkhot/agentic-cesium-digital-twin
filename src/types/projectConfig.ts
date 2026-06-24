@@ -146,6 +146,7 @@ export interface LocalModelPosition {
 export interface ModelAnnotationConfig {
   id: string;
   modelAssetId: string;
+  measurementPointId?: string;
   label: string;
   description?: string;
   localPosition: LocalModelPosition;
