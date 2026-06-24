@@ -22,6 +22,8 @@ This version demonstrates the Cesium visualization and interaction layer. It is 
 - Browser-only image intake panel with rule-based mock reconstruction readiness feedback
 - Config-driven GLB model asset rendering
 - Clickable model-local inspection annotations
+- Browser-only project setup and mock COLMAP reconstruction workflow
+- Reconstruction handoff contract examples for future pipeline integration
 
 ## Why This Matters
 
@@ -83,7 +85,14 @@ Open the local URL printed by Vite, usually:
 http://localhost:5173/
 ```
 
-In the browser, the Cesium viewer should show the mock facility area with the building, controlled-area boundary, and three measurement points. Select a measurement point to open the side panel, edit mock readings, apply belief overrides, and review the audit log.
+The app starts with the POC 3D project setup workflow. Create a project by
+typing a site location or selecting one on the globe, review local images, and
+run the mock reconstruction. The GLB appears only when the simulated job
+completes.
+
+Select `Open existing demo` to load `public/project_config.json` and use the
+facility, measurement, belief-state, image intake, GLB, and annotation features
+from the earlier POCs.
 
 Build the project:
 
@@ -99,7 +108,10 @@ npm run preview
 
 Cesium static assets are handled through `vite.config.js` using `vite-plugin-static-copy`. The config copies Cesium `ThirdParty`, `Workers`, `Assets`, and `Widgets` files from `node_modules/cesium/Build/Cesium` into the Vite-served static asset path.
 
-During local development, the app reads mock project data from `public/project_config.json`. To demo the config-driven workflow, edit values such as `projectName`, facility coordinates, boundary coordinates, measurement point readings, or belief thresholds in that JSON file, then refresh the browser to reload the configuration and see the updated viewer state.
+During local development, `public/project_config.json` is loaded only when
+`Open existing demo` is selected. To test config changes, edit values such as
+`projectName`, facility coordinates, boundary coordinates, measurement point
+readings, or belief thresholds, refresh the browser, and open the existing demo.
 
 ## Current Project Status
 
@@ -115,16 +127,18 @@ Completed:
 - Audit log
 - Early static mock `project_config.json` loading
 - Initial React/TypeScript ports-and-adapters structure
+- Browser-only image intake and rule-based readiness assessment
+- Local GLB model asset rendering from config
+- Model-local inspection annotations using standardized ENU coordinates
+- Browser-only mock COLMAP workflow from project setup to model display
+- POC 4A reconstruction handoff contract for discussion with the reconstruction pipeline owner
 
 In progress / planned:
 
 - More complete and validated config-driven `project_config.json`
 - Agent-assisted project configuration
-- Image intake and audit
-- Browser-only image intake and mock readiness assessment
-- Local GLB model asset rendering from `project_config.json`
-- Model-local inspection annotations using standardized ENU coordinates
-- Reconstruction pipeline integration
+- Image intake audit and EXIF/GPS inspection
+- Real reconstruction pipeline integration
 - Support for GLB / 3D Tiles output
 - Backend services
 
@@ -132,6 +146,9 @@ Future contract examples:
 
 - `docs/poc-1-config-driven-viewer.md`
 - `docs/poc-2a-image-intake.md`
+- `docs/poc-4a-reconstruction-handoff-contract.md`
+- `docs/examples/reconstruction_request.example.json`
+- `docs/examples/reconstruction_output.example.json`
 - `docs/examples/project_config.future.example.json`
 - `docs/ai-intake-assistant-scope.md`
 - `docs/reconstruction-pipeline-handshake.md`
@@ -147,10 +164,15 @@ They are discussion artifacts only; they are not implemented runtime features.
 - POC 2A: Browser-only image intake and mock readiness assessment
 - POC 3A: Render local GLB model assets from config
 - POC 3B: Attach inspection annotations to model assets
+- POC 3D: Browser-only mock COLMAP reconstruction workflow
+- POC 4A: Reconstruction handoff contract and examples
 - POC 3: 3D reconstruction integration
 - POC 4: Research extensions such as uncertainty, multi-digital-twin interaction, and decision support
 
-The current codebase is between POC 0 and POC 1: the decision-support viewer exists, and an initial static mock `project_config.json` loading path is already present.
+The current codebase includes the POC 1 viewer, POC 2A image readiness review,
+POC 3A/3B model rendering and annotations, and the POC 3D mock reconstruction
+workflow. POC 4A documents the proposed real reconstruction handoff, but a real
+reconstruction service is not connected.
 
 ## Research Direction
 
@@ -176,6 +198,7 @@ These are intended research directions, not claims about completed system capabi
 - No real image upload yet
 - No real LLM agent yet
 - No real 3D reconstruction pipeline yet
+- Mock reconstruction uses browser timers and a bundled sample GLB
 - Image intake readiness is rule-based and local-only
 - No persisted state yet
 - Not a production decommissioning system
@@ -206,6 +229,8 @@ docs/
   poc-2a-image-intake.md                  POC 2A run and test notes
   poc-3a-glb-model-assets.md              POC 3A GLB model asset notes
   poc-3b-model-local-annotations.md       POC 3B model annotation notes
+  poc-3d-mock-colmap-workflow.md          POC 3D run and test notes
+  poc-4a-reconstruction-handoff-contract.md  POC 4A pipeline handoff contract
   ai-intake-assistant-scope.md            AI intake assistant scope notes
   reconstruction-pipeline-handshake.md    Reconstruction pipeline integration notes
   project-config-schema.md   Project configuration schema notes

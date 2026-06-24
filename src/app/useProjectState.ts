@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { createProjectConfigRepository } from "../config/loadProjectConfig";
 import {
   createAuditEvent,
@@ -27,27 +27,46 @@ export function useProjectState() {
   const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([
     createAuditEvent("Application started. Waiting for user selection."),
   ]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const loadExistingDemo = useCallback(async () => {
     const repository = createProjectConfigRepository();
 
-    repository
-      .loadProjectConfig()
-      .then((loadedConfig) => {
-        setConfig(normalizeProjectConfig(loadedConfig));
-        setError(null);
-      })
-      .catch((loadError: unknown) => {
-        const message =
-          loadError instanceof Error
-            ? loadError.message
-            : "Unknown project config load error.";
-        console.error(message);
-        setError(message);
-      })
-      .finally(() => setIsLoading(false));
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const loadedConfig = await repository.loadProjectConfig();
+
+      setConfig(normalizeProjectConfig(loadedConfig));
+      setSelectedPointId(null);
+      setSelectedModelAnnotationId(null);
+      setAuditEvents([
+        createAuditEvent("Existing demonstration project loaded."),
+      ]);
+    } catch (loadError: unknown) {
+      const message =
+        loadError instanceof Error
+          ? loadError.message
+          : "Unknown project config load error.";
+      console.error(message);
+      setError(message);
+      throw loadError;
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const clearProject = useCallback(() => {
+    setConfig(null);
+    setSelectedPointId(null);
+    setSelectedModelAnnotationId(null);
+    setAuditEvents([
+      createAuditEvent("Application started. Waiting for user selection."),
+    ]);
+    setError(null);
+    setIsLoading(false);
   }, []);
 
   const selectedPoint = useMemo(() => {
@@ -220,5 +239,7 @@ export function useProjectState() {
     clearSelection,
     applyMeasurementUpdate,
     applyManualOverride,
+    loadExistingDemo,
+    clearProject,
   };
 }

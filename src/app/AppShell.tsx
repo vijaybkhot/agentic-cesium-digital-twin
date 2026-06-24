@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CesiumScene } from "../components/CesiumScene/CesiumScene";
 import { ImageIntakePanel } from "../components/ImageIntakePanel/ImageIntakePanel";
+import { ReconstructionWorkflowPanel } from "../components/ReconstructionWorkflowPanel/ReconstructionWorkflowPanel";
 import { SidePanel } from "../components/SidePanel/SidePanel";
 import { StatusPanel } from "../components/StatusPanel/StatusPanel";
 import { Toolbar } from "../components/Toolbar/Toolbar";
 import { useProjectState } from "./useProjectState";
+import { useReconstructionWorkflow } from "./useReconstructionWorkflow";
+
+type ApplicationMode = "workflow" | "existing-demo";
 
 interface DragState {
   active: boolean;
@@ -30,7 +34,10 @@ export function AppShell() {
     clearSelection,
     applyMeasurementUpdate,
     applyManualOverride,
+    loadExistingDemo,
+    clearProject,
   } = useProjectState();
+  const workflow = useReconstructionWorkflow();
   const panelRef = useRef<HTMLElement | null>(null);
   const dragStateRef = useRef<DragState>({
     active: false,
@@ -38,6 +45,7 @@ export function AppShell() {
     offsetY: 0,
   });
   const [isPanelVisible, setIsPanelVisible] = useState(true);
+  const [mode, setMode] = useState<ApplicationMode>("workflow");
 
   const placePanel = useCallback((left: number, top: number) => {
     const panel = panelRef.current;
@@ -122,56 +130,137 @@ export function AppShell() {
     event.preventDefault();
   }
 
+  const openExistingDemo = useCallback(async () => {
+    try {
+      await loadExistingDemo();
+      setMode("existing-demo");
+      setIsPanelVisible(true);
+    } catch {
+      // The visible status panel displays the repository error.
+    }
+  }, [loadExistingDemo]);
+
+  const startNewProject = useCallback(() => {
+    clearProject();
+    workflow.resetWorkflow();
+    setMode("workflow");
+    setIsPanelVisible(true);
+  }, [clearProject, workflow.resetWorkflow]);
+
+  const activeConfig =
+    mode === "existing-demo" ? config : workflow.config;
+
   return (
     <div className="app-shell">
-      {config && (
+      {activeConfig && (
         <CesiumScene
-          config={config}
+          config={activeConfig}
+          locationPickEnabled={
+            mode === "workflow" && workflow.locationPickEnabled
+          }
+          focusProjectVersion={
+            mode === "workflow" ? workflow.focusProjectVersion : 0
+          }
+          focusModelAssetId={
+            mode === "workflow"
+              ? workflow.config.modelAssets?.[0]?.assetId ?? null
+              : null
+          }
+          focusModelVersion={
+            mode === "workflow" ? workflow.focusModelVersion : 0
+          }
           onEntitySelected={(selection) => {
+            if (
+              mode === "workflow" &&
+              selection.type === "globeLocation"
+            ) {
+              workflow.setPickedLocation(selection.lat, selection.lon);
+              return;
+            }
+
+            if (mode !== "existing-demo") {
+              return;
+            }
+
             setIsPanelVisible(true);
 
             if (selection.type === "measurementPoint") {
               selectPoint(selection.id);
-            } else {
+            } else if (selection.type === "modelAnnotation") {
               selectModelAnnotation(selection.id);
             }
           }}
         />
       )}
-      <Toolbar config={config} />
+      <Toolbar config={activeConfig} />
       <StatusPanel isLoading={isLoading} error={error} />
-      <ImageIntakePanel
-        hasProjectLocation={
-          Number.isFinite(config?.scene.center.lat) &&
-          Number.isFinite(config?.scene.center.lon)
-        }
-      />
-      <button
-        className={`floating-button ${isPanelVisible ? "" : "is-visible"}`}
-        type="button"
-        onClick={() => setIsPanelVisible(true)}
-      >
-        Show panel
-      </button>
-      <SidePanel
-        project={config}
-        selectedPoint={selectedPoint}
-        selectedModelAnnotation={selectedModelAnnotation}
-        selectedModelAsset={selectedModelAsset}
-        beliefRules={config?.beliefRules ?? null}
-        auditEvents={auditEvents}
-        isVisible={isPanelVisible}
-        onHide={() => setIsPanelVisible(false)}
-        onClearSelection={clearSelection}
-        onResetPosition={() => {
-          setIsPanelVisible(true);
-          resetPanelPosition();
-        }}
-        onApplyMeasurementUpdate={applyMeasurementUpdate}
-        onApplyManualOverride={applyManualOverride}
-        panelRef={panelRef}
-        onPanelPointerDown={handlePanelPointerDown}
-      />
+      {mode === "workflow" ? (
+        <ReconstructionWorkflowPanel
+          step={workflow.step}
+          projectName={workflow.projectName}
+          description={workflow.description}
+          latitude={workflow.latitude}
+          longitude={workflow.longitude}
+          config={workflow.config}
+          review={workflow.review}
+          job={workflow.job}
+          error={workflow.error}
+          locationPickEnabled={workflow.locationPickEnabled}
+          hasValidLocation={workflow.hasValidLocation}
+          canStartReconstruction={workflow.canStartReconstruction}
+          imageIntakeVersion={workflow.imageIntakeVersion}
+          onProjectNameChange={workflow.setProjectName}
+          onDescriptionChange={workflow.setDescription}
+          onLatitudeChange={workflow.setLatitude}
+          onLongitudeChange={workflow.setLongitude}
+          onStartLocationPick={workflow.startLocationPick}
+          onCancelLocationPick={workflow.cancelLocationPick}
+          onViewTypedLocation={workflow.viewTypedLocation}
+          onCreateProject={workflow.createProject}
+          onImageSelectionChange={workflow.handleImageSelection}
+          onStartReconstruction={() => void workflow.startReconstruction()}
+          onResetWorkflow={workflow.resetWorkflow}
+          onOpenExistingDemo={() => void openExistingDemo()}
+        />
+      ) : (
+        <>
+          <ImageIntakePanel
+            hasProjectLocation={
+              Number.isFinite(config?.scene.center.lat) &&
+              Number.isFinite(config?.scene.center.lon)
+            }
+          />
+          <button
+            className={`floating-button ${
+              isPanelVisible ? "" : "is-visible"
+            }`}
+            type="button"
+            onClick={() => setIsPanelVisible(true)}
+          >
+            Show panel
+          </button>
+          <SidePanel
+            project={config}
+            selectedPoint={selectedPoint}
+            selectedModelAnnotation={selectedModelAnnotation}
+            selectedModelAsset={selectedModelAsset}
+            beliefRules={config?.beliefRules ?? null}
+            auditEvents={auditEvents}
+            isVisible={isPanelVisible}
+            onHide={() => setIsPanelVisible(false)}
+            onNewProject={startNewProject}
+            onClearSelection={clearSelection}
+            onResetPosition={() => {
+              setIsPanelVisible(true);
+              resetPanelPosition();
+            }}
+            onApplyMeasurementUpdate={applyMeasurementUpdate}
+            onApplyManualOverride={applyManualOverride}
+            panelRef={panelRef}
+            onPanelPointerDown={handlePanelPointerDown}
+          />
+        </>
+      )}
     </div>
   );
 }

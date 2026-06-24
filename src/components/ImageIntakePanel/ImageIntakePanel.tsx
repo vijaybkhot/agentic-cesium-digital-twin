@@ -10,6 +10,11 @@ import "./ImageIntakePanel.css";
 
 interface ImageIntakePanelProps {
   hasProjectLocation?: boolean;
+  variant?: "floating" | "embedded";
+  onSelectionChange?: (
+    files: File[],
+    review: ImageIntakeReview | null,
+  ) => void;
 }
 
 function formatBytes(bytes: number): string {
@@ -36,6 +41,8 @@ function formatStatus(status: ImageReadinessStatus): string {
 
 export function ImageIntakePanel({
   hasProjectLocation = false,
+  variant = "floating",
+  onSelectionChange,
 }: ImageIntakePanelProps) {
   const [review, setReview] = useState<ImageIntakeReview | null>(null);
   const [isInspecting, setIsInspecting] = useState(false);
@@ -74,6 +81,7 @@ export function ImageIntakePanel({
 
       if (inspectionRequestIdRef.current === requestId) {
         setReview(nextReview);
+        onSelectionChange?.(files, nextReview);
       }
     } catch (nextError) {
       if (inspectionRequestIdRef.current === requestId) {
@@ -82,6 +90,7 @@ export function ImageIntakePanel({
             ? nextError.message
             : "Image intake failed unexpectedly.",
         );
+        onSelectionChange?.(files, null);
       }
     } finally {
       if (inspectionRequestIdRef.current === requestId) {
@@ -95,6 +104,7 @@ export function ImageIntakePanel({
     setReview(null);
     setError(null);
     setIsInspecting(false);
+    onSelectionChange?.([], null);
 
     if (inputRef.current) {
       inputRef.current.value = "";
@@ -103,7 +113,9 @@ export function ImageIntakePanel({
 
   return (
     <aside
-      className={`image-intake-panel ${isCollapsed ? "is-collapsed" : ""}`}
+      className={`image-intake-panel image-intake-${variant} ${
+        isCollapsed ? "is-collapsed" : ""
+      }`}
     >
       <div className="image-intake-header">
         <div>
@@ -111,13 +123,15 @@ export function ImageIntakePanel({
           <h2>Image Intake / Mock Assistant</h2>
         </div>
         <div className="image-intake-actions">
-          <button
-            className="panel-button"
-            type="button"
-            onClick={() => setIsCollapsed((currentValue) => !currentValue)}
-          >
-            {isCollapsed ? "Show" : "Hide"}
-          </button>
+          {variant === "floating" && (
+            <button
+              className="panel-button"
+              type="button"
+              onClick={() => setIsCollapsed((currentValue) => !currentValue)}
+            >
+              {isCollapsed ? "Show" : "Hide"}
+            </button>
+          )}
           <button
             className="panel-button"
             type="button"

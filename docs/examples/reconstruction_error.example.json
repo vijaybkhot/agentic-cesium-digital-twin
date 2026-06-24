@@ -1,0 +1,11 @@
+{
+  "jobId": "recon-job-001",
+  "projectId": "gerrard-hall-test",
+  "status": "failed",
+  "progressMessage": "Reconstruction failed because the image set did not have enough overlapping features.",
+  "error": {
+    "code": "INSUFFICIENT_IMAGE_OVERLAP",
+    "message": "The pipeline could not match enough images to estimate stable camera positions.",
+    "recommendedAction": "Capture additional images with more overlap and more views around corners and hidden surfaces."
+  }
+}

@@ -2,7 +2,21 @@
 
 ## Overview
 
-The viewer is now config-driven. A `ProjectConfig` describes the scene center, camera, facility building, facility boundary, belief rules, measurement points, and annotations. The React app loads this config and passes it through a small application state layer into a Cesium adapter.
+The viewer is config-driven. A `ProjectConfig` describes the scene center,
+camera, optional site marker and facility, belief rules, measurement points,
+model assets, and annotations. The React app passes either a static demo config
+or an in-memory workflow config through the same Cesium adapter.
+
+## Application Modes
+
+- New-project workflow: starts with a globe and setup panel, then adds a site
+  marker and finally a returned model asset.
+- Existing demo: loads `public/project_config.json` and preserves the facility,
+  measurement, image intake, belief-state, model, and annotation features.
+
+The mock reconstruction provider follows the same port intended for a future
+backend provider. Its timers and sample GLB can be replaced without changing
+Cesium rendering.
 
 ## Why Config-Driven
 
@@ -22,6 +36,8 @@ Adapters implement these interfaces:
 - `StaticJsonProjectConfigRepository` loads `/project_config.json`.
 - `MockAgentProvider` prepares the future agent boundary without calling a real model.
 - `CesiumViewerAdapter` owns the Cesium viewer instance.
+- `MockColmapReconstructionProvider` simulates queued, running, and completed
+  reconstruction states and returns a typed model asset.
 
 ## Cesium Isolation
 

@@ -4,6 +4,14 @@
 
 This defines how the Cesium/config side can connect with an external NeRF/COLMAP/image-to-3D reconstruction pipeline without tightly coupling the systems. The goal is a small shared contract: the intake side prepares project data and consumes model asset references; the reconstruction side produces model assets and metadata.
 
+POC 3D now exercises this boundary with a browser-only
+`MockColmapReconstructionProvider`. It accepts a typed request, reports
+`queued`, `running`, and `completed` states, and returns the bundled milk-truck
+GLB. It does not execute COLMAP or transfer files.
+
+POC 4A expands this into a more complete discussion contract for the real
+pipeline handoff. See `docs/poc-4a-reconstruction-handoff-contract.md`.
+
 ## Responsibilities
 
 ### Cesium / Agent Intake Side
@@ -22,6 +30,21 @@ This defines how the Cesium/config side can connect with an external NeRF/COLMAP
 - generate model asset
 - provide output path/URL and metadata
 
+## Request Lifecycle
+
+```text
+ReconstructionRequest
+-> startReconstruction
+-> poll getReconstructionStatus
+-> getReconstructionOutput
+-> add returned asset to ProjectConfig.modelAssets
+```
+
+A future backend adapter can replace the mock provider while preserving this
+application flow.
+
+Example request, status, output, and error payloads live in `docs/examples/`.
+
 ## Shared Output Contract
 
 ```json
@@ -34,27 +57,27 @@ This defines how the Cesium/config side can connect with an external NeRF/COLMAP
     "assetType": "3d-tiles",
     "assetUrl": "/tilesets/mock-dnd-facility/tileset.json",
     "sourcePipeline": "external-reconstruction-pipeline",
-    "createdAt": "2026-05-20"
-  },
-  "spatialAnchor": {
-    "lat": 40.03883,
-    "lon": -75.59777,
-    "height": 0
-  },
-  "orientation": {
-    "heading": 0,
-    "pitch": 0,
-    "roll": 0
-  },
-  "scale": 1,
-  "quality": {
-    "status": "unknown",
-    "notes": "Placeholder until reconstruction quality metrics are available."
-  },
-  "coordinateFrame": {
-    "convention": "local-enu",
-    "unit": "meters",
-    "origin": "spatialAnchor"
+    "status": "ready",
+    "spatialAnchor": {
+      "lat": 40.03883,
+      "lon": -75.59777,
+      "height": 0
+    },
+    "orientation": {
+      "heading": 0,
+      "pitch": 0,
+      "roll": 0
+    },
+    "scale": 1,
+    "quality": {
+      "status": "unknown",
+      "notes": "Placeholder until reconstruction quality metrics are available."
+    },
+    "coordinateFrame": {
+      "convention": "local-enu",
+      "unit": "meters",
+      "origin": "spatialAnchor"
+    }
   }
 }
 ```
