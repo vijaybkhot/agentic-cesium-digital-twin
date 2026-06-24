@@ -1,0 +1,33 @@
+{
+  "projectId": "gerrard-hall-test",
+  "projectName": "Gerrard Hall Test",
+  "siteAnchor": {
+    "lat": 40.038728,
+    "lon": -75.59772,
+    "height": 0
+  },
+  "imageSet": {
+    "imageSetId": "gerrard-hall-images-001",
+    "sourceType": "project-folder",
+    "sourceUri": "/project-data/gerrard-hall-test/images",
+    "imageCount": 100,
+    "totalSizeBytes": 866134016,
+    "averageWidth": 5616,
+    "averageHeight": 3744,
+    "hasGpsMetadata": false
+  },
+  "requestedOutput": {
+    "assetType": "glb",
+    "preferredFallbacks": ["3d-tiles", "mesh", "point-cloud"]
+  },
+  "coordinateFrame": {
+    "convention": "local-enu",
+    "unit": "meters",
+    "origin": "spatialAnchor"
+  },
+  "metadata": {
+    "requestedBy": "cesium-intake-poc",
+    "readinessStatus": "ready_for_initial_test",
+    "notes": "Browser intake checks passed. This example does not upload images."
+  }
+}

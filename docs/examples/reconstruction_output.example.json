@@ -1,0 +1,33 @@
+{
+  "jobId": "recon-job-001",
+  "projectId": "gerrard-hall-test",
+  "status": "completed",
+  "asset": {
+    "assetId": "gerrard-hall-test-reconstruction-001",
+    "assetType": "glb",
+    "assetUrl": "/models/gerrard-hall-test.glb",
+    "sourcePipeline": "external-colmap-pipeline",
+    "status": "ready",
+    "spatialAnchor": {
+      "lat": 40.038728,
+      "lon": -75.59772,
+      "height": 0
+    },
+    "scale": 1,
+    "orientation": {
+      "heading": 0,
+      "pitch": 0,
+      "roll": 0
+    },
+    "coordinateFrame": {
+      "convention": "local-enu",
+      "unit": "meters",
+      "origin": "spatialAnchor"
+    },
+    "quality": {
+      "status": "unknown",
+      "confidence": 0.6,
+      "notes": "Placeholder quality metadata until pipeline metrics are available."
+    }
+  }
+}

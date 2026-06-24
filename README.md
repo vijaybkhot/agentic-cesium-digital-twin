@@ -23,6 +23,7 @@ This version demonstrates the Cesium visualization and interaction layer. It is 
 - Config-driven GLB model asset rendering
 - Clickable model-local inspection annotations
 - Browser-only project setup and mock COLMAP reconstruction workflow
+- Reconstruction handoff contract examples for future pipeline integration
 
 ## Why This Matters
 
@@ -130,6 +131,7 @@ Completed:
 - Local GLB model asset rendering from config
 - Model-local inspection annotations using standardized ENU coordinates
 - Browser-only mock COLMAP workflow from project setup to model display
+- POC 4A reconstruction handoff contract for discussion with the reconstruction pipeline owner
 
 In progress / planned:
 
@@ -144,6 +146,9 @@ Future contract examples:
 
 - `docs/poc-1-config-driven-viewer.md`
 - `docs/poc-2a-image-intake.md`
+- `docs/poc-4a-reconstruction-handoff-contract.md`
+- `docs/examples/reconstruction_request.example.json`
+- `docs/examples/reconstruction_output.example.json`
 - `docs/examples/project_config.future.example.json`
 - `docs/ai-intake-assistant-scope.md`
 - `docs/reconstruction-pipeline-handshake.md`
@@ -160,12 +165,14 @@ They are discussion artifacts only; they are not implemented runtime features.
 - POC 3A: Render local GLB model assets from config
 - POC 3B: Attach inspection annotations to model assets
 - POC 3D: Browser-only mock COLMAP reconstruction workflow
+- POC 4A: Reconstruction handoff contract and examples
 - POC 3: 3D reconstruction integration
 - POC 4: Research extensions such as uncertainty, multi-digital-twin interaction, and decision support
 
 The current codebase includes the POC 1 viewer, POC 2A image readiness review,
 POC 3A/3B model rendering and annotations, and the POC 3D mock reconstruction
-workflow. A real reconstruction service is not connected.
+workflow. POC 4A documents the proposed real reconstruction handoff, but a real
+reconstruction service is not connected.
 
 ## Research Direction
 
@@ -223,6 +230,7 @@ docs/
   poc-3a-glb-model-assets.md              POC 3A GLB model asset notes
   poc-3b-model-local-annotations.md       POC 3B model annotation notes
   poc-3d-mock-colmap-workflow.md          POC 3D run and test notes
+  poc-4a-reconstruction-handoff-contract.md  POC 4A pipeline handoff contract
   ai-intake-assistant-scope.md            AI intake assistant scope notes
   reconstruction-pipeline-handshake.md    Reconstruction pipeline integration notes
   project-config-schema.md   Project configuration schema notes

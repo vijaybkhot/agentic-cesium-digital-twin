@@ -9,6 +9,9 @@ POC 3D now exercises this boundary with a browser-only
 `queued`, `running`, and `completed` states, and returns the bundled milk-truck
 GLB. It does not execute COLMAP or transfer files.
 
+POC 4A expands this into a more complete discussion contract for the real
+pipeline handoff. See `docs/poc-4a-reconstruction-handoff-contract.md`.
+
 ## Responsibilities
 
 ### Cesium / Agent Intake Side
@@ -39,6 +42,8 @@ ReconstructionRequest
 
 A future backend adapter can replace the mock provider while preserving this
 application flow.
+
+Example request, status, output, and error payloads live in `docs/examples/`.
 
 ## Shared Output Contract
 

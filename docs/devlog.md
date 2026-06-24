@@ -1,5 +1,13 @@
 # Devlog
 
+## 2026-06-24
+
+- Added POC 4A reconstruction handoff contract documentation.
+- Added example reconstruction request, status, output, and error JSON payloads.
+- Documented questions for Ehsan about input format, output format, scale, orientation, location, and job status.
+- Clarified that future LLM use should be a screening/explanation layer, not part of this POC.
+- No backend, upload, real COLMAP process, cloud storage, or LLM integration was added.
+
 ## 2026-06-18
 
 - Added browser-only project setup with typed or globe-picked site coordinates.

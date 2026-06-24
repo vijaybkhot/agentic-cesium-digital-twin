@@ -1,0 +1,7 @@
+{
+  "jobId": "recon-job-001",
+  "projectId": "gerrard-hall-test",
+  "status": "running",
+  "progressMessage": "Feature matching is running on the selected image set.",
+  "progressPercent": 45
+}

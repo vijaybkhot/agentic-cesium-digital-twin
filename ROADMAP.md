@@ -31,6 +31,7 @@
 - POC 3A: Render a local GLB model asset from `project_config.json`.
 - POC 3B: Add model-local inspection annotations using standardized ENU coordinates.
 - POC 3D: Simulate project setup, image readiness, reconstruction job states, and model handoff in the browser.
+- POC 4A: Define the reconstruction handoff contract before connecting a real backend.
 - Add real backend reconstruction job orchestration.
 - Implement a real `ReconstructionProvider`.
 - Visualize reconstruction outputs as tilesets/models in Cesium.
