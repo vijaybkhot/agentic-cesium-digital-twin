@@ -24,6 +24,27 @@ export function buildPointDescription(point: MeasurementPointConfig): string {
   `;
 }
 
+export function applyMeasurementPointVisualState(
+  entity: Cesium.Entity,
+  point: MeasurementPointConfig,
+  isSelected: boolean,
+): void {
+  if (entity.point) {
+    entity.point.pixelSize = new Cesium.ConstantProperty(isSelected ? 22 : 14);
+    entity.point.color = new Cesium.ConstantProperty(
+      isSelected ? Cesium.Color.YELLOW : beliefColors[point.belief],
+    );
+    entity.point.outlineColor = new Cesium.ConstantProperty(Cesium.Color.BLACK);
+    entity.point.outlineWidth = new Cesium.ConstantProperty(isSelected ? 4 : 2);
+  }
+
+  if (entity.label) {
+    entity.label.fillColor = new Cesium.ConstantProperty(
+      isSelected ? Cesium.Color.YELLOW : Cesium.Color.WHITE,
+    );
+  }
+}
+
 export function createMeasurementPointEntity(
   viewer: Cesium.Viewer,
   point: MeasurementPointConfig,

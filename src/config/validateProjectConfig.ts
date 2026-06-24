@@ -323,6 +323,9 @@ export function validateProjectConfig(value: unknown): ProjectConfig {
       const modelAssets = Array.isArray(value.modelAssets)
         ? value.modelAssets.filter(isObject)
         : [];
+      const measurementPoints = Array.isArray(value.measurementPoints)
+        ? value.measurementPoints.filter(isObject)
+        : [];
 
       value.modelAnnotations.forEach((annotation, index) => {
         const path = `modelAnnotations[${index}]`;
@@ -335,6 +338,10 @@ export function validateProjectConfig(value: unknown): ProjectConfig {
         ["id", "modelAssetId", "label"].forEach((key) =>
           validateStringField(annotation, key, path, errors),
         );
+
+        if (annotation.measurementPointId !== undefined) {
+          validateStringField(annotation, "measurementPointId", path, errors);
+        }
 
         if (typeof annotation.id === "string") {
           if (annotationIds.has(annotation.id)) {
@@ -386,6 +393,18 @@ export function validateProjectConfig(value: unknown): ProjectConfig {
           errors.push(
             `${path}.modelAssetId must reference an asset with a local-enu meter coordinate frame`,
           );
+        }
+
+        if (typeof annotation.measurementPointId === "string") {
+          const referencedPoint = measurementPoints.find(
+            (point) => point.id === annotation.measurementPointId,
+          );
+
+          if (!referencedPoint) {
+            errors.push(
+              `${path}.measurementPointId must reference an existing measurement point`,
+            );
+          }
         }
       });
     }

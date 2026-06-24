@@ -2,6 +2,7 @@ import "cesium/Build/Cesium/Widgets/widgets.css";
 import * as Cesium from "cesium";
 import type {
   ViewerAdapter,
+  ViewerSelectedEntityIds,
   ViewerSelection,
 } from "../../ports/ViewerAdapter";
 import type {
@@ -12,10 +13,14 @@ import { flyToProject as flyViewerToProject } from "../../cesium/cameraControls"
 import { createCesiumViewer } from "../../cesium/createCesiumViewer";
 import { createFacilityBoundary } from "../../cesium/createFacilityBoundary";
 import { createFacilityBuilding } from "../../cesium/createFacilityBuilding";
-import { createModelAnnotationEntity } from "../../cesium/createModelAnnotationEntities";
+import {
+  applyModelAnnotationVisualState,
+  createModelAnnotationEntity,
+} from "../../cesium/createModelAnnotationEntities";
 import { createModelAssetEntity } from "../../cesium/createModelAssetEntities";
 import { createSiteMarker } from "../../cesium/createSiteMarker";
 import {
+  applyMeasurementPointVisualState,
   createMeasurementPointEntity,
   updateMeasurementPointEntity,
 } from "../../cesium/createMeasurementPointEntities";
@@ -29,6 +34,8 @@ export class CesiumViewerAdapter implements ViewerAdapter {
   private readonly pointEntities = new Map<string, Cesium.Entity>();
   private readonly modelAssetEntities = new Map<string, Cesium.Entity>();
   private readonly modelAnnotationEntities = new Map<string, Cesium.Entity>();
+  private readonly measurementPoints = new Map<string, MeasurementPointConfig>();
+  private selectedEntityIds: ViewerSelectedEntityIds = {};
 
   constructor(
     private readonly onEntitySelected: SelectionHandler,
@@ -52,6 +59,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.pointEntities.clear();
     this.modelAssetEntities.clear();
     this.modelAnnotationEntities.clear();
+    this.measurementPoints.clear();
 
     if (config.facility) {
       createFacilityBuilding(this.viewer, config.facility);
@@ -64,6 +72,9 @@ export class CesiumViewerAdapter implements ViewerAdapter {
 
     const modelAssetsById = new Map(
       config.modelAssets?.map((asset) => [asset.assetId, asset]) ?? [],
+    );
+    const measurementPointsById = new Map(
+      config.measurementPoints.map((point) => [point.id, point]),
     );
 
     modelAssetsById.forEach((asset) => {
@@ -85,14 +96,20 @@ export class CesiumViewerAdapter implements ViewerAdapter {
         this.viewer!,
         annotation,
         asset,
+        annotation.measurementPointId
+          ? measurementPointsById.get(annotation.measurementPointId)
+          : undefined,
       );
       this.modelAnnotationEntities.set(annotation.id, entity);
     });
 
     config.measurementPoints.forEach((point) => {
       const entity = createMeasurementPointEntity(this.viewer!, point);
+      this.measurementPoints.set(point.id, point);
       this.pointEntities.set(point.id, entity);
     });
+
+    this.applySelectionStyles();
   }
 
   updateMeasurementPoint(point: MeasurementPointConfig): void {
@@ -102,7 +119,9 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       return;
     }
 
+    this.measurementPoints.set(point.id, point);
     updateMeasurementPointEntity(entity, point);
+    this.applySelectionStyles();
   }
 
   flyToProject(config: ProjectConfig): void {
@@ -125,6 +144,11 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.locationPickMode = enabled;
   }
 
+  setSelectedEntityIds(selection: ViewerSelectedEntityIds): void {
+    this.selectedEntityIds = selection;
+    this.applySelectionStyles();
+  }
+
   destroy(): void {
     if (this.clickHandler && !this.clickHandler.isDestroyed()) {
       this.clickHandler.destroy();
@@ -140,6 +164,30 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.pointEntities.clear();
     this.modelAssetEntities.clear();
     this.modelAnnotationEntities.clear();
+    this.measurementPoints.clear();
+  }
+
+  private applySelectionStyles(): void {
+    this.pointEntities.forEach((entity, pointId) => {
+      const point = this.measurementPoints.get(pointId);
+
+      if (!point) {
+        return;
+      }
+
+      applyMeasurementPointVisualState(
+        entity,
+        point,
+        this.selectedEntityIds.measurementPointId === pointId,
+      );
+    });
+
+    this.modelAnnotationEntities.forEach((entity, annotationId) => {
+      applyModelAnnotationVisualState(
+        entity,
+        this.selectedEntityIds.modelAnnotationId === annotationId,
+      );
+    });
   }
 
   private attachSelectionHandler(): void {
