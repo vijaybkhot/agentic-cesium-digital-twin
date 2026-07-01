@@ -134,6 +134,7 @@ Completed:
 - Model-linked sensors that reuse existing measurement editing controls
 - Browser-only mock COLMAP workflow from project setup to model display
 - POC 4A reconstruction handoff contract for discussion with the reconstruction pipeline owner
+- POC 4B notes documenting Ehsan's current JPG-to-PLY reconstruction pipeline
 
 In progress / planned:
 
@@ -149,6 +150,7 @@ Future contract examples:
 - `docs/poc-1-config-driven-viewer.md`
 - `docs/poc-2a-image-intake.md`
 - `docs/poc-4a-reconstruction-handoff-contract.md`
+- `docs/poc-4b-ehsan-reconstruction-pipeline.md`
 - `docs/examples/reconstruction_request.example.json`
 - `docs/examples/reconstruction_output.example.json`
 - `docs/examples/project_config.future.example.json`
@@ -175,8 +177,9 @@ They are discussion artifacts only; they are not implemented runtime features.
 The current codebase includes the POC 1 viewer, POC 2A image readiness review,
 POC 3A/3B model rendering and annotations, and the POC 3D mock reconstruction
 workflow. POC 4E links model annotations to existing measurement data. POC 4A
-documents the proposed real reconstruction handoff, but a real reconstruction
-service is not connected.
+documents the proposed real reconstruction handoff, and POC 4B records Ehsan's
+current JPG-to-PLY pipeline shape. A real reconstruction service is not
+connected.
 
 ## Research Direction
 
@@ -235,6 +238,7 @@ docs/
   poc-3b-model-local-annotations.md       POC 3B model annotation notes
   poc-3d-mock-colmap-workflow.md          POC 3D run and test notes
   poc-4a-reconstruction-handoff-contract.md  POC 4A pipeline handoff contract
+  poc-4b-ehsan-reconstruction-pipeline.md    POC 4B real pipeline notes
   poc-4e-model-linked-sensors.md          POC 4E model-linked sensor notes
   ai-intake-assistant-scope.md            AI intake assistant scope notes
   reconstruction-pipeline-handshake.md    Reconstruction pipeline integration notes
