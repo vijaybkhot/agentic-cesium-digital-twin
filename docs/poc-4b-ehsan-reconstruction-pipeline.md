@@ -16,14 +16,14 @@ The pipeline takes ordinary site images, performs feature extraction and feature
 matching, generates a point cloud, and then applies semantic processing to group
 parts of the scene such as walls, windows, doors, and facade elements.
 
-The longer-term direction may include fuller 3D model, CAD, or BREP-style
+The longer-term direction may include a fuller 3D model, CAD, or BREP-style
 outputs, but the current concrete output for integration planning is a PLY point
 cloud.
 
 ## Input
 
 - Current input is JPG/JPEG images.
-- A folder of JPEG images is enough for the current pipeline.
+- A folder of JPG/JPEG images is enough for the current pipeline.
 - GPS metadata inside the images is strongly preferred.
 - There is no strict image-count requirement yet, but image sequence, overlap,
   and GPS metadata strongly affect whether reconstruction succeeds.
@@ -93,7 +93,7 @@ POC 4B clarifies that the real pipeline handoff should initially plan around:
 
 - JPG/JPEG image input
 - optional or required GPS/EXIF metadata checks
-- PLY point-cloud output
+- PLY point cloud output
 - placement metadata or conversion from local coordinates to global location
 - future conversion to GLB or 3D Tiles for Cesium rendering
 
@@ -102,7 +102,7 @@ POC 4B clarifies that the real pipeline handoff should initially plan around:
 - What exact folder or transfer format should the real backend use for images?
 - Can the pipeline return a stable output folder/path for each job?
 - What metadata is available with the PLY output?
-- Can local point-cloud coordinates be transformed into meters and a site
+- Can local point cloud coordinates be transformed into meters and a site
   anchor?
 - Which conversion path should be tested first: PLY to GLB or PLY to 3D Tiles?
 - What progress/status messages can be exposed from the pipeline dashboard?
