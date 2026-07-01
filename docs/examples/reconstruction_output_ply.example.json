@@ -1,0 +1,33 @@
+{
+  "jobId": "recon-job-ply-001",
+  "projectId": "gerrard-hall-test",
+  "status": "completed",
+  "asset": {
+    "assetId": "gerrard-hall-test-point-cloud-001",
+    "assetType": "point-cloud",
+    "assetUrl": "/models/local-sample-bunny.ply",
+    "sourcePipeline": "external-colmap-pipeline",
+    "status": "ready",
+    "spatialAnchor": {
+      "lat": 40.038728,
+      "lon": -75.59772,
+      "height": 0
+    },
+    "scale": 1,
+    "orientation": {
+      "heading": 0,
+      "pitch": 0,
+      "roll": 0
+    },
+    "coordinateFrame": {
+      "convention": "local-enu",
+      "unit": "meters",
+      "origin": "spatialAnchor"
+    },
+    "quality": {
+      "status": "unknown",
+      "confidence": 0.5,
+      "notes": "Example PLY point-cloud output. This is recognized by the contract but requires conversion before Cesium rendering."
+    }
+  }
+}

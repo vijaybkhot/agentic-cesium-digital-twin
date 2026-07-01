@@ -13,7 +13,7 @@ export interface ReconstructionRequest {
   projectId: string;
   files: File[];
   siteAnchor: SpatialAnchor;
-  requestedOutput: "glb";
+  requestedOutput: "glb" | "point-cloud" | "3d-tiles" | "mesh";
 }
 
 export interface ReconstructionJob {

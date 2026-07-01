@@ -2,6 +2,10 @@
 
 ## 2026-07-01
 
+- Added POC 4C PLY output awareness without adding raw PLY rendering.
+- Added a viewer-support helper that distinguishes rendered GLB assets from PLY/point-cloud assets that require conversion.
+- Added a PLY reconstruction output example and local sample test guidance.
+- Ignored local `public/models/*.ply` files so downloaded test point clouds are not committed accidentally.
 - Added POC 4B documentation for Ehsan's current reconstruction pipeline.
 - Recorded JPG/JPEG image input, GPS metadata importance, PLY point cloud output, and COLMAP feature matching as the key feasibility signal.
 - Clarified that this pass does not add backend upload, PLY rendering, EXIF/GPS parsing, or real reconstruction execution.

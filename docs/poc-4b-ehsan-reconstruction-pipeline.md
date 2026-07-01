@@ -111,6 +111,7 @@ POC 4B clarifies that the real pipeline handoff should initially plan around:
 
 - Add JPG/GPS-oriented image intake documentation and later EXIF inspection.
 - Add a PLY handoff example to the reconstruction contract.
-- Wait for a sample PLY file, then run a focused conversion/rendering spike.
+- Use a licensed local sample PLY for handoff testing without committing the binary.
+- Wait for Ehsan's sample PLY file, then run a focused conversion/rendering spike.
 - Keep the existing mock GLB workflow stable until real output conversion is
   tested.

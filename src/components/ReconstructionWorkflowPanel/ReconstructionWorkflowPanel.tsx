@@ -2,6 +2,7 @@ import type { ImageIntakeReview } from "../../types/imageIntake";
 import type { ProjectConfig } from "../../types/projectConfig";
 import type { ReconstructionJob } from "../../types/reconstruction";
 import type { ReconstructionWorkflowStep } from "../../app/useReconstructionWorkflow";
+import { getModelAssetViewerSupport } from "../../domain/modelAssetViewerSupport";
 import { ImageIntakePanel } from "../ImageIntakePanel/ImageIntakePanel";
 import "./ReconstructionWorkflowPanel.css";
 
@@ -83,6 +84,11 @@ export function ReconstructionWorkflowPanel({
   onResetWorkflow,
   onOpenExistingDemo,
 }: ReconstructionWorkflowPanelProps) {
+  const completedAsset = config.modelAssets?.[0] ?? null;
+  const viewerSupport = completedAsset
+    ? getModelAssetViewerSupport(completedAsset)
+    : null;
+
   return (
     <aside className="reconstruction-workflow-panel">
       <div className="workflow-heading">
@@ -265,23 +271,45 @@ export function ReconstructionWorkflowPanel({
           <section className="workflow-section">
             <h2>Reconstructed model</h2>
             <p className="workflow-success">
-              The mock reconstruction completed and the returned GLB is now
-              displayed at the selected site.
+              The mock reconstruction completed and returned a model asset.
             </p>
             <dl className="workflow-details">
               <div>
                 <dt>Asset</dt>
-                <dd>{config.modelAssets?.[0]?.assetId ?? "-"}</dd>
+                <dd>{completedAsset?.assetId ?? "-"}</dd>
               </div>
               <div>
                 <dt>Format</dt>
-                <dd>{config.modelAssets?.[0]?.assetType ?? "-"}</dd>
+                <dd>{completedAsset?.assetType ?? "-"}</dd>
+              </div>
+              <div>
+                <dt>Asset URL</dt>
+                <dd>{completedAsset?.assetUrl ?? "-"}</dd>
               </div>
               <div>
                 <dt>Pipeline</dt>
-                <dd>{config.modelAssets?.[0]?.sourcePipeline ?? "-"}</dd>
+                <dd>{completedAsset?.sourcePipeline ?? "-"}</dd>
+              </div>
+              <div>
+                <dt>Status</dt>
+                <dd>{completedAsset?.status ?? "-"}</dd>
+              </div>
+              <div>
+                <dt>Viewer</dt>
+                <dd>{viewerSupport?.label ?? "-"}</dd>
               </div>
             </dl>
+            {viewerSupport && (
+              <p
+                className={
+                  viewerSupport.canRenderInCurrentCesiumViewer
+                    ? "workflow-success"
+                    : "workflow-notice"
+                }
+              >
+                {viewerSupport.message}
+              </p>
+            )}
           </section>
         </>
       )}

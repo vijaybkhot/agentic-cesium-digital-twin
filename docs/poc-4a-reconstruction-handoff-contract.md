@@ -57,7 +57,7 @@ Important fields:
 - `projectName`: human-readable name
 - `siteAnchor`: approximate real-world location for the model
 - `imageSet`: where the reconstruction pipeline can find images
-- `requestedOutput`: preferred output type, such as `glb` or `3d-tiles`
+- `requestedOutput`: preferred output type, such as `glb`, `3d-tiles`, or `point-cloud`
 - `coordinateFrame`: expected normalized coordinate system
 - `metadata`: optional notes from the intake workflow
 
@@ -114,6 +114,10 @@ Useful failures include:
 - missing camera metadata
 - unsupported image format
 - output conversion failed
+
+POC 4C adds a separate PLY output example at
+`docs/examples/reconstruction_output_ply.example.json`. That example represents
+pipeline-native point-cloud output, not a directly rendered Cesium asset.
 
 ## Coordinate Contract
 
