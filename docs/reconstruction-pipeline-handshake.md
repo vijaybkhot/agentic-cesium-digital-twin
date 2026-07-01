@@ -12,6 +12,10 @@ GLB. It does not execute COLMAP or transfer files.
 POC 4A expands this into a more complete discussion contract for the real
 pipeline handoff. See `docs/poc-4a-reconstruction-handoff-contract.md`.
 
+POC 4B records the current reconstruction pipeline details discussed with
+Ehsan, including JPG/JPEG input, GPS metadata importance, and PLY point-cloud
+output. See `docs/poc-4b-ehsan-reconstruction-pipeline.md`.
+
 ## Responsibilities
 
 ### Cesium / Agent Intake Side

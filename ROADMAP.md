@@ -33,6 +33,7 @@
 - POC 4E: Link model annotations to existing measurement points.
 - POC 3D: Simulate project setup, image readiness, reconstruction job states, and model handoff in the browser.
 - POC 4A: Define the reconstruction handoff contract before connecting a real backend.
+- POC 4B: Document Ehsan's current JPG-to-PLY reconstruction pipeline.
 - Add real backend reconstruction job orchestration.
 - Implement a real `ReconstructionProvider`.
 - Visualize reconstruction outputs as tilesets/models in Cesium.
