@@ -4,6 +4,7 @@ export type ModelAssetViewerSupportStatus =
   | "renderable"
   | "conversion-required"
   | "future-supported"
+  | "failed"
   | "not-rendered";
 
 export interface ModelAssetViewerSupport {
@@ -19,6 +20,16 @@ export function getModelAssetViewerSupport(
   const assetUrl = asset.assetUrl.toLowerCase();
   const isPlyPointCloud =
     asset.assetType === "point-cloud" || assetUrl.endsWith(".ply");
+
+  if (asset.status === "failed") {
+    return {
+      status: "failed",
+      label: "Asset failed",
+      message:
+        "This asset is recognized in the config, but the reconstruction or asset preparation failed. It will need to be rerun or replaced before Cesium can display it.",
+      canRenderInCurrentCesiumViewer: false,
+    };
+  }
 
   if (asset.status !== "ready") {
     return {

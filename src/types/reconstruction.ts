@@ -9,11 +9,18 @@ export type ReconstructionStatus =
   | "completed"
   | "failed";
 
+export type ReconstructionRequestedAssetType = ModelAssetConfig["assetType"];
+
+export interface ReconstructionRequestedOutput {
+  assetType: ReconstructionRequestedAssetType;
+  preferredFallbacks?: ReconstructionRequestedAssetType[];
+}
+
 export interface ReconstructionRequest {
   projectId: string;
   files: File[];
   siteAnchor: SpatialAnchor;
-  requestedOutput: "glb" | "point-cloud" | "3d-tiles" | "mesh";
+  requestedOutput: ReconstructionRequestedOutput;
 }
 
 export interface ReconstructionJob {
