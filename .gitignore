@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Local reconstruction sample outputs
+public/models/*.ply
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

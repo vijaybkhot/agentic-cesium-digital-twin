@@ -25,6 +25,7 @@ This version demonstrates the Cesium visualization and interaction layer. It is 
 - Model annotations linked to existing sensor/measurement data
 - Browser-only project setup and mock COLMAP reconstruction workflow
 - Reconstruction handoff contract examples for future pipeline integration
+- PLY/point-cloud output awareness with conversion guidance for Cesium rendering
 
 ## Why This Matters
 
@@ -46,7 +47,7 @@ User Inputs / Images
 Images
   -> Image Sufficiency Check
   -> Reconstruction Pipeline
-  -> GLB / 3D Tiles
+  -> PLY / GLB / 3D Tiles
   -> Cesium Visualization
 ```
 
@@ -135,6 +136,7 @@ Completed:
 - Browser-only mock COLMAP workflow from project setup to model display
 - POC 4A reconstruction handoff contract for discussion with the reconstruction pipeline owner
 - POC 4B notes documenting Ehsan's current JPG-to-PLY reconstruction pipeline
+- POC 4C PLY output awareness and local sample test guidance
 
 In progress / planned:
 
@@ -142,7 +144,7 @@ In progress / planned:
 - Agent-assisted project configuration
 - Image intake audit and EXIF/GPS inspection
 - Real reconstruction pipeline integration
-- Support for GLB / 3D Tiles output
+- Conversion tests from PLY to GLB or 3D Tiles
 - Backend services
 
 Future contract examples:
@@ -151,8 +153,10 @@ Future contract examples:
 - `docs/poc-2a-image-intake.md`
 - `docs/poc-4a-reconstruction-handoff-contract.md`
 - `docs/poc-4b-ehsan-reconstruction-pipeline.md`
+- `docs/poc-4c-ply-output-awareness.md`
 - `docs/examples/reconstruction_request.example.json`
 - `docs/examples/reconstruction_output.example.json`
+- `docs/examples/reconstruction_output_ply.example.json`
 - `docs/examples/project_config.future.example.json`
 - `docs/ai-intake-assistant-scope.md`
 - `docs/reconstruction-pipeline-handshake.md`
@@ -171,6 +175,8 @@ They are discussion artifacts only; they are not implemented runtime features.
 - POC 4E: Link model annotations to existing sensor measurements
 - POC 3D: Browser-only mock COLMAP reconstruction workflow
 - POC 4A: Reconstruction handoff contract and examples
+- POC 4B: Document Ehsan's current JPG-to-PLY pipeline
+- POC 4C: Recognize PLY/point-cloud output as pipeline-native data
 - POC 3: 3D reconstruction integration
 - POC 4: Research extensions such as uncertainty, multi-digital-twin interaction, and decision support
 
@@ -178,8 +184,9 @@ The current codebase includes the POC 1 viewer, POC 2A image readiness review,
 POC 3A/3B model rendering and annotations, and the POC 3D mock reconstruction
 workflow. POC 4E links model annotations to existing measurement data. POC 4A
 documents the proposed real reconstruction handoff, and POC 4B records Ehsan's
-current JPG-to-PLY pipeline shape. A real reconstruction service is not
-connected.
+current JPG-to-PLY pipeline shape. POC 4C recognizes PLY/point-cloud output as
+pipeline-native data but still requires conversion to GLB or 3D Tiles before
+Cesium rendering. A real reconstruction service is not connected.
 
 ## Research Direction
 
@@ -206,6 +213,7 @@ These are intended research directions, not claims about completed system capabi
 - No real LLM agent yet
 - No real 3D reconstruction pipeline yet
 - Mock reconstruction uses browser timers and a bundled sample GLB
+- Raw PLY files are not rendered directly; they require conversion first
 - Image intake readiness is rule-based and local-only
 - No persisted state yet
 - Not a production decommissioning system
@@ -239,6 +247,7 @@ docs/
   poc-3d-mock-colmap-workflow.md          POC 3D run and test notes
   poc-4a-reconstruction-handoff-contract.md  POC 4A pipeline handoff contract
   poc-4b-ehsan-reconstruction-pipeline.md    POC 4B real pipeline notes
+  poc-4c-ply-output-awareness.md             POC 4C PLY output awareness notes
   poc-4e-model-linked-sensors.md          POC 4E model-linked sensor notes
   ai-intake-assistant-scope.md            AI intake assistant scope notes
   reconstruction-pipeline-handshake.md    Reconstruction pipeline integration notes

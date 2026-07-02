@@ -262,7 +262,10 @@ export function useReconstructionWorkflow() {
           lon: config.siteMarker.lon,
           height: 0,
         },
-        requestedOutput: "glb",
+        requestedOutput: {
+          assetType: "glb",
+          preferredFallbacks: ["3d-tiles", "mesh", "point-cloud"],
+        },
       });
 
       if (workflowVersion === workflowVersionRef.current) {

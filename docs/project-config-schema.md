@@ -64,12 +64,14 @@ refresh.
 ## Model Assets
 
 `modelAssets` is optional. In POC 3A, the viewer renders local GLB assets with
-`assetType: "glb"` and `status: "ready"`.
+`assetType: "glb"` and `status: "ready"`. In POC 4C, PLY point-cloud assets are
+recognized as pipeline-native output, but they are not rendered directly.
 
 Each rendered GLB model asset includes:
 
 - `assetId`: Stable model identifier.
-- `assetType`: Currently `glb` for rendered local GLB assets.
+- `assetType`: `glb`, `3d-tiles`, `point-cloud`, or `mesh`. Currently only
+  ready `glb` assets render directly.
 - `assetUrl`: Public URL for the model, such as `/models/CesiumMilkTruck.glb`.
 - `sourcePipeline`: Name of the mock or future reconstruction source.
 - `status`: Use `ready` for assets that should render.
@@ -78,8 +80,9 @@ Each rendered GLB model asset includes:
 - `orientation`: Heading, pitch, and roll in degrees.
 - `coordinateFrame`: Standard local coordinate convention used by attached annotations.
 
-GLB is the first supported model format because it is simple to test. 3D Tiles
-remains the preferred future target for larger geospatial reconstructions.
+GLB is the first supported model format because it is simple to test. PLY point
+clouds should be converted before Cesium rendering. 3D Tiles remains the
+preferred future target for larger geospatial reconstructions.
 
 ## Draft Projects
 
@@ -153,7 +156,7 @@ Planned optional fields:
 - `schemaVersion`: Draft schema identifier, such as `0.2-draft`, so future tools can understand which config shape they are reading.
 - `imageIntake`: Future metadata about uploaded images, GPS/EXIF availability, minimum image count checks, coverage status, and missing inputs.
 - `agentAssessment`: Future assistant output summarizing reconstruction readiness, reasoning, and the next recommended action.
-- `modelAssets`: Reconstruction or asset handoff references. POC 3A renders ready GLB assets; other asset types remain planned.
+- `modelAssets`: Reconstruction or asset handoff references. POC 3A renders ready GLB assets. POC 4C recognizes PLY/point-cloud assets and marks them as requiring conversion before rendering.
 - `modelAnnotations`: Model-local inspection points. POC 3B renders these for ready GLB assets.
 
 These top-level fields remain optional so older runtime configs continue to

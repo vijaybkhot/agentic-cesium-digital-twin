@@ -16,6 +16,11 @@ POC 4B records the current reconstruction pipeline details discussed with
 Ehsan, including JPG/JPEG input, GPS metadata importance, and PLY point cloud
 output. See `docs/poc-4b-ehsan-reconstruction-pipeline.md`.
 
+POC 4C adds PLY output awareness while keeping raw PLY rendering out of scope.
+PLY point-cloud output is treated as pipeline-native data that should be
+converted to GLB or 3D Tiles before Cesium rendering. See
+`docs/poc-4c-ply-output-awareness.md`.
+
 ## Responsibilities
 
 ### Cesium / Agent Intake Side
@@ -47,7 +52,8 @@ ReconstructionRequest
 A future backend adapter can replace the mock provider while preserving this
 application flow.
 
-Example request, status, output, and error payloads live in `docs/examples/`.
+Example request, status, output, PLY output, and error payloads live in
+`docs/examples/`.
 
 ## Shared Output Contract
 
@@ -106,11 +112,16 @@ GLB may be enough for small/simple models. It is straightforward to load and use
 
 3D Tiles should be the long-term target for larger geospatial scenes in Cesium. It supports tiled, geospatially anchored, scalable visualization better than a single monolithic model.
 
-The architecture should support both through `modelAssets` in config.
+PLY point clouds are useful pipeline output, but they are not the current direct
+Cesium rendering path in this app. Keep PLY as the native reconstruction output,
+then test conversion to GLB for small demos or 3D Tiles for larger point clouds.
+
+The architecture should support GLB, 3D Tiles, and pipeline-native assets
+through `modelAssets` in config.
 
 ## Open Questions
 
-- What format does the current reconstruction pipeline output?
+- Which PLY-to-viewer conversion path works best with Ehsan's sample output?
 - Does the output have scale/orientation/location metadata?
 - Can the pipeline normalize scale, axes, and origin into local ENU meters?
 - Can output be converted to GLB or 3D Tiles?
