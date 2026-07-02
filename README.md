@@ -137,6 +137,7 @@ Completed:
 - POC 4A reconstruction handoff contract for discussion with the reconstruction pipeline owner
 - POC 4B notes documenting Ehsan's current JPG-to-PLY reconstruction pipeline
 - POC 4C PLY output awareness and local sample test guidance
+- POC 4D local PLY-to-GLB conversion spike documentation and script
 
 In progress / planned:
 
@@ -144,7 +145,7 @@ In progress / planned:
 - Agent-assisted project configuration
 - Image intake audit and EXIF/GPS inspection
 - Real reconstruction pipeline integration
-- Conversion tests from PLY to GLB or 3D Tiles
+- Conversion tests from real pipeline PLY output to GLB or 3D Tiles
 - Backend services
 
 Future contract examples:
@@ -154,6 +155,7 @@ Future contract examples:
 - `docs/poc-4a-reconstruction-handoff-contract.md`
 - `docs/poc-4b-ehsan-reconstruction-pipeline.md`
 - `docs/poc-4c-ply-output-awareness.md`
+- `docs/poc-4d-ply-conversion-spike.md`
 - `docs/examples/reconstruction_request.example.json`
 - `docs/examples/reconstruction_output.example.json`
 - `docs/examples/reconstruction_output_ply.example.json`
@@ -177,6 +179,7 @@ They are discussion artifacts only; they are not implemented runtime features.
 - POC 4A: Reconstruction handoff contract and examples
 - POC 4B: Document Ehsan's current JPG-to-PLY pipeline
 - POC 4C: Recognize PLY/point-cloud output as pipeline-native data
+- POC 4D: Convert local PLY samples to GLB for a Cesium viewer spike
 - POC 3: 3D reconstruction integration
 - POC 4: Research extensions such as uncertainty, multi-digital-twin interaction, and decision support
 
@@ -186,7 +189,8 @@ workflow. POC 4E links model annotations to existing measurement data. POC 4A
 documents the proposed real reconstruction handoff, and POC 4B records Ehsan's
 current JPG-to-PLY pipeline shape. POC 4C recognizes PLY/point-cloud output as
 pipeline-native data but still requires conversion to GLB or 3D Tiles before
-Cesium rendering. A real reconstruction service is not connected.
+Cesium rendering. POC 4D adds a local Blender-based PLY-to-GLB conversion spike
+for testing small sample assets. A real reconstruction service is not connected.
 
 ## Research Direction
 
@@ -214,6 +218,7 @@ These are intended research directions, not claims about completed system capabi
 - No real 3D reconstruction pipeline yet
 - Mock reconstruction uses browser timers and a bundled sample GLB
 - Raw PLY files are not rendered directly; they require conversion first
+- Local PLY-to-GLB conversion requires Blender and is not part of the browser app
 - Image intake readiness is rule-based and local-only
 - No persisted state yet
 - Not a production decommissioning system
@@ -248,6 +253,7 @@ docs/
   poc-4a-reconstruction-handoff-contract.md  POC 4A pipeline handoff contract
   poc-4b-ehsan-reconstruction-pipeline.md    POC 4B real pipeline notes
   poc-4c-ply-output-awareness.md             POC 4C PLY output awareness notes
+  poc-4d-ply-conversion-spike.md             POC 4D local conversion spike notes
   poc-4e-model-linked-sensors.md          POC 4E model-linked sensor notes
   ai-intake-assistant-scope.md            AI intake assistant scope notes
   reconstruction-pipeline-handshake.md    Reconstruction pipeline integration notes
