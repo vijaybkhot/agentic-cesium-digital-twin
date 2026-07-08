@@ -2,7 +2,7 @@
 """Convert a local PLY file to a GLB file with Blender.
 
 Run with:
-  blender --background --python tools/convert-ply-to-glb.py -- input.ply output.glb
+  blender --background --factory-startup --python tools/convert-ply-to-glb.py -- input.ply output.glb
 
 This script is intentionally local-only. It does not upload files, run COLMAP,
 or change the Cesium app runtime.
@@ -13,12 +13,17 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+USAGE = (
+    "Use: blender --background --factory-startup "
+    "--python tools/convert-ply-to-glb.py -- input.ply output.glb"
+)
+
 try:
     import bpy
 except ImportError as exc:
     raise SystemExit(
         "This script must be run by Blender, not by system Python.\n"
-        "Use: blender --background --python tools/convert-ply-to-glb.py -- input.ply output.glb"
+        + USAGE
     ) from exc
 
 
@@ -26,14 +31,14 @@ def parse_args(argv: list[str]) -> tuple[Path, Path]:
     if "--" not in argv:
         raise SystemExit(
             "Missing '--' before script arguments.\n"
-            "Use: blender --background --python tools/convert-ply-to-glb.py -- input.ply output.glb"
+            + USAGE
         )
 
     args = argv[argv.index("--") + 1 :]
     if len(args) != 2:
         raise SystemExit(
             "Expected exactly two arguments: input.ply output.glb\n"
-            "Use: blender --background --python tools/convert-ply-to-glb.py -- input.ply output.glb"
+            + USAGE
         )
 
     input_path = Path(args[0]).expanduser().resolve()

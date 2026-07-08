@@ -45,13 +45,13 @@ Can we convert a small PLY into GLB and then view that GLB in Cesium?
 Install Blender locally, then run:
 
 ```bash
-blender --background --python tools/convert-ply-to-glb.py -- input.ply output.glb
+blender --background --factory-startup --python tools/convert-ply-to-glb.py -- input.ply output.glb
 ```
 
 Example local-only paths:
 
 ```bash
-blender --background --python tools/convert-ply-to-glb.py -- \
+blender --background --factory-startup --python tools/convert-ply-to-glb.py -- \
   public/models/local-sample-bunny.ply \
   public/models/local-sample-bunny.glb
 ```
