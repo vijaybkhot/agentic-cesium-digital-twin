@@ -11,6 +11,11 @@ export interface ImageGpsMetadata {
   longitude?: number;
 }
 
+export interface ProjectSiteLocation {
+  lat: number;
+  lon: number;
+}
+
 export interface InspectedImage {
   id: string;
   fileName: string;
@@ -37,6 +42,9 @@ export interface ImageIntakeSummary {
   gpsMissingCount: number;
   gpsUnknownCount: number;
   gpsCoveragePercent: number;
+  averageGpsLatitude?: number;
+  averageGpsLongitude?: number;
+  averageGpsDistanceFromSiteMeters?: number;
 }
 
 export interface ReconstructionReadinessResult {

@@ -1,11 +1,13 @@
 import type {
   ImageIntakeSummary,
   InspectedImage,
+  ProjectSiteLocation,
   ReconstructionReadinessResult,
 } from "../../types/imageIntake";
 
 const minimumImageCount = 20;
 const preferredImageCount = 40;
+const siteGpsDistanceWarningMeters = 1000;
 
 function sum(values: number[]): number {
   return values.reduce((total, value) => total + value, 0);
@@ -22,14 +24,76 @@ function countGpsStatus(
   return images.filter((image) => image.gps.status === status).length;
 }
 
+function toRadians(value: number): number {
+  return (value * Math.PI) / 180;
+}
+
+function calculateDistanceMeters(
+  firstPoint: ProjectSiteLocation,
+  secondPoint: ProjectSiteLocation,
+): number {
+  const earthRadiusMeters = 6_371_000;
+  const latitudeDifference = toRadians(secondPoint.lat - firstPoint.lat);
+  const longitudeDifference = toRadians(secondPoint.lon - firstPoint.lon);
+  const firstLatitude = toRadians(firstPoint.lat);
+  const secondLatitude = toRadians(secondPoint.lat);
+  const haversineValue =
+    Math.sin(latitudeDifference / 2) ** 2 +
+    Math.cos(firstLatitude) *
+      Math.cos(secondLatitude) *
+      Math.sin(longitudeDifference / 2) ** 2;
+
+  return (
+    earthRadiusMeters *
+    2 *
+    Math.atan2(Math.sqrt(haversineValue), Math.sqrt(1 - haversineValue))
+  );
+}
+
+function formatDistance(distanceMeters: number): string {
+  if (distanceMeters >= 1000) {
+    return `${(distanceMeters / 1000).toFixed(1)} km`;
+  }
+
+  return `${Math.round(distanceMeters)} m`;
+}
+
+function getImagesWithGps(images: InspectedImage[]): InspectedImage[] {
+  return images.filter(
+    (image) =>
+      image.gps.status === "present" &&
+      Number.isFinite(image.gps.latitude) &&
+      Number.isFinite(image.gps.longitude),
+  );
+}
+
 function createSummary(
   images: InspectedImage[],
   unsupportedFileCount: number,
   failedImageCount: number,
+  siteLocation?: ProjectSiteLocation,
 ): ImageIntakeSummary {
   const gpsPresentCount = countGpsStatus(images, "present");
   const gpsMissingCount = countGpsStatus(images, "missing");
   const gpsUnknownCount = countGpsStatus(images, "unknown");
+  const imagesWithGps = getImagesWithGps(images);
+  const averageGpsLatitude =
+    imagesWithGps.length > 0
+      ? average(imagesWithGps.map((image) => image.gps.latitude!))
+      : undefined;
+  const averageGpsLongitude =
+    imagesWithGps.length > 0
+      ? average(imagesWithGps.map((image) => image.gps.longitude!))
+      : undefined;
+  const averageGpsDistanceFromSiteMeters =
+    siteLocation &&
+    averageGpsLatitude !== undefined &&
+    averageGpsLongitude !== undefined
+      ? calculateDistanceMeters(siteLocation, {
+          lat: averageGpsLatitude,
+          lon: averageGpsLongitude,
+        })
+      : undefined;
 
   return {
     imageCount: images.length,
@@ -46,6 +110,9 @@ function createSummary(
     gpsUnknownCount,
     gpsCoveragePercent:
       images.length > 0 ? (gpsPresentCount / images.length) * 100 : 0,
+    averageGpsLatitude,
+    averageGpsLongitude,
+    averageGpsDistanceFromSiteMeters,
   };
 }
 
@@ -54,6 +121,7 @@ export function evaluateImageSetReadiness(args: {
   unsupportedFileCount: number;
   failedImageCount?: number;
   hasManualLocation?: boolean;
+  siteLocation?: ProjectSiteLocation;
 }): {
   summary: ImageIntakeSummary;
   readiness: ReconstructionReadinessResult;
@@ -62,6 +130,7 @@ export function evaluateImageSetReadiness(args: {
     args.images,
     args.unsupportedFileCount,
     args.failedImageCount ?? 0,
+    args.siteLocation,
   );
   const reasons: string[] = [];
   const missingInputs: string[] = [];
@@ -136,6 +205,20 @@ export function evaluateImageSetReadiness(args: {
     );
     recommendedActions.push(
       "Prefer image sets where most photos include GPS metadata, especially for real reconstruction placement.",
+    );
+  }
+
+  if (
+    summary.averageGpsDistanceFromSiteMeters !== undefined &&
+    summary.averageGpsDistanceFromSiteMeters > siteGpsDistanceWarningMeters
+  ) {
+    reasons.push(
+      `The average image GPS location is about ${formatDistance(
+        summary.averageGpsDistanceFromSiteMeters,
+      )} from the selected project site.`,
+    );
+    recommendedActions.push(
+      "Confirm that the selected site location matches the photos before starting real reconstruction.",
     );
   }
 

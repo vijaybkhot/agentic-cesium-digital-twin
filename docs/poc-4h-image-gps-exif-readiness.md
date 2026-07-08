@@ -24,6 +24,8 @@ The intake summary shows:
 - images without GPS
 - GPS coverage percentage
 - GPS unknown count
+- average distance from image GPS to the selected project site, when both are
+  available
 
 The assistant message also summarizes GPS availability.
 
@@ -33,6 +35,11 @@ Ehsan noted that GPS metadata can help the reconstruction pipeline place local
 coordinates into a real-world location. Images without GPS can still be useful,
 especially when the user provides a site anchor, but GPS makes the future
 handoff easier.
+
+The app keeps the user-selected site location as the main anchor. Image GPS is
+used as supporting evidence. If the average image GPS location is more than
+about 1 km from the selected project site, the app shows a warning so the user
+can confirm the site before running a real reconstruction.
 
 ## Local-Only Behavior
 
@@ -58,12 +65,14 @@ Then test the image intake panel with:
 2. JPEG images without GPS metadata.
 3. A mixed image set with some GPS and some non-GPS images.
 4. PNG, WebP, or HEIC images, where GPS may show as unknown.
+5. GPS-tagged images from a different location than the selected project site.
 
 Confirm that:
 
 - image count and resolution checks still behave as before
 - GPS counts appear in the summary
 - missing GPS adds advisory text
+- far-away image GPS adds an advisory site mismatch warning
 - `Review Recommended` and `Ready for Initial Test` can still start mock
   reconstruction
 

@@ -138,7 +138,7 @@ Completed:
 - POC 4B notes documenting Ehsan's current JPG-to-PLY reconstruction pipeline
 - POC 4C PLY output awareness and local sample test guidance
 - POC 4D local PLY-to-GLB conversion spike documentation and script
-- POC 4H browser-only GPS/EXIF readiness checks for image intake
+- POC 4H browser-only GPS/EXIF readiness and site-distance checks for image intake
 
 In progress / planned:
 
@@ -194,7 +194,8 @@ current JPG-to-PLY pipeline shape. POC 4C recognizes PLY/point-cloud output as
 pipeline-native data but still requires conversion to GLB or 3D Tiles before
 Cesium rendering. POC 4D adds a local Blender-based PLY-to-GLB conversion spike
 for testing small sample assets. POC 4H adds browser-only GPS/EXIF readiness
-checks to image intake. A real reconstruction service is not connected.
+checks and a simple image-GPS-to-site warning to image intake. A real
+reconstruction service is not connected.
 
 ## Research Direction
 

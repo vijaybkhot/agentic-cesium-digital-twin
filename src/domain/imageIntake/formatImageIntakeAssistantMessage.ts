@@ -28,11 +28,22 @@ function formatGpsSummary(summary: ImageIntakeSummary): string {
     return "No GPS metadata was inspected because no usable images were found.";
   }
 
-  return `GPS metadata was found in ${
+  const gpsCoverageSummary = `GPS metadata was found in ${
     summary.gpsPresentCount
   } of ${summary.imageCount} usable images (${summary.gpsCoveragePercent.toFixed(
     0,
   )}% coverage).`;
+
+  if (summary.averageGpsDistanceFromSiteMeters === undefined) {
+    return gpsCoverageSummary;
+  }
+
+  const distance =
+    summary.averageGpsDistanceFromSiteMeters >= 1000
+      ? `${(summary.averageGpsDistanceFromSiteMeters / 1000).toFixed(1)} km`
+      : `${Math.round(summary.averageGpsDistanceFromSiteMeters)} m`;
+
+  return `${gpsCoverageSummary} The average image GPS location is about ${distance} from the selected project site.`;
 }
 
 export function formatImageIntakeAssistantMessage(review: {

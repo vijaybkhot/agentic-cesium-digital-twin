@@ -75,8 +75,9 @@ Common risk factors include:
 - not enough useful shared features between images
 
 For image readiness work, the app should treat browser-only checks such as image
-count, resolution, and GPS/EXIF availability as an early guide. COLMAP feature
-matching remains the stronger feasibility signal.
+count, resolution, GPS/EXIF availability, and GPS distance from the selected
+site as an early guide. COLMAP feature matching remains the stronger feasibility
+signal.
 
 ## How This Affects The Cesium App
 

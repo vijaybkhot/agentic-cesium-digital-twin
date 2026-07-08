@@ -5,6 +5,7 @@
 - Added POC 4H browser-only GPS/EXIF readiness checks to image intake.
 - Added GPS metadata status for usable images: present, missing, or unknown.
 - Added GPS coverage counts to the image intake summary and mock assistant message.
+- Added an advisory warning when average image GPS appears far from the selected project site.
 - Kept GPS advisory only; missing GPS does not block mock reconstruction.
 - No backend upload, image storage, LLM review, COLMAP execution, or real reconstruction pre-check was added.
 
