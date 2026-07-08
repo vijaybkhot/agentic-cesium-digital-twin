@@ -15,11 +15,22 @@ function average(values: number[]): number {
   return values.length > 0 ? sum(values) / values.length : 0;
 }
 
+function countGpsStatus(
+  images: InspectedImage[],
+  status: InspectedImage["gps"]["status"],
+): number {
+  return images.filter((image) => image.gps.status === status).length;
+}
+
 function createSummary(
   images: InspectedImage[],
   unsupportedFileCount: number,
   failedImageCount: number,
 ): ImageIntakeSummary {
+  const gpsPresentCount = countGpsStatus(images, "present");
+  const gpsMissingCount = countGpsStatus(images, "missing");
+  const gpsUnknownCount = countGpsStatus(images, "unknown");
+
   return {
     imageCount: images.length,
     totalSizeBytes: sum(images.map((image) => image.fileSizeBytes)),
@@ -30,6 +41,11 @@ function createSummary(
     supportedImageCount: images.length + failedImageCount,
     unsupportedFileCount,
     failedImageCount,
+    gpsPresentCount,
+    gpsMissingCount,
+    gpsUnknownCount,
+    gpsCoveragePercent:
+      images.length > 0 ? (gpsPresentCount / images.length) * 100 : 0,
   };
 }
 
@@ -104,6 +120,23 @@ export function evaluateImageSetReadiness(args: {
       "Some images are below the initial resolution guideline of 1280x720.",
     );
     recommendedActions.push("Use higher resolution images where possible.");
+  }
+
+  if (summary.imageCount > 0 && summary.gpsPresentCount === 0) {
+    reasons.push("No usable images had readable GPS metadata.");
+    recommendedActions.push(
+      "Keep the site location filled in, and use phone or drone images with location services enabled when possible.",
+    );
+  } else if (
+    summary.gpsPresentCount > 0 &&
+    summary.gpsPresentCount < summary.imageCount
+  ) {
+    reasons.push(
+      `Readable GPS metadata was found in ${summary.gpsPresentCount} of ${summary.imageCount} usable images.`,
+    );
+    recommendedActions.push(
+      "Prefer image sets where most photos include GPS metadata, especially for real reconstruction placement.",
+    );
   }
 
   if (lowResolutionRatio > 0.5 && status === "ready_for_initial_test") {

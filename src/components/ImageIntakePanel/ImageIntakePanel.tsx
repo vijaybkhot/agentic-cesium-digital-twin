@@ -163,7 +163,7 @@ export function ImageIntakePanel({
           </label>
 
           {isInspecting && (
-            <p className="image-intake-status">Inspecting image dimensions...</p>
+            <p className="image-intake-status">Inspecting image metadata...</p>
           )}
 
           {error && <p className="image-intake-error">{error}</p>}
@@ -207,6 +207,22 @@ export function ImageIntakePanel({
                 <div>
                   <dt>Low resolution</dt>
                   <dd>{review.summary.lowResolutionCount}</dd>
+                </div>
+                <div>
+                  <dt>Images with GPS</dt>
+                  <dd>{review.summary.gpsPresentCount}</dd>
+                </div>
+                <div>
+                  <dt>Images without GPS</dt>
+                  <dd>{review.summary.gpsMissingCount}</dd>
+                </div>
+                <div>
+                  <dt>GPS coverage</dt>
+                  <dd>{review.summary.gpsCoveragePercent.toFixed(0)}%</dd>
+                </div>
+                <div>
+                  <dt>GPS unknown</dt>
+                  <dd>{review.summary.gpsUnknownCount}</dd>
                 </div>
               </dl>
 

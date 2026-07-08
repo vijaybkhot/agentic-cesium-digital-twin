@@ -138,12 +138,13 @@ Completed:
 - POC 4B notes documenting Ehsan's current JPG-to-PLY reconstruction pipeline
 - POC 4C PLY output awareness and local sample test guidance
 - POC 4D local PLY-to-GLB conversion spike documentation and script
+- POC 4H browser-only GPS/EXIF readiness checks for image intake
 
 In progress / planned:
 
 - More complete and validated config-driven `project_config.json`
 - Agent-assisted project configuration
-- Image intake audit and EXIF/GPS inspection
+- Deeper image intake audit beyond metadata checks
 - Real reconstruction pipeline integration
 - Conversion tests from real pipeline PLY output to GLB or 3D Tiles
 - Backend services
@@ -156,6 +157,7 @@ Future contract examples:
 - `docs/poc-4b-ehsan-reconstruction-pipeline.md`
 - `docs/poc-4c-ply-output-awareness.md`
 - `docs/poc-4d-ply-conversion-spike.md`
+- `docs/poc-4h-image-gps-exif-readiness.md`
 - `docs/examples/reconstruction_request.example.json`
 - `docs/examples/reconstruction_output.example.json`
 - `docs/examples/reconstruction_output_ply.example.json`
@@ -180,6 +182,7 @@ They are discussion artifacts only; they are not implemented runtime features.
 - POC 4B: Document Ehsan's current JPG-to-PLY pipeline
 - POC 4C: Recognize PLY/point-cloud output as pipeline-native data
 - POC 4D: Convert local PLY samples to GLB for a Cesium viewer spike
+- POC 4H: Add browser-only GPS/EXIF advisory checks to image intake
 - POC 3: 3D reconstruction integration
 - POC 4: Research extensions such as uncertainty, multi-digital-twin interaction, and decision support
 
@@ -190,7 +193,8 @@ documents the proposed real reconstruction handoff, and POC 4B records Ehsan's
 current JPG-to-PLY pipeline shape. POC 4C recognizes PLY/point-cloud output as
 pipeline-native data but still requires conversion to GLB or 3D Tiles before
 Cesium rendering. POC 4D adds a local Blender-based PLY-to-GLB conversion spike
-for testing small sample assets. A real reconstruction service is not connected.
+for testing small sample assets. POC 4H adds browser-only GPS/EXIF readiness
+checks to image intake. A real reconstruction service is not connected.
 
 ## Research Direction
 
@@ -255,6 +259,7 @@ docs/
   poc-4c-ply-output-awareness.md             POC 4C PLY output awareness notes
   poc-4d-ply-conversion-spike.md             POC 4D local conversion spike notes
   poc-4e-model-linked-sensors.md          POC 4E model-linked sensor notes
+  poc-4h-image-gps-exif-readiness.md      POC 4H GPS/EXIF intake notes
   ai-intake-assistant-scope.md            AI intake assistant scope notes
   reconstruction-pipeline-handshake.md    Reconstruction pipeline integration notes
   project-config-schema.md   Project configuration schema notes

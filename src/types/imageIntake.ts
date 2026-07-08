@@ -3,6 +3,14 @@ export type ImageReadinessStatus =
   | "needs_review"
   | "ready_for_initial_test";
 
+export type ImageGpsStatus = "present" | "missing" | "unknown";
+
+export interface ImageGpsMetadata {
+  status: ImageGpsStatus;
+  latitude?: number;
+  longitude?: number;
+}
+
 export interface InspectedImage {
   id: string;
   fileName: string;
@@ -12,6 +20,7 @@ export interface InspectedImage {
   height: number;
   megapixels: number;
   isLowResolution: boolean;
+  gps: ImageGpsMetadata;
 }
 
 export interface ImageIntakeSummary {
@@ -24,6 +33,10 @@ export interface ImageIntakeSummary {
   supportedImageCount: number;
   unsupportedFileCount: number;
   failedImageCount: number;
+  gpsPresentCount: number;
+  gpsMissingCount: number;
+  gpsUnknownCount: number;
+  gpsCoveragePercent: number;
 }
 
 export interface ReconstructionReadinessResult {

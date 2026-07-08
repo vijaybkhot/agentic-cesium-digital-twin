@@ -23,6 +23,18 @@ function formatList(title: string, values: string[]): string {
   return `${title}\n${values.map((value) => `- ${value}`).join("\n")}`;
 }
 
+function formatGpsSummary(summary: ImageIntakeSummary): string {
+  if (summary.imageCount === 0) {
+    return "No GPS metadata was inspected because no usable images were found.";
+  }
+
+  return `GPS metadata was found in ${
+    summary.gpsPresentCount
+  } of ${summary.imageCount} usable images (${summary.gpsCoveragePercent.toFixed(
+    0,
+  )}% coverage).`;
+}
+
 export function formatImageIntakeAssistantMessage(review: {
   summary: ImageIntakeSummary;
   readiness: ReconstructionReadinessResult;
@@ -34,6 +46,7 @@ export function formatImageIntakeAssistantMessage(review: {
     `I found ${review.summary.imageCount} usable ${imageLabel}. The image set is ${formatStatus(
       review.readiness.status,
     )}.`,
+    formatGpsSummary(review.summary),
     formatList("Reasons:", review.readiness.reasons),
     formatList("Missing inputs:", review.readiness.missingInputs),
     formatList("Recommended next actions:", review.readiness.recommendedActions),

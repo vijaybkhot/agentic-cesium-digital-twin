@@ -28,9 +28,9 @@ cloud.
 - There is no strict image-count requirement yet, but image sequence, overlap,
   and GPS metadata strongly affect whether reconstruction succeeds.
 
-For the Cesium app, this means the image intake step should eventually check for
-JPG/JPEG compatibility and GPS/EXIF availability before sending images to the
-real pipeline.
+For the Cesium app, this means the image intake step should check JPG/JPEG
+compatibility and GPS/EXIF availability before sending images to the real
+pipeline. POC 4H now adds the first browser-only GPS/EXIF advisory check.
 
 ## Current Output
 
@@ -74,8 +74,9 @@ Common risk factors include:
 - weak image overlap
 - not enough useful shared features between images
 
-For future image readiness work, the app should treat browser-only checks as an
-early guide and COLMAP feature matching as the stronger feasibility signal.
+For image readiness work, the app should treat browser-only checks such as image
+count, resolution, and GPS/EXIF availability as an early guide. COLMAP feature
+matching remains the stronger feasibility signal.
 
 ## How This Affects The Cesium App
 
@@ -92,7 +93,7 @@ project setup
 POC 4B clarifies that the real pipeline handoff should initially plan around:
 
 - JPG/JPEG image input
-- optional or required GPS/EXIF metadata checks
+- browser-only GPS/EXIF metadata checks as an advisory signal
 - PLY point cloud output
 - placement metadata or conversion from local coordinates to global location
 - future conversion to GLB or 3D Tiles for Cesium rendering
@@ -109,7 +110,7 @@ POC 4B clarifies that the real pipeline handoff should initially plan around:
 
 ## Next Recommended POCs
 
-- Add JPG/GPS-oriented image intake documentation and later EXIF inspection.
+- Use POC 4H GPS/EXIF intake results in the future real handoff metadata.
 - Add a PLY handoff example to the reconstruction contract.
 - Use a licensed local sample PLY for handoff testing without committing the binary.
 - Wait for Ehsan's sample PLY file, then run a focused conversion/rendering spike.

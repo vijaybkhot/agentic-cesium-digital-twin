@@ -1,4 +1,8 @@
-import type { InspectedImage } from "../../types/imageIntake";
+import exifr from "exifr";
+import type {
+  ImageGpsMetadata,
+  InspectedImage,
+} from "../../types/imageIntake";
 
 const lowResolutionWidth = 1280;
 const lowResolutionHeight = 720;
@@ -7,14 +11,48 @@ function createImageId(file: File): string {
   return `${file.name}-${file.size}-${file.lastModified}`;
 }
 
-export function inspectImageFile(file: File): Promise<InspectedImage> {
+function isJpegImage(file: File): boolean {
+  return file.type === "image/jpeg" || /\.jpe?g$/i.test(file.name);
+}
+
+async function inspectGpsMetadata(file: File): Promise<ImageGpsMetadata> {
+  if (!isJpegImage(file)) {
+    return { status: "unknown" };
+  }
+
+  try {
+    const gps = await exifr.gps(file);
+
+    if (
+      Number.isFinite(gps?.latitude) &&
+      Number.isFinite(gps?.longitude)
+    ) {
+      return {
+        status: "present",
+        latitude: gps.latitude,
+        longitude: gps.longitude,
+      };
+    }
+
+    return { status: "missing" };
+  } catch (error) {
+    console.warn(`Could not read GPS metadata for ${file.name}.`, error);
+    return { status: "unknown" };
+  }
+}
+
+function inspectImageDimensions(file: File): Promise<{
+  width: number;
+  height: number;
+  megapixels: number;
+  isLowResolution: boolean;
+}> {
   if (!file.type.startsWith("image/")) {
     return Promise.reject(
       new Error(`${file.name} is not a supported browser image file.`),
     );
   }
 
-  // TODO: Add EXIF/GPS metadata extraction in a future backend or dedicated browser parser.
   const objectUrl = URL.createObjectURL(file);
 
   return new Promise((resolve, reject) => {
@@ -32,10 +70,6 @@ export function inspectImageFile(file: File): Promise<InspectedImage> {
 
       cleanup();
       resolve({
-        id: createImageId(file),
-        fileName: file.name,
-        fileType: file.type,
-        fileSizeBytes: file.size,
         width,
         height,
         megapixels,
@@ -51,4 +85,20 @@ export function inspectImageFile(file: File): Promise<InspectedImage> {
 
     image.src = objectUrl;
   });
+}
+
+export async function inspectImageFile(file: File): Promise<InspectedImage> {
+  const [dimensions, gps] = await Promise.all([
+    inspectImageDimensions(file),
+    inspectGpsMetadata(file),
+  ]);
+
+  return {
+    id: createImageId(file),
+    fileName: file.name,
+    fileType: file.type,
+    fileSizeBytes: file.size,
+    ...dimensions,
+    gps,
+  };
 }
