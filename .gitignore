@@ -14,7 +14,8 @@ dist-ssr
 
 # Local reconstruction sample outputs
 public/models/*.ply
-public/models/local-*.glb
+public/models/*.glb
+!public/models/CesiumMilkTruck.glb
 
 # Python tooling caches
 __pycache__/

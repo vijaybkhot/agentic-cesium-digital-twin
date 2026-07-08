@@ -60,7 +60,8 @@ The repo ignores:
 
 ```text
 public/models/*.ply
-public/models/local-*.glb
+public/models/*.glb
+!public/models/CesiumMilkTruck.glb
 ```
 
 This keeps downloaded PLY samples and generated GLB test files out of Git by
@@ -94,8 +95,32 @@ documented in the repository.
 ## Current Validation Note
 
 This repository includes the conversion script and documentation, but it does
-not include Blender or a sample PLY file. If Blender is not installed on a local
-machine, the script cannot be executed yet.
+not commit Blender, downloaded sample PLY files, or generated GLB files.
+
+Local testing with the Stanford Bunny showed an important distinction:
+
+- Single scan/range-grid PLY files such as `bun270.ply` can import into Blender
+  but may export an empty GLB because they do not contain exportable mesh
+  primitives.
+- Reconstructed mesh PLY files such as `bun_zipper.ply`, which include both
+  vertices and faces, convert successfully to GLB through the Blender command
+  line.
+
+The successful local command used the selected mesh PLY and produced a GLB of
+about 5.55 MB:
+
+```bash
+/Applications/Blender.app/Contents/MacOS/Blender \
+  --background \
+  --factory-startup \
+  --python tools/convert-ply-to-glb.py -- \
+  public/models/bun_zipper.ply \
+  public/models/local-bun-zipper.glb
+```
+
+The converted local GLB rendered in Cesium when used as a temporary
+`modelAssets[].assetUrl`. That temporary asset and config change should remain
+local-only unless the sample license and attribution are documented.
 
 ## Decision From This Spike
 
