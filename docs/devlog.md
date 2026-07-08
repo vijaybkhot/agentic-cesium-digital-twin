@@ -1,5 +1,12 @@
 # Devlog
 
+## 2026-07-02
+
+- Added POC 4D local PLY-to-GLB conversion spike documentation.
+- Added a Blender command-line script for converting local PLY samples to GLB.
+- Kept raw PLY samples and generated local GLB files ignored by default.
+- Clarified that 3D Tiles remains the likely future path for large point clouds.
+
 ## 2026-07-01
 
 - Added POC 4C PLY output awareness without adding raw PLY rendering.

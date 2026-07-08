@@ -21,6 +21,11 @@ PLY point-cloud output is treated as pipeline-native data that should be
 converted to GLB or 3D Tiles before Cesium rendering. See
 `docs/poc-4c-ply-output-awareness.md`.
 
+POC 4D adds a local Blender-based PLY-to-GLB conversion spike. It is a local
+tooling experiment only; it does not add backend upload, real COLMAP execution,
+raw PLY rendering, or 3D Tiles rendering. See
+`docs/poc-4d-ply-conversion-spike.md`.
+
 ## Responsibilities
 
 ### Cesium / Agent Intake Side
@@ -115,6 +120,10 @@ GLB may be enough for small/simple models. It is straightforward to load and use
 PLY point clouds are useful pipeline output, but they are not the current direct
 Cesium rendering path in this app. Keep PLY as the native reconstruction output,
 then test conversion to GLB for small demos or 3D Tiles for larger point clouds.
+
+The current local conversion spike uses Blender to test PLY to GLB conversion.
+Generated local GLB samples should stay uncommitted until their source license
+and attribution are documented.
 
 The architecture should support GLB, 3D Tiles, and pipeline-native assets
 through `modelAssets` in config.

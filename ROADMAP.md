@@ -35,6 +35,7 @@
 - POC 4A: Define the reconstruction handoff contract before connecting a real backend.
 - POC 4B: Document Ehsan's current JPG-to-PLY reconstruction pipeline.
 - POC 4C: Recognize PLY/point-cloud output as pipeline-native data and document the conversion path before raw rendering.
+- POC 4D: Add a local PLY-to-GLB conversion spike using Blender while keeping sample/generated assets local-only.
 - Add real backend reconstruction job orchestration.
 - Implement a real `ReconstructionProvider`.
 - Visualize reconstruction outputs as tilesets/models in Cesium.
