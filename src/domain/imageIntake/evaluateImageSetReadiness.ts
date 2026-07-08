@@ -212,6 +212,12 @@ export function evaluateImageSetReadiness(args: {
     summary.averageGpsDistanceFromSiteMeters !== undefined &&
     summary.averageGpsDistanceFromSiteMeters > siteGpsDistanceWarningMeters
   ) {
+    if (summary.gpsPresentCount === 1) {
+      reasons.push(
+        "Only one image had GPS, so this distance check is based on limited GPS data.",
+      );
+    }
+
     reasons.push(
       `The average image GPS location is about ${formatDistance(
         summary.averageGpsDistanceFromSiteMeters,

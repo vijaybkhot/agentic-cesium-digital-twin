@@ -42,8 +42,12 @@ function formatGpsSummary(summary: ImageIntakeSummary): string {
     summary.averageGpsDistanceFromSiteMeters >= 1000
       ? `${(summary.averageGpsDistanceFromSiteMeters / 1000).toFixed(1)} km`
       : `${Math.round(summary.averageGpsDistanceFromSiteMeters)} m`;
+  const limitedGpsNotice =
+    summary.gpsPresentCount === 1
+      ? " Only one image had GPS, so this distance check is based on limited GPS data."
+      : "";
 
-  return `${gpsCoverageSummary} The average image GPS location is about ${distance} from the selected project site.`;
+  return `${gpsCoverageSummary}${limitedGpsNotice} The average image GPS location is about ${distance} from the selected project site.`;
 }
 
 export function formatImageIntakeAssistantMessage(review: {

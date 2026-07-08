@@ -41,6 +41,9 @@ used as supporting evidence. If the average image GPS location is more than
 about 1 km from the selected project site, the app shows a warning so the user
 can confirm the site before running a real reconstruction.
 
+If only one image has GPS, the app says the distance check is based on limited
+GPS data.
+
 ## Local-Only Behavior
 
 All inspection happens in the browser:
