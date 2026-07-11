@@ -23,6 +23,7 @@
 ## POC 2A: Browser Image Readiness Review
 
 - Inspect local image dimensions and sizes without uploading files.
+- Inspect GPS/EXIF availability locally in the browser as an advisory signal.
 - Apply deterministic readiness rules.
 - Present mock assistant guidance for an initial reconstruction trial.
 
@@ -36,6 +37,7 @@
 - POC 4B: Document Ehsan's current JPG-to-PLY reconstruction pipeline.
 - POC 4C: Recognize PLY/point-cloud output as pipeline-native data and document the conversion path before raw rendering.
 - POC 4D: Add a local PLY-to-GLB conversion spike using Blender while keeping sample/generated assets local-only.
+- POC 4H: Add browser-only GPS/EXIF readiness checks before real pipeline handoff.
 - Add real backend reconstruction job orchestration.
 - Implement a real `ReconstructionProvider`.
 - Visualize reconstruction outputs as tilesets/models in Cesium.

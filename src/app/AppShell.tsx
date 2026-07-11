@@ -49,6 +49,15 @@ export function AppShell() {
   });
   const [isPanelVisible, setIsPanelVisible] = useState(true);
   const [mode, setMode] = useState<ApplicationMode>("workflow");
+  const existingDemoProjectLocation =
+    config &&
+    Number.isFinite(config.scene.center.lat) &&
+    Number.isFinite(config.scene.center.lon)
+      ? {
+          lat: config.scene.center.lat,
+          lon: config.scene.center.lon,
+        }
+      : undefined;
 
   const placePanel = useCallback((left: number, top: number) => {
     const panel = panelRef.current;
@@ -234,10 +243,8 @@ export function AppShell() {
       ) : (
         <>
           <ImageIntakePanel
-            hasProjectLocation={
-              Number.isFinite(config?.scene.center.lat) &&
-              Number.isFinite(config?.scene.center.lon)
-            }
+            hasProjectLocation={Boolean(existingDemoProjectLocation)}
+            projectLocation={existingDemoProjectLocation}
           />
           <button
             className={`floating-button ${

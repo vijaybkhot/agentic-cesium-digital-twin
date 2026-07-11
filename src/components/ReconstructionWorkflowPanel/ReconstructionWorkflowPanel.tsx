@@ -222,6 +222,14 @@ export function ReconstructionWorkflowPanel({
               key={imageIntakeVersion}
               variant="embedded"
               hasProjectLocation
+              projectLocation={
+                config.siteMarker
+                  ? {
+                      lat: config.siteMarker.lat,
+                      lon: config.siteMarker.lon,
+                    }
+                  : undefined
+              }
               onSelectionChange={onImageSelectionChange}
             />
           </div>

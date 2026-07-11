@@ -15,9 +15,11 @@ This is a rule-based mock assistant. It does not call an LLM, upload files, run 
 - average resolution
 - average megapixels
 - low-resolution image count
+- GPS/EXIF availability
 - basic reconstruction readiness status
 
-Files stay on the user's machine. The browser reads image dimensions locally.
+Files stay on the user's machine. The browser reads image dimensions and
+GPS/EXIF availability locally.
 
 ## Readiness Statuses
 
@@ -47,7 +49,8 @@ http://localhost:5173/
 2. Select 1 image and confirm the status is `Not Ready`.
 3. Select 20-39 images and confirm the status is `Review Recommended`.
 4. Select 40 or more good-resolution images and confirm the status is `Ready for Initial Test`.
-5. Confirm the panel shows image count, total size, average resolution, average megapixels, and low-resolution count.
+5. Confirm the panel shows image count, total size, average resolution, average megapixels, low-resolution count, and GPS coverage.
+6. With GPS-tagged images, confirm the panel can show the distance between image GPS and the selected project site.
 
 Good test sources include phone photos of one site/object or public photogrammetry datasets such as COLMAP sample images. Keep large datasets outside the repository.
 
@@ -55,7 +58,7 @@ Good test sources include phone photos of one site/object or public photogrammet
 
 - No cloud upload.
 - No backend handoff.
-- No EXIF/GPS parsing yet.
+- GPS/EXIF checks and site-distance warnings are advisory only and do not prove reconstruction quality.
 - No computer vision quality analysis.
 - No COLMAP or reconstruction execution yet.
 - The file picker currently accepts image files only, so unsupported-file testing may require future UI changes.

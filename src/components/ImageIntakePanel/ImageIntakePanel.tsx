@@ -5,11 +5,13 @@ import { inspectImageSet } from "../../domain/imageIntake/inspectImageSet";
 import type {
   ImageIntakeReview,
   ImageReadinessStatus,
+  ProjectSiteLocation,
 } from "../../types/imageIntake";
 import "./ImageIntakePanel.css";
 
 interface ImageIntakePanelProps {
   hasProjectLocation?: boolean;
+  projectLocation?: ProjectSiteLocation;
   variant?: "floating" | "embedded";
   onSelectionChange?: (
     files: File[],
@@ -39,8 +41,17 @@ function formatStatus(status: ImageReadinessStatus): string {
   return "Not Ready";
 }
 
+function formatDistance(distanceMeters: number): string {
+  if (distanceMeters >= 1000) {
+    return `${(distanceMeters / 1000).toFixed(1)} km`;
+  }
+
+  return `${Math.round(distanceMeters)} m`;
+}
+
 export function ImageIntakePanel({
   hasProjectLocation = false,
+  projectLocation,
   variant = "floating",
   onSelectionChange,
 }: ImageIntakePanelProps) {
@@ -70,7 +81,8 @@ export function ImageIntakePanel({
         images: inspection.images,
         unsupportedFileCount: inspection.unsupportedFileCount,
         failedImageCount: inspection.failedImageCount,
-        hasManualLocation: hasProjectLocation,
+        hasManualLocation: hasProjectLocation || Boolean(projectLocation),
+        siteLocation: projectLocation,
       });
       const nextReview = {
         images: inspection.images,
@@ -163,7 +175,7 @@ export function ImageIntakePanel({
           </label>
 
           {isInspecting && (
-            <p className="image-intake-status">Inspecting image dimensions...</p>
+            <p className="image-intake-status">Inspecting image metadata...</p>
           )}
 
           {error && <p className="image-intake-error">{error}</p>}
@@ -208,6 +220,33 @@ export function ImageIntakePanel({
                   <dt>Low resolution</dt>
                   <dd>{review.summary.lowResolutionCount}</dd>
                 </div>
+                <div>
+                  <dt>Images with GPS</dt>
+                  <dd>{review.summary.gpsPresentCount}</dd>
+                </div>
+                <div>
+                  <dt>Images without GPS</dt>
+                  <dd>{review.summary.gpsMissingCount}</dd>
+                </div>
+                <div>
+                  <dt>GPS coverage</dt>
+                  <dd>{review.summary.gpsCoveragePercent.toFixed(0)}%</dd>
+                </div>
+                <div>
+                  <dt>GPS unknown</dt>
+                  <dd>{review.summary.gpsUnknownCount}</dd>
+                </div>
+                {review.summary.averageGpsDistanceFromSiteMeters !==
+                  undefined && (
+                  <div>
+                    <dt>GPS-site distance</dt>
+                    <dd>
+                      {formatDistance(
+                        review.summary.averageGpsDistanceFromSiteMeters,
+                      )}
+                    </dd>
+                  </div>
+                )}
               </dl>
 
               <ResultList title="Reasons" values={review.readiness.reasons} />

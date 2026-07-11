@@ -26,13 +26,19 @@ tooling experiment only; it does not add backend upload, real COLMAP execution,
 raw PLY rendering, or 3D Tiles rendering. See
 `docs/poc-4d-ply-conversion-spike.md`.
 
+POC 4H adds browser-only GPS/EXIF readiness checks to image intake. It reports
+GPS coverage and a simple image-GPS-to-site distance warning as advisory signals
+before reconstruction handoff, but does not upload images or run a real
+feasibility check. See
+`docs/poc-4h-image-gps-exif-readiness.md`.
+
 ## Responsibilities
 
 ### Cesium / Agent Intake Side
 
 - collect user inputs
 - collect uploaded images in future
-- inspect metadata
+- inspect metadata, including GPS/EXIF availability
 - create project ID
 - generate or update `project_config.json`
 - consume model asset references
@@ -59,6 +65,10 @@ application flow.
 
 Example request, status, output, PLY output, and error payloads live in
 `docs/examples/`.
+
+Future request metadata can include image GPS coverage and image-GPS-to-site
+distance from POC 4H so the reconstruction side knows whether GPS was available
+and roughly aligned before running heavier pipeline steps.
 
 ## Shared Output Contract
 
