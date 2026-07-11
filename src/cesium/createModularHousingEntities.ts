@@ -75,9 +75,52 @@ function getModuleCoordinate(
 
   return offsetCoordinate(
     scenario.factorySite.location,
-    -220 + moduleIndex * 120,
-    -260,
+    -120 + moduleIndex * 120,
+    -120,
   );
+}
+
+function getFocusCoordinates(
+  scenario: ModularHousingScenario,
+  target: ModularCameraTarget,
+): ModularCoordinate[] {
+  if (target === "factory") {
+    return [
+      scenario.factorySite.location,
+      ...scenario.productionStations.map((station) => station.location),
+      ...scenario.modules
+        .map((module, index) =>
+          module.currentLocation === "factory"
+            ? getModuleCoordinate(scenario, module, index)
+            : null,
+        )
+        .filter((coordinate): coordinate is ModularCoordinate =>
+          Boolean(coordinate),
+        ),
+    ];
+  }
+
+  if (target === "site") {
+    return [
+      scenario.constructionSite.location,
+      ...scenario.installationZones.map((zone) => zone.location),
+      ...scenario.modules
+        .map((module, index) =>
+          module.currentLocation === "construction-site"
+            ? getModuleCoordinate(scenario, module, index)
+            : null,
+        )
+        .filter((coordinate): coordinate is ModularCoordinate =>
+          Boolean(coordinate),
+        ),
+    ];
+  }
+
+  return [
+    scenario.factorySite.location,
+    ...scenario.route.checkpoints.map((checkpoint) => checkpoint.location),
+    scenario.constructionSite.location,
+  ];
 }
 
 function moduleColor(module: ModularUnit): Cesium.Color {
@@ -428,35 +471,18 @@ export function flyToModularScenarioTarget(
   scenario: ModularHousingScenario,
   target: ModularCameraTarget,
 ): void {
-  const targetCoordinate =
-    target === "factory"
-      ? scenario.factorySite.location
-      : target === "site"
-        ? scenario.constructionSite.location
-        : {
-            lat:
-              (scenario.factorySite.location.lat +
-                scenario.constructionSite.location.lat) /
-              2,
-            lon:
-              (scenario.factorySite.location.lon +
-                scenario.constructionSite.location.lon) /
-              2,
-            height: 0,
-          };
-  const height = target === "system" ? 26000 : 5200;
+  const focusPoints = getFocusCoordinates(scenario, target).map(
+    pointFromCoordinate,
+  );
+  const range = target === "system" ? 30000 : 2400;
+  const boundingSphere = Cesium.BoundingSphere.fromPoints(focusPoints);
 
-  viewer.camera.flyTo({
-    destination: Cesium.Cartesian3.fromDegrees(
-      targetCoordinate.lon,
-      targetCoordinate.lat,
-      height,
+  viewer.camera.flyToBoundingSphere(boundingSphere, {
+    offset: new Cesium.HeadingPitchRange(
+      0,
+      -Cesium.Math.PI_OVER_TWO,
+      range,
     ),
-    orientation: {
-      heading: 0,
-      pitch: Cesium.Math.toRadians(target === "system" ? -70 : -58),
-      roll: 0,
-    },
     duration: 1,
   });
 }
