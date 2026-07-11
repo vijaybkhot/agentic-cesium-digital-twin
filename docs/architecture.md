@@ -13,10 +13,18 @@ or an in-memory workflow config through the same Cesium adapter.
   marker and finally a returned model asset.
 - Existing demo: loads `public/project_config.json` and preserves the facility,
   measurement, image intake, belief-state, model, and annotation features.
+- Planned modular housing demo: will remain a separate proposal-demo mode for a
+  factory, logistics, and construction-site digital twin scenario. Its first
+  implementation should use typed mock scenario data and modular-specific
+  Cesium entities instead of replacing `project_config.json` or reusing
+  decommissioning measurement fields.
 
 The mock reconstruction provider follows the same port intended for a future
 backend provider. Its timers and sample GLB can be replaced without changing
 Cesium rendering.
+
+The modular housing demo guardrails are recorded in
+`docs/decisions/005-modular-housing-demo-guardrails.md`.
 
 ## Why Config-Driven
 

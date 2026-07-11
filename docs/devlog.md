@@ -1,5 +1,12 @@
 # Devlog
 
+## 2026-07-11
+
+- Added modular housing demo architecture guardrails before implementation.
+- Documented that the first modular demo should be a separate app mode with
+  typed mock scenario data, modular-specific Cesium entities, and explicit
+  mock-only AI/robotics/logistics boundaries.
+
 ## 2026-07-08
 
 - Added POC 4H browser-only GPS/EXIF readiness checks to image intake.
