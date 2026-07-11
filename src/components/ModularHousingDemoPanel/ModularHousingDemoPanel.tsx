@@ -13,6 +13,12 @@ interface ModularHousingDemoPanelProps {
   onOpenExistingDemo: () => void;
 }
 
+const acronymLabels: Record<string, string> = {
+  ai: "AI",
+  mep: "MEP",
+  qc: "QC",
+};
+
 function formatCoordinate(location: { lat: number; lon: number }): string {
   return `${location.lat.toFixed(4)}, ${location.lon.toFixed(4)}`;
 }
@@ -20,7 +26,10 @@ function formatCoordinate(location: { lat: number; lon: number }): string {
 function formatSlug(value: string): string {
   return value
     .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .map(
+      (part) =>
+        acronymLabels[part] ?? part.charAt(0).toUpperCase() + part.slice(1),
+    )
     .join(" ");
 }
 
