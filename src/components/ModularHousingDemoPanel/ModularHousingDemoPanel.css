@@ -1,0 +1,151 @@
+.modular-demo-panel {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  width: 430px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 20px;
+  color: #1d2736;
+  background: rgba(247, 248, 251, 0.97);
+  border: 1px solid #d7dbe5;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16);
+}
+
+.modular-demo-heading h1 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.modular-demo-copy {
+  color: #475569;
+  line-height: 1.5;
+}
+
+.modular-demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #d7dbe5;
+}
+
+.modular-demo-section {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #d7dbe5;
+}
+
+.modular-demo-section h2 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.modular-demo-details {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.modular-demo-details div {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  gap: 10px;
+}
+
+.modular-demo-details dt,
+.module-card dt {
+  color: #64748b;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.modular-demo-details dd,
+.module-card dd {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.module-list {
+  display: grid;
+  gap: 10px;
+}
+
+.module-card {
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #d7dbe5;
+  border-radius: 8px;
+}
+
+.module-card-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.module-card-heading span {
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+.module-card dl {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.module-card dl div {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.modular-demo-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.modular-demo-list li {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #d7dbe5;
+  border-radius: 8px;
+  line-height: 1.4;
+}
+
+.modular-demo-list small {
+  color: #475569;
+}
+
+.modular-demo-meta {
+  color: #0f766e;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .modular-demo-panel {
+    right: 12px;
+    left: 12px;
+    width: auto;
+    max-width: none;
+    max-height: calc(100vh - 24px);
+  }
+}

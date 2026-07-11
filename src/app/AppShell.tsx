@@ -1,14 +1,17 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CesiumScene } from "../components/CesiumScene/CesiumScene";
 import { ImageIntakePanel } from "../components/ImageIntakePanel/ImageIntakePanel";
+import { ModularHousingDemoPanel } from "../components/ModularHousingDemoPanel/ModularHousingDemoPanel";
 import { ReconstructionWorkflowPanel } from "../components/ReconstructionWorkflowPanel/ReconstructionWorkflowPanel";
 import { SidePanel } from "../components/SidePanel/SidePanel";
 import { StatusPanel } from "../components/StatusPanel/StatusPanel";
 import { Toolbar } from "../components/Toolbar/Toolbar";
+import { createModularHousingViewerConfig } from "../domain/modularHousing/createModularHousingViewerConfig";
+import { mockModularHousingScenario } from "../domain/modularHousing/mockModularHousingScenario";
 import { useProjectState } from "./useProjectState";
 import { useReconstructionWorkflow } from "./useReconstructionWorkflow";
 
-type ApplicationMode = "workflow" | "existing-demo";
+type ApplicationMode = "workflow" | "existing-demo" | "modular-demo";
 
 interface DragState {
   active: boolean;
@@ -49,6 +52,10 @@ export function AppShell() {
   });
   const [isPanelVisible, setIsPanelVisible] = useState(true);
   const [mode, setMode] = useState<ApplicationMode>("workflow");
+  const modularViewerConfig = useMemo(
+    () => createModularHousingViewerConfig(mockModularHousingScenario),
+    [],
+  );
   const existingDemoProjectLocation =
     config &&
     Number.isFinite(config.scene.center.lat) &&
@@ -159,8 +166,19 @@ export function AppShell() {
     setIsPanelVisible(true);
   }, [clearProject, workflow.resetWorkflow]);
 
+  const openModularDemo = useCallback(() => {
+    clearSelection();
+    workflow.resetWorkflow();
+    setMode("modular-demo");
+    setIsPanelVisible(true);
+  }, [clearSelection, workflow.resetWorkflow]);
+
   const activeConfig =
-    mode === "existing-demo" ? config : workflow.config;
+    mode === "existing-demo"
+      ? config
+      : mode === "modular-demo"
+        ? modularViewerConfig
+        : workflow.config;
 
   return (
     <div className="app-shell">
@@ -239,6 +257,13 @@ export function AppShell() {
           onStartReconstruction={() => void workflow.startReconstruction()}
           onResetWorkflow={workflow.resetWorkflow}
           onOpenExistingDemo={() => void openExistingDemo()}
+          onOpenModularDemo={openModularDemo}
+        />
+      ) : mode === "modular-demo" ? (
+        <ModularHousingDemoPanel
+          scenario={mockModularHousingScenario}
+          onNewProject={startNewProject}
+          onOpenExistingDemo={() => void openExistingDemo()}
         />
       ) : (
         <>
@@ -266,6 +291,7 @@ export function AppShell() {
             isVisible={isPanelVisible}
             onHide={() => setIsPanelVisible(false)}
             onNewProject={startNewProject}
+            onOpenModularDemo={openModularDemo}
             onClearSelection={clearSelection}
             onResetPosition={() => {
               setIsPanelVisible(true);

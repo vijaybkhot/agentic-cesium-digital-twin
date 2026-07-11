@@ -24,6 +24,7 @@ This version demonstrates the Cesium visualization and interaction layer. It is 
 - Clickable model-local inspection annotations
 - Model annotations linked to existing sensor/measurement data
 - Browser-only project setup and mock COLMAP reconstruction workflow
+- Separate modular housing proposal-demo mode with typed mock scenario data
 - Reconstruction handoff contract examples for future pipeline integration
 - PLY/point-cloud output awareness with conversion guidance for Cesium rendering
 
@@ -96,6 +97,12 @@ Select `Open existing demo` to load `public/project_config.json` and use the
 facility, measurement, belief-state, image intake, GLB, and annotation features
 from the earlier POCs.
 
+Select `Open modular housing demo` to view the proposal-support modular housing
+scenario shell. This mode uses typed mock data for factory, logistics, site,
+module, event, and recommendation concepts. Detailed modular Cesium entities are
+planned separately; the current shell is not connected to real AI, robotics,
+factory, logistics, or construction-site systems.
+
 Build the project:
 
 ```bash
@@ -134,6 +141,7 @@ Completed:
 - Model-local inspection annotations using standardized ENU coordinates
 - Model-linked sensors that reuse existing measurement editing controls
 - Browser-only mock COLMAP workflow from project setup to model display
+- Modular housing proposal-demo mode foundation with typed mock scenario data
 - POC 4A reconstruction handoff contract for discussion with the reconstruction pipeline owner
 - POC 4B notes documenting Ehsan's current JPG-to-PLY reconstruction pipeline
 - POC 4C PLY output awareness and local sample test guidance

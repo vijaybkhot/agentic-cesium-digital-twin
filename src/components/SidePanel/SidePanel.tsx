@@ -24,6 +24,7 @@ interface SidePanelProps {
   isVisible: boolean;
   onHide: () => void;
   onNewProject: () => void;
+  onOpenModularDemo: () => void;
   onClearSelection: () => void;
   onResetPosition: () => void;
   onApplyMeasurementUpdate: (
@@ -48,6 +49,7 @@ export function SidePanel({
   isVisible,
   onHide,
   onNewProject,
+  onOpenModularDemo,
   onClearSelection,
   onResetPosition,
   onApplyMeasurementUpdate,
@@ -116,6 +118,9 @@ export function SidePanel({
           </button>
           <button className="panel-button" type="button" onClick={onNewProject}>
             New project
+          </button>
+          <button className="panel-button" type="button" onClick={onOpenModularDemo}>
+            Modular demo
           </button>
           <button className="panel-button" type="button" onClick={onHide}>
             Hide

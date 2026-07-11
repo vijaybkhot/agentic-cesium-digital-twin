@@ -35,6 +35,7 @@ interface ReconstructionWorkflowPanelProps {
   onStartReconstruction: () => void;
   onResetWorkflow: () => void;
   onOpenExistingDemo: () => void;
+  onOpenModularDemo: () => void;
 }
 
 function getJobMessage(job: ReconstructionJob | null): string {
@@ -83,6 +84,7 @@ export function ReconstructionWorkflowPanel({
   onStartReconstruction,
   onResetWorkflow,
   onOpenExistingDemo,
+  onOpenModularDemo,
 }: ReconstructionWorkflowPanelProps) {
   const completedAsset = config.modelAssets?.[0] ?? null;
   const viewerSupport = completedAsset
@@ -209,6 +211,13 @@ export function ReconstructionWorkflowPanel({
               onClick={onOpenExistingDemo}
             >
               Open existing demo
+            </button>
+            <button
+              className="panel-button"
+              type="button"
+              onClick={onOpenModularDemo}
+            >
+              Open modular housing demo
             </button>
           </div>
         </>
