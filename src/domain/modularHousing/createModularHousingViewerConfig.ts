@@ -35,12 +35,6 @@ export function createModularHousingViewerConfig(
         range: 120000,
       },
     },
-    siteMarker: {
-      lat: center.lat,
-      lon: center.lon,
-      height: 0,
-      label: "Modular housing demo region",
-    },
     beliefRules: {
       doseRate: {
         lowMax: 0,

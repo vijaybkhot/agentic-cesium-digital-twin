@@ -132,6 +132,11 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       stationType: "Robotic fabrication",
       status: "idle",
       siteId: "factory-baton-rouge",
+      location: {
+        lat: 30.4588,
+        lon: -91.1767,
+        height: 0,
+      },
       moduleIds: [],
     },
     {
@@ -140,6 +145,11 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       stationType: "Robotic assembly",
       status: "quality-check",
       siteId: "factory-baton-rouge",
+      location: {
+        lat: 30.4583,
+        lon: -91.1755,
+        height: 0,
+      },
       moduleIds: ["MOD-BATH-001"],
     },
     {
@@ -148,6 +158,11 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       stationType: "Robotic fit-out",
       status: "delayed",
       siteId: "factory-baton-rouge",
+      location: {
+        lat: 30.4577,
+        lon: -91.1763,
+        height: 0,
+      },
       moduleIds: ["MOD-KIT-003"],
     },
   ],

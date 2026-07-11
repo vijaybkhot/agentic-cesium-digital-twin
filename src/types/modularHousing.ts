@@ -4,6 +4,17 @@ export interface ModularCoordinate {
   height?: number;
 }
 
+export type ModularCameraTarget = "system" | "factory" | "site";
+
+export type ModularEntityKind =
+  | "factory-site"
+  | "construction-site"
+  | "logistics-route"
+  | "route-checkpoint"
+  | "module"
+  | "production-station"
+  | "installation-zone";
+
 export type ModularSiteRole = "factory" | "construction-site";
 
 export type ModularSiteStatus =
@@ -108,6 +119,7 @@ export interface ProductionStation {
   stationType: string;
   status: ProductionStationStatus;
   siteId: string;
+  location: ModularCoordinate;
   moduleIds: string[];
 }
 

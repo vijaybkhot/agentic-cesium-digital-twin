@@ -1,44 +1,34 @@
 import type {
   DigitalTwinAssociation,
   ModularAiRecommendation,
+  ModularCameraTarget,
   ModularHousingScenario,
   ModularTwinEvent,
   ModularUnit,
 } from "../../types/modularHousing";
+import { formatModularSlug } from "../../domain/modularHousing/formatModularHousingLabels";
 import "./ModularHousingDemoPanel.css";
 
 interface ModularHousingDemoPanelProps {
   scenario: ModularHousingScenario;
+  selectedModularEntityId?: string | null;
+  onFocusTarget: (target: ModularCameraTarget) => void;
   onNewProject: () => void;
   onOpenExistingDemo: () => void;
 }
-
-const acronymLabels: Record<string, string> = {
-  ai: "AI",
-  mep: "MEP",
-  qc: "QC",
-};
 
 function formatCoordinate(location: { lat: number; lon: number }): string {
   return `${location.lat.toFixed(4)}, ${location.lon.toFixed(4)}`;
 }
 
-function formatSlug(value: string): string {
-  return value
-    .split("-")
-    .map(
-      (part) =>
-        acronymLabels[part] ?? part.charAt(0).toUpperCase() + part.slice(1),
-    )
-    .join(" ");
-}
-
 function formatTwinAssociation(value: DigitalTwinAssociation): string {
-  return formatSlug(value);
+  return formatModularSlug(value);
 }
 
 export function ModularHousingDemoPanel({
   scenario,
+  selectedModularEntityId = null,
+  onFocusTarget,
   onNewProject,
   onOpenExistingDemo,
 }: ModularHousingDemoPanelProps) {
@@ -72,6 +62,51 @@ export function ModularHousingDemoPanel({
       </div>
 
       <section className="modular-demo-section">
+        <h2>Map View</h2>
+        <div className="modular-demo-actions modular-demo-actions-compact">
+          <button
+            className="panel-button"
+            type="button"
+            onClick={() => onFocusTarget("system")}
+          >
+            System view
+          </button>
+          <button
+            className="panel-button"
+            type="button"
+            onClick={() => onFocusTarget("factory")}
+          >
+            Factory view
+          </button>
+          <button
+            className="panel-button"
+            type="button"
+            onClick={() => onFocusTarget("site")}
+          >
+            Site view
+          </button>
+        </div>
+        {selectedModularEntityId && (
+          <p className="modular-demo-selected">
+            Selected map item: <strong>{selectedModularEntityId}</strong>
+          </p>
+        )}
+      </section>
+
+      <section className="modular-demo-section">
+        <h2>Map Legend</h2>
+        <ul className="modular-demo-legend">
+          <LegendItem colorClass="factory" label="Factory site" />
+          <LegendItem colorClass="site" label="Construction site" />
+          <LegendItem colorClass="route" label="Active route" />
+          <LegendItem colorClass="module-factory" label="Module at factory" />
+          <LegendItem colorClass="module-transit" label="Module in transit" />
+          <LegendItem colorClass="zone" label="Installation zone" />
+          <LegendItem colorClass="station" label="Production station" />
+        </ul>
+      </section>
+
+      <section className="modular-demo-section">
         <h2>Digital Twin Sites</h2>
         <dl className="modular-demo-details">
           <div>
@@ -79,7 +114,7 @@ export function ModularHousingDemoPanel({
             <dd>
               <strong>{scenario.factorySite.name}</strong>
               <span>{formatCoordinate(scenario.factorySite.location)}</span>
-              <span>{formatSlug(scenario.factorySite.status)}</span>
+              <span>{formatModularSlug(scenario.factorySite.status)}</span>
             </dd>
           </div>
           <div>
@@ -87,7 +122,7 @@ export function ModularHousingDemoPanel({
             <dd>
               <strong>{scenario.constructionSite.name}</strong>
               <span>{formatCoordinate(scenario.constructionSite.location)}</span>
-              <span>{formatSlug(scenario.constructionSite.status)}</span>
+              <span>{formatModularSlug(scenario.constructionSite.status)}</span>
             </dd>
           </div>
           <div>
@@ -95,7 +130,7 @@ export function ModularHousingDemoPanel({
             <dd>
               <strong>{scenario.route.name}</strong>
               <span>
-                {formatSlug(scenario.route.status)} -{" "}
+                {formatModularSlug(scenario.route.status)} -{" "}
                 {scenario.route.estimatedDistanceMiles.toFixed(1)} mi
               </span>
             </dd>
@@ -136,29 +171,47 @@ export function ModularHousingDemoPanel({
   );
 }
 
+function LegendItem({
+  colorClass,
+  label,
+}: {
+  colorClass: string;
+  label: string;
+}) {
+  return (
+    <li>
+      <span
+        aria-hidden="true"
+        className={`modular-demo-swatch is-${colorClass}`}
+      />
+      <span>{label}</span>
+    </li>
+  );
+}
+
 function ModuleCard({ module }: { module: ModularUnit }) {
   return (
     <article className="module-card">
       <div className="module-card-heading">
         <strong>{module.id}</strong>
-        <span>{formatSlug(module.type)}</span>
+        <span>{formatModularSlug(module.type)}</span>
       </div>
       <dl>
         <div>
           <dt>Location</dt>
-          <dd>{formatSlug(module.currentLocation)}</dd>
+          <dd>{formatModularSlug(module.currentLocation)}</dd>
         </div>
         <div>
           <dt>Production</dt>
-          <dd>{formatSlug(module.productionStatus)}</dd>
+          <dd>{formatModularSlug(module.productionStatus)}</dd>
         </div>
         <div>
           <dt>Install</dt>
-          <dd>{formatSlug(module.installationStatus)}</dd>
+          <dd>{formatModularSlug(module.installationStatus)}</dd>
         </div>
         <div>
           <dt>Quality</dt>
-          <dd>{formatSlug(module.qualityStatus)}</dd>
+          <dd>{formatModularSlug(module.qualityStatus)}</dd>
         </div>
         <div>
           <dt>Twin</dt>
@@ -188,7 +241,7 @@ function RecommendationItem({
   return (
     <li>
       <span className="modular-demo-meta">
-        {formatSlug(recommendation.priority)} priority
+        {formatModularSlug(recommendation.priority)} priority
       </span>
       <span>{recommendation.message}</span>
       <small>{recommendation.rationale}</small>

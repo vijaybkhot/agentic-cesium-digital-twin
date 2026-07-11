@@ -4,6 +4,10 @@ import type {
   ViewerAdapter,
   ViewerSelection,
 } from "../../ports/ViewerAdapter";
+import type {
+  ModularCameraTarget,
+  ModularHousingScenario,
+} from "../../types/modularHousing";
 import type { ProjectConfig } from "../../types/projectConfig";
 
 interface CesiumSceneProps {
@@ -12,6 +16,10 @@ interface CesiumSceneProps {
   locationPickEnabled?: boolean;
   selectedMeasurementPointId?: string | null;
   selectedModelAnnotationId?: string | null;
+  selectedModularEntityId?: string | null;
+  modularScenario?: ModularHousingScenario | null;
+  modularFocusTarget?: ModularCameraTarget | null;
+  modularFocusVersion?: number;
   focusProjectVersion?: number;
   focusModelAssetId?: string | null;
   focusModelVersion?: number;
@@ -32,6 +40,10 @@ export function CesiumScene({
   locationPickEnabled = false,
   selectedMeasurementPointId = null,
   selectedModelAnnotationId = null,
+  selectedModularEntityId = null,
+  modularScenario = null,
+  modularFocusTarget = null,
+  modularFocusVersion = 0,
   focusProjectVersion = 0,
   focusModelAssetId = null,
   focusModelVersion = 0,
@@ -84,6 +96,10 @@ export function CesiumScene({
   ]);
 
   useEffect(() => {
+    adapterRef.current?.renderModularScenario(modularScenario);
+  }, [modularScenario]);
+
+  useEffect(() => {
     adapterRef.current?.setLocationPickMode(locationPickEnabled);
   }, [locationPickEnabled]);
 
@@ -91,8 +107,13 @@ export function CesiumScene({
     adapterRef.current?.setSelectedEntityIds({
       measurementPointId: selectedMeasurementPointId,
       modelAnnotationId: selectedModelAnnotationId,
+      modularEntityId: selectedModularEntityId,
     });
-  }, [selectedMeasurementPointId, selectedModelAnnotationId]);
+  }, [
+    selectedMeasurementPointId,
+    selectedModelAnnotationId,
+    selectedModularEntityId,
+  ]);
 
   useEffect(() => {
     if (focusProjectVersion > 0) {
@@ -105,6 +126,15 @@ export function CesiumScene({
       adapterRef.current?.flyToModelAsset(focusModelAssetId);
     }
   }, [focusModelAssetId, focusModelVersion]);
+
+  useEffect(() => {
+    if (modularScenario && modularFocusTarget && modularFocusVersion > 0) {
+      adapterRef.current?.flyToModularTarget(
+        modularScenario,
+        modularFocusTarget,
+      );
+    }
+  }, [modularScenario, modularFocusTarget, modularFocusVersion]);
 
   return <div ref={containerRef} className="cesium-container" />;
 }
