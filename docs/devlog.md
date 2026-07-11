@@ -2,6 +2,9 @@
 
 ## 2026-07-11
 
+- Added a modular housing proposal-demo mode foundation with typed mock
+  scenario data for factory, logistics, site, modules, events, and mock
+  recommendations.
 - Added modular housing demo architecture guardrails before implementation.
 - Documented that the first modular demo should be a separate app mode with
   typed mock scenario data, modular-specific Cesium entities, and explicit
