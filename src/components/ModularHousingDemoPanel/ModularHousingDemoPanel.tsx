@@ -79,7 +79,7 @@ export function ModularHousingDemoPanel({
             <dd>
               <strong>{scenario.factorySite.name}</strong>
               <span>{formatCoordinate(scenario.factorySite.location)}</span>
-              <span>{scenario.factorySite.status}</span>
+              <span>{formatSlug(scenario.factorySite.status)}</span>
             </dd>
           </div>
           <div>
@@ -87,7 +87,7 @@ export function ModularHousingDemoPanel({
             <dd>
               <strong>{scenario.constructionSite.name}</strong>
               <span>{formatCoordinate(scenario.constructionSite.location)}</span>
-              <span>{scenario.constructionSite.status}</span>
+              <span>{formatSlug(scenario.constructionSite.status)}</span>
             </dd>
           </div>
           <div>

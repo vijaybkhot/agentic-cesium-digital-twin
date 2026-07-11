@@ -16,7 +16,7 @@ export const mockModularHousingScenario: ModularHousingScenario = {
     },
     description:
       "Mock factory-side digital twin for modular unit fabrication and robotics status.",
-    status: "Production shift active",
+    status: "production-shift-active",
   },
   constructionSite: {
     id: "site-affordable-housing",
@@ -29,14 +29,14 @@ export const mockModularHousingScenario: ModularHousingScenario = {
     },
     description:
       "Mock construction-site digital twin for foundation readiness, module placement, and inspection status.",
-    status: "Foundation Zone 1 ready",
+    status: "foundation-zone-1-ready",
   },
   route: {
     id: "route-factory-to-site",
     name: "Factory-to-site delivery route",
     fromSiteId: "factory-baton-rouge",
     toSiteId: "site-affordable-housing",
-    status: "planned",
+    status: "active",
     estimatedDistanceMiles: 9.2,
     checkpoints: [
       {
@@ -47,7 +47,7 @@ export const mockModularHousingScenario: ModularHousingScenario = {
           lon: -91.1734,
           height: 0,
         },
-        status: "Ready for pickup",
+        status: "pickup-complete",
       },
       {
         id: "checkpoint-route-midpoint",
@@ -57,7 +57,7 @@ export const mockModularHousingScenario: ModularHousingScenario = {
           lon: -91.1358,
           height: 0,
         },
-        status: "Planned transit checkpoint",
+        status: "in-transit-checkpoint",
       },
       {
         id: "checkpoint-site-gate",
@@ -67,7 +67,7 @@ export const mockModularHousingScenario: ModularHousingScenario = {
           lon: -91.1001,
           height: 0,
         },
-        status: "Awaiting delivery",
+        status: "awaiting-delivery",
       },
     ],
   },
@@ -130,9 +130,9 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       id: "station-1",
       name: "Robotic wall framing cell",
       stationType: "Robotic fabrication",
-      status: "active",
+      status: "idle",
       siteId: "factory-baton-rouge",
-      moduleIds: ["MOD-BED-002"],
+      moduleIds: [],
     },
     {
       id: "station-2",

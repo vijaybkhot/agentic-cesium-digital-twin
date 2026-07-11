@@ -167,11 +167,11 @@ export function AppShell() {
   }, [clearProject, workflow.resetWorkflow]);
 
   const openModularDemo = useCallback(() => {
-    clearSelection();
+    clearProject();
     workflow.resetWorkflow();
     setMode("modular-demo");
     setIsPanelVisible(true);
-  }, [clearSelection, workflow.resetWorkflow]);
+  }, [clearProject, workflow.resetWorkflow]);
 
   const activeConfig =
     mode === "existing-demo"

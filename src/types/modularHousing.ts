@@ -6,22 +6,34 @@ export interface ModularCoordinate {
 
 export type ModularSiteRole = "factory" | "construction-site";
 
+export type ModularSiteStatus =
+  | "production-shift-active"
+  | "foundation-zone-1-ready";
+
 export interface ModularSite {
   id: string;
   name: string;
   role: ModularSiteRole;
   location: ModularCoordinate;
   description: string;
-  status: string;
+  status: ModularSiteStatus;
 }
 
 export type LogisticsRouteStatus = "planned" | "ready" | "active" | "delivered";
+
+export type LogisticsCheckpointStatus =
+  | "ready-for-pickup"
+  | "pickup-complete"
+  | "planned-transit-checkpoint"
+  | "in-transit-checkpoint"
+  | "awaiting-delivery"
+  | "delivered";
 
 export interface LogisticsCheckpoint {
   id: string;
   label: string;
   location: ModularCoordinate;
-  status: string;
+  status: LogisticsCheckpointStatus;
 }
 
 export interface LogisticsRoute {
