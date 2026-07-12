@@ -2,6 +2,10 @@
 
 ## 2026-07-11
 
+- Added a read-only modular digital twin detail panel for selected Cesium
+  factory, site, route, module, station, and installation-zone entities.
+- Kept modular entity details mock-only; status update controls and causal
+  event-feed actions remain deferred to the next modular demo pass.
 - Rendered the modular housing mock scenario in Cesium with native factory,
   site, route, module, production station, and installation zone entities.
 - Added a modular housing proposal-demo mode foundation with typed mock

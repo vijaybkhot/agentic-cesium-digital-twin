@@ -15,6 +15,11 @@ export type ModularEntityKind =
   | "production-station"
   | "installation-zone";
 
+export interface SelectedModularEntity {
+  id: string;
+  kind: ModularEntityKind;
+}
+
 export type ModularSiteRole = "factory" | "construction-site";
 
 export type ModularSiteStatus =

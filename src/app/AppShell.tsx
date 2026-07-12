@@ -8,7 +8,10 @@ import { StatusPanel } from "../components/StatusPanel/StatusPanel";
 import { Toolbar } from "../components/Toolbar/Toolbar";
 import { createModularHousingViewerConfig } from "../domain/modularHousing/createModularHousingViewerConfig";
 import { mockModularHousingScenario } from "../domain/modularHousing/mockModularHousingScenario";
-import type { ModularCameraTarget } from "../types/modularHousing";
+import type {
+  ModularCameraTarget,
+  SelectedModularEntity,
+} from "../types/modularHousing";
 import { useProjectState } from "./useProjectState";
 import { useReconstructionWorkflow } from "./useReconstructionWorkflow";
 
@@ -53,9 +56,8 @@ export function AppShell() {
   });
   const [isPanelVisible, setIsPanelVisible] = useState(true);
   const [mode, setMode] = useState<ApplicationMode>("workflow");
-  const [selectedModularEntityId, setSelectedModularEntityId] = useState<
-    string | null
-  >(null);
+  const [selectedModularEntity, setSelectedModularEntity] =
+    useState<SelectedModularEntity | null>(null);
   const [modularFocusRequest, setModularFocusRequest] = useState<{
     target: ModularCameraTarget;
     version: number;
@@ -160,7 +162,7 @@ export function AppShell() {
   const openExistingDemo = useCallback(async () => {
     try {
       await loadExistingDemo();
-      setSelectedModularEntityId(null);
+      setSelectedModularEntity(null);
       setModularFocusRequest(null);
       setMode("existing-demo");
       setIsPanelVisible(true);
@@ -172,7 +174,7 @@ export function AppShell() {
   const startNewProject = useCallback(() => {
     clearProject();
     workflow.resetWorkflow();
-    setSelectedModularEntityId(null);
+    setSelectedModularEntity(null);
     setModularFocusRequest(null);
     setMode("workflow");
     setIsPanelVisible(true);
@@ -181,7 +183,7 @@ export function AppShell() {
   const openModularDemo = useCallback(() => {
     clearProject();
     workflow.resetWorkflow();
-    setSelectedModularEntityId(null);
+    setSelectedModularEntity(null);
     setModularFocusRequest((currentRequest) => ({
       target: "system",
       version: (currentRequest?.version ?? 0) + 1,
@@ -230,7 +232,7 @@ export function AppShell() {
             mode === "existing-demo" ? selectedModelAnnotationId : null
           }
           selectedModularEntityId={
-            mode === "modular-demo" ? selectedModularEntityId : null
+            mode === "modular-demo" ? selectedModularEntity?.id ?? null : null
           }
           modularScenario={
             mode === "modular-demo" ? mockModularHousingScenario : null
@@ -252,7 +254,10 @@ export function AppShell() {
 
             if (mode === "modular-demo") {
               if (selection.type === "modularEntity") {
-                setSelectedModularEntityId(selection.id);
+                setSelectedModularEntity({
+                  id: selection.id,
+                  kind: selection.kind,
+                });
                 setIsPanelVisible(true);
               }
               return;
@@ -306,7 +311,7 @@ export function AppShell() {
       ) : mode === "modular-demo" ? (
         <ModularHousingDemoPanel
           scenario={mockModularHousingScenario}
-          selectedModularEntityId={selectedModularEntityId}
+          selectedModularEntity={selectedModularEntity}
           onFocusTarget={focusModularTarget}
           onNewProject={startNewProject}
           onOpenExistingDemo={() => void openExistingDemo()}
