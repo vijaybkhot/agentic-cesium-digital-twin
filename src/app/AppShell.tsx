@@ -8,6 +8,7 @@ import { StatusPanel } from "../components/StatusPanel/StatusPanel";
 import { Toolbar } from "../components/Toolbar/Toolbar";
 import { createModularHousingViewerConfig } from "../domain/modularHousing/createModularHousingViewerConfig";
 import { mockModularHousingScenario } from "../domain/modularHousing/mockModularHousingScenario";
+import type { ModularCameraTarget } from "../types/modularHousing";
 import { useProjectState } from "./useProjectState";
 import { useReconstructionWorkflow } from "./useReconstructionWorkflow";
 
@@ -52,6 +53,13 @@ export function AppShell() {
   });
   const [isPanelVisible, setIsPanelVisible] = useState(true);
   const [mode, setMode] = useState<ApplicationMode>("workflow");
+  const [selectedModularEntityId, setSelectedModularEntityId] = useState<
+    string | null
+  >(null);
+  const [modularFocusRequest, setModularFocusRequest] = useState<{
+    target: ModularCameraTarget;
+    version: number;
+  } | null>(null);
   const modularViewerConfig = useMemo(
     () => createModularHousingViewerConfig(mockModularHousingScenario),
     [],
@@ -152,6 +160,8 @@ export function AppShell() {
   const openExistingDemo = useCallback(async () => {
     try {
       await loadExistingDemo();
+      setSelectedModularEntityId(null);
+      setModularFocusRequest(null);
       setMode("existing-demo");
       setIsPanelVisible(true);
     } catch {
@@ -162,6 +172,8 @@ export function AppShell() {
   const startNewProject = useCallback(() => {
     clearProject();
     workflow.resetWorkflow();
+    setSelectedModularEntityId(null);
+    setModularFocusRequest(null);
     setMode("workflow");
     setIsPanelVisible(true);
   }, [clearProject, workflow.resetWorkflow]);
@@ -169,9 +181,21 @@ export function AppShell() {
   const openModularDemo = useCallback(() => {
     clearProject();
     workflow.resetWorkflow();
+    setSelectedModularEntityId(null);
+    setModularFocusRequest((currentRequest) => ({
+      target: "system",
+      version: (currentRequest?.version ?? 0) + 1,
+    }));
     setMode("modular-demo");
     setIsPanelVisible(true);
   }, [clearProject, workflow.resetWorkflow]);
+
+  const focusModularTarget = useCallback((target: ModularCameraTarget) => {
+    setModularFocusRequest((currentRequest) => ({
+      target,
+      version: (currentRequest?.version ?? 0) + 1,
+    }));
+  }, []);
 
   const activeConfig =
     mode === "existing-demo"
@@ -205,12 +229,32 @@ export function AppShell() {
           selectedModelAnnotationId={
             mode === "existing-demo" ? selectedModelAnnotationId : null
           }
+          selectedModularEntityId={
+            mode === "modular-demo" ? selectedModularEntityId : null
+          }
+          modularScenario={
+            mode === "modular-demo" ? mockModularHousingScenario : null
+          }
+          modularFocusTarget={
+            mode === "modular-demo" ? modularFocusRequest?.target ?? null : null
+          }
+          modularFocusVersion={
+            mode === "modular-demo" ? modularFocusRequest?.version ?? 0 : 0
+          }
           onEntitySelected={(selection) => {
             if (
               mode === "workflow" &&
               selection.type === "globeLocation"
             ) {
               workflow.setPickedLocation(selection.lat, selection.lon);
+              return;
+            }
+
+            if (mode === "modular-demo") {
+              if (selection.type === "modularEntity") {
+                setSelectedModularEntityId(selection.id);
+                setIsPanelVisible(true);
+              }
               return;
             }
 
@@ -262,6 +306,8 @@ export function AppShell() {
       ) : mode === "modular-demo" ? (
         <ModularHousingDemoPanel
           scenario={mockModularHousingScenario}
+          selectedModularEntityId={selectedModularEntityId}
+          onFocusTarget={focusModularTarget}
           onNewProject={startNewProject}
           onOpenExistingDemo={() => void openExistingDemo()}
         />

@@ -25,6 +25,7 @@ This version demonstrates the Cesium visualization and interaction layer. It is 
 - Model annotations linked to existing sensor/measurement data
 - Browser-only project setup and mock COLMAP reconstruction workflow
 - Separate modular housing proposal-demo mode with typed mock scenario data
+- Cesium-native modular factory, route, station, zone, and module rendering
 - Reconstruction handoff contract examples for future pipeline integration
 - PLY/point-cloud output awareness with conversion guidance for Cesium rendering
 
@@ -99,9 +100,10 @@ from the earlier POCs.
 
 Select `Open modular housing demo` to view the proposal-support modular housing
 scenario shell. This mode uses typed mock data for factory, logistics, site,
-module, event, and recommendation concepts. Detailed modular Cesium entities are
-planned separately; the current shell is not connected to real AI, robotics,
-factory, logistics, or construction-site systems.
+module, event, and recommendation concepts. It renders lightweight Cesium-native
+factory, route, station, zone, and module entities without new binary assets.
+The current shell is not connected to real AI, robotics, factory, logistics, or
+construction-site systems.
 
 Build the project:
 

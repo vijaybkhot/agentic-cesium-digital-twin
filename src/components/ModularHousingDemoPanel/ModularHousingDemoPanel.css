@@ -35,6 +35,12 @@
   border-top: 1px solid #d7dbe5;
 }
 
+.modular-demo-actions-compact {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
 .modular-demo-section {
   margin-top: 18px;
   padding-top: 16px;
@@ -140,6 +146,67 @@
   font-weight: 700;
 }
 
+.modular-demo-selected {
+  margin: 10px 0 0;
+  color: #475569;
+  overflow-wrap: anywhere;
+}
+
+.modular-demo-legend {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.modular-demo-legend li {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  color: #334155;
+  font-size: 0.88rem;
+}
+
+.modular-demo-swatch {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.28);
+}
+
+.modular-demo-swatch.is-factory {
+  background: #2563eb;
+}
+
+.modular-demo-swatch.is-site {
+  background: #16a34a;
+}
+
+.modular-demo-swatch.is-route {
+  background: #f97316;
+}
+
+.modular-demo-swatch.is-module-factory {
+  background: #06b6d4;
+}
+
+.modular-demo-swatch.is-module-transit {
+  background: #facc15;
+}
+
+.modular-demo-swatch.is-zone {
+  background: #84cc16;
+}
+
+.modular-demo-swatch.is-station {
+  background: #7c3aed;
+}
+
 @media (max-width: 600px) {
   .modular-demo-panel {
     right: 12px;
@@ -147,5 +214,9 @@
     width: auto;
     max-width: none;
     max-height: calc(100vh - 24px);
+  }
+
+  .modular-demo-legend {
+    grid-template-columns: 1fr;
   }
 }

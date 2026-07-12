@@ -2,6 +2,8 @@
 
 ## 2026-07-11
 
+- Rendered the modular housing mock scenario in Cesium with native factory,
+  site, route, module, production station, and installation zone entities.
 - Added a modular housing proposal-demo mode foundation with typed mock
   scenario data for factory, logistics, site, modules, events, and mock
   recommendations.

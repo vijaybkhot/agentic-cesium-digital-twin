@@ -18,12 +18,22 @@ import {
   createModelAnnotationEntity,
 } from "../../cesium/createModelAnnotationEntities";
 import { createModelAssetEntity } from "../../cesium/createModelAssetEntities";
+import {
+  applyModularEntityVisualState,
+  createModularHousingEntities,
+  flyToModularScenarioTarget,
+} from "../../cesium/createModularHousingEntities";
 import { createSiteMarker } from "../../cesium/createSiteMarker";
 import {
   applyMeasurementPointVisualState,
   createMeasurementPointEntity,
   updateMeasurementPointEntity,
 } from "../../cesium/createMeasurementPointEntities";
+import type {
+  ModularCameraTarget,
+  ModularEntityKind,
+  ModularHousingScenario,
+} from "../../types/modularHousing";
 
 type SelectionHandler = (selection: ViewerSelection) => void;
 
@@ -34,6 +44,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
   private readonly pointEntities = new Map<string, Cesium.Entity>();
   private readonly modelAssetEntities = new Map<string, Cesium.Entity>();
   private readonly modelAnnotationEntities = new Map<string, Cesium.Entity>();
+  private readonly modularEntities = new Map<string, Cesium.Entity>();
   private readonly measurementPoints = new Map<string, MeasurementPointConfig>();
   private selectedEntityIds: ViewerSelectedEntityIds = {};
 
@@ -59,6 +70,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.pointEntities.clear();
     this.modelAssetEntities.clear();
     this.modelAnnotationEntities.clear();
+    this.modularEntities.clear();
     this.measurementPoints.clear();
 
     if (config.facility) {
@@ -112,6 +124,28 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.applySelectionStyles();
   }
 
+  renderModularScenario(scenario: ModularHousingScenario | null): void {
+    if (!this.viewer) {
+      return;
+    }
+
+    this.modularEntities.forEach((entity) => {
+      this.viewer?.entities.remove(entity);
+    });
+    this.modularEntities.clear();
+
+    if (!scenario) {
+      return;
+    }
+
+    createModularHousingEntities(this.viewer, scenario).forEach(
+      (entity, entityId) => {
+        this.modularEntities.set(entityId, entity);
+      },
+    );
+    this.applySelectionStyles();
+  }
+
   updateMeasurementPoint(point: MeasurementPointConfig): void {
     const entity = this.pointEntities.get(point.id);
 
@@ -140,6 +174,15 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     }
   }
 
+  flyToModularTarget(
+    scenario: ModularHousingScenario,
+    target: ModularCameraTarget,
+  ): void {
+    if (this.viewer) {
+      flyToModularScenarioTarget(this.viewer, scenario, target);
+    }
+  }
+
   setLocationPickMode(enabled: boolean): void {
     this.locationPickMode = enabled;
   }
@@ -164,6 +207,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.pointEntities.clear();
     this.modelAssetEntities.clear();
     this.modelAnnotationEntities.clear();
+    this.modularEntities.clear();
     this.measurementPoints.clear();
   }
 
@@ -186,6 +230,13 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       applyModelAnnotationVisualState(
         entity,
         this.selectedEntityIds.modelAnnotationId === annotationId,
+      );
+    });
+
+    this.modularEntities.forEach((entity, entityId) => {
+      applyModularEntityVisualState(
+        entity,
+        this.selectedEntityIds.modularEntityId === entityId,
       );
     });
   }
@@ -235,6 +286,10 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       const entityType = entity.properties?.entityType?.getValue();
       const pointId = entity.properties?.pointId?.getValue();
       const annotationId = entity.properties?.annotationId?.getValue();
+      const modularId = entity.properties?.modularId?.getValue();
+      const modularKind = entity.properties?.modularKind?.getValue() as
+        | ModularEntityKind
+        | undefined;
 
       if (entityType === "measurementPoint" && typeof pointId === "string") {
         this.onEntitySelected({ type: "measurementPoint", id: pointId });
@@ -245,6 +300,18 @@ export class CesiumViewerAdapter implements ViewerAdapter {
         typeof annotationId === "string"
       ) {
         this.onEntitySelected({ type: "modelAnnotation", id: annotationId });
+      }
+
+      if (
+        entityType === "modularEntity" &&
+        typeof modularId === "string" &&
+        typeof modularKind === "string"
+      ) {
+        this.onEntitySelected({
+          type: "modularEntity",
+          id: modularId,
+          kind: modularKind,
+        });
       }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
   }
