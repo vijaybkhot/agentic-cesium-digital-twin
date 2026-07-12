@@ -2,6 +2,9 @@
 
 ## 2026-07-11
 
+- Added a cross-mode modular demo regression checklist covering workflow,
+  image intake, reconstruction, existing controlled-facility demo, model
+  annotations, modular interactions, and mode-switch state isolation.
 - Added local demo modular status actions for selected module units.
 - Updated the modular event feed to show demo Factory Twin, Logistics Twin,
   Site Twin, and AI Agent coordination after status actions.
