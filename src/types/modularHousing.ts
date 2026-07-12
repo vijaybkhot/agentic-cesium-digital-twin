@@ -20,6 +20,19 @@ export interface SelectedModularEntity {
   kind: ModularEntityKind;
 }
 
+export type ModularStatusActionId =
+  | "complete-fabrication-qc"
+  | "assign-dispatch-shipment"
+  | "mark-delivered-to-site"
+  | "mark-installed";
+
+export interface ModularStatusAction {
+  id: ModularStatusActionId;
+  moduleId: string;
+  label: string;
+  description: string;
+}
+
 export type ModularSiteRole = "factory" | "construction-site";
 
 export type ModularSiteStatus =

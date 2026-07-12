@@ -3,10 +3,13 @@ import type {
   ModularAiRecommendation,
   ModularCameraTarget,
   ModularHousingScenario,
+  ModularStatusAction,
+  ModularStatusActionId,
   ModularTwinEvent,
   ModularUnit,
   SelectedModularEntity,
 } from "../../types/modularHousing";
+import { getAvailableModularStatusActions } from "../../domain/modularHousing/applyModularStatusAction";
 import { formatModularSlug } from "../../domain/modularHousing/formatModularHousingLabels";
 import {
   getSelectedModularEntityDetails,
@@ -18,6 +21,10 @@ interface ModularHousingDemoPanelProps {
   scenario: ModularHousingScenario;
   selectedModularEntity?: SelectedModularEntity | null;
   onFocusTarget: (target: ModularCameraTarget) => void;
+  onApplyModularAction: (
+    actionId: ModularStatusActionId,
+    moduleId: string,
+  ) => void;
   onNewProject: () => void;
   onOpenExistingDemo: () => void;
 }
@@ -34,6 +41,7 @@ export function ModularHousingDemoPanel({
   scenario,
   selectedModularEntity = null,
   onFocusTarget,
+  onApplyModularAction,
   onNewProject,
   onOpenExistingDemo,
 }: ModularHousingDemoPanelProps) {
@@ -43,6 +51,10 @@ export function ModularHousingDemoPanel({
   );
   const selectedModuleId =
     selectedModularEntity?.kind === "module" ? selectedModularEntity.id : null;
+  const selectedActions = getAvailableModularStatusActions(
+    scenario,
+    selectedModularEntity,
+  );
 
   return (
     <aside className="modular-demo-panel">
@@ -54,10 +66,10 @@ export function ModularHousingDemoPanel({
       </div>
 
       <p className="modular-demo-copy">
-        Mock modular housing scenario for showing how factory fabrication,
-        logistics, and construction-site installation could be coordinated in a
-        geospatial digital twin view. No real AI, robotics, backend, or live
-        physical-system integration is connected.
+        Proposal demo for showing how factory fabrication, logistics, and
+        construction-site installation could be coordinated in a geospatial
+        digital twin view. No real AI, robotics, backend, or live physical-system
+        integration is connected.
       </p>
 
       <div className="modular-demo-actions">
@@ -102,7 +114,21 @@ export function ModularHousingDemoPanel({
 
       <section className="modular-demo-section">
         <h2>Selected Digital Twin Item</h2>
-        <SelectedEntityDetails details={selectedDetails} />
+        <SelectedEntityDetails
+          details={selectedDetails}
+          selectedModuleId={selectedModuleId}
+          actions={selectedActions}
+          onApplyModularAction={onApplyModularAction}
+        />
+      </section>
+
+      <section className="modular-demo-section">
+        <h2>Twin Events</h2>
+        <ul className="modular-demo-list">
+          {[...scenario.events].reverse().map((event) => (
+            <EventItem key={event.id} event={event} />
+          ))}
+        </ul>
       </section>
 
       <section className="modular-demo-section">
@@ -164,16 +190,7 @@ export function ModularHousingDemoPanel({
       </section>
 
       <section className="modular-demo-section">
-        <h2>Mock Twin Events</h2>
-        <ul className="modular-demo-list">
-          {scenario.events.map((event) => (
-            <EventItem key={event.id} event={event} />
-          ))}
-        </ul>
-      </section>
-
-      <section className="modular-demo-section">
-        <h2>Mock AI Recommendations</h2>
+        <h2>AI Recommendations</h2>
         <ul className="modular-demo-list">
           {scenario.recommendations.map((recommendation) => (
             <RecommendationItem
@@ -189,8 +206,17 @@ export function ModularHousingDemoPanel({
 
 function SelectedEntityDetails({
   details,
+  selectedModuleId,
+  actions,
+  onApplyModularAction,
 }: {
   details: SelectedModularEntityDetails | null;
+  selectedModuleId: string | null;
+  actions: ModularStatusAction[];
+  onApplyModularAction: (
+    actionId: ModularStatusActionId,
+    moduleId: string,
+  ) => void;
 }) {
   if (!details) {
     return (
@@ -222,7 +248,50 @@ function SelectedEntityDetails({
           </div>
         ))}
       </dl>
+      {selectedModuleId && (
+        <StatusActions
+          moduleId={selectedModuleId}
+          actions={actions}
+          onApplyModularAction={onApplyModularAction}
+        />
+      )}
     </article>
+  );
+}
+
+function StatusActions({
+  moduleId,
+  actions,
+  onApplyModularAction,
+}: {
+  moduleId: string;
+  actions: ModularStatusAction[];
+  onApplyModularAction: (
+    actionId: ModularStatusActionId,
+    moduleId: string,
+  ) => void;
+}) {
+  return (
+    <div className="status-actions">
+      <h3>Status Actions</h3>
+      {actions.length === 0 ? (
+        <p>No status action available for this module state.</p>
+      ) : (
+        <div className="status-action-list">
+          {actions.map((action) => (
+            <button
+              key={action.id}
+              className="panel-button status-action-button"
+              type="button"
+              onClick={() => onApplyModularAction(action.id, moduleId)}
+              title={action.description}
+            >
+              {action.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
