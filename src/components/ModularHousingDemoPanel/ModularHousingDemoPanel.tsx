@@ -195,8 +195,9 @@ function SelectedEntityDetails({
   if (!details) {
     return (
       <p className="modular-demo-empty-state">
-        No map item selected yet. Factory, route, module, station, and
-        installation-zone details appear here.
+        No map item selected yet. Factory site, construction site, route, route
+        checkpoint, module, production station, and installation zone details
+        appear here.
       </p>
     );
   }

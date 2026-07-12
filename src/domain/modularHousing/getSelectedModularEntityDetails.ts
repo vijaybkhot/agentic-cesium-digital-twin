@@ -150,7 +150,7 @@ export function getSelectedModularEntityDetails(
           value: formatModularSlug(module.digitalTwinAssociation),
         },
         {
-          label: "Assigned zone",
+          label: "Assigned Zone",
           value: assignedZone?.name ?? module.assignedZoneId ?? "Not assigned",
         },
       ],
