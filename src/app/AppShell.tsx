@@ -6,10 +6,12 @@ import { ReconstructionWorkflowPanel } from "../components/ReconstructionWorkflo
 import { SidePanel } from "../components/SidePanel/SidePanel";
 import { StatusPanel } from "../components/StatusPanel/StatusPanel";
 import { Toolbar } from "../components/Toolbar/Toolbar";
+import { applyModularStatusAction } from "../domain/modularHousing/applyModularStatusAction";
 import { createModularHousingViewerConfig } from "../domain/modularHousing/createModularHousingViewerConfig";
 import { mockModularHousingScenario } from "../domain/modularHousing/mockModularHousingScenario";
 import type {
   ModularCameraTarget,
+  ModularStatusActionId,
   SelectedModularEntity,
 } from "../types/modularHousing";
 import { useProjectState } from "./useProjectState";
@@ -58,13 +60,16 @@ export function AppShell() {
   const [mode, setMode] = useState<ApplicationMode>("workflow");
   const [selectedModularEntity, setSelectedModularEntity] =
     useState<SelectedModularEntity | null>(null);
+  const [modularScenario, setModularScenario] = useState(
+    mockModularHousingScenario,
+  );
   const [modularFocusRequest, setModularFocusRequest] = useState<{
     target: ModularCameraTarget;
     version: number;
   } | null>(null);
   const modularViewerConfig = useMemo(
-    () => createModularHousingViewerConfig(mockModularHousingScenario),
-    [],
+    () => createModularHousingViewerConfig(modularScenario),
+    [modularScenario],
   );
   const existingDemoProjectLocation =
     config &&
@@ -183,6 +188,7 @@ export function AppShell() {
   const openModularDemo = useCallback(() => {
     clearProject();
     workflow.resetWorkflow();
+    setModularScenario(mockModularHousingScenario);
     setSelectedModularEntity(null);
     setModularFocusRequest((currentRequest) => ({
       target: "system",
@@ -198,6 +204,16 @@ export function AppShell() {
       version: (currentRequest?.version ?? 0) + 1,
     }));
   }, []);
+
+  const applyModularAction = useCallback(
+    (actionId: ModularStatusActionId, moduleId: string) => {
+      setModularScenario((currentScenario) =>
+        applyModularStatusAction(currentScenario, actionId, moduleId),
+      );
+      setSelectedModularEntity({ id: moduleId, kind: "module" });
+    },
+    [],
+  );
 
   const activeConfig =
     mode === "existing-demo"
@@ -235,7 +251,7 @@ export function AppShell() {
             mode === "modular-demo" ? selectedModularEntity?.id ?? null : null
           }
           modularScenario={
-            mode === "modular-demo" ? mockModularHousingScenario : null
+            mode === "modular-demo" ? modularScenario : null
           }
           modularFocusTarget={
             mode === "modular-demo" ? modularFocusRequest?.target ?? null : null
@@ -310,9 +326,10 @@ export function AppShell() {
         />
       ) : mode === "modular-demo" ? (
         <ModularHousingDemoPanel
-          scenario={mockModularHousingScenario}
+          scenario={modularScenario}
           selectedModularEntity={selectedModularEntity}
           onFocusTarget={focusModularTarget}
+          onApplyModularAction={applyModularAction}
           onNewProject={startNewProject}
           onOpenExistingDemo={() => void openExistingDemo()}
         />

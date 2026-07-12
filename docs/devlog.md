@@ -2,6 +2,11 @@
 
 ## 2026-07-11
 
+- Added local mock modular status actions for selected module units.
+- Updated the modular event feed to show mock Factory Twin, Logistics Twin,
+  Site Twin, and AI Agent coordination after status actions.
+- Kept modular status actions local-only with no backend, real AI, robotics,
+  IoT, live telemetry, or optimization integration.
 - Added a read-only modular digital twin detail panel for selected Cesium
   factory, site, route, module, station, and installation-zone entities.
 - Kept modular entity details mock-only; status update controls and causal
