@@ -5,13 +5,18 @@ import type {
   ModularHousingScenario,
   ModularTwinEvent,
   ModularUnit,
+  SelectedModularEntity,
 } from "../../types/modularHousing";
 import { formatModularSlug } from "../../domain/modularHousing/formatModularHousingLabels";
+import {
+  getSelectedModularEntityDetails,
+  type SelectedModularEntityDetails,
+} from "../../domain/modularHousing/getSelectedModularEntityDetails";
 import "./ModularHousingDemoPanel.css";
 
 interface ModularHousingDemoPanelProps {
   scenario: ModularHousingScenario;
-  selectedModularEntityId?: string | null;
+  selectedModularEntity?: SelectedModularEntity | null;
   onFocusTarget: (target: ModularCameraTarget) => void;
   onNewProject: () => void;
   onOpenExistingDemo: () => void;
@@ -27,11 +32,18 @@ function formatTwinAssociation(value: DigitalTwinAssociation): string {
 
 export function ModularHousingDemoPanel({
   scenario,
-  selectedModularEntityId = null,
+  selectedModularEntity = null,
   onFocusTarget,
   onNewProject,
   onOpenExistingDemo,
 }: ModularHousingDemoPanelProps) {
+  const selectedDetails = getSelectedModularEntityDetails(
+    scenario,
+    selectedModularEntity,
+  );
+  const selectedModuleId =
+    selectedModularEntity?.kind === "module" ? selectedModularEntity.id : null;
+
   return (
     <aside className="modular-demo-panel">
       <div className="modular-demo-heading">
@@ -86,11 +98,11 @@ export function ModularHousingDemoPanel({
             Site view
           </button>
         </div>
-        {selectedModularEntityId && (
-          <p className="modular-demo-selected">
-            Selected map item: <strong>{selectedModularEntityId}</strong>
-          </p>
-        )}
+      </section>
+
+      <section className="modular-demo-section">
+        <h2>Selected Digital Twin Item</h2>
+        <SelectedEntityDetails details={selectedDetails} />
       </section>
 
       <section className="modular-demo-section">
@@ -142,7 +154,11 @@ export function ModularHousingDemoPanel({
         <h2>Module Units</h2>
         <div className="module-list">
           {scenario.modules.map((module) => (
-            <ModuleCard key={module.id} module={module} />
+            <ModuleCard
+              key={module.id}
+              module={module}
+              isSelected={module.id === selectedModuleId}
+            />
           ))}
         </div>
       </section>
@@ -171,6 +187,45 @@ export function ModularHousingDemoPanel({
   );
 }
 
+function SelectedEntityDetails({
+  details,
+}: {
+  details: SelectedModularEntityDetails | null;
+}) {
+  if (!details) {
+    return (
+      <p className="modular-demo-empty-state">
+        No map item selected yet. Factory site, construction site, route, route
+        checkpoint, module, production station, and installation zone details
+        appear here.
+      </p>
+    );
+  }
+
+  return (
+    <article className="selected-entity-card">
+      <div className="selected-entity-heading">
+        <span>{details.kindLabel}</span>
+        <strong>{details.title}</strong>
+      </div>
+      {details.status && (
+        <p className="selected-entity-status">{details.status}</p>
+      )}
+      {details.description && (
+        <p className="selected-entity-description">{details.description}</p>
+      )}
+      <dl className="selected-entity-details">
+        {details.rows.map((row) => (
+          <div key={row.label}>
+            <dt>{row.label}</dt>
+            <dd>{row.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </article>
+  );
+}
+
 function LegendItem({
   colorClass,
   label,
@@ -189,9 +244,18 @@ function LegendItem({
   );
 }
 
-function ModuleCard({ module }: { module: ModularUnit }) {
+function ModuleCard({
+  module,
+  isSelected,
+}: {
+  module: ModularUnit;
+  isSelected: boolean;
+}) {
   return (
-    <article className="module-card">
+    <article
+      className={`module-card ${isSelected ? "is-selected" : ""}`}
+      aria-current={isSelected ? "true" : undefined}
+    >
       <div className="module-card-heading">
         <strong>{module.id}</strong>
         <span>{formatModularSlug(module.type)}</span>
