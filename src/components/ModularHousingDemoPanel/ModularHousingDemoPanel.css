@@ -229,30 +229,30 @@
   overflow-wrap: anywhere;
 }
 
-.mock-status-actions {
+.status-actions {
   display: grid;
   gap: 8px;
   padding-top: 10px;
   border-top: 1px solid #e2e8f0;
 }
 
-.mock-status-actions h3 {
+.status-actions h3 {
   margin: 0;
   font-size: 0.92rem;
 }
 
-.mock-status-actions p {
+.status-actions p {
   margin: 0;
   color: #64748b;
   line-height: 1.4;
 }
 
-.mock-status-action-list {
+.status-action-list {
   display: grid;
   gap: 8px;
 }
 
-.mock-status-action-button {
+.status-action-button {
   width: 100%;
   justify-content: center;
 }

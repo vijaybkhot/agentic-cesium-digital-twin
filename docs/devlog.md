@@ -2,24 +2,24 @@
 
 ## 2026-07-11
 
-- Added local mock modular status actions for selected module units.
-- Updated the modular event feed to show mock Factory Twin, Logistics Twin,
+- Added local demo modular status actions for selected module units.
+- Updated the modular event feed to show demo Factory Twin, Logistics Twin,
   Site Twin, and AI Agent coordination after status actions.
 - Kept modular status actions local-only with no backend, real AI, robotics,
   IoT, live telemetry, or optimization integration.
 - Added a read-only modular digital twin detail panel for selected Cesium
   factory, site, route, module, station, and installation-zone entities.
-- Kept modular entity details mock-only; status update controls and causal
+- Kept modular entity details demo-only; status update controls and causal
   event-feed actions remain deferred to the next modular demo pass.
-- Rendered the modular housing mock scenario in Cesium with native factory,
+- Rendered the modular housing demo scenario in Cesium with native factory,
   site, route, module, production station, and installation zone entities.
-- Added a modular housing proposal-demo mode foundation with typed mock
-  scenario data for factory, logistics, site, modules, events, and mock
+- Added a modular housing proposal-demo mode foundation with typed demo
+  scenario data for factory, logistics, site, modules, events, and demo
   recommendations.
 - Added modular housing demo architecture guardrails before implementation.
 - Documented that the first modular demo should be a separate app mode with
-  typed mock scenario data, modular-specific Cesium entities, and explicit
-  mock-only AI/robotics/logistics boundaries.
+  typed demo scenario data, modular-specific Cesium entities, and explicit
+  demo-only AI/robotics/logistics boundaries.
 
 ## 2026-07-08
 

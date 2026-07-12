@@ -15,7 +15,7 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       height: 0,
     },
     description:
-      "Mock factory-side digital twin for modular unit fabrication and robotics status.",
+      "Factory-side digital twin for modular unit fabrication and robotics status.",
     status: "production-shift-active",
   },
   constructionSite: {
@@ -28,7 +28,7 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       height: 0,
     },
     description:
-      "Mock construction-site digital twin for foundation readiness, module placement, and inspection status.",
+      "Construction-site digital twin for foundation readiness, module placement, and inspection status.",
     status: "foundation-zone-1-ready",
   },
   route: {
@@ -109,7 +109,7 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       digitalTwinAssociation: "factory-twin",
       assignedZoneId: "zone-2",
       description:
-        "Kitchen/living module delayed at a mock robotic fabrication station.",
+        "Kitchen/living module delayed at a simulated robotic fabrication station.",
     },
     {
       id: "MOD-MEP-004",
@@ -122,7 +122,7 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       digitalTwinAssociation: "logistics-twin",
       assignedZoneId: "zone-3",
       description:
-        "MEP module represented as a mock shipment moving between factory and site.",
+        "MEP module represented as a demo shipment moving between factory and site.",
     },
   ],
   productionStations: [
@@ -222,7 +222,7 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       id: "event-003",
       source: "Logistics Twin",
       timestamp: "08:31",
-      message: "MEP module MOD-MEP-004 assigned to the mock delivery route.",
+      message: "MEP module MOD-MEP-004 assigned to the delivery route.",
       relatedModuleId: "MOD-MEP-004",
     },
     {
@@ -230,7 +230,7 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       source: "AI Agent",
       timestamp: "08:35",
       message:
-        "Mock recommendation generated: ship MOD-BED-002 before MOD-KIT-003 because Zone 1 is ready and the kitchen/living module is delayed.",
+        "Recommendation generated: ship MOD-BED-002 before MOD-KIT-003 because Zone 1 is ready and the kitchen/living module is delayed.",
       relatedModuleId: "MOD-BED-002",
     },
   ],
@@ -241,7 +241,7 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       message:
         "Optimize delivery sequence by shipping MOD-BED-002 before MOD-KIT-003.",
       rationale:
-        "Zone 1 is ready, MOD-BED-002 passed QC, and MOD-KIT-003 has a mock robotic cell delay.",
+        "Zone 1 is ready, MOD-BED-002 passed QC, and MOD-KIT-003 has a simulated robotic cell delay.",
       relatedModuleId: "MOD-BED-002",
     },
     {
@@ -259,7 +259,7 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       message:
         "Keep bathroom pod MOD-BATH-001 at the factory until quality check is complete.",
       rationale:
-        "Mock quality status is still QC pending.",
+        "Quality status is still QC pending.",
       relatedModuleId: "MOD-BATH-001",
     },
   ],

@@ -66,10 +66,10 @@ export function ModularHousingDemoPanel({
       </div>
 
       <p className="modular-demo-copy">
-        Mock modular housing scenario for showing how factory fabrication,
-        logistics, and construction-site installation could be coordinated in a
-        geospatial digital twin view. No real AI, robotics, backend, or live
-        physical-system integration is connected.
+        Proposal demo for showing how factory fabrication, logistics, and
+        construction-site installation could be coordinated in a geospatial
+        digital twin view. No real AI, robotics, backend, or live physical-system
+        integration is connected.
       </p>
 
       <div className="modular-demo-actions">
@@ -123,7 +123,7 @@ export function ModularHousingDemoPanel({
       </section>
 
       <section className="modular-demo-section">
-        <h2>Mock Twin Events</h2>
+        <h2>Twin Events</h2>
         <ul className="modular-demo-list">
           {[...scenario.events].reverse().map((event) => (
             <EventItem key={event.id} event={event} />
@@ -190,7 +190,7 @@ export function ModularHousingDemoPanel({
       </section>
 
       <section className="modular-demo-section">
-        <h2>Mock AI Recommendations</h2>
+        <h2>AI Recommendations</h2>
         <ul className="modular-demo-list">
           {scenario.recommendations.map((recommendation) => (
             <RecommendationItem
@@ -249,7 +249,7 @@ function SelectedEntityDetails({
         ))}
       </dl>
       {selectedModuleId && (
-        <MockStatusActions
+        <StatusActions
           moduleId={selectedModuleId}
           actions={actions}
           onApplyModularAction={onApplyModularAction}
@@ -259,7 +259,7 @@ function SelectedEntityDetails({
   );
 }
 
-function MockStatusActions({
+function StatusActions({
   moduleId,
   actions,
   onApplyModularAction,
@@ -272,16 +272,16 @@ function MockStatusActions({
   ) => void;
 }) {
   return (
-    <div className="mock-status-actions">
-      <h3>Mock Status Actions</h3>
+    <div className="status-actions">
+      <h3>Status Actions</h3>
       {actions.length === 0 ? (
-        <p>No mock status action available for this module state.</p>
+        <p>No status action available for this module state.</p>
       ) : (
-        <div className="mock-status-action-list">
+        <div className="status-action-list">
           {actions.map((action) => (
             <button
               key={action.id}
-              className="panel-button mock-status-action-button"
+              className="panel-button status-action-button"
               type="button"
               onClick={() => onApplyModularAction(action.id, moduleId)}
               title={action.description}

@@ -10,7 +10,7 @@ import type {
   SelectedModularEntity,
 } from "../../types/modularHousing";
 
-function formatMockTimestamp(eventCount: number, eventIndex: number): string {
+function formatDemoTimestamp(eventCount: number, eventIndex: number): string {
   const totalMinutes = 8 * 60 + 40 + Math.max(0, eventCount - 4) + eventIndex;
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
@@ -27,7 +27,7 @@ function createEvents(
   return events.map((event, index) => ({
     ...event,
     id: `event-${actionId}-${module.id.toLowerCase()}-${scenario.events.length + index + 1}`,
-    timestamp: formatMockTimestamp(scenario.events.length, index),
+    timestamp: formatDemoTimestamp(scenario.events.length, index),
     relatedModuleId: module.id,
   }));
 }
@@ -122,7 +122,7 @@ export function getAvailableModularStatusActions(
       moduleId: module.id,
       label: "Complete fabrication and QC",
       description:
-        "Mock factory twin marks fabrication and quality checks complete.",
+        "Factory twin marks fabrication and quality checks complete.",
     });
   }
 
@@ -131,7 +131,7 @@ export function getAvailableModularStatusActions(
       id: "assign-dispatch-shipment",
       moduleId: module.id,
       label: "Assign and dispatch shipment",
-      description: "Mock logistics twin moves this module onto the delivery route.",
+      description: "Logistics twin moves this module onto the delivery route.",
     });
   }
 
@@ -140,7 +140,7 @@ export function getAvailableModularStatusActions(
       id: "mark-delivered-to-site",
       moduleId: module.id,
       label: "Mark delivered to site",
-      description: "Mock site twin receives the module at its assigned zone.",
+      description: "Site twin receives the module at its assigned zone.",
     });
   }
 
@@ -149,7 +149,7 @@ export function getAvailableModularStatusActions(
       id: "mark-installed",
       moduleId: module.id,
       label: "Mark installed",
-      description: "Mock site twin records installation progress for the module.",
+      description: "Site twin records installation progress for the module.",
     });
   }
 
@@ -174,11 +174,11 @@ export function applyModularStatusAction(
     const events = createEvents(scenario, actionId, module, [
       {
         source: "Factory Twin",
-        message: `${module.id} completed mock fabrication and QC review at the factory.`,
+        message: `${module.id} completed fabrication and QC review at the factory.`,
       },
       {
         source: "AI Agent",
-        message: `Mock delivery sequence updated: ${module.id} can now be considered after higher-priority ready modules.`,
+        message: `Delivery sequence updated: ${module.id} can now be considered after higher-priority ready modules.`,
       },
     ]);
 
@@ -195,9 +195,9 @@ export function applyModularStatusAction(
       recommendations: upsertRecommendation(scenario.recommendations, {
         id: "rec-bathroom-ready",
         priority: "medium",
-        message: `Mock sequence can now consider ${module.id} for a later shipment.`,
+        message: `Sequence can now consider ${module.id} for a later shipment.`,
         rationale:
-          "The bathroom pod has completed the local mock fabrication and QC path, but the bedroom module remains the preferred first shipment for Zone 1.",
+          "The bathroom pod has completed the local demo fabrication and QC path, but the bedroom module remains the preferred first shipment for Zone 1.",
         relatedModuleId: module.id,
       }),
     };
@@ -207,21 +207,21 @@ export function applyModularStatusAction(
     const events = createEvents(scenario, actionId, module, [
       {
         source: "Factory Twin",
-        message: `${module.id} released from the factory-side mock twin for shipment.`,
+        message: `${module.id} released from the factory-side twin for shipment.`,
       },
       {
         source: "Logistics Twin",
-        message: `Mock shipment assigned for ${module.id} on the factory-to-site route.`,
+        message: `Shipment assigned for ${module.id} on the factory-to-site route.`,
       },
       {
         source: "Site Twin",
-        message: `Construction-site mock twin is expecting ${module.id} at ${
+        message: `Construction-site twin is expecting ${module.id} at ${
           module.assignedZoneId ?? "its assigned zone"
         }.`,
       },
       {
         source: "AI Agent",
-        message: `Mock delivery sequence updated after dispatching ${module.id}.`,
+        message: `Delivery sequence updated after dispatching ${module.id}.`,
       },
     ]);
 
@@ -259,7 +259,7 @@ export function applyModularStatusAction(
       recommendations: upsertRecommendation(scenario.recommendations, {
         id: "rec-active-dispatch",
         priority: "high",
-        message: `Track ${module.id} through the active mock delivery route before dispatching delayed modules.`,
+        message: `Track ${module.id} through the active delivery route before dispatching delayed modules.`,
         rationale:
           "The module has passed QC and is now represented by the logistics twin, while delayed factory modules remain off the route.",
         relatedModuleId: module.id,
@@ -271,7 +271,7 @@ export function applyModularStatusAction(
     const events = createEvents(scenario, actionId, module, [
       {
         source: "Logistics Twin",
-        message: `${module.id} marked delivered in the mock logistics workflow.`,
+        message: `${module.id} marked delivered in the logistics workflow.`,
       },
       {
         source: "Site Twin",
@@ -279,7 +279,7 @@ export function applyModularStatusAction(
       },
       {
         source: "AI Agent",
-        message: `Mock delivery sequence updated after site delivery of ${module.id}.`,
+        message: `Delivery sequence updated after site delivery of ${module.id}.`,
       },
     ]);
 
@@ -310,7 +310,7 @@ export function applyModularStatusAction(
         priority: "high",
         message: `Prepare installation crew for ${module.id} at the assigned zone.`,
         rationale:
-          "The module is now represented by the site twin, so the next mock step is installation rather than route planning.",
+          "The module is now represented by the site twin, so the next demo step is installation rather than route planning.",
         relatedModuleId: module.id,
       }),
     };
@@ -320,11 +320,11 @@ export function applyModularStatusAction(
     const events = createEvents(scenario, actionId, module, [
       {
         source: "Site Twin",
-        message: `${module.id} marked installed in the mock construction-site twin.`,
+        message: `${module.id} marked installed in the construction-site twin.`,
       },
       {
         source: "AI Agent",
-        message: `Mock sequence updated: ${module.id} can move toward inspection tracking.`,
+        message: `Sequence updated: ${module.id} can move toward inspection tracking.`,
       },
     ]);
 
@@ -343,7 +343,7 @@ export function applyModularStatusAction(
       recommendations: upsertRecommendation(scenario.recommendations, {
         id: "rec-installation-followup",
         priority: "medium",
-        message: `Prepare mock inspection follow-up for ${module.id}.`,
+        message: `Prepare inspection follow-up for ${module.id}.`,
         rationale:
           "The module has reached the installed state in the local proposal-demo workflow.",
         relatedModuleId: module.id,

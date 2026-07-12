@@ -59,8 +59,14 @@ function getModuleCoordinate(
       scenario.route.checkpoints.find((checkpoint) =>
         checkpoint.id.includes("midpoint"),
       ) ?? scenario.route.checkpoints[0];
+    const column = moduleIndex % 2 === 0 ? -1 : 1;
+    const row = Math.floor(moduleIndex / 2);
 
-    return offsetCoordinate(midpoint.location, 80, 80);
+    return offsetCoordinate(
+      midpoint.location,
+      120 * column,
+      -120 + row * 140,
+    );
   }
 
   if (module.currentLocation === "construction-site" && module.assignedZoneId) {
