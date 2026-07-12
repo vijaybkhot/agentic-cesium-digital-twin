@@ -80,6 +80,15 @@ function getModuleCoordinate(
   );
 }
 
+function getModulesByLocation(
+  scenario: ModularHousingScenario,
+  currentLocation: ModularUnit["currentLocation"],
+): ModularUnit[] {
+  return scenario.modules.filter(
+    (module) => module.currentLocation === currentLocation,
+  );
+}
+
 function getFocusCoordinates(
   scenario: ModularHousingScenario,
   target: ModularCameraTarget,
@@ -88,15 +97,9 @@ function getFocusCoordinates(
     return [
       scenario.factorySite.location,
       ...scenario.productionStations.map((station) => station.location),
-      ...scenario.modules
-        .map((module, index) =>
-          module.currentLocation === "factory"
-            ? getModuleCoordinate(scenario, module, index)
-            : null,
-        )
-        .filter((coordinate): coordinate is ModularCoordinate =>
-          Boolean(coordinate),
-        ),
+      ...getModulesByLocation(scenario, "factory").map((module, index) =>
+        getModuleCoordinate(scenario, module, index),
+      ),
     ];
   }
 
@@ -104,15 +107,9 @@ function getFocusCoordinates(
     return [
       scenario.constructionSite.location,
       ...scenario.installationZones.map((zone) => zone.location),
-      ...scenario.modules
-        .map((module, index) =>
-          module.currentLocation === "construction-site"
-            ? getModuleCoordinate(scenario, module, index)
-            : null,
-        )
-        .filter((coordinate): coordinate is ModularCoordinate =>
-          Boolean(coordinate),
-        ),
+      ...getModulesByLocation(scenario, "construction-site").map(
+        (module, index) => getModuleCoordinate(scenario, module, index),
+      ),
     ];
   }
 
@@ -154,15 +151,29 @@ function zoneColor(zone: InstallationZone): Cesium.Color {
 function addEntityMetadata(
   kind: ModularEntityKind,
   id: string,
+  visualState?: {
+    pixelSize?: number;
+    outlineColor?: Cesium.Color;
+    outlineWidth?: number;
+    polylineWidth?: number;
+  },
 ): {
   entityType: string;
   modularKind: ModularEntityKind;
   modularId: string;
+  basePixelSize?: number;
+  baseOutlineColor?: Cesium.Color;
+  baseOutlineWidth?: number;
+  basePolylineWidth?: number;
 } {
   return {
     entityType: "modularEntity",
     modularKind: kind,
     modularId: id,
+    basePixelSize: visualState?.pixelSize,
+    baseOutlineColor: visualState?.outlineColor,
+    baseOutlineWidth: visualState?.outlineWidth,
+    basePolylineWidth: visualState?.polylineWidth,
   };
 }
 
@@ -202,7 +213,11 @@ function createSiteEntity(
       outlineWidth: 2,
     },
     description,
-    properties: addEntityMetadata(kind, id),
+    properties: addEntityMetadata(kind, id, {
+      pixelSize: 18,
+      outlineColor: Cesium.Color.WHITE,
+      outlineWidth: 3,
+    }),
   });
 }
 
@@ -230,7 +245,9 @@ function createRouteEntity(
       Status: ${formatModularSlug(scenario.route.status)}<br />
       Distance: ${scenario.route.estimatedDistanceMiles.toFixed(1)} mi
     `,
-    properties: addEntityMetadata("logistics-route", scenario.route.id),
+    properties: addEntityMetadata("logistics-route", scenario.route.id, {
+      polylineWidth: 5,
+    }),
   });
 }
 
@@ -261,7 +278,11 @@ function createCheckpointEntity(
       <strong>${checkpoint.label}</strong><br />
       Status: ${formatModularSlug(checkpoint.status)}
     `,
-    properties: addEntityMetadata("route-checkpoint", checkpoint.id),
+    properties: addEntityMetadata("route-checkpoint", checkpoint.id, {
+      pixelSize: 10,
+      outlineColor: Cesium.Color.BLACK,
+      outlineWidth: 2,
+    }),
   });
 }
 
@@ -301,7 +322,11 @@ function createModuleEntity(
       Install: ${formatModularSlug(module.installationStatus)}<br />
       Quality: ${formatModularSlug(module.qualityStatus)}
     `,
-    properties: addEntityMetadata("module", module.id),
+    properties: addEntityMetadata("module", module.id, {
+      pixelSize: 15,
+      outlineColor: Cesium.Color.BLACK,
+      outlineWidth: 2,
+    }),
   });
 }
 
@@ -336,7 +361,11 @@ function createStationEntity(
       Status: ${formatModularSlug(station.status)}<br />
       Modules: ${station.moduleIds.join(", ") || "None assigned"}
     `,
-    properties: addEntityMetadata("production-station", station.id),
+    properties: addEntityMetadata("production-station", station.id, {
+      pixelSize: 13,
+      outlineColor: Cesium.Color.WHITE,
+      outlineWidth: 2,
+    }),
   });
 }
 
@@ -377,7 +406,11 @@ function createInstallationZoneEntity(
       Status: ${formatModularSlug(zone.status)}<br />
       Assigned modules: ${zone.assignedModuleIds.join(", ")}
     `,
-    properties: addEntityMetadata("installation-zone", zone.id),
+    properties: addEntityMetadata("installation-zone", zone.id, {
+      pixelSize: 12,
+      outlineColor: Cesium.Color.BLACK,
+      outlineWidth: 2,
+    }),
   });
 }
 
@@ -424,8 +457,15 @@ export function createModularHousingEntities(
     entities.set(station.id, createStationEntity(viewer, station));
   });
 
-  scenario.modules.forEach((module, index) => {
-    entities.set(module.id, createModuleEntity(viewer, scenario, module, index));
+  const moduleLocationIndexes = new Map<ModularUnit["currentLocation"], number>();
+
+  scenario.modules.forEach((module) => {
+    const locationIndex = moduleLocationIndexes.get(module.currentLocation) ?? 0;
+    moduleLocationIndexes.set(module.currentLocation, locationIndex + 1);
+    entities.set(
+      module.id,
+      createModuleEntity(viewer, scenario, module, locationIndex),
+    );
   });
 
   return entities;
@@ -435,28 +475,37 @@ export function applyModularEntityVisualState(
   entity: Cesium.Entity,
   isSelected: boolean,
 ): void {
-  const entityKind = entity.properties?.modularKind?.getValue() as
-    | ModularEntityKind
-    | undefined;
-
   if (entity.point) {
-    const baseSize =
-      entityKind === "factory-site" || entityKind === "construction-site"
-        ? 18
-        : entityKind === "module"
-          ? 15
-          : 12;
+    const baseSize = entity.properties?.basePixelSize?.getValue() as
+      | number
+      | undefined;
+    const baseOutlineColor = entity.properties?.baseOutlineColor?.getValue() as
+      | Cesium.Color
+      | undefined;
+    const baseOutlineWidth = entity.properties?.baseOutlineWidth?.getValue() as
+      | number
+      | undefined;
+
     entity.point.pixelSize = new Cesium.ConstantProperty(
-      isSelected ? baseSize + 7 : baseSize,
+      isSelected ? (baseSize ?? 12) + 7 : baseSize ?? 12,
     );
     entity.point.outlineColor = new Cesium.ConstantProperty(
-      isSelected ? modularColors.selected : Cesium.Color.BLACK,
+      isSelected
+        ? modularColors.selected
+        : baseOutlineColor ?? Cesium.Color.BLACK,
     );
-    entity.point.outlineWidth = new Cesium.ConstantProperty(isSelected ? 4 : 2);
+    entity.point.outlineWidth = new Cesium.ConstantProperty(
+      isSelected ? 4 : baseOutlineWidth ?? 2,
+    );
   }
 
   if (entity.polyline) {
-    entity.polyline.width = new Cesium.ConstantProperty(isSelected ? 8 : 5);
+    const basePolylineWidth = entity.properties?.basePolylineWidth?.getValue() as
+      | number
+      | undefined;
+    entity.polyline.width = new Cesium.ConstantProperty(
+      isSelected ? (basePolylineWidth ?? 5) + 3 : basePolylineWidth ?? 5,
+    );
   }
 
   if (entity.label) {
