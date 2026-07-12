@@ -109,6 +109,13 @@ export function ModularHousingDemoPanel({
           >
             Site view
           </button>
+          <button
+            className="panel-button"
+            type="button"
+            onClick={() => onFocusTarget("logistics")}
+          >
+            Logistics view
+          </button>
         </div>
       </section>
 
@@ -134,12 +141,12 @@ export function ModularHousingDemoPanel({
       <section className="modular-demo-section">
         <h2>Map Legend</h2>
         <ul className="modular-demo-legend">
-          <LegendItem colorClass="factory" label="Factory site" />
-          <LegendItem colorClass="site" label="Construction site" />
+          <LegendItem colorClass="factory" label="Factory footprint" />
+          <LegendItem colorClass="site" label="Site footprint" />
           <LegendItem colorClass="route" label="Active route" />
           <LegendItem colorClass="module-factory" label="Module at factory" />
           <LegendItem colorClass="module-transit" label="Module in transit" />
-          <LegendItem colorClass="zone" label="Installation zone" />
+          <LegendItem colorClass="zone" label="Installation pad" />
           <LegendItem colorClass="station" label="Production station" />
         </ul>
       </section>

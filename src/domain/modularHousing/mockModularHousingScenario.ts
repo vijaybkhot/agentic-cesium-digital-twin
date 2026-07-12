@@ -14,6 +14,11 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       lon: -91.1761,
       height: 0,
     },
+    footprint: {
+      widthMeters: 560,
+      depthMeters: 360,
+      rotationDegrees: 18,
+    },
     description:
       "Factory-side digital twin for modular unit fabrication and robotics status.",
     status: "production-shift-active",
@@ -26,6 +31,11 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       lat: 30.5316,
       lon: -91.0982,
       height: 0,
+    },
+    footprint: {
+      widthMeters: 460,
+      depthMeters: 340,
+      rotationDegrees: -22,
     },
     description:
       "Construction-site digital twin for foundation readiness, module placement, and inspection status.",
@@ -177,6 +187,11 @@ export const mockModularHousingScenario: ModularHousingScenario = {
         lon: -91.0977,
         height: 0,
       },
+      footprint: {
+        widthMeters: 108,
+        depthMeters: 54,
+        rotationDegrees: -22,
+      },
       assignedModuleIds: ["MOD-BATH-001", "MOD-BED-002"],
     },
     {
@@ -189,6 +204,11 @@ export const mockModularHousingScenario: ModularHousingScenario = {
         lon: -91.0983,
         height: 0,
       },
+      footprint: {
+        widthMeters: 132,
+        depthMeters: 62,
+        rotationDegrees: -22,
+      },
       assignedModuleIds: ["MOD-KIT-003"],
     },
     {
@@ -200,6 +220,11 @@ export const mockModularHousingScenario: ModularHousingScenario = {
         lat: 30.5312,
         lon: -91.0988,
         height: 0,
+      },
+      footprint: {
+        widthMeters: 118,
+        depthMeters: 38,
+        rotationDegrees: -22,
       },
       assignedModuleIds: ["MOD-MEP-004"],
     },

@@ -2,6 +2,8 @@
 
 ## 2026-07-11
 
+- Added screenshot-ready modular camera views and illustrative Cesium footprint
+  polygons for proposal visuals.
 - Added a cross-mode modular demo regression checklist covering workflow,
   image intake, reconstruction, existing controlled-facility demo, model
   annotations, modular interactions, and mode-switch state isolation.

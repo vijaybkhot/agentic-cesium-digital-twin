@@ -4,7 +4,13 @@ export interface ModularCoordinate {
   height?: number;
 }
 
-export type ModularCameraTarget = "system" | "factory" | "site";
+export interface ModularFootprint {
+  widthMeters: number;
+  depthMeters: number;
+  rotationDegrees: number;
+}
+
+export type ModularCameraTarget = "system" | "factory" | "site" | "logistics";
 
 export type ModularEntityKind =
   | "factory-site"
@@ -44,6 +50,7 @@ export interface ModularSite {
   name: string;
   role: ModularSiteRole;
   location: ModularCoordinate;
+  footprint: ModularFootprint;
   description: string;
   status: ModularSiteStatus;
 }
@@ -154,6 +161,7 @@ export interface InstallationZone {
   status: InstallationZoneStatus;
   siteId: string;
   location: ModularCoordinate;
+  footprint: ModularFootprint;
   assignedModuleIds: string[];
 }
 
