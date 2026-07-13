@@ -286,10 +286,12 @@
 
 .modular-demo-swatch.is-factory {
   background: #2563eb;
+  border-radius: 2px;
 }
 
 .modular-demo-swatch.is-site {
   background: #16a34a;
+  border-radius: 2px;
 }
 
 .modular-demo-swatch.is-route {
@@ -306,10 +308,12 @@
 
 .modular-demo-swatch.is-zone {
   background: #84cc16;
+  border-radius: 2px;
 }
 
 .modular-demo-swatch.is-station {
   background: #7c3aed;
+  border-radius: 2px;
 }
 
 @media (max-width: 600px) {

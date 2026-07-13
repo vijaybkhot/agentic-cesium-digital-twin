@@ -234,9 +234,13 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     });
 
     this.modularEntities.forEach((entity, entityId) => {
+      const modularId =
+        (entity.properties?.modularId?.getValue() as string | undefined) ??
+        entityId;
+
       applyModularEntityVisualState(
         entity,
-        this.selectedEntityIds.modularEntityId === entityId,
+        this.selectedEntityIds.modularEntityId === modularId,
       );
     });
   }

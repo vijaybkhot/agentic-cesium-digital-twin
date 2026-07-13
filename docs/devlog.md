@@ -2,6 +2,10 @@
 
 ## 2026-07-11
 
+- Added screenshot-ready modular camera views and illustrative Cesium footprint
+  polygons for proposal visuals.
+- Added low production-cell and installation-pad slabs, plus modest extruded
+  module boxes, while keeping factory/site footprints as flat proposal geometry.
 - Added a cross-mode modular demo regression checklist covering workflow,
   image intake, reconstruction, existing controlled-facility demo, model
   annotations, modular interactions, and mode-switch state isolation.

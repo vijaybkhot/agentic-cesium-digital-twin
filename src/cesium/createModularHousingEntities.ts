@@ -4,7 +4,9 @@ import type {
   ModularCameraTarget,
   ModularCoordinate,
   ModularEntityKind,
+  ModularFootprint,
   ModularHousingScenario,
+  ModularSite,
   ModularUnit,
   ProductionStation,
 } from "../types/modularHousing";
@@ -23,6 +25,12 @@ const modularColors = {
   zoneReady: Cesium.Color.fromCssColorString("#84cc16"),
   zoneWaiting: Cesium.Color.fromCssColorString("#f59e0b"),
   selected: Cesium.Color.YELLOW,
+};
+
+const modularExtrusions = {
+  module: 8,
+  productionCell: 2.4,
+  installationPad: 1.2,
 };
 
 function pointFromCoordinate(coordinate: ModularCoordinate): Cesium.Cartesian3 {
@@ -46,6 +54,176 @@ function offsetCoordinate(
     lat: coordinate.lat + northMeters / metersPerDegreeLat,
     lon: coordinate.lon + eastMeters / metersPerDegreeLon,
     height: coordinate.height ?? 0,
+  };
+}
+
+function rotateOffset(
+  eastMeters: number,
+  northMeters: number,
+  rotationDegrees: number,
+): { eastMeters: number; northMeters: number } {
+  const rotation = Cesium.Math.toRadians(rotationDegrees);
+  const cosRotation = Math.cos(rotation);
+  const sinRotation = Math.sin(rotation);
+
+  return {
+    eastMeters: eastMeters * cosRotation - northMeters * sinRotation,
+    northMeters: eastMeters * sinRotation + northMeters * cosRotation,
+  };
+}
+
+function footprintCorners(
+  center: ModularCoordinate,
+  footprint: ModularFootprint,
+): ModularCoordinate[] {
+  const halfWidth = footprint.widthMeters / 2;
+  const halfDepth = footprint.depthMeters / 2;
+  const cornerOffsets = [
+    { eastMeters: -halfWidth, northMeters: -halfDepth },
+    { eastMeters: halfWidth, northMeters: -halfDepth },
+    { eastMeters: halfWidth, northMeters: halfDepth },
+    { eastMeters: -halfWidth, northMeters: halfDepth },
+  ];
+
+  return cornerOffsets.map((offset) => {
+    const rotatedOffset = rotateOffset(
+      offset.eastMeters,
+      offset.northMeters,
+      footprint.rotationDegrees,
+    );
+
+    return offsetCoordinate(
+      center,
+      rotatedOffset.eastMeters,
+      rotatedOffset.northMeters,
+    );
+  });
+}
+
+function polygonHierarchyFromFootprint(
+  center: ModularCoordinate,
+  footprint: ModularFootprint,
+): Cesium.PolygonHierarchy {
+  return new Cesium.PolygonHierarchy(
+    footprintCorners(center, footprint).map(pointFromCoordinate),
+  );
+}
+
+function labelCoordinateOutsideFootprint(
+  center: ModularCoordinate,
+  footprint: ModularFootprint,
+): ModularCoordinate {
+  const rotatedOffset = rotateOffset(
+    0,
+    footprint.depthMeters / 2 + 92,
+    footprint.rotationDegrees,
+  );
+
+  return offsetCoordinate(
+    center,
+    rotatedOffset.eastMeters,
+    rotatedOffset.northMeters,
+  );
+}
+
+function coordinateAlongFootprintEdge(
+  center: ModularCoordinate,
+  footprint: ModularFootprint,
+  index: number,
+  count: number,
+  edge: "north" | "south" | "east" | "west",
+  insetMeters: number,
+): ModularCoordinate {
+  const slotCount = Math.max(1, count + 1);
+  const usesHorizontalEdge = edge === "north" || edge === "south";
+  const slotWidth = footprint.widthMeters / slotCount;
+  const slotDepth = footprint.depthMeters / slotCount;
+  const localEast = usesHorizontalEdge
+    ? -footprint.widthMeters / 2 + slotWidth * (index + 1)
+    : (edge === "east" ? 1 : -1) * (footprint.widthMeters / 2 - insetMeters);
+  const localNorth = usesHorizontalEdge
+    ? (edge === "north" ? 1 : -1) * (footprint.depthMeters / 2 - insetMeters)
+    : -footprint.depthMeters / 2 + slotDepth * (index + 1);
+  const rotatedOffset = rotateOffset(
+    localEast,
+    localNorth,
+    footprint.rotationDegrees,
+  );
+
+  return offsetCoordinate(
+    center,
+    rotatedOffset.eastMeters,
+    rotatedOffset.northMeters,
+  );
+}
+
+function coordinateInsideFootprint(
+  center: ModularCoordinate,
+  footprint: ModularFootprint,
+  index: number,
+  count: number,
+): ModularCoordinate {
+  if (count <= 1) {
+    return center;
+  }
+
+  const slotWidth = footprint.widthMeters / count;
+  const localEast = -footprint.widthMeters / 2 + slotWidth * (index + 0.5);
+  const rotatedOffset = rotateOffset(localEast, 0, footprint.rotationDegrees);
+
+  return offsetCoordinate(
+    center,
+    rotatedOffset.eastMeters,
+    rotatedOffset.northMeters,
+  );
+}
+
+function getModuleFootprint(
+  scenario: ModularHousingScenario,
+  module: ModularUnit,
+): ModularFootprint {
+  const dimensionsByType: Record<
+    ModularUnit["type"],
+    Pick<ModularFootprint, "widthMeters" | "depthMeters">
+  > = {
+    "bathroom-pod": { widthMeters: 42, depthMeters: 24 },
+    "bedroom-module": { widthMeters: 58, depthMeters: 28 },
+    "kitchen-living-module": { widthMeters: 76, depthMeters: 34 },
+    "mep-module": { widthMeters: 54, depthMeters: 18 },
+  };
+  const assignedZone = module.assignedZoneId
+    ? scenario.installationZones.find((zone) => zone.id === module.assignedZoneId)
+    : undefined;
+  const rotationDegrees =
+    module.currentLocation === "construction-site" && assignedZone
+      ? assignedZone.footprint.rotationDegrees
+      : module.currentLocation === "in-transit"
+        ? 42
+        : scenario.factorySite.footprint.rotationDegrees;
+
+  return {
+    ...dimensionsByType[module.type],
+    rotationDegrees,
+  };
+}
+
+function getConstructionSiteModuleIndex(
+  scenario: ModularHousingScenario,
+  module: ModularUnit,
+): { index: number; count: number } {
+  const zoneModules = scenario.modules.filter(
+    (candidate) =>
+      candidate.currentLocation === "construction-site" &&
+      candidate.assignedZoneId === module.assignedZoneId,
+  );
+  const index = Math.max(
+    0,
+    zoneModules.findIndex((candidate) => candidate.id === module.id),
+  );
+
+  return {
+    index,
+    count: Math.max(1, zoneModules.length),
   };
 }
 
@@ -75,14 +253,24 @@ function getModuleCoordinate(
     );
 
     if (zone) {
-      return offsetCoordinate(zone.location, 45, -45);
+      const zonePosition = getConstructionSiteModuleIndex(scenario, module);
+
+      return coordinateInsideFootprint(
+        zone.location,
+        zone.footprint,
+        zonePosition.index,
+        zonePosition.count,
+      );
     }
   }
 
-  return offsetCoordinate(
+  return coordinateAlongFootprintEdge(
     scenario.factorySite.location,
-    -120 + moduleIndex * 120,
-    -120,
+    scenario.factorySite.footprint,
+    moduleIndex,
+    getModulesByLocation(scenario, "factory").length,
+    "east",
+    56,
   );
 }
 
@@ -102,7 +290,14 @@ function getFocusCoordinates(
   if (target === "factory") {
     return [
       scenario.factorySite.location,
+      ...footprintCorners(
+        scenario.factorySite.location,
+        scenario.factorySite.footprint,
+      ),
       ...scenario.productionStations.map((station) => station.location),
+      ...scenario.productionStations.flatMap((station) =>
+        footprintCorners(station.location, station.footprint),
+      ),
       ...getModulesByLocation(scenario, "factory").map((module, index) =>
         getModuleCoordinate(scenario, module, index),
       ),
@@ -112,9 +307,25 @@ function getFocusCoordinates(
   if (target === "site") {
     return [
       scenario.constructionSite.location,
+      ...footprintCorners(
+        scenario.constructionSite.location,
+        scenario.constructionSite.footprint,
+      ),
       ...scenario.installationZones.map((zone) => zone.location),
+      ...scenario.installationZones.flatMap((zone) =>
+        footprintCorners(zone.location, zone.footprint),
+      ),
       ...getModulesByLocation(scenario, "construction-site").map(
         (module, index) => getModuleCoordinate(scenario, module, index),
+      ),
+    ];
+  }
+
+  if (target === "logistics") {
+    return [
+      ...scenario.route.checkpoints.map((checkpoint) => checkpoint.location),
+      ...getModulesByLocation(scenario, "in-transit").map((module, index) =>
+        getModuleCoordinate(scenario, module, index),
       ),
     ];
   }
@@ -162,6 +373,8 @@ function addEntityMetadata(
     outlineColor?: Cesium.Color;
     outlineWidth?: number;
     polylineWidth?: number;
+    polygonMaterialColor?: Cesium.Color;
+    polygonOutlineColor?: Cesium.Color;
   },
 ): {
   entityType: string;
@@ -171,6 +384,8 @@ function addEntityMetadata(
   baseOutlineColor?: Cesium.Color;
   baseOutlineWidth?: number;
   basePolylineWidth?: number;
+  basePolygonMaterialColor?: Cesium.Color;
+  basePolygonOutlineColor?: Cesium.Color;
 } {
   return {
     entityType: "modularEntity",
@@ -180,50 +395,73 @@ function addEntityMetadata(
     baseOutlineColor: visualState?.outlineColor,
     baseOutlineWidth: visualState?.outlineWidth,
     basePolylineWidth: visualState?.polylineWidth,
+    basePolygonMaterialColor: visualState?.polygonMaterialColor,
+    basePolygonOutlineColor: visualState?.polygonOutlineColor,
   };
 }
 
 function createSiteEntity(
   viewer: Cesium.Viewer,
   kind: "factory-site" | "construction-site",
-  id: string,
-  name: string,
-  coordinate: ModularCoordinate,
+  site: ModularSite,
   color: Cesium.Color,
-  description: string,
 ): Cesium.Entity {
+  const polygonMaterialColor = color.withAlpha(0.16);
+
   return viewer.entities.add({
-    id: `modular:${kind}:${id}`,
-    name,
-    position: pointFromCoordinate(coordinate),
+    id: `modular:${kind}:${site.id}`,
+    name: site.name,
+    position: pointFromCoordinate(site.location),
     point: {
       pixelSize: 18,
       color,
       outlineColor: Cesium.Color.WHITE,
       outlineWidth: 3,
     },
-    ellipse: {
-      semiMajorAxis: 320,
-      semiMinorAxis: 220,
-      material: color.withAlpha(0.16),
+    polygon: {
+      hierarchy: polygonHierarchyFromFootprint(site.location, site.footprint),
+      material: polygonMaterialColor,
       outline: true,
       outlineColor: color,
     },
-    label: {
-      text: name,
-      font: "14px sans-serif",
-      pixelOffset: new Cesium.Cartesian2(0, -30),
-      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-      fillColor: Cesium.Color.WHITE,
-      outlineColor: Cesium.Color.BLACK,
-      outlineWidth: 2,
-    },
-    description,
-    properties: addEntityMetadata(kind, id, {
+    description: `
+      <strong>${site.name}</strong><br />
+      Illustrative footprint: ${site.footprint.widthMeters}m x ${site.footprint.depthMeters}m<br />
+      ${site.description}
+    `,
+    properties: addEntityMetadata(kind, site.id, {
       pixelSize: 18,
       outlineColor: Cesium.Color.WHITE,
       outlineWidth: 3,
+      polygonMaterialColor,
+      polygonOutlineColor: color,
     }),
+  });
+}
+
+function createSiteLabelEntity(
+  viewer: Cesium.Viewer,
+  kind: "factory-site" | "construction-site",
+  site: ModularSite,
+): Cesium.Entity {
+  return viewer.entities.add({
+    id: `modular:${kind}:${site.id}:label`,
+    name: `${site.name} label`,
+    position: pointFromCoordinate(
+      labelCoordinateOutsideFootprint(site.location, site.footprint),
+    ),
+    label: {
+      text: site.name,
+      font: "bold 17px sans-serif",
+      pixelOffset: new Cesium.Cartesian2(0, 0),
+      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+      fillColor: Cesium.Color.WHITE,
+      outlineColor: Cesium.Color.BLACK,
+      outlineWidth: 3,
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.CENTER,
+    },
+    properties: addEntityMetadata(kind, site.id),
   });
 }
 
@@ -273,7 +511,7 @@ function createCheckpointEntity(
     },
     label: {
       text: checkpoint.label,
-      font: "12px sans-serif",
+      font: "bold 12px sans-serif",
       pixelOffset: new Cesium.Cartesian2(0, 18),
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
       fillColor: Cesium.Color.WHITE,
@@ -299,7 +537,9 @@ function createModuleEntity(
   moduleIndex: number,
 ): Cesium.Entity {
   const coordinate = getModuleCoordinate(scenario, module, moduleIndex);
+  const footprint = getModuleFootprint(scenario, module);
   const color = moduleColor(module);
+  const polygonMaterialColor = color.withAlpha(0.28);
 
   return viewer.entities.add({
     id: `modular:module:${module.id}`,
@@ -311,9 +551,16 @@ function createModuleEntity(
       outlineColor: Cesium.Color.BLACK,
       outlineWidth: 2,
     },
+    polygon: {
+      hierarchy: polygonHierarchyFromFootprint(coordinate, footprint),
+      material: polygonMaterialColor,
+      outline: true,
+      outlineColor: color,
+      extrudedHeight: modularExtrusions.module,
+    },
     label: {
       text: `${module.id}\n${formatModularSlug(module.currentLocation)}`,
-      font: "12px sans-serif",
+      font: "bold 12px sans-serif",
       pixelOffset: new Cesium.Cartesian2(0, -30),
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
       fillColor: Cesium.Color.WHITE,
@@ -326,12 +573,15 @@ function createModuleEntity(
       Location: ${formatModularSlug(module.currentLocation)}<br />
       Production: ${formatModularSlug(module.productionStatus)}<br />
       Install: ${formatModularSlug(module.installationStatus)}<br />
-      Quality: ${formatModularSlug(module.qualityStatus)}
+      Quality: ${formatModularSlug(module.qualityStatus)}<br />
+      Illustrative module footprint: ${footprint.widthMeters}m x ${footprint.depthMeters}m
     `,
     properties: addEntityMetadata("module", module.id, {
       pixelSize: 15,
       outlineColor: Cesium.Color.BLACK,
       outlineWidth: 2,
+      polygonMaterialColor,
+      polygonOutlineColor: color,
     }),
   });
 }
@@ -341,6 +591,7 @@ function createStationEntity(
   station: ProductionStation,
 ): Cesium.Entity {
   const color = stationColor(station);
+  const polygonMaterialColor = color.withAlpha(0.22);
 
   return viewer.entities.add({
     id: `modular:production-station:${station.id}`,
@@ -352,9 +603,19 @@ function createStationEntity(
       outlineColor: Cesium.Color.WHITE,
       outlineWidth: 2,
     },
+    polygon: {
+      hierarchy: polygonHierarchyFromFootprint(
+        station.location,
+        station.footprint,
+      ),
+      material: polygonMaterialColor,
+      outline: true,
+      outlineColor: color,
+      extrudedHeight: modularExtrusions.productionCell,
+    },
     label: {
       text: `${station.name}\n${formatModularSlug(station.status)}`,
-      font: "12px sans-serif",
+      font: "bold 12px sans-serif",
       pixelOffset: new Cesium.Cartesian2(0, 24),
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
       fillColor: Cesium.Color.WHITE,
@@ -365,12 +626,15 @@ function createStationEntity(
       <strong>${station.name}</strong><br />
       Type: ${station.stationType}<br />
       Status: ${formatModularSlug(station.status)}<br />
-      Modules: ${station.moduleIds.join(", ") || "None assigned"}
+      Modules: ${station.moduleIds.join(", ") || "None assigned"}<br />
+      Illustrative production cell: ${station.footprint.widthMeters}m x ${station.footprint.depthMeters}m
     `,
     properties: addEntityMetadata("production-station", station.id, {
       pixelSize: 13,
       outlineColor: Cesium.Color.WHITE,
       outlineWidth: 2,
+      polygonMaterialColor,
+      polygonOutlineColor: color,
     }),
   });
 }
@@ -380,6 +644,7 @@ function createInstallationZoneEntity(
   zone: InstallationZone,
 ): Cesium.Entity {
   const color = zoneColor(zone);
+  const polygonMaterialColor = color.withAlpha(0.22);
 
   return viewer.entities.add({
     id: `modular:installation-zone:${zone.id}`,
@@ -391,16 +656,16 @@ function createInstallationZoneEntity(
       outlineColor: Cesium.Color.BLACK,
       outlineWidth: 2,
     },
-    ellipse: {
-      semiMajorAxis: 90,
-      semiMinorAxis: 65,
-      material: color.withAlpha(0.2),
+    polygon: {
+      hierarchy: polygonHierarchyFromFootprint(zone.location, zone.footprint),
+      material: polygonMaterialColor,
       outline: true,
       outlineColor: color,
+      extrudedHeight: modularExtrusions.installationPad,
     },
     label: {
       text: `${zone.name}\n${formatModularSlug(zone.status)}`,
-      font: "12px sans-serif",
+      font: "bold 12px sans-serif",
       pixelOffset: new Cesium.Cartesian2(0, -28),
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
       fillColor: Cesium.Color.WHITE,
@@ -410,12 +675,15 @@ function createInstallationZoneEntity(
     description: `
       <strong>${zone.name}</strong><br />
       Status: ${formatModularSlug(zone.status)}<br />
-      Assigned modules: ${zone.assignedModuleIds.join(", ")}
+      Assigned modules: ${zone.assignedModuleIds.join(", ")}<br />
+      Illustrative placement pad: ${zone.footprint.widthMeters}m x ${zone.footprint.depthMeters}m
     `,
     properties: addEntityMetadata("installation-zone", zone.id, {
       pixelSize: 12,
       outlineColor: Cesium.Color.BLACK,
       outlineWidth: 2,
+      polygonMaterialColor,
+      polygonOutlineColor: color,
     }),
   });
 }
@@ -429,24 +697,34 @@ export function createModularHousingEntities(
   const factoryEntity = createSiteEntity(
     viewer,
     "factory-site",
-    scenario.factorySite.id,
-    scenario.factorySite.name,
-    scenario.factorySite.location,
+    scenario.factorySite,
     modularColors.factory,
-    scenario.factorySite.description,
   );
   entities.set(scenario.factorySite.id, factoryEntity);
+  entities.set(
+    `${scenario.factorySite.id}:label`,
+    createSiteLabelEntity(
+      viewer,
+      "factory-site",
+      scenario.factorySite,
+    ),
+  );
 
   const siteEntity = createSiteEntity(
     viewer,
     "construction-site",
-    scenario.constructionSite.id,
-    scenario.constructionSite.name,
-    scenario.constructionSite.location,
+    scenario.constructionSite,
     modularColors.site,
-    scenario.constructionSite.description,
   );
   entities.set(scenario.constructionSite.id, siteEntity);
+  entities.set(
+    `${scenario.constructionSite.id}:label`,
+    createSiteLabelEntity(
+      viewer,
+      "construction-site",
+      scenario.constructionSite,
+    ),
+  );
 
   const routeEntity = createRouteEntity(viewer, scenario);
   entities.set(scenario.route.id, routeEntity);
@@ -514,6 +792,24 @@ export function applyModularEntityVisualState(
     );
   }
 
+  if (entity.polygon) {
+    const basePolygonMaterialColor = entity.properties?.basePolygonMaterialColor
+      ?.getValue() as Cesium.Color | undefined;
+    const basePolygonOutlineColor = entity.properties?.basePolygonOutlineColor
+      ?.getValue() as Cesium.Color | undefined;
+
+    entity.polygon.material = new Cesium.ColorMaterialProperty(
+      isSelected
+        ? modularColors.selected.withAlpha(0.34)
+        : basePolygonMaterialColor ?? Cesium.Color.WHITE.withAlpha(0.18),
+    );
+    entity.polygon.outlineColor = new Cesium.ConstantProperty(
+      isSelected
+        ? modularColors.selected
+        : basePolygonOutlineColor ?? Cesium.Color.BLACK,
+    );
+  }
+
   if (entity.label) {
     entity.label.fillColor = new Cesium.ConstantProperty(
       isSelected ? modularColors.selected : Cesium.Color.WHITE,
@@ -529,7 +825,8 @@ export function flyToModularScenarioTarget(
   const focusPoints = getFocusCoordinates(scenario, target).map(
     pointFromCoordinate,
   );
-  const range = target === "system" ? 30000 : 2400;
+  const range =
+    target === "system" ? 30000 : target === "logistics" ? 15000 : 2400;
   const boundingSphere = Cesium.BoundingSphere.fromPoints(focusPoints);
 
   viewer.camera.flyToBoundingSphere(boundingSphere, {

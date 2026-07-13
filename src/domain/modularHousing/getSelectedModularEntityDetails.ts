@@ -174,6 +174,10 @@ export function getSelectedModularEntityDetails(
         { label: "Type", value: station.stationType },
         { label: "Status", value: formatModularSlug(station.status) },
         { label: "Modules", value: formatList(station.moduleIds) },
+        {
+          label: "Footprint",
+          value: `${station.footprint.widthMeters}m x ${station.footprint.depthMeters}m`,
+        },
       ],
     };
   }
