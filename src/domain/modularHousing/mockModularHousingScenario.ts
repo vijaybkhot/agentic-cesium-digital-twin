@@ -140,12 +140,17 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       id: "station-1",
       name: "Robotic wall framing cell",
       stationType: "Robotic fabrication",
-      status: "idle",
+      status: "available",
       siteId: "factory-baton-rouge",
       location: {
         lat: 30.4588,
         lon: -91.1767,
         height: 0,
+      },
+      footprint: {
+        widthMeters: 112,
+        depthMeters: 72,
+        rotationDegrees: 18,
       },
       moduleIds: [],
     },
@@ -160,6 +165,11 @@ export const mockModularHousingScenario: ModularHousingScenario = {
         lon: -91.1755,
         height: 0,
       },
+      footprint: {
+        widthMeters: 104,
+        depthMeters: 68,
+        rotationDegrees: 18,
+      },
       moduleIds: ["MOD-BATH-001"],
     },
     {
@@ -172,6 +182,11 @@ export const mockModularHousingScenario: ModularHousingScenario = {
         lat: 30.4577,
         lon: -91.1763,
         height: 0,
+      },
+      footprint: {
+        widthMeters: 128,
+        depthMeters: 76,
+        rotationDegrees: 18,
       },
       moduleIds: ["MOD-KIT-003"],
     },

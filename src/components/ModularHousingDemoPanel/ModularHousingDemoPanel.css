@@ -313,6 +313,7 @@
 
 .modular-demo-swatch.is-station {
   background: #7c3aed;
+  border-radius: 2px;
 }
 
 @media (max-width: 600px) {

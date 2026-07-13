@@ -27,6 +27,12 @@ const modularColors = {
   selected: Cesium.Color.YELLOW,
 };
 
+const modularExtrusions = {
+  module: 8,
+  productionCell: 2.4,
+  installationPad: 1.2,
+};
+
 function pointFromCoordinate(coordinate: ModularCoordinate): Cesium.Cartesian3 {
   return Cesium.Cartesian3.fromDegrees(
     coordinate.lon,
@@ -103,6 +109,27 @@ function polygonHierarchyFromFootprint(
   );
 }
 
+function coordinateInsideFootprint(
+  center: ModularCoordinate,
+  footprint: ModularFootprint,
+  index: number,
+  count: number,
+): ModularCoordinate {
+  if (count <= 1) {
+    return center;
+  }
+
+  const slotWidth = footprint.widthMeters / count;
+  const localEast = -footprint.widthMeters / 2 + slotWidth * (index + 0.5);
+  const rotatedOffset = rotateOffset(localEast, 0, footprint.rotationDegrees);
+
+  return offsetCoordinate(
+    center,
+    rotatedOffset.eastMeters,
+    rotatedOffset.northMeters,
+  );
+}
+
 function getModuleFootprint(
   scenario: ModularHousingScenario,
   module: ModularUnit,
@@ -132,6 +159,26 @@ function getModuleFootprint(
   };
 }
 
+function getConstructionSiteModuleIndex(
+  scenario: ModularHousingScenario,
+  module: ModularUnit,
+): { index: number; count: number } {
+  const zoneModules = scenario.modules.filter(
+    (candidate) =>
+      candidate.currentLocation === "construction-site" &&
+      candidate.assignedZoneId === module.assignedZoneId,
+  );
+  const index = Math.max(
+    0,
+    zoneModules.findIndex((candidate) => candidate.id === module.id),
+  );
+
+  return {
+    index,
+    count: Math.max(1, zoneModules.length),
+  };
+}
+
 function getModuleCoordinate(
   scenario: ModularHousingScenario,
   module: ModularUnit,
@@ -158,7 +205,14 @@ function getModuleCoordinate(
     );
 
     if (zone) {
-      return offsetCoordinate(zone.location, 45, -45);
+      const zonePosition = getConstructionSiteModuleIndex(scenario, module);
+
+      return coordinateInsideFootprint(
+        zone.location,
+        zone.footprint,
+        zonePosition.index,
+        zonePosition.count,
+      );
     }
   }
 
@@ -190,6 +244,9 @@ function getFocusCoordinates(
         scenario.factorySite.footprint,
       ),
       ...scenario.productionStations.map((station) => station.location),
+      ...scenario.productionStations.flatMap((station) =>
+        footprintCorners(station.location, station.footprint),
+      ),
       ...getModulesByLocation(scenario, "factory").map((module, index) =>
         getModuleCoordinate(scenario, module, index),
       ),
@@ -431,6 +488,7 @@ function createModuleEntity(
       material: polygonMaterialColor,
       outline: true,
       outlineColor: color,
+      extrudedHeight: modularExtrusions.module,
     },
     label: {
       text: `${module.id}\n${formatModularSlug(module.currentLocation)}`,
@@ -465,6 +523,7 @@ function createStationEntity(
   station: ProductionStation,
 ): Cesium.Entity {
   const color = stationColor(station);
+  const polygonMaterialColor = color.withAlpha(0.22);
 
   return viewer.entities.add({
     id: `modular:production-station:${station.id}`,
@@ -475,6 +534,16 @@ function createStationEntity(
       color,
       outlineColor: Cesium.Color.WHITE,
       outlineWidth: 2,
+    },
+    polygon: {
+      hierarchy: polygonHierarchyFromFootprint(
+        station.location,
+        station.footprint,
+      ),
+      material: polygonMaterialColor,
+      outline: true,
+      outlineColor: color,
+      extrudedHeight: modularExtrusions.productionCell,
     },
     label: {
       text: `${station.name}\n${formatModularSlug(station.status)}`,
@@ -489,12 +558,15 @@ function createStationEntity(
       <strong>${station.name}</strong><br />
       Type: ${station.stationType}<br />
       Status: ${formatModularSlug(station.status)}<br />
-      Modules: ${station.moduleIds.join(", ") || "None assigned"}
+      Modules: ${station.moduleIds.join(", ") || "None assigned"}<br />
+      Illustrative production cell: ${station.footprint.widthMeters}m x ${station.footprint.depthMeters}m
     `,
     properties: addEntityMetadata("production-station", station.id, {
       pixelSize: 13,
       outlineColor: Cesium.Color.WHITE,
       outlineWidth: 2,
+      polygonMaterialColor,
+      polygonOutlineColor: color,
     }),
   });
 }
@@ -521,6 +593,7 @@ function createInstallationZoneEntity(
       material: polygonMaterialColor,
       outline: true,
       outlineColor: color,
+      extrudedHeight: modularExtrusions.installationPad,
     },
     label: {
       text: `${zone.name}\n${formatModularSlug(zone.status)}`,

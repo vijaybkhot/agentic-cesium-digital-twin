@@ -147,7 +147,7 @@ export function ModularHousingDemoPanel({
           <LegendItem colorClass="module-factory" label="Module at factory" />
           <LegendItem colorClass="module-transit" label="Module in transit" />
           <LegendItem colorClass="zone" label="Installation pad" />
-          <LegendItem colorClass="station" label="Production station" />
+          <LegendItem colorClass="station" label="Production cell" />
         </ul>
       </section>
 

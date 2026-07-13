@@ -133,7 +133,7 @@ export interface ModularUnit {
 }
 
 export type ProductionStationStatus =
-  | "idle"
+  | "available"
   | "active"
   | "delayed"
   | "quality-check";
@@ -145,6 +145,7 @@ export interface ProductionStation {
   status: ProductionStationStatus;
   siteId: string;
   location: ModularCoordinate;
+  footprint: ModularFootprint;
   moduleIds: string[];
 }
 
