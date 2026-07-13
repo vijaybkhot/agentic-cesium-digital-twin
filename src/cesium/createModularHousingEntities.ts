@@ -109,6 +109,23 @@ function polygonHierarchyFromFootprint(
   );
 }
 
+function labelCoordinateOutsideFootprint(
+  center: ModularCoordinate,
+  footprint: ModularFootprint,
+): ModularCoordinate {
+  const rotatedOffset = rotateOffset(
+    0,
+    footprint.depthMeters / 2 + 92,
+    footprint.rotationDegrees,
+  );
+
+  return offsetCoordinate(
+    center,
+    rotatedOffset.eastMeters,
+    rotatedOffset.northMeters,
+  );
+}
+
 function coordinateInsideFootprint(
   center: ModularCoordinate,
   footprint: ModularFootprint,
@@ -373,15 +390,6 @@ function createSiteEntity(
       outline: true,
       outlineColor: color,
     },
-    label: {
-      text: site.name,
-      font: "14px sans-serif",
-      pixelOffset: new Cesium.Cartesian2(0, -30),
-      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-      fillColor: Cesium.Color.WHITE,
-      outlineColor: Cesium.Color.BLACK,
-      outlineWidth: 2,
-    },
     description: `
       <strong>${site.name}</strong><br />
       Illustrative footprint: ${site.footprint.widthMeters}m x ${site.footprint.depthMeters}m<br />
@@ -394,6 +402,32 @@ function createSiteEntity(
       polygonMaterialColor,
       polygonOutlineColor: color,
     }),
+  });
+}
+
+function createSiteLabelEntity(
+  viewer: Cesium.Viewer,
+  kind: "factory-site" | "construction-site",
+  site: ModularSite,
+): Cesium.Entity {
+  return viewer.entities.add({
+    id: `modular:${kind}:${site.id}:label`,
+    name: `${site.name} label`,
+    position: pointFromCoordinate(
+      labelCoordinateOutsideFootprint(site.location, site.footprint),
+    ),
+    label: {
+      text: site.name,
+      font: "bold 17px sans-serif",
+      pixelOffset: new Cesium.Cartesian2(0, 0),
+      style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+      fillColor: Cesium.Color.WHITE,
+      outlineColor: Cesium.Color.BLACK,
+      outlineWidth: 3,
+      horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+      verticalOrigin: Cesium.VerticalOrigin.CENTER,
+    },
+    properties: addEntityMetadata(kind, site.id),
   });
 }
 
@@ -633,6 +667,14 @@ export function createModularHousingEntities(
     modularColors.factory,
   );
   entities.set(scenario.factorySite.id, factoryEntity);
+  entities.set(
+    `${scenario.factorySite.id}:label`,
+    createSiteLabelEntity(
+      viewer,
+      "factory-site",
+      scenario.factorySite,
+    ),
+  );
 
   const siteEntity = createSiteEntity(
     viewer,
@@ -641,6 +683,14 @@ export function createModularHousingEntities(
     modularColors.site,
   );
   entities.set(scenario.constructionSite.id, siteEntity);
+  entities.set(
+    `${scenario.constructionSite.id}:label`,
+    createSiteLabelEntity(
+      viewer,
+      "construction-site",
+      scenario.constructionSite,
+    ),
+  );
 
   const routeEntity = createRouteEntity(viewer, scenario);
   entities.set(scenario.route.id, routeEntity);

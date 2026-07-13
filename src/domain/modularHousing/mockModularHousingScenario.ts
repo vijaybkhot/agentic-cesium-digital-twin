@@ -143,8 +143,8 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       status: "available",
       siteId: "factory-baton-rouge",
       location: {
-        lat: 30.4588,
-        lon: -91.1767,
+        lat: 30.459,
+        lon: -91.1769,
         height: 0,
       },
       footprint: {
@@ -161,8 +161,8 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       status: "quality-check",
       siteId: "factory-baton-rouge",
       location: {
-        lat: 30.4583,
-        lon: -91.1755,
+        lat: 30.45835,
+        lon: -91.1752,
         height: 0,
       },
       footprint: {
@@ -179,8 +179,8 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       status: "delayed",
       siteId: "factory-baton-rouge",
       location: {
-        lat: 30.4577,
-        lon: -91.1763,
+        lat: 30.45745,
+        lon: -91.1768,
         height: 0,
       },
       footprint: {
@@ -215,8 +215,8 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       status: "awaiting-module",
       siteId: "site-affordable-housing",
       location: {
-        lat: 30.5315,
-        lon: -91.0983,
+        lat: 30.53145,
+        lon: -91.09815,
         height: 0,
       },
       footprint: {
@@ -232,8 +232,8 @@ export const mockModularHousingScenario: ModularHousingScenario = {
       status: "awaiting-module",
       siteId: "site-affordable-housing",
       location: {
-        lat: 30.5312,
-        lon: -91.0988,
+        lat: 30.531,
+        lon: -91.09905,
         height: 0,
       },
       footprint: {
