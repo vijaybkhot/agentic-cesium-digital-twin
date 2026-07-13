@@ -126,6 +126,37 @@ function labelCoordinateOutsideFootprint(
   );
 }
 
+function coordinateAlongFootprintEdge(
+  center: ModularCoordinate,
+  footprint: ModularFootprint,
+  index: number,
+  count: number,
+  edge: "north" | "south" | "east" | "west",
+  insetMeters: number,
+): ModularCoordinate {
+  const slotCount = Math.max(1, count + 1);
+  const usesHorizontalEdge = edge === "north" || edge === "south";
+  const slotWidth = footprint.widthMeters / slotCount;
+  const slotDepth = footprint.depthMeters / slotCount;
+  const localEast = usesHorizontalEdge
+    ? -footprint.widthMeters / 2 + slotWidth * (index + 1)
+    : (edge === "east" ? 1 : -1) * (footprint.widthMeters / 2 - insetMeters);
+  const localNorth = usesHorizontalEdge
+    ? (edge === "north" ? 1 : -1) * (footprint.depthMeters / 2 - insetMeters)
+    : -footprint.depthMeters / 2 + slotDepth * (index + 1);
+  const rotatedOffset = rotateOffset(
+    localEast,
+    localNorth,
+    footprint.rotationDegrees,
+  );
+
+  return offsetCoordinate(
+    center,
+    rotatedOffset.eastMeters,
+    rotatedOffset.northMeters,
+  );
+}
+
 function coordinateInsideFootprint(
   center: ModularCoordinate,
   footprint: ModularFootprint,
@@ -233,10 +264,13 @@ function getModuleCoordinate(
     }
   }
 
-  return offsetCoordinate(
+  return coordinateAlongFootprintEdge(
     scenario.factorySite.location,
-    -120 + moduleIndex * 120,
-    -120,
+    scenario.factorySite.footprint,
+    moduleIndex,
+    getModulesByLocation(scenario, "factory").length,
+    "east",
+    56,
   );
 }
 
@@ -477,7 +511,7 @@ function createCheckpointEntity(
     },
     label: {
       text: checkpoint.label,
-      font: "12px sans-serif",
+      font: "bold 12px sans-serif",
       pixelOffset: new Cesium.Cartesian2(0, 18),
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
       fillColor: Cesium.Color.WHITE,
@@ -526,7 +560,7 @@ function createModuleEntity(
     },
     label: {
       text: `${module.id}\n${formatModularSlug(module.currentLocation)}`,
-      font: "12px sans-serif",
+      font: "bold 12px sans-serif",
       pixelOffset: new Cesium.Cartesian2(0, -30),
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
       fillColor: Cesium.Color.WHITE,
@@ -581,7 +615,7 @@ function createStationEntity(
     },
     label: {
       text: `${station.name}\n${formatModularSlug(station.status)}`,
-      font: "12px sans-serif",
+      font: "bold 12px sans-serif",
       pixelOffset: new Cesium.Cartesian2(0, 24),
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
       fillColor: Cesium.Color.WHITE,
@@ -631,7 +665,7 @@ function createInstallationZoneEntity(
     },
     label: {
       text: `${zone.name}\n${formatModularSlug(zone.status)}`,
-      font: "12px sans-serif",
+      font: "bold 12px sans-serif",
       pixelOffset: new Cesium.Cartesian2(0, -28),
       style: Cesium.LabelStyle.FILL_AND_OUTLINE,
       fillColor: Cesium.Color.WHITE,
