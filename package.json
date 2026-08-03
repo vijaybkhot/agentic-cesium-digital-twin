@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "validate:disaster-data": "node scripts/validateDisasterResilienceData.mjs"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
