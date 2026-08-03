@@ -12,9 +12,9 @@
         "nearest_shelter": "Cypress Community Safe Point (fictional)",
         "estimated_flood_depth_ft": 0.4,
         "risk_level": "Low",
-        "recommended_action": "Demonstration scenario: review the mock property summary and compare it with higher-risk examples.",
+        "recommended_action": "Mock decision-support example: monitor official sources and review household flood preparations; do not rely on this demonstration.",
         "data_source": "Synthetic local research data; not validated hazard data.",
-        "confidence_note": "Illustrative value created for the research POC. It is not a measured or predicted flood depth.",
+        "confidence_note": "Synthetic value created for the research POC. It is not a measured or predicted flood depth.",
         "building_height_m": 6.5
       },
       "geometry": {
@@ -40,9 +40,9 @@
         "nearest_shelter": "Cypress Community Safe Point (fictional)",
         "estimated_flood_depth_ft": 1.3,
         "risk_level": "Moderate",
-        "recommended_action": "Demonstration scenario: review the mock route status and property confidence note.",
+        "recommended_action": "Mock decision-support example: prepare essential items and identify an official evacuation option; follow only verified local instructions.",
         "data_source": "Synthetic local research data; not validated hazard data.",
-        "confidence_note": "Illustrative value created for the research POC. Local elevation and drainage are not modeled.",
+        "confidence_note": "Synthetic value created for the research POC. Local elevation and drainage are not modeled.",
         "building_height_m": 7.2
       },
       "geometry": {
@@ -68,9 +68,9 @@
         "nearest_shelter": "Cypress Community Safe Point (fictional)",
         "estimated_flood_depth_ft": 2.8,
         "risk_level": "High",
-        "recommended_action": "Demonstration scenario: inspect the high-risk dashboard state and mock response context.",
+        "recommended_action": "Mock decision-support example: prioritize early readiness and seek official evacuation guidance; this demonstration is not an evacuation order.",
         "data_source": "Synthetic local research data; not validated hazard data.",
-        "confidence_note": "Illustrative value created for the research POC. It must not be used for emergency decisions.",
+        "confidence_note": "Synthetic value created for the research POC. It must not be used for emergency decisions.",
         "building_height_m": 9.2
       },
       "geometry": {
@@ -96,9 +96,9 @@
         "nearest_shelter": "Cypress Community Safe Point (fictional)",
         "estimated_flood_depth_ft": 0.8,
         "risk_level": "Low",
-        "recommended_action": "Demonstration scenario: compare this lower-depth property with the mock flood boundary.",
+        "recommended_action": "Mock decision-support example: protect movable outdoor items and monitor official sources; do not rely on this demonstration.",
         "data_source": "Synthetic local research data; not validated hazard data.",
-        "confidence_note": "Illustrative value created for the research POC. Parcel and building geometry are fictional.",
+        "confidence_note": "Synthetic value created for the research POC. Parcel and building geometry are fictional.",
         "building_height_m": 6.8
       },
       "geometry": {
@@ -124,9 +124,9 @@
         "nearest_shelter": "Cypress Community Safe Point (fictional)",
         "estimated_flood_depth_ft": 3.4,
         "risk_level": "High",
-        "recommended_action": "Demonstration scenario: review the high-risk property summary and uncertainty language.",
+        "recommended_action": "Mock decision-support example: avoid making travel decisions from this display and follow official evacuation instructions if issued.",
         "data_source": "Synthetic local research data; not validated hazard data.",
-        "confidence_note": "Illustrative value created for the research POC. It is not real HEC-RAS output.",
+        "confidence_note": "Synthetic value created for the research POC. It is not real HEC-RAS output.",
         "building_height_m": 7.5
       },
       "geometry": {
@@ -152,9 +152,9 @@
         "nearest_shelter": "Cypress Community Safe Point (fictional)",
         "estimated_flood_depth_ft": 2.0,
         "risk_level": "Moderate",
-        "recommended_action": "Demonstration scenario: inspect the mock shelter, route status, and confidence information.",
+        "recommended_action": "Mock decision-support example: review household assistance needs and follow only verified local instructions.",
         "data_source": "Synthetic local research data; not validated hazard data.",
-        "confidence_note": "Illustrative value created for the research POC. No residents, structures, or hazards are represented.",
+        "confidence_note": "Synthetic value created for the research POC. No residents, structures, or hazards are represented.",
         "building_height_m": 8.6
       },
       "geometry": {

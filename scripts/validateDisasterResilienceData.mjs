@@ -1,0 +1,206 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+
+const geoJsonPath = "public/examples/disaster_resilience_properties.geojson";
+const scenarioPath =
+  "src/domain/disasterResilience/mockDisasterResilienceScenario.ts";
+
+const requiredPropertyFields = [
+  "property_id",
+  "address_label",
+  "occupancy_type",
+  "evacuation_zone",
+  "nearest_shelter",
+  "estimated_flood_depth_ft",
+  "risk_level",
+  "recommended_action",
+  "data_source",
+  "confidence_note",
+  "building_height_m",
+];
+const supportedRiskLevels = new Set(["Low", "Moderate", "High"]);
+const mockLanguagePattern = /\b(?:fictional|mock|synthetic)\b/i;
+
+function polygonBounds(ring) {
+  const longitudes = ring.map(([longitude]) => longitude);
+  const latitudes = ring.map(([, latitude]) => latitude);
+
+  return {
+    minLongitude: Math.min(...longitudes),
+    maxLongitude: Math.max(...longitudes),
+    minLatitude: Math.min(...latitudes),
+    maxLatitude: Math.max(...latitudes),
+  };
+}
+
+function boundsOverlap(first, second) {
+  return (
+    first.minLongitude < second.maxLongitude &&
+    first.maxLongitude > second.minLongitude &&
+    first.minLatitude < second.maxLatitude &&
+    first.maxLatitude > second.minLatitude
+  );
+}
+
+function parseCoordinates(source) {
+  return [...source.matchAll(/lat:\s*(-?\d+(?:\.\d+)?),\s*lon:\s*(-?\d+(?:\.\d+)?)/g)].map(
+    ([, latitude, longitude]) => ({
+      latitude: Number(latitude),
+      longitude: Number(longitude),
+    }),
+  );
+}
+
+function sourceSection(source, startMarker, endMarker) {
+  const start = source.indexOf(startMarker);
+  const end = source.indexOf(endMarker, start + startMarker.length);
+
+  assert.notEqual(start, -1, `Missing scenario marker: ${startMarker}`);
+  assert.notEqual(end, -1, `Missing scenario marker: ${endMarker}`);
+  return source.slice(start, end);
+}
+
+const [geoJsonSource, scenarioSource] = await Promise.all([
+  readFile(geoJsonPath, "utf8"),
+  readFile(scenarioPath, "utf8"),
+]);
+const geoJson = JSON.parse(geoJsonSource);
+
+assert.equal(geoJson.type, "FeatureCollection");
+assert.ok(
+  geoJson.features.length >= 5 && geoJson.features.length <= 8,
+  "Expected 5–8 property features",
+);
+
+const propertyIds = new Set();
+const propertyBounds = [];
+const depthsByRisk = { Low: [], Moderate: [], High: [] };
+
+for (const feature of geoJson.features) {
+  assert.equal(feature.type, "Feature");
+  assert.equal(feature.geometry?.type, "Polygon");
+
+  for (const field of requiredPropertyFields) {
+    assert.ok(
+      Object.hasOwn(feature.properties, field),
+      `${feature.properties.property_id ?? "Unknown property"} is missing ${field}`,
+    );
+  }
+
+  const properties = feature.properties;
+  assert.ok(!propertyIds.has(properties.property_id), "Property IDs must be unique");
+  propertyIds.add(properties.property_id);
+  assert.match(properties.address_label, /\bDemo\b/i);
+  assert.match(properties.occupancy_type, /\bFictional\b/i);
+  assert.match(properties.nearest_shelter, /\bFictional\b/i);
+  assert.match(properties.data_source, mockLanguagePattern);
+  assert.match(properties.confidence_note, mockLanguagePattern);
+  assert.match(properties.recommended_action, mockLanguagePattern);
+  assert.doesNotMatch(
+    properties.recommended_action,
+    /\b(?:inspect|compare|review) (?:the|this) (?:demo|dashboard|property summary|route status|mock flood boundary)/i,
+    `${properties.property_id} contains circular demo instructions`,
+  );
+  assert.ok(supportedRiskLevels.has(properties.risk_level));
+  assert.ok(
+    Number.isFinite(properties.estimated_flood_depth_ft) &&
+      properties.estimated_flood_depth_ft >= 0,
+  );
+  assert.ok(
+    Number.isFinite(properties.building_height_m) &&
+      properties.building_height_m > 0,
+  );
+  depthsByRisk[properties.risk_level].push(properties.estimated_flood_depth_ft);
+
+  const ring = feature.geometry.coordinates?.[0];
+  assert.ok(Array.isArray(ring) && ring.length >= 4, "Polygon ring is incomplete");
+  assert.deepEqual(ring[0], ring.at(-1), "Polygon ring must be closed");
+
+  for (const coordinate of ring) {
+    assert.ok(Array.isArray(coordinate) && coordinate.length >= 2);
+    const [longitude, latitude] = coordinate;
+    assert.ok(Number.isFinite(longitude) && longitude >= -180 && longitude <= 180);
+    assert.ok(Number.isFinite(latitude) && latitude >= -90 && latitude <= 90);
+  }
+
+  propertyBounds.push({
+    propertyId: properties.property_id,
+    ...polygonBounds(ring),
+  });
+}
+
+for (let firstIndex = 0; firstIndex < propertyBounds.length; firstIndex += 1) {
+  for (
+    let secondIndex = firstIndex + 1;
+    secondIndex < propertyBounds.length;
+    secondIndex += 1
+  ) {
+    assert.ok(
+      !boundsOverlap(propertyBounds[firstIndex], propertyBounds[secondIndex]),
+      `${propertyBounds[firstIndex].propertyId} overlaps ${propertyBounds[secondIndex].propertyId}`,
+    );
+  }
+}
+
+assert.ok(
+  Math.max(...depthsByRisk.Low) < Math.min(...depthsByRisk.Moderate) &&
+    Math.max(...depthsByRisk.Moderate) < Math.min(...depthsByRisk.High),
+  "Risk levels must increase with the mock flood depths",
+);
+
+assert.doesNotMatch(geoJsonSource, /https?:\/\//i);
+assert.doesNotMatch(scenarioSource, /https?:\/\//i);
+assert.match(
+  scenarioSource,
+  /propertyDataUrl:\s*"\/examples\/disaster_resilience_properties\.geojson"/,
+);
+assert.match(scenarioSource, /disclaimer:\s*DISASTER_DEMO_DISCLAIMER/);
+assert.match(scenarioSource, /label:\s*MOCK_FLOOD_LAYER_LABEL/);
+
+for (const eventSource of [
+  "Weather Twin",
+  "Flood Model Twin",
+  "Property Twin",
+  "Response Twin",
+  "AI Assistant",
+]) {
+  assert.match(scenarioSource, new RegExp(`source: "${eventSource}"`));
+}
+
+const floodCoordinates = parseCoordinates(
+  sourceSection(scenarioSource, "boundary: [", "representativeDepthFt:"),
+);
+const shelterCoordinates = parseCoordinates(
+  sourceSection(scenarioSource, "shelter: {", "route: {"),
+);
+const routeCoordinates = parseCoordinates(
+  sourceSection(scenarioSource, "positions: [", "description:"),
+);
+
+assert.ok(floodCoordinates.length >= 3, "Flood boundary needs at least three positions");
+assert.equal(shelterCoordinates.length, 1, "Scenario needs one shelter location");
+assert.ok(routeCoordinates.length >= 2, "Response route needs at least two positions");
+
+const floodBounds = polygonBounds(
+  floodCoordinates.map(({ longitude, latitude }) => [longitude, latitude]),
+);
+
+for (const property of propertyBounds) {
+  assert.ok(
+    property.minLongitude >= floodBounds.minLongitude &&
+      property.maxLongitude <= floodBounds.maxLongitude &&
+      property.minLatitude >= floodBounds.minLatitude &&
+      property.maxLatitude <= floodBounds.maxLatitude,
+    `${property.propertyId} must fall inside the mock flood boundary`,
+  );
+}
+
+assert.deepEqual(
+  routeCoordinates.at(-1),
+  shelterCoordinates[0],
+  "The mock response route must end at the fictional shelter",
+);
+
+console.log(
+  `Validated ${geoJson.features.length} fictional properties, ${floodCoordinates.length} flood-boundary positions, ${routeCoordinates.length} route positions, one shelter, and five twin event sources.`,
+);
