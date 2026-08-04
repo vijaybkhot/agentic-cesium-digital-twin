@@ -56,9 +56,13 @@ export function DisasterResilienceDemoPanel({
       <section className="disaster-resilience-demo-section">
         <h2>Current prototype scope</h2>
         <p className="disaster-resilience-demo-empty-state">
-          This ticket establishes the isolated mode and neighborhood camera.
-          Mock property, flood, shelter, and route layers will be added in the
-          next Cesium implementation tickets.
+          Fictional risk-styled property structures are shown using synthetic
+          local data. Mock flood, shelter, and route layers will be added in
+          later Cesium implementation tickets.
+        </p>
+        <p className="disaster-resilience-alignment-note" role="note">
+          Synthetic demonstration footprints. Not aligned with real parcels,
+          buildings, roads, or addresses.
         </p>
       </section>
 
