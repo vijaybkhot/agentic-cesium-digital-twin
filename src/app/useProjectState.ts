@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { createProjectConfigRepository } from "../config/loadProjectConfig";
 import {
   createAuditEvent,
@@ -19,6 +19,7 @@ import {
 } from "./appState";
 
 export function useProjectState() {
+  const loadVersionRef = useRef(0);
   const [config, setConfig] = useState<ProjectConfig | null>(null);
   const [selectedPointId, setSelectedPointId] = useState<string | null>(null);
   const [selectedModelAnnotationId, setSelectedModelAnnotationId] = useState<
@@ -31,6 +32,8 @@ export function useProjectState() {
   const [error, setError] = useState<string | null>(null);
 
   const loadExistingDemo = useCallback(async () => {
+    const loadVersion = loadVersionRef.current + 1;
+    loadVersionRef.current = loadVersion;
     const repository = createProjectConfigRepository();
 
     setIsLoading(true);
@@ -39,6 +42,10 @@ export function useProjectState() {
     try {
       const loadedConfig = await repository.loadProjectConfig();
 
+      if (loadVersion !== loadVersionRef.current) {
+        return;
+      }
+
       setConfig(normalizeProjectConfig(loadedConfig));
       setSelectedPointId(null);
       setSelectedModelAnnotationId(null);
@@ -46,6 +53,10 @@ export function useProjectState() {
         createAuditEvent("Existing demonstration project loaded."),
       ]);
     } catch (loadError: unknown) {
+      if (loadVersion !== loadVersionRef.current) {
+        return;
+      }
+
       const message =
         loadError instanceof Error
           ? loadError.message
@@ -54,11 +65,14 @@ export function useProjectState() {
       setError(message);
       throw loadError;
     } finally {
-      setIsLoading(false);
+      if (loadVersion === loadVersionRef.current) {
+        setIsLoading(false);
+      }
     }
   }, []);
 
   const clearProject = useCallback(() => {
+    loadVersionRef.current += 1;
     setConfig(null);
     setSelectedPointId(null);
     setSelectedModelAnnotationId(null);

@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CesiumScene } from "../components/CesiumScene/CesiumScene";
+import { DisasterResilienceDemoPanel } from "../components/DisasterResilienceDemoPanel/DisasterResilienceDemoPanel";
 import { ImageIntakePanel } from "../components/ImageIntakePanel/ImageIntakePanel";
 import { ModularHousingDemoPanel } from "../components/ModularHousingDemoPanel/ModularHousingDemoPanel";
 import { ReconstructionWorkflowPanel } from "../components/ReconstructionWorkflowPanel/ReconstructionWorkflowPanel";
 import { SidePanel } from "../components/SidePanel/SidePanel";
 import { StatusPanel } from "../components/StatusPanel/StatusPanel";
 import { Toolbar } from "../components/Toolbar/Toolbar";
+import { createDisasterResilienceViewerConfig } from "../domain/disasterResilience/createDisasterResilienceViewerConfig";
+import { mockDisasterResilienceScenario } from "../domain/disasterResilience/mockDisasterResilienceScenario";
 import { applyModularStatusAction } from "../domain/modularHousing/applyModularStatusAction";
 import { createModularHousingViewerConfig } from "../domain/modularHousing/createModularHousingViewerConfig";
 import { mockModularHousingScenario } from "../domain/modularHousing/mockModularHousingScenario";
@@ -17,7 +20,11 @@ import type {
 import { useProjectState } from "./useProjectState";
 import { useReconstructionWorkflow } from "./useReconstructionWorkflow";
 
-type ApplicationMode = "workflow" | "existing-demo" | "modular-demo";
+type ApplicationMode =
+  | "workflow"
+  | "existing-demo"
+  | "modular-demo"
+  | "disaster-demo";
 
 interface DragState {
   active: boolean;
@@ -51,6 +58,7 @@ export function AppShell() {
   } = useProjectState();
   const workflow = useReconstructionWorkflow();
   const panelRef = useRef<HTMLElement | null>(null);
+  const navigationVersionRef = useRef(0);
   const dragStateRef = useRef<DragState>({
     active: false,
     offsetX: 0,
@@ -63,6 +71,9 @@ export function AppShell() {
   const [modularScenario, setModularScenario] = useState(
     mockModularHousingScenario,
   );
+  const [disasterScenario, setDisasterScenario] = useState(
+    mockDisasterResilienceScenario,
+  );
   const [modularFocusRequest, setModularFocusRequest] = useState<{
     target: ModularCameraTarget;
     version: number;
@@ -70,6 +81,10 @@ export function AppShell() {
   const modularViewerConfig = useMemo(
     () => createModularHousingViewerConfig(modularScenario),
     [modularScenario],
+  );
+  const disasterViewerConfig = useMemo(
+    () => createDisasterResilienceViewerConfig(disasterScenario),
+    [disasterScenario],
   );
   const existingDemoProjectLocation =
     config &&
@@ -165,8 +180,16 @@ export function AppShell() {
   }
 
   const openExistingDemo = useCallback(async () => {
+    const navigationVersion = navigationVersionRef.current + 1;
+    navigationVersionRef.current = navigationVersion;
+
     try {
       await loadExistingDemo();
+
+      if (navigationVersion !== navigationVersionRef.current) {
+        return;
+      }
+
       setSelectedModularEntity(null);
       setModularFocusRequest(null);
       setMode("existing-demo");
@@ -177,6 +200,7 @@ export function AppShell() {
   }, [loadExistingDemo]);
 
   const startNewProject = useCallback(() => {
+    navigationVersionRef.current += 1;
     clearProject();
     workflow.resetWorkflow();
     setSelectedModularEntity(null);
@@ -186,6 +210,7 @@ export function AppShell() {
   }, [clearProject, workflow.resetWorkflow]);
 
   const openModularDemo = useCallback(() => {
+    navigationVersionRef.current += 1;
     clearProject();
     workflow.resetWorkflow();
     setModularScenario(mockModularHousingScenario);
@@ -195,6 +220,18 @@ export function AppShell() {
       version: (currentRequest?.version ?? 0) + 1,
     }));
     setMode("modular-demo");
+    setIsPanelVisible(true);
+  }, [clearProject, workflow.resetWorkflow]);
+
+  const openDisasterDemo = useCallback(() => {
+    navigationVersionRef.current += 1;
+    clearProject();
+    workflow.resetWorkflow();
+    setModularScenario(mockModularHousingScenario);
+    setSelectedModularEntity(null);
+    setModularFocusRequest(null);
+    setDisasterScenario(mockDisasterResilienceScenario);
+    setMode("disaster-demo");
     setIsPanelVisible(true);
   }, [clearProject, workflow.resetWorkflow]);
 
@@ -220,7 +257,9 @@ export function AppShell() {
       ? config
       : mode === "modular-demo"
         ? modularViewerConfig
-        : workflow.config;
+        : mode === "disaster-demo"
+          ? disasterViewerConfig
+          : workflow.config;
 
   return (
     <div className="app-shell">
@@ -323,6 +362,7 @@ export function AppShell() {
           onResetWorkflow={workflow.resetWorkflow}
           onOpenExistingDemo={() => void openExistingDemo()}
           onOpenModularDemo={openModularDemo}
+          onOpenDisasterDemo={openDisasterDemo}
         />
       ) : mode === "modular-demo" ? (
         <ModularHousingDemoPanel
@@ -332,6 +372,14 @@ export function AppShell() {
           onApplyModularAction={applyModularAction}
           onNewProject={startNewProject}
           onOpenExistingDemo={() => void openExistingDemo()}
+          onOpenDisasterDemo={openDisasterDemo}
+        />
+      ) : mode === "disaster-demo" ? (
+        <DisasterResilienceDemoPanel
+          scenario={disasterScenario}
+          onNewProject={startNewProject}
+          onOpenExistingDemo={() => void openExistingDemo()}
+          onOpenModularDemo={openModularDemo}
         />
       ) : (
         <>
@@ -360,6 +408,7 @@ export function AppShell() {
             onHide={() => setIsPanelVisible(false)}
             onNewProject={startNewProject}
             onOpenModularDemo={openModularDemo}
+            onOpenDisasterDemo={openDisasterDemo}
             onClearSelection={clearSelection}
             onResetPosition={() => {
               setIsPanelVisible(true);
