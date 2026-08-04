@@ -185,15 +185,45 @@ const floodBounds = polygonBounds(
   floodCoordinates.map(({ longitude, latitude }) => [longitude, latitude]),
 );
 
+const expectedInsideFloodBoundary = [
+  "PROP-002",
+  "PROP-003",
+  "PROP-005",
+  "PROP-006",
+];
+const expectedOutsideFloodBoundary = ["PROP-001", "PROP-004"];
+const insideFloodBoundary = [];
+const outsideFloodBoundary = [];
+
 for (const property of propertyBounds) {
-  assert.ok(
+  const fullyInside =
     property.minLongitude >= floodBounds.minLongitude &&
-      property.maxLongitude <= floodBounds.maxLongitude &&
-      property.minLatitude >= floodBounds.minLatitude &&
-      property.maxLatitude <= floodBounds.maxLatitude,
-    `${property.propertyId} must fall inside the mock flood boundary`,
+    property.maxLongitude <= floodBounds.maxLongitude &&
+    property.minLatitude >= floodBounds.minLatitude &&
+    property.maxLatitude <= floodBounds.maxLatitude;
+
+  if (fullyInside) {
+    insideFloodBoundary.push(property.propertyId);
+    continue;
+  }
+
+  assert.ok(
+    !boundsOverlap(property, floodBounds),
+    `${property.propertyId} must not partially cross the mock flood boundary`,
   );
+  outsideFloodBoundary.push(property.propertyId);
 }
+
+assert.deepEqual(
+  insideFloodBoundary.sort(),
+  expectedInsideFloodBoundary,
+  "Expected the Moderate/High properties inside the mock flood boundary",
+);
+assert.deepEqual(
+  outsideFloodBoundary.sort(),
+  expectedOutsideFloodBoundary,
+  "Expected the Low properties outside the mock flood boundary",
+);
 
 assert.deepEqual(
   routeCoordinates.at(-1),
@@ -202,5 +232,5 @@ assert.deepEqual(
 );
 
 console.log(
-  `Validated ${geoJson.features.length} fictional properties, ${floodCoordinates.length} flood-boundary positions, ${routeCoordinates.length} route positions, one shelter, and five twin event sources.`,
+  `Validated ${geoJson.features.length} fictional properties (${insideFloodBoundary.length} inside and ${outsideFloodBoundary.length} outside the mock flood boundary), ${floodCoordinates.length} flood-boundary positions, ${routeCoordinates.length} route positions, one shelter, and five twin event sources.`,
 );

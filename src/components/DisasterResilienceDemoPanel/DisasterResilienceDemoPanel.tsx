@@ -54,11 +54,41 @@ export function DisasterResilienceDemoPanel({
       </section>
 
       <section className="disaster-resilience-demo-section">
+        <h2>Mock flood visualization</h2>
+        <p className="disaster-resilience-flood-label">
+          <span
+            className="disaster-resilience-flood-swatch"
+            aria-hidden="true"
+          />
+          {scenario.floodLayer.label}
+        </p>
+        <dl className="disaster-resilience-demo-details">
+          <div>
+            <dt>Depth</dt>
+            <dd>
+              {scenario.floodLayer.representativeDepthFt.toFixed(1)} ft mock
+              representative depth
+            </dd>
+          </div>
+          <div>
+            <dt>Display</dt>
+            <dd>
+              {scenario.floodLayer.visualHeightScaleMultiplier}× illustrative
+              vertical exaggeration
+            </dd>
+          </div>
+        </dl>
+        <p className="disaster-resilience-flood-note" role="note">
+          {scenario.floodLayer.confidenceNote}
+        </p>
+      </section>
+
+      <section className="disaster-resilience-demo-section">
         <h2>Current prototype scope</h2>
         <p className="disaster-resilience-demo-empty-state">
-          Fictional risk-styled property structures are shown using synthetic
-          local data. Mock flood, shelter, and route layers will be added in
-          later Cesium implementation tickets.
+          Fictional risk-styled property structures and a mock flood-depth
+          layer are shown using synthetic local data. Mock shelter and route
+          layers will be added in later Cesium implementation tickets.
         </p>
         <p className="disaster-resilience-alignment-note" role="note">
           Synthetic demonstration footprints. Not aligned with real parcels,
