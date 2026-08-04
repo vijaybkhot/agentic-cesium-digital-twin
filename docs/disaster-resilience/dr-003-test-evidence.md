@@ -57,6 +57,18 @@ artifacts and are not committed to the repository.
 Headless SwiftShader may emit WebGL performance messages. The existing Cesium
 terrain-outline warning also appeared; neither is caused by DR-003.
 
+## Review correction and regression run
+
+The pull-request review found that a superseded controlled-facility request
+could still update hidden project state after navigation to another mode. The
+project-state hook now invalidates pending loads when the project is cleared
+and ignores stale success, error, and loading updates.
+
+After that correction, the data validation, production build, diff check, and
+complete Chrome walkthrough above were repeated successfully. The delayed-load
+test again left modular housing active, and no application error or unhandled
+exception was reported.
+
 ## Manual approval gate
 
 Repository-owner manual testing is pending. The DR-003 PR must not merge until
