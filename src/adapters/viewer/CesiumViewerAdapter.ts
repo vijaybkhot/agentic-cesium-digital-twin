@@ -24,6 +24,7 @@ import {
   flyToModularScenarioTarget,
 } from "../../cesium/createModularHousingEntities";
 import { createSiteMarker } from "../../cesium/createSiteMarker";
+import { styleDisasterPropertyDataSource } from "../../cesium/styleDisasterPropertyDataSource";
 import {
   applyMeasurementPointVisualState,
   createMeasurementPointEntity,
@@ -48,6 +49,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
   private readonly modularEntities = new Map<string, Cesium.Entity>();
   private readonly disasterDataSources = new Set<Cesium.DataSource>();
   private readonly disasterEntities = new Set<Cesium.Entity>();
+  private readonly disasterPropertyEntities = new Map<string, Cesium.Entity>();
   private readonly measurementPoints = new Map<string, MeasurementPointConfig>();
   private disasterLoadVersion = 0;
   private selectedEntityIds: ViewerSelectedEntityIds = {};
@@ -170,6 +172,14 @@ export class CesiumViewerAdapter implements ViewerAdapter {
         scenario.propertyDataUrl,
       );
       dataSource.show = false;
+      dataSource.name = `disaster-properties:${scenario.id}`;
+
+      if (!this.isCurrentDisasterLoad(loadVersion, viewer)) {
+        dataSource.entities.removeAll();
+        return;
+      }
+
+      const propertyEntities = styleDisasterPropertyDataSource(dataSource);
 
       if (!this.isCurrentDisasterLoad(loadVersion, viewer)) {
         dataSource.entities.removeAll();
@@ -186,6 +196,10 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       }
 
       this.disasterDataSources.add(dataSource);
+      propertyEntities.forEach((entity, propertyId) => {
+        this.disasterPropertyEntities.set(propertyId, entity);
+      });
+      dataSource.show = true;
     } catch (loadError: unknown) {
       if (dataSource && !viewer.isDestroyed()) {
         if (viewer.dataSources.contains(dataSource)) {
@@ -268,6 +282,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.modularEntities.clear();
     this.disasterDataSources.clear();
     this.disasterEntities.clear();
+    this.disasterPropertyEntities.clear();
     this.measurementPoints.clear();
   }
 
@@ -298,6 +313,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
 
     this.disasterDataSources.clear();
     this.disasterEntities.clear();
+    this.disasterPropertyEntities.clear();
   }
 
   private applySelectionStyles(): void {
