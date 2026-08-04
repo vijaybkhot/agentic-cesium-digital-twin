@@ -53,5 +53,11 @@ visible. Screenshots and machine-specific harness code are not committed.
 
 ## Manual approval gate
 
+Manual review correctly noted that the synthetic footprints do not align with
+the real-world features visible in configured base imagery. The panel now
+states prominently that the demonstration footprints are not aligned with real
+parcels, buildings, roads, or addresses. This avoids associating fictional risk
+values with the real properties beneath the visualization.
+
 Repository-owner manual testing is pending. The DR-005 PR must not merge until
 the owner completes the PR walkthrough and explicitly approves the result.

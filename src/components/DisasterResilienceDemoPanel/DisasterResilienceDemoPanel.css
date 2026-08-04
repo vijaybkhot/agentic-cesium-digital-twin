@@ -84,6 +84,19 @@
   line-height: 1.5;
 }
 
+.disaster-resilience-alignment-note {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  color: #713f12;
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-left-width: 4px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .disaster-resilience-demo-actions {
   display: flex;
   flex-wrap: wrap;

@@ -60,6 +60,10 @@ export function DisasterResilienceDemoPanel({
           local data. Mock flood, shelter, and route layers will be added in
           later Cesium implementation tickets.
         </p>
+        <p className="disaster-resilience-alignment-note" role="note">
+          Synthetic demonstration footprints. Not aligned with real parcels,
+          buildings, roads, or addresses.
+        </p>
       </section>
 
       <div className="disaster-resilience-demo-actions">
