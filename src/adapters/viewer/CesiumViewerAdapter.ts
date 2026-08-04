@@ -34,6 +34,7 @@ import type {
   ModularEntityKind,
   ModularHousingScenario,
 } from "../../types/modularHousing";
+import type { DisasterResilienceScenario } from "../../types/disasterResilience";
 
 type SelectionHandler = (selection: ViewerSelection) => void;
 
@@ -45,7 +46,10 @@ export class CesiumViewerAdapter implements ViewerAdapter {
   private readonly modelAssetEntities = new Map<string, Cesium.Entity>();
   private readonly modelAnnotationEntities = new Map<string, Cesium.Entity>();
   private readonly modularEntities = new Map<string, Cesium.Entity>();
+  private readonly disasterDataSources = new Set<Cesium.DataSource>();
+  private readonly disasterEntities = new Set<Cesium.Entity>();
   private readonly measurementPoints = new Map<string, MeasurementPointConfig>();
+  private disasterLoadVersion = 0;
   private selectedEntityIds: ViewerSelectedEntityIds = {};
 
   constructor(
@@ -146,6 +150,57 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.applySelectionStyles();
   }
 
+  async renderDisasterScenario(
+    scenario: DisasterResilienceScenario | null,
+  ): Promise<void> {
+    const loadVersion = this.disasterLoadVersion + 1;
+    this.disasterLoadVersion = loadVersion;
+    const viewer = this.viewer;
+
+    this.clearDisasterLayers();
+
+    if (!scenario || !viewer || viewer.isDestroyed()) {
+      return;
+    }
+
+    let dataSource: Cesium.GeoJsonDataSource | null = null;
+
+    try {
+      dataSource = await Cesium.GeoJsonDataSource.load(
+        scenario.propertyDataUrl,
+      );
+      dataSource.show = false;
+
+      if (!this.isCurrentDisasterLoad(loadVersion, viewer)) {
+        dataSource.entities.removeAll();
+        return;
+      }
+
+      await viewer.dataSources.add(dataSource);
+
+      if (!this.isCurrentDisasterLoad(loadVersion, viewer)) {
+        if (!viewer.isDestroyed() && viewer.dataSources.contains(dataSource)) {
+          viewer.dataSources.remove(dataSource, true);
+        }
+        return;
+      }
+
+      this.disasterDataSources.add(dataSource);
+    } catch (loadError: unknown) {
+      if (dataSource && !viewer.isDestroyed()) {
+        if (viewer.dataSources.contains(dataSource)) {
+          viewer.dataSources.remove(dataSource, true);
+        } else {
+          dataSource.entities.removeAll();
+        }
+      }
+
+      if (this.isCurrentDisasterLoad(loadVersion, viewer)) {
+        console.warn("Unable to load disaster property GeoJSON.", loadError);
+      }
+    }
+  }
+
   updateMeasurementPoint(point: MeasurementPointConfig): void {
     const entity = this.pointEntities.get(point.id);
 
@@ -193,6 +248,9 @@ export class CesiumViewerAdapter implements ViewerAdapter {
   }
 
   destroy(): void {
+    this.disasterLoadVersion += 1;
+    this.clearDisasterLayers();
+
     if (this.clickHandler && !this.clickHandler.isDestroyed()) {
       this.clickHandler.destroy();
     }
@@ -208,7 +266,38 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.modelAssetEntities.clear();
     this.modelAnnotationEntities.clear();
     this.modularEntities.clear();
+    this.disasterDataSources.clear();
+    this.disasterEntities.clear();
     this.measurementPoints.clear();
+  }
+
+  private isCurrentDisasterLoad(
+    loadVersion: number,
+    viewer: Cesium.Viewer,
+  ): boolean {
+    return (
+      loadVersion === this.disasterLoadVersion &&
+      this.viewer === viewer &&
+      !viewer.isDestroyed()
+    );
+  }
+
+  private clearDisasterLayers(): void {
+    const viewer = this.viewer;
+
+    if (viewer && !viewer.isDestroyed()) {
+      this.disasterDataSources.forEach((dataSource) => {
+        if (viewer.dataSources.contains(dataSource)) {
+          viewer.dataSources.remove(dataSource, true);
+        }
+      });
+      this.disasterEntities.forEach((entity) => {
+        viewer.entities.remove(entity);
+      });
+    }
+
+    this.disasterDataSources.clear();
+    this.disasterEntities.clear();
   }
 
   private applySelectionStyles(): void {

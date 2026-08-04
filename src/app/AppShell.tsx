@@ -292,6 +292,9 @@ export function AppShell() {
           modularScenario={
             mode === "modular-demo" ? modularScenario : null
           }
+          disasterScenario={
+            mode === "disaster-demo" ? disasterScenario : null
+          }
           modularFocusTarget={
             mode === "modular-demo" ? modularFocusRequest?.target ?? null : null
           }
