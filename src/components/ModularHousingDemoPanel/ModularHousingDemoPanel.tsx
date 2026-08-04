@@ -27,6 +27,7 @@ interface ModularHousingDemoPanelProps {
   ) => void;
   onNewProject: () => void;
   onOpenExistingDemo: () => void;
+  onOpenDisasterDemo: () => void;
 }
 
 function formatCoordinate(location: { lat: number; lon: number }): string {
@@ -44,6 +45,7 @@ export function ModularHousingDemoPanel({
   onApplyModularAction,
   onNewProject,
   onOpenExistingDemo,
+  onOpenDisasterDemo,
 }: ModularHousingDemoPanelProps) {
   const selectedDetails = getSelectedModularEntityDetails(
     scenario,
@@ -82,6 +84,13 @@ export function ModularHousingDemoPanel({
           onClick={onOpenExistingDemo}
         >
           Open existing demo
+        </button>
+        <button
+          className="panel-button"
+          type="button"
+          onClick={onOpenDisasterDemo}
+        >
+          Disaster Resilience Demo
         </button>
       </div>
 
