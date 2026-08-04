@@ -4,6 +4,7 @@ import type {
   ModularEntityKind,
   ModularHousingScenario,
 } from "../types/modularHousing";
+import type { DisasterResilienceScenario } from "../types/disasterResilience";
 
 export type ViewerSelection =
   | { type: "measurementPoint"; id: string }
@@ -21,6 +22,9 @@ export interface ViewerAdapter {
   initialize(container: HTMLElement, config: ProjectConfig): void | Promise<void>;
   renderProject(config: ProjectConfig): void;
   renderModularScenario(scenario: ModularHousingScenario | null): void;
+  renderDisasterScenario(
+    scenario: DisasterResilienceScenario | null,
+  ): Promise<void>;
   updateMeasurementPoint(point: MeasurementPointConfig): void;
   flyToProject(config: ProjectConfig): void;
   flyToModelAsset(assetId: string): void;

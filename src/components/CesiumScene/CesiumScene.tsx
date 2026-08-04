@@ -8,6 +8,7 @@ import type {
   ModularCameraTarget,
   ModularHousingScenario,
 } from "../../types/modularHousing";
+import type { DisasterResilienceScenario } from "../../types/disasterResilience";
 import type { ProjectConfig } from "../../types/projectConfig";
 
 interface CesiumSceneProps {
@@ -18,6 +19,7 @@ interface CesiumSceneProps {
   selectedModelAnnotationId?: string | null;
   selectedModularEntityId?: string | null;
   modularScenario?: ModularHousingScenario | null;
+  disasterScenario?: DisasterResilienceScenario | null;
   modularFocusTarget?: ModularCameraTarget | null;
   modularFocusVersion?: number;
   focusProjectVersion?: number;
@@ -42,6 +44,7 @@ export function CesiumScene({
   selectedModelAnnotationId = null,
   selectedModularEntityId = null,
   modularScenario = null,
+  disasterScenario = null,
   modularFocusTarget = null,
   modularFocusVersion = 0,
   focusProjectVersion = 0,
@@ -98,6 +101,24 @@ export function CesiumScene({
   useEffect(() => {
     adapterRef.current?.renderModularScenario(modularScenario);
   }, [modularScenario]);
+
+  useEffect(() => {
+    const adapter = adapterRef.current;
+
+    if (!adapter) {
+      return;
+    }
+
+    void adapter.renderDisasterScenario(disasterScenario).catch((loadError) => {
+      console.warn("Unable to update disaster layers.", loadError);
+    });
+
+    return () => {
+      void adapter.renderDisasterScenario(null).catch((cleanupError) => {
+        console.warn("Unable to clear disaster layers.", cleanupError);
+      });
+    };
+  }, [config.projectId, disasterScenario]);
 
   useEffect(() => {
     adapterRef.current?.setLocationPickMode(locationPickEnabled);
