@@ -8,7 +8,10 @@ import type {
   ModularCameraTarget,
   ModularHousingScenario,
 } from "../../types/modularHousing";
-import type { DisasterResilienceScenario } from "../../types/disasterResilience";
+import type {
+  DisasterCameraTarget,
+  DisasterResilienceScenario,
+} from "../../types/disasterResilience";
 import type { ProjectConfig } from "../../types/projectConfig";
 
 interface CesiumSceneProps {
@@ -23,6 +26,9 @@ interface CesiumSceneProps {
   disasterScenario?: DisasterResilienceScenario | null;
   modularFocusTarget?: ModularCameraTarget | null;
   modularFocusVersion?: number;
+  disasterFocusTarget?: DisasterCameraTarget | null;
+  disasterFocusPropertyId?: string | null;
+  disasterFocusVersion?: number;
   focusProjectVersion?: number;
   focusModelAssetId?: string | null;
   focusModelVersion?: number;
@@ -49,6 +55,9 @@ export function CesiumScene({
   disasterScenario = null,
   modularFocusTarget = null,
   modularFocusVersion = 0,
+  disasterFocusTarget = null,
+  disasterFocusPropertyId = null,
+  disasterFocusVersion = 0,
   focusProjectVersion = 0,
   focusModelAssetId = null,
   focusModelVersion = 0,
@@ -160,6 +169,21 @@ export function CesiumScene({
       );
     }
   }, [modularScenario, modularFocusTarget, modularFocusVersion]);
+
+  useEffect(() => {
+    if (disasterScenario && disasterFocusTarget && disasterFocusVersion > 0) {
+      adapterRef.current?.flyToDisasterTarget(
+        disasterScenario,
+        disasterFocusTarget,
+        disasterFocusPropertyId,
+      );
+    }
+  }, [
+    disasterScenario,
+    disasterFocusTarget,
+    disasterFocusPropertyId,
+    disasterFocusVersion,
+  ]);
 
   return <div ref={containerRef} className="cesium-container" />;
 }

@@ -5,6 +5,7 @@ import type {
   ModularHousingScenario,
 } from "../types/modularHousing";
 import type {
+  DisasterCameraTarget,
   DisasterPropertyAttributes,
   DisasterResilienceScenario,
 } from "../types/disasterResilience";
@@ -40,6 +41,11 @@ export interface ViewerAdapter {
   flyToModularTarget(
     scenario: ModularHousingScenario,
     target: ModularCameraTarget,
+  ): void;
+  flyToDisasterTarget(
+    scenario: DisasterResilienceScenario,
+    target: DisasterCameraTarget,
+    selectedPropertyId: string | null,
   ): void;
   setLocationPickMode(enabled: boolean): void;
   setSelectedEntityIds(selection: ViewerSelectedEntityIds): void;
