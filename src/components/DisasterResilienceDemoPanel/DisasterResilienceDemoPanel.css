@@ -74,6 +74,93 @@
   line-height: 1.5;
 }
 
+.disaster-resilience-flood-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.disaster-resilience-flood-swatch {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  background: rgba(56, 189, 248, 0.45);
+  border: 2px solid #0284c7;
+  border-radius: 3px;
+}
+
+.disaster-resilience-flood-note {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  color: #075985;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.disaster-resilience-flood-explanation,
+.disaster-resilience-risk-explanation {
+  margin: 10px 0 0;
+  color: #475569;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.disaster-resilience-risk-legend {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+.disaster-resilience-risk-legend p {
+  display: grid;
+  grid-template-columns: 14px 72px minmax(0, 1fr);
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-size: 0.86rem;
+}
+
+.disaster-resilience-risk-legend-title {
+  display: grid;
+  gap: 2px;
+  margin-bottom: 2px;
+  font-size: 0.88rem;
+}
+
+.disaster-resilience-risk-legend-title span {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.risk-swatch {
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.35);
+  border-radius: 2px;
+}
+
+.risk-swatch-low {
+  background: #22c55e;
+}
+
+.risk-swatch-moderate {
+  background: #f59e0b;
+}
+
+.risk-swatch-high {
+  background: #ef4444;
+}
+
 .disaster-resilience-demo-empty-state {
   margin: 0;
   padding: 10px 12px;

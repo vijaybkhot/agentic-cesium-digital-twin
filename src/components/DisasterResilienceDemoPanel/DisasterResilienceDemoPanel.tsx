@@ -12,6 +12,10 @@ function formatCoordinate(value: number): string {
   return value.toFixed(5);
 }
 
+function formatDepth(value: number): string {
+  return value.toFixed(1);
+}
+
 export function DisasterResilienceDemoPanel({
   scenario,
   onNewProject,
@@ -54,11 +58,96 @@ export function DisasterResilienceDemoPanel({
       </section>
 
       <section className="disaster-resilience-demo-section">
+        <h2>Mock flood visualization</h2>
+        <p className="disaster-resilience-flood-label">
+          <span
+            className="disaster-resilience-flood-swatch"
+            aria-hidden="true"
+          />
+          {scenario.floodLayer.label}
+        </p>
+        <dl className="disaster-resilience-demo-details">
+          <div>
+            <dt>Extent</dt>
+            <dd>
+              Mock depths ≥
+              {formatDepth(scenario.floodLayer.displayExtentMinDepthFt)} ft
+            </dd>
+          </div>
+          <div>
+            <dt>Depth</dt>
+            <dd>
+              {formatDepth(scenario.floodLayer.representativeDepthFt)} ft mock
+              representative depth
+            </dd>
+          </div>
+          <div>
+            <dt>Display</dt>
+            <dd>
+              {scenario.floodLayer.visualHeightScaleMultiplier}× illustrative
+              vertical exaggeration
+            </dd>
+          </div>
+        </dl>
+        <p className="disaster-resilience-flood-note" role="note">
+          {scenario.floodLayer.confidenceNote}
+        </p>
+        <p className="disaster-resilience-flood-explanation">
+          The blue volume uses one representative depth and a 3× visual
+          extrusion. It does not show the water depth at each property.
+        </p>
+        <div
+          className="disaster-resilience-risk-legend"
+          aria-label="Mock property risk thresholds"
+        >
+          <div className="disaster-resilience-risk-legend-title">
+            <strong>Mock property risk thresholds</strong>
+            <span>Synthetic depth only; not a validated risk model.</span>
+          </div>
+          <p>
+            <span className="risk-swatch risk-swatch-low" aria-hidden="true" />
+            <strong>Low</strong>
+            <span>
+              &lt;{" "}
+              {formatDepth(
+                scenario.riskDepthThresholds.moderateMinDepthFt,
+              )} ft
+            </span>
+          </p>
+          <p>
+            <span
+              className="risk-swatch risk-swatch-moderate"
+              aria-hidden="true"
+            />
+            <strong>Moderate</strong>
+            <span>
+              {formatDepth(
+                scenario.riskDepthThresholds.moderateMinDepthFt,
+              )} to &lt;{" "}
+              {formatDepth(scenario.riskDepthThresholds.highMinDepthFt)} ft
+            </span>
+          </p>
+          <p>
+            <span className="risk-swatch risk-swatch-high" aria-hidden="true" />
+            <strong>High</strong>
+            <span>
+              ≥ {formatDepth(scenario.riskDepthThresholds.highMinDepthFt)} ft
+            </span>
+          </p>
+        </div>
+        <p className="disaster-resilience-risk-explanation">
+          Property colors use each fictional property&apos;s separate synthetic
+          depth. Their diagonal arrangement has no spatial or hydrologic
+          meaning.
+        </p>
+      </section>
+
+      <section className="disaster-resilience-demo-section">
         <h2>Current prototype scope</h2>
         <p className="disaster-resilience-demo-empty-state">
-          Fictional risk-styled property structures are shown using synthetic
-          local data. Mock flood, shelter, and route layers will be added in
-          later Cesium implementation tickets.
+          Fictional risk-styled property structures and a mock flood-depth
+          layer are shown using synthetic local data. Mock shelter and route
+          layers will be added in later Cesium implementation tickets.
         </p>
         <p className="disaster-resilience-alignment-note" role="note">
           Synthetic demonstration footprints. Not aligned with real parcels,
