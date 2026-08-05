@@ -67,5 +67,14 @@ not committed.
 
 ## Manual approval gate
 
+Manual review identified ambiguity between the uniform blue visualization and
+the property-specific risk colors. The scenario now defines a 1.0 ft mock
+display-extent threshold and explicit property-risk thresholds: Low below 1.0
+ft, Moderate from 1.0 to below 2.5 ft, and High at or above 2.5 ft. The panel
+states that the blue extrusion is not property-level water depth and that the
+diagonal property arrangement has no spatial or hydrologic meaning. The data
+validator verifies every property risk and boundary placement against these
+thresholds.
+
 Repository-owner manual testing is pending. The DR-006 PR must not merge until
 the owner completes the PR walkthrough and explicitly approves the result.

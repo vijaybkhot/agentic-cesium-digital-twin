@@ -12,6 +12,10 @@ function formatCoordinate(value: number): string {
   return value.toFixed(5);
 }
 
+function formatDepth(value: number): string {
+  return value.toFixed(1);
+}
+
 export function DisasterResilienceDemoPanel({
   scenario,
   onNewProject,
@@ -64,9 +68,16 @@ export function DisasterResilienceDemoPanel({
         </p>
         <dl className="disaster-resilience-demo-details">
           <div>
+            <dt>Extent</dt>
+            <dd>
+              Mock depths ≥
+              {formatDepth(scenario.floodLayer.displayExtentMinDepthFt)} ft
+            </dd>
+          </div>
+          <div>
             <dt>Depth</dt>
             <dd>
-              {scenario.floodLayer.representativeDepthFt.toFixed(1)} ft mock
+              {formatDepth(scenario.floodLayer.representativeDepthFt)} ft mock
               representative depth
             </dd>
           </div>
@@ -80,6 +91,54 @@ export function DisasterResilienceDemoPanel({
         </dl>
         <p className="disaster-resilience-flood-note" role="note">
           {scenario.floodLayer.confidenceNote}
+        </p>
+        <p className="disaster-resilience-flood-explanation">
+          The blue volume uses one representative depth and a 3× visual
+          extrusion. It does not show the water depth at each property.
+        </p>
+        <div
+          className="disaster-resilience-risk-legend"
+          aria-label="Mock property risk thresholds"
+        >
+          <div className="disaster-resilience-risk-legend-title">
+            <strong>Mock property risk thresholds</strong>
+            <span>Synthetic depth only; not a validated risk model.</span>
+          </div>
+          <p>
+            <span className="risk-swatch risk-swatch-low" aria-hidden="true" />
+            <strong>Low</strong>
+            <span>
+              &lt;{" "}
+              {formatDepth(
+                scenario.riskDepthThresholds.moderateMinDepthFt,
+              )} ft
+            </span>
+          </p>
+          <p>
+            <span
+              className="risk-swatch risk-swatch-moderate"
+              aria-hidden="true"
+            />
+            <strong>Moderate</strong>
+            <span>
+              {formatDepth(
+                scenario.riskDepthThresholds.moderateMinDepthFt,
+              )} to &lt;{" "}
+              {formatDepth(scenario.riskDepthThresholds.highMinDepthFt)} ft
+            </span>
+          </p>
+          <p>
+            <span className="risk-swatch risk-swatch-high" aria-hidden="true" />
+            <strong>High</strong>
+            <span>
+              ≥ {formatDepth(scenario.riskDepthThresholds.highMinDepthFt)} ft
+            </span>
+          </p>
+        </div>
+        <p className="disaster-resilience-risk-explanation">
+          Property colors use each fictional property&apos;s separate synthetic
+          depth. Their diagonal arrangement has no spatial or hydrologic
+          meaning.
         </p>
       </section>
 

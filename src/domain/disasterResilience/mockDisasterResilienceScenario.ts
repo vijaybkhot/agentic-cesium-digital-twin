@@ -15,6 +15,10 @@ export const mockDisasterResilienceScenario: DisasterResilienceScenario = {
     height: 0,
   },
   propertyDataUrl: "/examples/disaster_resilience_properties.geojson",
+  riskDepthThresholds: {
+    moderateMinDepthFt: 1,
+    highMinDepthFt: 2.5,
+  },
   floodLayer: {
     id: "mock-neighborhood-flood-layer",
     label: MOCK_FLOOD_LAYER_LABEL,
@@ -24,6 +28,7 @@ export const mockDisasterResilienceScenario: DisasterResilienceScenario = {
       { lat: 30.45125, lon: -91.154, height: 0 },
       { lat: 30.45125, lon: -91.1549, height: 0 },
     ],
+    displayExtentMinDepthFt: 1,
     representativeDepthFt: 2.4,
     visualHeightScaleMultiplier: 3,
     confidenceNote:

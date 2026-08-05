@@ -103,6 +103,64 @@
   line-height: 1.45;
 }
 
+.disaster-resilience-flood-explanation,
+.disaster-resilience-risk-explanation {
+  margin: 10px 0 0;
+  color: #475569;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.disaster-resilience-risk-legend {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+.disaster-resilience-risk-legend p {
+  display: grid;
+  grid-template-columns: 14px 72px minmax(0, 1fr);
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-size: 0.86rem;
+}
+
+.disaster-resilience-risk-legend-title {
+  display: grid;
+  gap: 2px;
+  margin-bottom: 2px;
+  font-size: 0.88rem;
+}
+
+.disaster-resilience-risk-legend-title span {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.risk-swatch {
+  width: 12px;
+  height: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.35);
+  border-radius: 2px;
+}
+
+.risk-swatch-low {
+  background: #22c55e;
+}
+
+.risk-swatch-moderate {
+  background: #f59e0b;
+}
+
+.risk-swatch-high {
+  background: #ef4444;
+}
+
 .disaster-resilience-demo-empty-state {
   margin: 0;
   padding: 10px 12px;

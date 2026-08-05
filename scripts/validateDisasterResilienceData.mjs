@@ -60,11 +60,46 @@ function sourceSection(source, startMarker, endMarker) {
   return source.slice(start, end);
 }
 
+function parseNumberField(source, fieldName) {
+  const match = source.match(
+    new RegExp(`${fieldName}:\\s*(-?\\d+(?:\\.\\d+)?)`),
+  );
+
+  assert.ok(match, `Missing numeric scenario field: ${fieldName}`);
+  return Number(match[1]);
+}
+
 const [geoJsonSource, scenarioSource] = await Promise.all([
   readFile(geoJsonPath, "utf8"),
   readFile(scenarioPath, "utf8"),
 ]);
 const geoJson = JSON.parse(geoJsonSource);
+const riskThresholdSource = sourceSection(
+  scenarioSource,
+  "riskDepthThresholds: {",
+  "floodLayer: {",
+);
+const floodLayerSource = sourceSection(
+  scenarioSource,
+  "floodLayer: {",
+  "shelter: {",
+);
+const moderateMinDepthFt = parseNumberField(
+  riskThresholdSource,
+  "moderateMinDepthFt",
+);
+const highMinDepthFt = parseNumberField(
+  riskThresholdSource,
+  "highMinDepthFt",
+);
+const displayExtentMinDepthFt = parseNumberField(
+  floodLayerSource,
+  "displayExtentMinDepthFt",
+);
+
+assert.ok(moderateMinDepthFt >= 0);
+assert.ok(highMinDepthFt > moderateMinDepthFt);
+assert.ok(displayExtentMinDepthFt >= 0);
 
 assert.equal(geoJson.type, "FeatureCollection");
 assert.ok(
@@ -106,6 +141,17 @@ for (const feature of geoJson.features) {
     Number.isFinite(properties.estimated_flood_depth_ft) &&
       properties.estimated_flood_depth_ft >= 0,
   );
+  const expectedRiskLevel =
+    properties.estimated_flood_depth_ft >= highMinDepthFt
+      ? "High"
+      : properties.estimated_flood_depth_ft >= moderateMinDepthFt
+        ? "Moderate"
+        : "Low";
+  assert.equal(
+    properties.risk_level,
+    expectedRiskLevel,
+    `${properties.property_id} risk must match its synthetic depth threshold`,
+  );
   assert.ok(
     Number.isFinite(properties.building_height_m) &&
       properties.building_height_m > 0,
@@ -125,6 +171,7 @@ for (const feature of geoJson.features) {
 
   propertyBounds.push({
     propertyId: properties.property_id,
+    estimatedFloodDepthFt: properties.estimated_flood_depth_ft,
     ...polygonBounds(ring),
   });
 }
@@ -201,6 +248,14 @@ for (const property of propertyBounds) {
     property.maxLongitude <= floodBounds.maxLongitude &&
     property.minLatitude >= floodBounds.minLatitude &&
     property.maxLatitude <= floodBounds.maxLatitude;
+  const expectedInside =
+    property.estimatedFloodDepthFt >= displayExtentMinDepthFt;
+
+  assert.equal(
+    fullyInside,
+    expectedInside,
+    `${property.propertyId} boundary coverage must match the mock display threshold`,
+  );
 
   if (fullyInside) {
     insideFloodBoundary.push(property.propertyId);

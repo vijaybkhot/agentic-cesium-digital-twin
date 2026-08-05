@@ -44,9 +44,15 @@ export interface DisasterFloodLayer {
   id: string;
   label: string;
   boundary: DisasterCoordinate[];
+  displayExtentMinDepthFt: number;
   representativeDepthFt: number;
   visualHeightScaleMultiplier: number;
   confidenceNote: string;
+}
+
+export interface DisasterRiskDepthThresholds {
+  moderateMinDepthFt: number;
+  highMinDepthFt: number;
 }
 
 export interface DisasterShelter {
@@ -81,6 +87,7 @@ export interface DisasterResilienceScenario {
   description: string;
   center: DisasterCoordinate;
   propertyDataUrl: string;
+  riskDepthThresholds: DisasterRiskDepthThresholds;
   floodLayer: DisasterFloodLayer;
   shelter: DisasterShelter;
   route: DisasterResponseRoute;
