@@ -22,6 +22,9 @@
 }
 
 .disaster-resilience-disclaimer {
+  position: sticky;
+  top: 0;
+  z-index: 2;
   margin: 16px 0 0;
   padding: 12px 14px;
   color: #7f1d1d;
@@ -111,13 +114,11 @@
   line-height: 1.45;
 }
 
-.disaster-resilience-selection-status {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+.disaster-property-dashboard-heading {
+  display: grid;
+  gap: 3px;
   margin: 0;
-  padding: 10px 12px;
+  padding: 12px 14px;
   color: #1e3a8a;
   background: #eff6ff;
   border: 1px solid #93c5fd;
@@ -125,20 +126,114 @@
   border-radius: 8px;
 }
 
-.disaster-resilience-selection-status span {
+.disaster-property-dashboard-heading span {
   font-size: 0.88rem;
   font-weight: 700;
 }
 
-.disaster-resilience-selection-status strong {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+.disaster-property-dashboard-heading strong,
+.disaster-property-dashboard-heading small {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
-.disaster-resilience-selection-note {
-  margin: 8px 0 0;
+.disaster-property-dashboard-heading small {
+  color: #475569;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+}
+
+.disaster-property-risk {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border: 1px solid;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.disaster-property-risk > span {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  background: currentColor;
+  border: 1px solid rgba(15, 23, 42, 0.35);
+  border-radius: 50%;
+}
+
+.disaster-property-risk-low {
+  color: #166534;
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
+.disaster-property-risk-moderate {
+  color: #92400e;
+  background: #fffbeb;
+  border-color: #fcd34d;
+}
+
+.disaster-property-risk-high {
+  color: #991b1b;
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+.disaster-property-risk-unknown {
+  color: #475569;
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.disaster-property-dashboard-details {
+  display: grid;
+  gap: 0;
+  margin: 12px 0 0;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.disaster-property-dashboard-details div {
+  min-width: 0;
+  padding: 10px 12px;
+  background: #ffffff;
+}
+
+.disaster-property-dashboard-details div + div {
+  border-top: 1px solid #e2e8f0;
+}
+
+.disaster-property-dashboard-details dt {
+  margin-bottom: 3px;
   color: #64748b;
-  font-size: 0.84rem;
-  line-height: 1.4;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.disaster-property-dashboard-details dd {
+  min-width: 0;
+  margin: 0;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.disaster-property-dashboard-disclaimer {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  color: #7f1d1d;
+  background: #fff7ed;
+  border: 1px solid #fdba74;
+  border-left-width: 4px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.45;
 }
 
 .disaster-resilience-risk-legend {
@@ -225,11 +320,13 @@
 
 @media (max-width: 600px) {
   .disaster-resilience-demo-panel {
+    top: 12px;
     right: 12px;
     left: 12px;
     width: auto;
     max-width: none;
     max-height: calc(100vh - 24px);
+    padding: 16px;
   }
 
   .disaster-resilience-demo-details div {

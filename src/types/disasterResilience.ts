@@ -79,6 +79,7 @@ export interface DisasterTwinEvent {
 
 export interface SelectedDisasterProperty {
   propertyId: string;
+  attributes: DisasterPropertyAttributes;
 }
 
 export interface DisasterResilienceScenario {

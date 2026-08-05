@@ -335,7 +335,10 @@ export function AppShell() {
 
             if (mode === "disaster-demo") {
               if (selection.type === "disasterProperty") {
-                setSelectedDisasterProperty({ propertyId: selection.id });
+                setSelectedDisasterProperty({
+                  propertyId: selection.id,
+                  attributes: selection.attributes,
+                });
                 setIsPanelVisible(true);
               }
               return;

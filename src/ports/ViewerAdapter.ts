@@ -4,13 +4,20 @@ import type {
   ModularEntityKind,
   ModularHousingScenario,
 } from "../types/modularHousing";
-import type { DisasterResilienceScenario } from "../types/disasterResilience";
+import type {
+  DisasterPropertyAttributes,
+  DisasterResilienceScenario,
+} from "../types/disasterResilience";
 
 export type ViewerSelection =
   | { type: "measurementPoint"; id: string }
   | { type: "modelAnnotation"; id: string }
   | { type: "modularEntity"; id: string; kind: ModularEntityKind }
-  | { type: "disasterProperty"; id: string }
+  | {
+      type: "disasterProperty";
+      id: string;
+      attributes: DisasterPropertyAttributes;
+    }
   | { type: "globeLocation"; lat: number; lon: number };
 
 export interface ViewerSelectedEntityIds {
