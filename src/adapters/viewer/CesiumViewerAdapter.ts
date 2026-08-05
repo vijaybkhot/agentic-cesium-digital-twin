@@ -25,7 +25,10 @@ import {
   flyToModularScenarioTarget,
 } from "../../cesium/createModularHousingEntities";
 import { createSiteMarker } from "../../cesium/createSiteMarker";
-import { styleDisasterPropertyDataSource } from "../../cesium/styleDisasterPropertyDataSource";
+import {
+  applyDisasterPropertyVisualState,
+  styleDisasterPropertyDataSource,
+} from "../../cesium/styleDisasterPropertyDataSource";
 import {
   applyMeasurementPointVisualState,
   createMeasurementPointEntity,
@@ -207,6 +210,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
         this.disasterPropertyEntities.set(propertyId, entity);
       });
       dataSource.show = true;
+      this.applySelectionStyles();
     } catch (loadError: unknown) {
       if (dataSource && !viewer.isDestroyed()) {
         if (viewer.dataSources.contains(dataSource)) {
@@ -355,6 +359,13 @@ export class CesiumViewerAdapter implements ViewerAdapter {
         this.selectedEntityIds.modularEntityId === modularId,
       );
     });
+
+    this.disasterPropertyEntities.forEach((entity, propertyId) => {
+      applyDisasterPropertyVisualState(
+        entity,
+        this.selectedEntityIds.disasterPropertyId === propertyId,
+      );
+    });
   }
 
   private attachSelectionHandler(): void {
@@ -403,6 +414,8 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       const pointId = entity.properties?.pointId?.getValue();
       const annotationId = entity.properties?.annotationId?.getValue();
       const modularId = entity.properties?.modularId?.getValue();
+      const disasterPropertyId =
+        entity.properties?.disasterPropertyId?.getValue();
       const modularKind = entity.properties?.modularKind?.getValue() as
         | ModularEntityKind
         | undefined;
@@ -416,6 +429,17 @@ export class CesiumViewerAdapter implements ViewerAdapter {
         typeof annotationId === "string"
       ) {
         this.onEntitySelected({ type: "modelAnnotation", id: annotationId });
+      }
+
+      if (
+        entityType === "disasterProperty" &&
+        typeof disasterPropertyId === "string" &&
+        !(pickedObject.primitive instanceof Cesium.LabelCollection)
+      ) {
+        this.onEntitySelected({
+          type: "disasterProperty",
+          id: disasterPropertyId,
+        });
       }
 
       if (

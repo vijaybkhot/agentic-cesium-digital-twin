@@ -5,6 +5,10 @@ import type { DisasterRiskLevel } from "../types/disasterResilience";
 export const DISASTER_PROPERTY_MATERIAL_ALPHA = 0.82;
 export const DEFAULT_DISASTER_BUILDING_HEIGHT_M = 6;
 export const DISASTER_PROPERTY_LABEL_MAX_DISTANCE_M = 800;
+export const SELECTED_DISASTER_PROPERTY_MATERIAL_ALPHA = 1;
+
+export const selectedDisasterPropertyOutlineColor =
+  Cesium.Color.fromCssColorString("#fef08a");
 
 export const disasterRiskColors: Readonly<
   Record<DisasterRiskLevel, Cesium.Color>
@@ -156,6 +160,49 @@ function stylePropertyEntity(
   setEntityMetadata(entity.properties, "disasterPropertyId", propertyId);
 
   return { propertyId, entity };
+}
+
+export function applyDisasterPropertyVisualState(
+  entity: Cesium.Entity,
+  isSelected: boolean,
+  time = Cesium.JulianDate.now(),
+): void {
+  if (!entity.polygon || !entity.properties) {
+    return;
+  }
+
+  const values = entity.properties.getValue(time) as Record<string, unknown>;
+  const propertyId = asNonEmptyString(values.property_id) ?? entity.id;
+  const addressLabel =
+    asNonEmptyString(values.address_label) ?? propertyId ?? "Fictional property";
+  const riskStyle = getDisasterPropertyVisualStyle(values.risk_level);
+
+  entity.polygon.material = new Cesium.ColorMaterialProperty(
+    riskStyle.color.withAlpha(
+      isSelected
+        ? SELECTED_DISASTER_PROPERTY_MATERIAL_ALPHA
+        : DISASTER_PROPERTY_MATERIAL_ALPHA,
+    ),
+  );
+  entity.polygon.outlineColor = new Cesium.ConstantProperty(
+    isSelected ? selectedDisasterPropertyOutlineColor : Cesium.Color.WHITE,
+  );
+
+  if (!entity.label) {
+    return;
+  }
+
+  entity.label.text = new Cesium.ConstantProperty(
+    `${isSelected ? "Selected\n" : ""}${addressLabel}\n${riskStyle.label}`,
+  );
+  entity.label.fillColor = new Cesium.ConstantProperty(
+    isSelected ? selectedDisasterPropertyOutlineColor : Cesium.Color.WHITE,
+  );
+  entity.label.scale = new Cesium.ConstantProperty(isSelected ? 1.15 : 1);
+  entity.label.showBackground = new Cesium.ConstantProperty(isSelected);
+  entity.label.backgroundColor = new Cesium.ConstantProperty(
+    Cesium.Color.BLACK.withAlpha(0.72),
+  );
 }
 
 export function styleDisasterPropertyDataSource(

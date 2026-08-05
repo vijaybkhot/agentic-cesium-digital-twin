@@ -10,12 +10,14 @@ export type ViewerSelection =
   | { type: "measurementPoint"; id: string }
   | { type: "modelAnnotation"; id: string }
   | { type: "modularEntity"; id: string; kind: ModularEntityKind }
+  | { type: "disasterProperty"; id: string }
   | { type: "globeLocation"; lat: number; lon: number };
 
 export interface ViewerSelectedEntityIds {
   measurementPointId?: string | null;
   modelAnnotationId?: string | null;
   modularEntityId?: string | null;
+  disasterPropertyId?: string | null;
 }
 
 export interface ViewerAdapter {
