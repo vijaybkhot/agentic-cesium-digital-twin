@@ -40,6 +40,7 @@ import type {
   ModularHousingScenario,
 } from "../../types/modularHousing";
 import type { DisasterResilienceScenario } from "../../types/disasterResilience";
+import { parseDisasterPropertyAttributes } from "../../domain/disasterResilience/parseDisasterPropertyAttributes";
 
 type SelectionHandler = (selection: ViewerSelection) => void;
 
@@ -416,6 +417,9 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       const modularId = entity.properties?.modularId?.getValue();
       const disasterPropertyId =
         entity.properties?.disasterPropertyId?.getValue();
+      const disasterPropertyAttributes = parseDisasterPropertyAttributes(
+        entity.properties?.getValue(),
+      );
       const modularKind = entity.properties?.modularKind?.getValue() as
         | ModularEntityKind
         | undefined;
@@ -434,11 +438,13 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       if (
         entityType === "disasterProperty" &&
         typeof disasterPropertyId === "string" &&
+        disasterPropertyAttributes?.property_id === disasterPropertyId &&
         !(pickedObject.primitive instanceof Cesium.LabelCollection)
       ) {
         this.onEntitySelected({
           type: "disasterProperty",
           id: disasterPropertyId,
+          attributes: disasterPropertyAttributes,
         });
       }
 
