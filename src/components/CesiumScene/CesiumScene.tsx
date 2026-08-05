@@ -18,6 +18,7 @@ interface CesiumSceneProps {
   selectedMeasurementPointId?: string | null;
   selectedModelAnnotationId?: string | null;
   selectedModularEntityId?: string | null;
+  selectedDisasterPropertyId?: string | null;
   modularScenario?: ModularHousingScenario | null;
   disasterScenario?: DisasterResilienceScenario | null;
   modularFocusTarget?: ModularCameraTarget | null;
@@ -43,6 +44,7 @@ export function CesiumScene({
   selectedMeasurementPointId = null,
   selectedModelAnnotationId = null,
   selectedModularEntityId = null,
+  selectedDisasterPropertyId = null,
   modularScenario = null,
   disasterScenario = null,
   modularFocusTarget = null,
@@ -129,11 +131,13 @@ export function CesiumScene({
       measurementPointId: selectedMeasurementPointId,
       modelAnnotationId: selectedModelAnnotationId,
       modularEntityId: selectedModularEntityId,
+      disasterPropertyId: selectedDisasterPropertyId,
     });
   }, [
     selectedMeasurementPointId,
     selectedModelAnnotationId,
     selectedModularEntityId,
+    selectedDisasterPropertyId,
   ]);
 
   useEffect(() => {

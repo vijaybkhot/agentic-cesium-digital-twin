@@ -111,6 +111,36 @@
   line-height: 1.45;
 }
 
+.disaster-resilience-selection-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  padding: 10px 12px;
+  color: #1e3a8a;
+  background: #eff6ff;
+  border: 1px solid #93c5fd;
+  border-left-width: 4px;
+  border-radius: 8px;
+}
+
+.disaster-resilience-selection-status span {
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.disaster-resilience-selection-status strong {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.disaster-resilience-selection-note {
+  margin: 8px 0 0;
+  color: #64748b;
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
 .disaster-resilience-risk-legend {
   display: grid;
   gap: 6px;

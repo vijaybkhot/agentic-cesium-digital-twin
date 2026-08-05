@@ -1,8 +1,12 @@
-import type { DisasterResilienceScenario } from "../../types/disasterResilience";
+import type {
+  DisasterResilienceScenario,
+  SelectedDisasterProperty,
+} from "../../types/disasterResilience";
 import "./DisasterResilienceDemoPanel.css";
 
 interface DisasterResilienceDemoPanelProps {
   scenario: DisasterResilienceScenario;
+  selectedProperty: SelectedDisasterProperty | null;
   onNewProject: () => void;
   onOpenExistingDemo: () => void;
   onOpenModularDemo: () => void;
@@ -18,6 +22,7 @@ function formatDepth(value: number): string {
 
 export function DisasterResilienceDemoPanel({
   scenario,
+  selectedProperty,
   onNewProject,
   onOpenExistingDemo,
   onOpenModularDemo,
@@ -54,6 +59,24 @@ export function DisasterResilienceDemoPanel({
         </dl>
         <p className="disaster-resilience-demo-copy">
           {scenario.description}
+        </p>
+      </section>
+
+      <section className="disaster-resilience-demo-section">
+        <h2>Property selection</h2>
+        {selectedProperty ? (
+          <p className="disaster-resilience-selection-status" role="status">
+            <span>Selected property</span>
+            <strong>{selectedProperty.propertyId}</strong>
+          </p>
+        ) : (
+          <p className="disaster-resilience-demo-empty-state" role="status">
+            Click a fictional property roof or wall to select it.
+          </p>
+        )}
+        <p className="disaster-resilience-selection-note">
+          Detailed property information will be added in the next dashboard
+          ticket.
         </p>
       </section>
 

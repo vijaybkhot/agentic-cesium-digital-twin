@@ -17,6 +17,7 @@ import type {
   ModularStatusActionId,
   SelectedModularEntity,
 } from "../types/modularHousing";
+import type { SelectedDisasterProperty } from "../types/disasterResilience";
 import { useProjectState } from "./useProjectState";
 import { useReconstructionWorkflow } from "./useReconstructionWorkflow";
 
@@ -68,6 +69,8 @@ export function AppShell() {
   const [mode, setMode] = useState<ApplicationMode>("workflow");
   const [selectedModularEntity, setSelectedModularEntity] =
     useState<SelectedModularEntity | null>(null);
+  const [selectedDisasterProperty, setSelectedDisasterProperty] =
+    useState<SelectedDisasterProperty | null>(null);
   const [modularScenario, setModularScenario] = useState(
     mockModularHousingScenario,
   );
@@ -191,6 +194,7 @@ export function AppShell() {
       }
 
       setSelectedModularEntity(null);
+      setSelectedDisasterProperty(null);
       setModularFocusRequest(null);
       setMode("existing-demo");
       setIsPanelVisible(true);
@@ -204,6 +208,7 @@ export function AppShell() {
     clearProject();
     workflow.resetWorkflow();
     setSelectedModularEntity(null);
+    setSelectedDisasterProperty(null);
     setModularFocusRequest(null);
     setMode("workflow");
     setIsPanelVisible(true);
@@ -215,6 +220,7 @@ export function AppShell() {
     workflow.resetWorkflow();
     setModularScenario(mockModularHousingScenario);
     setSelectedModularEntity(null);
+    setSelectedDisasterProperty(null);
     setModularFocusRequest((currentRequest) => ({
       target: "system",
       version: (currentRequest?.version ?? 0) + 1,
@@ -229,6 +235,7 @@ export function AppShell() {
     workflow.resetWorkflow();
     setModularScenario(mockModularHousingScenario);
     setSelectedModularEntity(null);
+    setSelectedDisasterProperty(null);
     setModularFocusRequest(null);
     setDisasterScenario(mockDisasterResilienceScenario);
     setMode("disaster-demo");
@@ -289,6 +296,11 @@ export function AppShell() {
           selectedModularEntityId={
             mode === "modular-demo" ? selectedModularEntity?.id ?? null : null
           }
+          selectedDisasterPropertyId={
+            mode === "disaster-demo"
+              ? selectedDisasterProperty?.propertyId ?? null
+              : null
+          }
           modularScenario={
             mode === "modular-demo" ? modularScenario : null
           }
@@ -316,6 +328,14 @@ export function AppShell() {
                   id: selection.id,
                   kind: selection.kind,
                 });
+                setIsPanelVisible(true);
+              }
+              return;
+            }
+
+            if (mode === "disaster-demo") {
+              if (selection.type === "disasterProperty") {
+                setSelectedDisasterProperty({ propertyId: selection.id });
                 setIsPanelVisible(true);
               }
               return;
@@ -380,6 +400,7 @@ export function AppShell() {
       ) : mode === "disaster-demo" ? (
         <DisasterResilienceDemoPanel
           scenario={disasterScenario}
+          selectedProperty={selectedDisasterProperty}
           onNewProject={startNewProject}
           onOpenExistingDemo={() => void openExistingDemo()}
           onOpenModularDemo={openModularDemo}
