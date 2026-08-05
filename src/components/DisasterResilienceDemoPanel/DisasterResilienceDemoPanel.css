@@ -47,6 +47,35 @@
   font-size: 1rem;
 }
 
+.disaster-camera-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.disaster-camera-controls .panel-button {
+  min-width: 0;
+  white-space: normal;
+}
+
+.disaster-camera-controls .panel-button:last-child {
+  grid-column: 1 / -1;
+}
+
+.disaster-camera-controls .panel-button:disabled {
+  color: #94a3b8;
+  background: #f1f5f9;
+  cursor: not-allowed;
+  opacity: 0.78;
+}
+
+.disaster-camera-note {
+  margin: 8px 0 0;
+  color: #64748b;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
 .disaster-resilience-demo-details {
   display: grid;
   gap: 8px;

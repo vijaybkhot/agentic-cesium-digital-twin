@@ -14,6 +14,7 @@ import { createCesiumViewer } from "../../cesium/createCesiumViewer";
 import { createFacilityBoundary } from "../../cesium/createFacilityBoundary";
 import { createFacilityBuilding } from "../../cesium/createFacilityBuilding";
 import { createDisasterFloodLayer } from "../../cesium/createDisasterFloodLayer";
+import { flyToDisasterScenarioTarget } from "../../cesium/flyToDisasterScenarioTarget";
 import {
   applyModelAnnotationVisualState,
   createModelAnnotationEntity,
@@ -39,7 +40,10 @@ import type {
   ModularEntityKind,
   ModularHousingScenario,
 } from "../../types/modularHousing";
-import type { DisasterResilienceScenario } from "../../types/disasterResilience";
+import type {
+  DisasterCameraTarget,
+  DisasterResilienceScenario,
+} from "../../types/disasterResilience";
 import { parseDisasterPropertyAttributes } from "../../domain/disasterResilience/parseDisasterPropertyAttributes";
 
 type SelectionHandler = (selection: ViewerSelection) => void;
@@ -262,6 +266,24 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     if (this.viewer) {
       flyToModularScenarioTarget(this.viewer, scenario, target);
     }
+  }
+
+  flyToDisasterTarget(
+    scenario: DisasterResilienceScenario,
+    target: DisasterCameraTarget,
+    selectedPropertyId: string | null,
+  ): void {
+    if (!this.viewer) {
+      return;
+    }
+
+    flyToDisasterScenarioTarget(
+      this.viewer,
+      scenario,
+      target,
+      this.disasterPropertyEntities,
+      selectedPropertyId,
+    );
   }
 
   setLocationPickMode(enabled: boolean): void {

@@ -1,4 +1,5 @@
 import type {
+  DisasterCameraTarget,
   DisasterResilienceScenario,
   SelectedDisasterProperty,
 } from "../../types/disasterResilience";
@@ -8,6 +9,7 @@ import "./DisasterResilienceDemoPanel.css";
 interface DisasterResilienceDemoPanelProps {
   scenario: DisasterResilienceScenario;
   selectedProperty: SelectedDisasterProperty | null;
+  onFocusTarget: (target: DisasterCameraTarget) => void;
   onNewProject: () => void;
   onOpenExistingDemo: () => void;
   onOpenModularDemo: () => void;
@@ -24,6 +26,7 @@ function formatDepth(value: number): string {
 export function DisasterResilienceDemoPanel({
   scenario,
   selectedProperty,
+  onFocusTarget,
   onNewProject,
   onOpenExistingDemo,
   onOpenModularDemo,
@@ -38,6 +41,46 @@ export function DisasterResilienceDemoPanel({
       <p className="disaster-resilience-disclaimer" role="note">
         {scenario.disclaimer}
       </p>
+
+      <section className="disaster-resilience-demo-section">
+        <h2>Camera views</h2>
+        <div
+          className="disaster-camera-controls"
+          aria-label="Disaster resilience camera views"
+        >
+          <button
+            className="panel-button"
+            type="button"
+            onClick={() => onFocusTarget("overall")}
+          >
+            Overall view
+          </button>
+          <button
+            className="panel-button"
+            type="button"
+            onClick={() => onFocusTarget("flood")}
+          >
+            Flood layer view
+          </button>
+          <button
+            className="panel-button"
+            type="button"
+            disabled={!selectedProperty}
+            title={
+              selectedProperty
+                ? "Focus the latest selected fictional property"
+                : "Select a fictional property first"
+            }
+            onClick={() => onFocusTarget("selected-property")}
+          >
+            Selected property view
+          </button>
+        </div>
+        <p className="disaster-camera-note">
+          Repeatable illustrative views for presenting this mock research
+          scenario.
+        </p>
+      </section>
 
       <section className="disaster-resilience-demo-section">
         <h2>Scenario</h2>

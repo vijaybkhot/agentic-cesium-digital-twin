@@ -17,7 +17,10 @@ import type {
   ModularStatusActionId,
   SelectedModularEntity,
 } from "../types/modularHousing";
-import type { SelectedDisasterProperty } from "../types/disasterResilience";
+import type {
+  DisasterCameraTarget,
+  SelectedDisasterProperty,
+} from "../types/disasterResilience";
 import { useProjectState } from "./useProjectState";
 import { useReconstructionWorkflow } from "./useReconstructionWorkflow";
 
@@ -79,6 +82,11 @@ export function AppShell() {
   );
   const [modularFocusRequest, setModularFocusRequest] = useState<{
     target: ModularCameraTarget;
+    version: number;
+  } | null>(null);
+  const [disasterFocusRequest, setDisasterFocusRequest] = useState<{
+    target: DisasterCameraTarget;
+    propertyId: string | null;
     version: number;
   } | null>(null);
   const modularViewerConfig = useMemo(
@@ -196,6 +204,7 @@ export function AppShell() {
       setSelectedModularEntity(null);
       setSelectedDisasterProperty(null);
       setModularFocusRequest(null);
+      setDisasterFocusRequest(null);
       setMode("existing-demo");
       setIsPanelVisible(true);
     } catch {
@@ -210,6 +219,7 @@ export function AppShell() {
     setSelectedModularEntity(null);
     setSelectedDisasterProperty(null);
     setModularFocusRequest(null);
+    setDisasterFocusRequest(null);
     setMode("workflow");
     setIsPanelVisible(true);
   }, [clearProject, workflow.resetWorkflow]);
@@ -221,6 +231,7 @@ export function AppShell() {
     setModularScenario(mockModularHousingScenario);
     setSelectedModularEntity(null);
     setSelectedDisasterProperty(null);
+    setDisasterFocusRequest(null);
     setModularFocusRequest((currentRequest) => ({
       target: "system",
       version: (currentRequest?.version ?? 0) + 1,
@@ -238,6 +249,11 @@ export function AppShell() {
     setSelectedDisasterProperty(null);
     setModularFocusRequest(null);
     setDisasterScenario(mockDisasterResilienceScenario);
+    setDisasterFocusRequest((currentRequest) => ({
+      target: "overall",
+      propertyId: null,
+      version: (currentRequest?.version ?? 0) + 1,
+    }));
     setMode("disaster-demo");
     setIsPanelVisible(true);
   }, [clearProject, workflow.resetWorkflow]);
@@ -248,6 +264,26 @@ export function AppShell() {
       version: (currentRequest?.version ?? 0) + 1,
     }));
   }, []);
+
+  const focusDisasterTarget = useCallback(
+    (target: DisasterCameraTarget) => {
+      const propertyId =
+        target === "selected-property"
+          ? selectedDisasterProperty?.propertyId ?? null
+          : null;
+
+      if (target === "selected-property" && !propertyId) {
+        return;
+      }
+
+      setDisasterFocusRequest((currentRequest) => ({
+        target,
+        propertyId,
+        version: (currentRequest?.version ?? 0) + 1,
+      }));
+    },
+    [selectedDisasterProperty],
+  );
 
   const applyModularAction = useCallback(
     (actionId: ModularStatusActionId, moduleId: string) => {
@@ -312,6 +348,19 @@ export function AppShell() {
           }
           modularFocusVersion={
             mode === "modular-demo" ? modularFocusRequest?.version ?? 0 : 0
+          }
+          disasterFocusTarget={
+            mode === "disaster-demo"
+              ? disasterFocusRequest?.target ?? null
+              : null
+          }
+          disasterFocusPropertyId={
+            mode === "disaster-demo"
+              ? disasterFocusRequest?.propertyId ?? null
+              : null
+          }
+          disasterFocusVersion={
+            mode === "disaster-demo" ? disasterFocusRequest?.version ?? 0 : 0
           }
           onEntitySelected={(selection) => {
             if (
@@ -404,6 +453,7 @@ export function AppShell() {
         <DisasterResilienceDemoPanel
           scenario={disasterScenario}
           selectedProperty={selectedDisasterProperty}
+          onFocusTarget={focusDisasterTarget}
           onNewProject={startNewProject}
           onOpenExistingDemo={() => void openExistingDemo()}
           onOpenModularDemo={openModularDemo}
