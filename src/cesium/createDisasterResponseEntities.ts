@@ -1,5 +1,6 @@
 import * as Cesium from "cesium";
 import { formatDisasterRouteStatus } from "../domain/disasterResilience/formatDisasterRouteStatus";
+import { disasterResilienceVisualColors } from "../theme/disasterResilienceVisualTokens";
 import type {
   DisasterResponseRoute,
   DisasterShelter,
@@ -10,9 +11,9 @@ export const DISASTER_RESPONSE_ROUTE_WIDTH_PX = 7;
 export const DISASTER_RESPONSE_LABEL_MAX_DISTANCE_M = 1_500;
 
 export const disasterShelterColor =
-  Cesium.Color.fromCssColorString("#06b6d4");
+  Cesium.Color.fromCssColorString(disasterResilienceVisualColors.shelter);
 export const disasterRouteColor =
-  Cesium.Color.fromCssColorString("#a855f7");
+  Cesium.Color.fromCssColorString(disasterResilienceVisualColors.route);
 
 export interface DisasterResponseEntities {
   shelterEntity: Cesium.Entity;

@@ -1,4 +1,5 @@
 import * as Cesium from "cesium";
+import { disasterResilienceVisualColors } from "../theme/disasterResilienceVisualTokens";
 import type { DisasterFloodLayer } from "../types/disasterResilience";
 
 export const FEET_TO_METERS = 0.3048;
@@ -7,9 +8,9 @@ export const DISASTER_FLOOD_MATERIAL_ALPHA = 0.26;
 export const DISASTER_FLOOD_LABEL_MAX_DISTANCE_M = 2_000;
 
 export const disasterFloodColor =
-  Cesium.Color.fromCssColorString("#38bdf8");
+  Cesium.Color.fromCssColorString(disasterResilienceVisualColors.flood);
 export const disasterFloodOutlineColor =
-  Cesium.Color.fromCssColorString("#e0f2fe");
+  Cesium.Color.fromCssColorString(disasterResilienceVisualColors.floodOutline);
 
 export function getDisasterFloodVisualDepthM(
   floodLayer: DisasterFloodLayer,
