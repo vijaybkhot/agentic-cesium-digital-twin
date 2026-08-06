@@ -14,6 +14,7 @@ import { createCesiumViewer } from "../../cesium/createCesiumViewer";
 import { createFacilityBoundary } from "../../cesium/createFacilityBoundary";
 import { createFacilityBuilding } from "../../cesium/createFacilityBuilding";
 import { createDisasterFloodLayer } from "../../cesium/createDisasterFloodLayer";
+import { createDisasterResponseEntities } from "../../cesium/createDisasterResponseEntities";
 import { flyToDisasterScenarioTarget } from "../../cesium/flyToDisasterScenarioTarget";
 import {
   applyModelAnnotationVisualState,
@@ -179,6 +180,13 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       scenario.floodLayer,
     );
     this.disasterEntities.add(floodEntity);
+    const { shelterEntity, routeEntity } = createDisasterResponseEntities(
+      viewer,
+      scenario.shelter,
+      scenario.route,
+    );
+    this.disasterEntities.add(shelterEntity);
+    this.disasterEntities.add(routeEntity);
 
     let dataSource: Cesium.GeoJsonDataSource | null = null;
 
