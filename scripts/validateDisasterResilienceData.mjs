@@ -204,15 +204,63 @@ assert.match(
 assert.match(scenarioSource, /disclaimer:\s*DISASTER_DEMO_DISCLAIMER/);
 assert.match(scenarioSource, /label:\s*MOCK_FLOOD_LAYER_LABEL/);
 
-for (const eventSource of [
+const requiredEventSources = [
   "Weather Twin",
   "Flood Model Twin",
   "Property Twin",
   "Response Twin",
   "AI Assistant",
-]) {
+];
+
+for (const eventSource of requiredEventSources) {
   assert.match(scenarioSource, new RegExp(`source: "${eventSource}"`));
 }
+
+const eventSection = sourceSection(scenarioSource, "events: [", "disclaimer:");
+const eventRecords = [
+  ...eventSection.matchAll(
+    /id:\s*"([^"]+)"[\s\S]*?source:\s*"([^"]+)"[\s\S]*?message:\s*"([^"]+)"[\s\S]*?timestamp:\s*"([^"]+)"/g,
+  ),
+].map(([, id, source, message, timestamp]) => ({
+  id,
+  source,
+  message,
+  timestamp,
+}));
+
+assert.equal(eventRecords.length, requiredEventSources.length);
+assert.deepEqual(
+  eventRecords.map(({ source }) => source),
+  requiredEventSources,
+  "Twin events must retain their deterministic source order",
+);
+assert.equal(
+  new Set(eventRecords.map(({ id }) => id)).size,
+  eventRecords.length,
+  "Twin event IDs must be unique",
+);
+assert.equal(
+  new Set(eventRecords.map(({ timestamp }) => timestamp)).size,
+  eventRecords.length,
+  "Twin event timestamps must be unique",
+);
+
+const eventTimes = eventRecords.map(({ timestamp }) => Date.parse(timestamp));
+assert.ok(eventTimes.every(Number.isFinite), "Twin event timestamps must be valid");
+assert.deepEqual(
+  eventTimes,
+  [...eventTimes].sort((first, second) => first - second),
+  "Twin events must be chronological",
+);
+
+for (const event of eventRecords) {
+  assert.match(event.message, mockLanguagePattern);
+  assert.doesNotMatch(event.message, /\b(?:live|real-time|forecast|prediction)\b/i);
+}
+
+const aiEvent = eventRecords.find(({ source }) => source === "AI Assistant");
+assert.ok(aiEvent, "AI Assistant event is required");
+assert.match(aiEvent.message, /\bmock\b/i);
 
 const floodCoordinates = parseCoordinates(
   sourceSection(scenarioSource, "boundary: [", "representativeDepthFt:"),

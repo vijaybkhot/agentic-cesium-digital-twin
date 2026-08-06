@@ -1,5 +1,6 @@
 import * as Cesium from "cesium";
 import { isDisasterRiskLevel } from "../domain/disasterResilience/disasterResilienceContract";
+import { disasterResilienceVisualColors } from "../theme/disasterResilienceVisualTokens";
 import type { DisasterRiskLevel } from "../types/disasterResilience";
 
 export const DISASTER_PROPERTY_MATERIAL_ALPHA = 0.82;
@@ -8,18 +9,22 @@ export const DISASTER_PROPERTY_LABEL_MAX_DISTANCE_M = 800;
 export const SELECTED_DISASTER_PROPERTY_MATERIAL_ALPHA = 1;
 
 export const selectedDisasterPropertyOutlineColor =
-  Cesium.Color.fromCssColorString("#fef08a");
+  Cesium.Color.fromCssColorString(
+    disasterResilienceVisualColors.selectedPropertyOutline,
+  );
 
 export const disasterRiskColors: Readonly<
   Record<DisasterRiskLevel, Cesium.Color>
 > = {
-  Low: Cesium.Color.fromCssColorString("#22c55e"),
-  Moderate: Cesium.Color.fromCssColorString("#f59e0b"),
-  High: Cesium.Color.fromCssColorString("#ef4444"),
+  Low: Cesium.Color.fromCssColorString(disasterResilienceVisualColors.riskLow),
+  Moderate: Cesium.Color.fromCssColorString(
+    disasterResilienceVisualColors.riskModerate,
+  ),
+  High: Cesium.Color.fromCssColorString(disasterResilienceVisualColors.riskHigh),
 };
 
 export const unknownDisasterRiskColor = Cesium.Color.fromCssColorString(
-  "#64748b",
+  disasterResilienceVisualColors.riskUnknown,
 );
 
 export interface DisasterPropertyVisualStyle {
