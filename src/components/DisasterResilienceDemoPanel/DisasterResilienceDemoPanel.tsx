@@ -12,6 +12,7 @@ import "./DisasterResilienceDemoPanel.css";
 interface DisasterResilienceDemoPanelProps {
   scenario: DisasterResilienceScenario;
   selectedProperty: SelectedDisasterProperty | null;
+  osmBuildingsConfigured: boolean;
   onFocusTarget: (target: DisasterCameraTarget) => void;
   onNewProject: () => void;
   onOpenExistingDemo: () => void;
@@ -29,6 +30,7 @@ function formatDepth(value: number): string {
 export function DisasterResilienceDemoPanel({
   scenario,
   selectedProperty,
+  osmBuildingsConfigured,
   onFocusTarget,
   onNewProject,
   onOpenExistingDemo,
@@ -200,6 +202,32 @@ export function DisasterResilienceDemoPanel({
       />
 
       <DisasterTwinEventFeed events={scenario.events} />
+
+      <section className="disaster-resilience-demo-section">
+        <h2>Optional 3D building context</h2>
+        <p
+          className={`disaster-osm-context-status ${
+            osmBuildingsConfigured
+              ? "disaster-osm-context-status-configured"
+              : "disaster-osm-context-status-local"
+          }`}
+          role="status"
+        >
+          {osmBuildingsConfigured
+            ? "Ion token detected — OSM Buildings context requested"
+            : "No ion token — local-only fallback active"}
+        </p>
+        <p className="disaster-osm-context-copy">
+          When available, Cesium OSM Buildings provide subdued neighborhood
+          context only. They are not property records, hazard data, or a source
+          for this demo&apos;s fictional attributes. The colored local structures
+          remain authoritative and selectable.
+        </p>
+        <p className="disaster-osm-context-attribution-note">
+          Source attribution is provided by Cesium&apos;s on-map credit display
+          whenever OSM tiles are shown.
+        </p>
+      </section>
 
       <section className="disaster-resilience-demo-section">
         <h2>Current prototype scope</h2>

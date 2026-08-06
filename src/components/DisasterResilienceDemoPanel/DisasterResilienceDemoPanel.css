@@ -496,6 +496,41 @@
   overflow-wrap: anywhere;
 }
 
+.disaster-osm-context-status {
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid;
+  border-radius: 8px;
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.disaster-osm-context-status-configured {
+  color: #155e75;
+  background: #ecfeff;
+  border-color: #67e8f9;
+}
+
+.disaster-osm-context-status-local {
+  color: #475569;
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.disaster-osm-context-copy,
+.disaster-osm-context-attribution-note {
+  margin: 10px 0 0;
+  color: #475569;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.disaster-osm-context-attribution-note {
+  padding-left: 10px;
+  border-left: 3px solid #67e8f9;
+}
+
 .disaster-resilience-demo-empty-state {
   margin: 0;
   padding: 10px 12px;
