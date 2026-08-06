@@ -15,6 +15,7 @@ import { createFacilityBoundary } from "../../cesium/createFacilityBoundary";
 import { createFacilityBuilding } from "../../cesium/createFacilityBuilding";
 import { createDisasterFloodLayer } from "../../cesium/createDisasterFloodLayer";
 import { createDisasterResponseEntities } from "../../cesium/createDisasterResponseEntities";
+import { createOptionalOsmBuildings } from "../../cesium/createOptionalOsmBuildings";
 import { flyToDisasterScenarioTarget } from "../../cesium/flyToDisasterScenarioTarget";
 import {
   applyModelAnnotationVisualState,
@@ -59,6 +60,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
   private readonly modularEntities = new Map<string, Cesium.Entity>();
   private readonly disasterDataSources = new Set<Cesium.DataSource>();
   private readonly disasterEntities = new Set<Cesium.Entity>();
+  private readonly disasterTilesets = new Set<Cesium.Cesium3DTileset>();
   private readonly disasterPropertyEntities = new Map<string, Cesium.Entity>();
   private readonly measurementPoints = new Map<string, MeasurementPointConfig>();
   private disasterLoadVersion = 0;
@@ -187,6 +189,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     );
     this.disasterEntities.add(shelterEntity);
     this.disasterEntities.add(routeEntity);
+    void this.loadOptionalDisasterOsmBuildings(loadVersion, viewer);
 
     let dataSource: Cesium.GeoJsonDataSource | null = null;
 
@@ -324,6 +327,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.modularEntities.clear();
     this.disasterDataSources.clear();
     this.disasterEntities.clear();
+    this.disasterTilesets.clear();
     this.disasterPropertyEntities.clear();
     this.measurementPoints.clear();
   }
@@ -339,6 +343,52 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     );
   }
 
+  private async loadOptionalDisasterOsmBuildings(
+    loadVersion: number,
+    viewer: Cesium.Viewer,
+  ): Promise<void> {
+    let tileset: Cesium.Cesium3DTileset | null = null;
+
+    try {
+      tileset = await createOptionalOsmBuildings();
+
+      if (!tileset) {
+        return;
+      }
+
+      if (!this.isCurrentDisasterLoad(loadVersion, viewer)) {
+        tileset.destroy();
+        return;
+      }
+
+      viewer.scene.primitives.add(tileset);
+
+      if (!this.isCurrentDisasterLoad(loadVersion, viewer)) {
+        viewer.scene.primitives.remove(tileset);
+        return;
+      }
+
+      this.disasterTilesets.add(tileset);
+    } catch {
+      if (tileset && !tileset.isDestroyed()) {
+        if (
+          !viewer.isDestroyed() &&
+          viewer.scene.primitives.contains(tileset)
+        ) {
+          viewer.scene.primitives.remove(tileset);
+        } else {
+          tileset.destroy();
+        }
+      }
+
+      if (this.isCurrentDisasterLoad(loadVersion, viewer)) {
+        console.warn(
+          "Optional Cesium OSM Buildings context unavailable; continuing with local disaster layers.",
+        );
+      }
+    }
+  }
+
   private clearDisasterLayers(): void {
     const viewer = this.viewer;
 
@@ -351,10 +401,16 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       this.disasterEntities.forEach((entity) => {
         viewer.entities.remove(entity);
       });
+      this.disasterTilesets.forEach((tileset) => {
+        if (viewer.scene.primitives.contains(tileset)) {
+          viewer.scene.primitives.remove(tileset);
+        }
+      });
     }
 
     this.disasterDataSources.clear();
     this.disasterEntities.clear();
+    this.disasterTilesets.clear();
     this.disasterPropertyEntities.clear();
   }
 
@@ -434,7 +490,22 @@ export class CesiumViewerAdapter implements ViewerAdapter {
         return;
       }
 
-      const pickedObject = this.viewer.scene.pick(event.position);
+      const disasterPropertyPick =
+        this.disasterPropertyEntities.size > 0
+          ? this.viewer.scene.drillPick(event.position).find((candidate) => {
+              const candidateEntity = candidate.id as
+                | Cesium.Entity
+                | undefined;
+
+              return (
+                candidateEntity?.properties?.entityType?.getValue() ===
+                  "disasterProperty" &&
+                !(candidate.primitive instanceof Cesium.LabelCollection)
+              );
+            })
+          : undefined;
+      const pickedObject =
+        disasterPropertyPick ?? this.viewer.scene.pick(event.position);
 
       if (!Cesium.defined(pickedObject) || !Cesium.defined(pickedObject.id)) {
         return;

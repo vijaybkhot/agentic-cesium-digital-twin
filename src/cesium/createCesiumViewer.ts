@@ -1,7 +1,8 @@
 import * as Cesium from "cesium";
+import { getCesiumIonAccessToken } from "../config/cesiumIon";
 
 function createBaseLayer(): Cesium.ImageryLayer {
-  const ionAccessToken = import.meta.env.VITE_CESIUM_ION_ACCESS_TOKEN;
+  const ionAccessToken = getCesiumIonAccessToken();
 
   if (ionAccessToken) {
     Cesium.Ion.defaultAccessToken = ionAccessToken;
