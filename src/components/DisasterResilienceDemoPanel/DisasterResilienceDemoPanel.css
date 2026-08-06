@@ -76,6 +76,84 @@
   line-height: 1.4;
 }
 
+.disaster-response-details {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.disaster-response-details div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+.disaster-response-details dt {
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.disaster-response-details dd {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  margin: 0;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.disaster-response-details dd span:not(.disaster-route-status) {
+  color: #475569;
+  font-size: 0.88rem;
+}
+
+.disaster-route-status {
+  justify-self: start;
+  padding: 5px 9px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.disaster-route-status-open {
+  color: #166534;
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+
+.disaster-route-status-at-risk {
+  color: #92400e;
+  background: #fffbeb;
+  border-color: #fcd34d;
+}
+
+.disaster-route-status-not-recommended {
+  color: #991b1b;
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+.disaster-response-safety-note {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  color: #6b21a8;
+  background: #faf5ff;
+  border: 1px solid #d8b4fe;
+  border-left-width: 4px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .disaster-resilience-demo-details {
   display: grid;
   gap: 8px;

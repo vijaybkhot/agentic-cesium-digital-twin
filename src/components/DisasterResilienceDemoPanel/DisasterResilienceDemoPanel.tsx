@@ -3,6 +3,7 @@ import type {
   DisasterResilienceScenario,
   SelectedDisasterProperty,
 } from "../../types/disasterResilience";
+import { formatDisasterRouteStatus } from "../../domain/disasterResilience/formatDisasterRouteStatus";
 import { DisasterPropertyDashboard } from "./DisasterPropertyDashboard";
 import "./DisasterResilienceDemoPanel.css";
 
@@ -113,6 +114,40 @@ export function DisasterResilienceDemoPanel({
       />
 
       <section className="disaster-resilience-demo-section">
+        <h2>Mock response context</h2>
+        <dl className="disaster-response-details">
+          <div>
+            <dt>Fictional safe point</dt>
+            <dd>
+              <strong>{scenario.shelter.name}</strong>
+              <span>{scenario.shelter.description}</span>
+            </dd>
+          </div>
+          <div>
+            <dt>Mock response route</dt>
+            <dd>
+              <strong>{scenario.route.name}</strong>
+              <span>{scenario.route.description}</span>
+            </dd>
+          </div>
+          <div>
+            <dt>Mock route status</dt>
+            <dd>
+              <span
+                className={`disaster-route-status disaster-route-status-${scenario.route.status}`}
+              >
+                {formatDisasterRouteStatus(scenario.route.status)}
+              </span>
+            </dd>
+          </div>
+        </dl>
+        <p className="disaster-response-safety-note" role="note">
+          Illustrative research context only. This is not an actual shelter,
+          evacuation route, route recommendation, or operational guidance.
+        </p>
+      </section>
+
+      <section className="disaster-resilience-demo-section">
         <h2>Mock flood visualization</h2>
         <p className="disaster-resilience-flood-label">
           <span
@@ -201,8 +236,8 @@ export function DisasterResilienceDemoPanel({
         <h2>Current prototype scope</h2>
         <p className="disaster-resilience-demo-empty-state">
           Fictional risk-styled property structures and a mock flood-depth
-          layer are shown using synthetic local data. Mock shelter and route
-          layers will be added in later Cesium implementation tickets.
+          layer are shown with one fictional safe point and one non-operational
+          mock response route using synthetic local data.
         </p>
         <p className="disaster-resilience-alignment-note" role="note">
           Synthetic demonstration footprints. Not aligned with real parcels,
