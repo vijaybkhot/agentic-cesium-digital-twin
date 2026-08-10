@@ -13,6 +13,10 @@ import { mockDisasterResilienceScenario } from "../domain/disasterResilience/moc
 import { applyModularStatusAction } from "../domain/modularHousing/applyModularStatusAction";
 import { createModularHousingViewerConfig } from "../domain/modularHousing/createModularHousingViewerConfig";
 import { mockModularHousingScenario } from "../domain/modularHousing/mockModularHousingScenario";
+import { createUrbanResilienceViewerConfig } from "../domain/urbanResilience/createUrbanResilienceViewerConfig";
+import { grandIslePortFourchonScenario } from "../domain/urbanResilience/grandIslePortFourchonScenario";
+import { parseUrbanResponseContext } from "../domain/urbanResilience/parseUrbanResponseContext";
+import { UrbanResilienceDemoPanel } from "../components/UrbanResilienceDemoPanel/UrbanResilienceDemoPanel";
 import type {
   ModularCameraTarget,
   ModularStatusActionId,
@@ -22,6 +26,10 @@ import type {
   DisasterCameraTarget,
   SelectedDisasterProperty,
 } from "../types/disasterResilience";
+import type {
+  UrbanCameraTarget,
+  SelectedUrbanProperty,
+} from "../types/urbanResilience";
 import { useProjectState } from "./useProjectState";
 import { useReconstructionWorkflow } from "./useReconstructionWorkflow";
 
@@ -29,7 +37,8 @@ type ApplicationMode =
   | "workflow"
   | "existing-demo"
   | "modular-demo"
-  | "disaster-demo";
+  | "disaster-demo"
+  | "urban-resilience-demo";
 
 interface DragState {
   active: boolean;
@@ -75,11 +84,16 @@ export function AppShell() {
     useState<SelectedModularEntity | null>(null);
   const [selectedDisasterProperty, setSelectedDisasterProperty] =
     useState<SelectedDisasterProperty | null>(null);
+  const [selectedUrbanProperty, setSelectedUrbanProperty] =
+    useState<SelectedUrbanProperty | null>(null);
   const [modularScenario, setModularScenario] = useState(
     mockModularHousingScenario,
   );
   const [disasterScenario, setDisasterScenario] = useState(
     mockDisasterResilienceScenario,
+  );
+  const [urbanScenario, setUrbanScenario] = useState(
+    grandIslePortFourchonScenario,
   );
   const [modularFocusRequest, setModularFocusRequest] = useState<{
     target: ModularCameraTarget;
@@ -90,6 +104,11 @@ export function AppShell() {
     propertyId: string | null;
     version: number;
   } | null>(null);
+  const [urbanFocusRequest, setUrbanFocusRequest] = useState<{
+    target: UrbanCameraTarget;
+    propertyId: string | null;
+    version: number;
+  } | null>(null);
   const modularViewerConfig = useMemo(
     () => createModularHousingViewerConfig(modularScenario),
     [modularScenario],
@@ -97,6 +116,10 @@ export function AppShell() {
   const disasterViewerConfig = useMemo(
     () => createDisasterResilienceViewerConfig(disasterScenario),
     [disasterScenario],
+  );
+  const urbanViewerConfig = useMemo(
+    () => createUrbanResilienceViewerConfig(urbanScenario),
+    [urbanScenario],
   );
   const existingDemoProjectLocation =
     config &&
@@ -204,8 +227,10 @@ export function AppShell() {
 
       setSelectedModularEntity(null);
       setSelectedDisasterProperty(null);
+      setSelectedUrbanProperty(null);
       setModularFocusRequest(null);
       setDisasterFocusRequest(null);
+      setUrbanFocusRequest(null);
       setMode("existing-demo");
       setIsPanelVisible(true);
     } catch {
@@ -219,8 +244,10 @@ export function AppShell() {
     workflow.resetWorkflow();
     setSelectedModularEntity(null);
     setSelectedDisasterProperty(null);
+    setSelectedUrbanProperty(null);
     setModularFocusRequest(null);
     setDisasterFocusRequest(null);
+    setUrbanFocusRequest(null);
     setMode("workflow");
     setIsPanelVisible(true);
   }, [clearProject, workflow.resetWorkflow]);
@@ -232,7 +259,9 @@ export function AppShell() {
     setModularScenario(mockModularHousingScenario);
     setSelectedModularEntity(null);
     setSelectedDisasterProperty(null);
+    setSelectedUrbanProperty(null);
     setDisasterFocusRequest(null);
+    setUrbanFocusRequest(null);
     setModularFocusRequest((currentRequest) => ({
       target: "system",
       version: (currentRequest?.version ?? 0) + 1,
@@ -248,7 +277,9 @@ export function AppShell() {
     setModularScenario(mockModularHousingScenario);
     setSelectedModularEntity(null);
     setSelectedDisasterProperty(null);
+    setSelectedUrbanProperty(null);
     setModularFocusRequest(null);
+    setUrbanFocusRequest(null);
     setDisasterScenario(mockDisasterResilienceScenario);
     setDisasterFocusRequest((currentRequest) => ({
       target: "overall",
@@ -256,6 +287,45 @@ export function AppShell() {
       version: (currentRequest?.version ?? 0) + 1,
     }));
     setMode("disaster-demo");
+    setIsPanelVisible(true);
+  }, [clearProject, workflow.resetWorkflow]);
+
+  const openUrbanResilienceDemo = useCallback(async () => {
+    const navigationVersion = navigationVersionRef.current + 1;
+    navigationVersionRef.current = navigationVersion;
+    clearProject();
+    workflow.resetWorkflow();
+    setModularScenario(mockModularHousingScenario);
+    setSelectedModularEntity(null);
+    setSelectedDisasterProperty(null);
+    setSelectedUrbanProperty(null);
+    setModularFocusRequest(null);
+    setDisasterFocusRequest(null);
+    setDisasterScenario(mockDisasterResilienceScenario);
+
+    let resolvedScenario = grandIslePortFourchonScenario;
+
+    try {
+      const response = await fetch(grandIslePortFourchonScenario.responseDataUrl);
+      const responseJson: unknown = await response.json();
+      const { routes, resources } = parseUrbanResponseContext(responseJson);
+
+      if (navigationVersion !== navigationVersionRef.current) {
+        return;
+      }
+
+      resolvedScenario = { ...grandIslePortFourchonScenario, routes, resources };
+    } catch (loadError) {
+      if (navigationVersion !== navigationVersionRef.current) {
+        return;
+      }
+
+      console.warn("Unable to load urban resilience response context.", loadError);
+    }
+
+    setUrbanScenario(resolvedScenario);
+    setUrbanFocusRequest({ target: "overall", propertyId: null, version: 1 });
+    setMode("urban-resilience-demo");
     setIsPanelVisible(true);
   }, [clearProject, workflow.resetWorkflow]);
 
@@ -286,6 +356,26 @@ export function AppShell() {
     [selectedDisasterProperty],
   );
 
+  const focusUrbanTarget = useCallback(
+    (target: UrbanCameraTarget) => {
+      const propertyId =
+        target === "selected-property"
+          ? selectedUrbanProperty?.propertyId ?? null
+          : null;
+
+      if (target === "selected-property" && !propertyId) {
+        return;
+      }
+
+      setUrbanFocusRequest((currentRequest) => ({
+        target,
+        propertyId,
+        version: (currentRequest?.version ?? 0) + 1,
+      }));
+    },
+    [selectedUrbanProperty],
+  );
+
   const applyModularAction = useCallback(
     (actionId: ModularStatusActionId, moduleId: string) => {
       setModularScenario((currentScenario) =>
@@ -303,7 +393,9 @@ export function AppShell() {
         ? modularViewerConfig
         : mode === "disaster-demo"
           ? disasterViewerConfig
-          : workflow.config;
+          : mode === "urban-resilience-demo"
+            ? urbanViewerConfig
+            : workflow.config;
 
   return (
     <div className="app-shell">
@@ -338,11 +430,19 @@ export function AppShell() {
               ? selectedDisasterProperty?.propertyId ?? null
               : null
           }
+          selectedUrbanPropertyId={
+            mode === "urban-resilience-demo"
+              ? selectedUrbanProperty?.propertyId ?? null
+              : null
+          }
           modularScenario={
             mode === "modular-demo" ? modularScenario : null
           }
           disasterScenario={
             mode === "disaster-demo" ? disasterScenario : null
+          }
+          urbanScenario={
+            mode === "urban-resilience-demo" ? urbanScenario : null
           }
           modularFocusTarget={
             mode === "modular-demo" ? modularFocusRequest?.target ?? null : null
@@ -362,6 +462,19 @@ export function AppShell() {
           }
           disasterFocusVersion={
             mode === "disaster-demo" ? disasterFocusRequest?.version ?? 0 : 0
+          }
+          urbanFocusTarget={
+            mode === "urban-resilience-demo"
+              ? urbanFocusRequest?.target ?? null
+              : null
+          }
+          urbanFocusPropertyId={
+            mode === "urban-resilience-demo"
+              ? urbanFocusRequest?.propertyId ?? null
+              : null
+          }
+          urbanFocusVersion={
+            mode === "urban-resilience-demo" ? urbanFocusRequest?.version ?? 0 : 0
           }
           onEntitySelected={(selection) => {
             if (
@@ -386,6 +499,17 @@ export function AppShell() {
             if (mode === "disaster-demo") {
               if (selection.type === "disasterProperty") {
                 setSelectedDisasterProperty({
+                  propertyId: selection.id,
+                  attributes: selection.attributes,
+                });
+                setIsPanelVisible(true);
+              }
+              return;
+            }
+
+            if (mode === "urban-resilience-demo") {
+              if (selection.type === "urbanProperty") {
+                setSelectedUrbanProperty({
                   propertyId: selection.id,
                   attributes: selection.attributes,
                 });
@@ -439,6 +563,7 @@ export function AppShell() {
           onOpenExistingDemo={() => void openExistingDemo()}
           onOpenModularDemo={openModularDemo}
           onOpenDisasterDemo={openDisasterDemo}
+          onOpenUrbanResilienceDemo={() => void openUrbanResilienceDemo()}
         />
       ) : mode === "modular-demo" ? (
         <ModularHousingDemoPanel
@@ -449,6 +574,7 @@ export function AppShell() {
           onNewProject={startNewProject}
           onOpenExistingDemo={() => void openExistingDemo()}
           onOpenDisasterDemo={openDisasterDemo}
+          onOpenUrbanResilienceDemo={() => void openUrbanResilienceDemo()}
         />
       ) : mode === "disaster-demo" ? (
         <DisasterResilienceDemoPanel
@@ -459,6 +585,18 @@ export function AppShell() {
           onNewProject={startNewProject}
           onOpenExistingDemo={() => void openExistingDemo()}
           onOpenModularDemo={openModularDemo}
+          onOpenUrbanResilienceDemo={() => void openUrbanResilienceDemo()}
+        />
+      ) : mode === "urban-resilience-demo" ? (
+        <UrbanResilienceDemoPanel
+          scenario={urbanScenario}
+          selectedProperty={selectedUrbanProperty}
+          osmBuildingsConfigured={hasCesiumIonAccessToken()}
+          onFocusTarget={focusUrbanTarget}
+          onNewProject={startNewProject}
+          onOpenExistingDemo={() => void openExistingDemo()}
+          onOpenModularDemo={openModularDemo}
+          onOpenDisasterDemo={openDisasterDemo}
         />
       ) : (
         <>
@@ -488,6 +626,7 @@ export function AppShell() {
             onNewProject={startNewProject}
             onOpenModularDemo={openModularDemo}
             onOpenDisasterDemo={openDisasterDemo}
+            onOpenUrbanResilienceDemo={() => void openUrbanResilienceDemo()}
             onClearSelection={clearSelection}
             onResetPosition={() => {
               setIsPanelVisible(true);

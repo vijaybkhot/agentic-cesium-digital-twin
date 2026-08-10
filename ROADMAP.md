@@ -42,3 +42,22 @@
 - Implement a real `ReconstructionProvider`.
 - Visualize reconstruction outputs as tilesets/models in Cesium.
 - Track reconstruction state and provenance in the project audit trail.
+
+## POC 4: Research Extension Demos
+
+The reusable config-driven viewer also hosts several additive, self-contained
+demo modes that reuse the POC 1 Cesium adapter without changing the
+`project_config.json` contract (see `docs/decisions/005-modular-housing-demo-guardrails.md`):
+
+- Modular housing proposal demo (`modular-demo`): typed mock scenario data for
+  a distributed factory/logistics/construction-site digital twin concept.
+- Property-specific disaster resilience demo (`disaster-demo`): a fully
+  fictional, guardrailed flood/property/response scenario used to validate the
+  property-risk-and-response visualization pattern.
+- Urban resilience demo (`urban-resilience-demo`): the same visualization
+  pattern applied to **real data** for Grand Isle and Port Fourchon,
+  Louisiana -- real OpenStreetMap building footprints, real FEMA National
+  Flood Hazard Layer flood-zone classifications, and a real LA Highway 1
+  response corridor. See
+  `docs/decisions/006-urban-resilience-real-data-guardrails.md` for the data
+  sourcing, risk-classification methodology, and research-only framing.

@@ -17,6 +17,9 @@ import { createDisasterFloodLayer } from "../../cesium/createDisasterFloodLayer"
 import { createDisasterResponseEntities } from "../../cesium/createDisasterResponseEntities";
 import { createOptionalOsmBuildings } from "../../cesium/createOptionalOsmBuildings";
 import { flyToDisasterScenarioTarget } from "../../cesium/flyToDisasterScenarioTarget";
+import { createUrbanResilienceResponseEntities } from "../../cesium/createUrbanResilienceResponseEntities";
+import { styleUrbanFloodZoneDataSource } from "../../cesium/createUrbanFloodZoneLayers";
+import { flyToUrbanResilienceScenarioTarget } from "../../cesium/flyToUrbanResilienceScenarioTarget";
 import {
   applyModelAnnotationVisualState,
   createModelAnnotationEntity,
@@ -33,6 +36,10 @@ import {
   styleDisasterPropertyDataSource,
 } from "../../cesium/styleDisasterPropertyDataSource";
 import {
+  applyUrbanPropertyVisualState,
+  styleUrbanPropertyDataSource,
+} from "../../cesium/styleUrbanPropertyDataSource";
+import {
   applyMeasurementPointVisualState,
   createMeasurementPointEntity,
   updateMeasurementPointEntity,
@@ -47,6 +54,11 @@ import type {
   DisasterResilienceScenario,
 } from "../../types/disasterResilience";
 import { parseDisasterPropertyAttributes } from "../../domain/disasterResilience/parseDisasterPropertyAttributes";
+import type {
+  UrbanCameraTarget,
+  UrbanResilienceScenario,
+} from "../../types/urbanResilience";
+import { parseUrbanPropertyAttributes } from "../../domain/urbanResilience/parseUrbanPropertyAttributes";
 
 type SelectionHandler = (selection: ViewerSelection) => void;
 
@@ -62,8 +74,14 @@ export class CesiumViewerAdapter implements ViewerAdapter {
   private readonly disasterEntities = new Set<Cesium.Entity>();
   private readonly disasterTilesets = new Set<Cesium.Cesium3DTileset>();
   private readonly disasterPropertyEntities = new Map<string, Cesium.Entity>();
+  private readonly urbanDataSources = new Set<Cesium.DataSource>();
+  private readonly urbanEntities = new Set<Cesium.Entity>();
+  private readonly urbanTilesets = new Set<Cesium.Cesium3DTileset>();
+  private readonly urbanPropertyEntities = new Map<string, Cesium.Entity>();
+  private readonly urbanFloodZoneEntities = new Map<string, Cesium.Entity>();
   private readonly measurementPoints = new Map<string, MeasurementPointConfig>();
   private disasterLoadVersion = 0;
+  private urbanLoadVersion = 0;
   private selectedEntityIds: ViewerSelectedEntityIds = {};
 
   constructor(
@@ -242,6 +260,34 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     }
   }
 
+  async renderUrbanResilienceScenario(
+    scenario: UrbanResilienceScenario | null,
+  ): Promise<void> {
+    const loadVersion = this.urbanLoadVersion + 1;
+    this.urbanLoadVersion = loadVersion;
+    const viewer = this.viewer;
+
+    this.clearUrbanLayers();
+
+    if (!scenario || !viewer || viewer.isDestroyed()) {
+      return;
+    }
+
+    const { resourceEntities, routeEntities } = createUrbanResilienceResponseEntities(
+      viewer,
+      scenario.resources,
+      scenario.routes,
+    );
+    resourceEntities.forEach((entity) => this.urbanEntities.add(entity));
+    routeEntities.forEach((entity) => this.urbanEntities.add(entity));
+    void this.loadOptionalUrbanOsmBuildings(loadVersion, viewer);
+
+    await Promise.all([
+      this.loadUrbanFloodZones(loadVersion, viewer, scenario),
+      this.loadUrbanProperties(loadVersion, viewer, scenario),
+    ]);
+  }
+
   updateMeasurementPoint(point: MeasurementPointConfig): void {
     const entity = this.pointEntities.get(point.id);
 
@@ -297,6 +343,25 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     );
   }
 
+  flyToUrbanResilienceTarget(
+    scenario: UrbanResilienceScenario,
+    target: UrbanCameraTarget,
+    selectedPropertyId: string | null,
+  ): void {
+    if (!this.viewer) {
+      return;
+    }
+
+    flyToUrbanResilienceScenarioTarget(
+      this.viewer,
+      scenario,
+      target,
+      this.urbanPropertyEntities,
+      this.urbanFloodZoneEntities,
+      selectedPropertyId,
+    );
+  }
+
   setLocationPickMode(enabled: boolean): void {
     this.locationPickMode = enabled;
   }
@@ -309,6 +374,8 @@ export class CesiumViewerAdapter implements ViewerAdapter {
   destroy(): void {
     this.disasterLoadVersion += 1;
     this.clearDisasterLayers();
+    this.urbanLoadVersion += 1;
+    this.clearUrbanLayers();
 
     if (this.clickHandler && !this.clickHandler.isDestroyed()) {
       this.clickHandler.destroy();
@@ -329,6 +396,11 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.disasterEntities.clear();
     this.disasterTilesets.clear();
     this.disasterPropertyEntities.clear();
+    this.urbanDataSources.clear();
+    this.urbanEntities.clear();
+    this.urbanTilesets.clear();
+    this.urbanPropertyEntities.clear();
+    this.urbanFloodZoneEntities.clear();
     this.measurementPoints.clear();
   }
 
@@ -414,6 +486,190 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.disasterPropertyEntities.clear();
   }
 
+  private isCurrentUrbanLoad(loadVersion: number, viewer: Cesium.Viewer): boolean {
+    return (
+      loadVersion === this.urbanLoadVersion && this.viewer === viewer && !viewer.isDestroyed()
+    );
+  }
+
+  private async loadUrbanFloodZones(
+    loadVersion: number,
+    viewer: Cesium.Viewer,
+    scenario: UrbanResilienceScenario,
+  ): Promise<void> {
+    let dataSource: Cesium.GeoJsonDataSource | null = null;
+
+    try {
+      dataSource = await Cesium.GeoJsonDataSource.load(scenario.floodZoneDataUrl, {
+        clampToGround: true,
+      });
+      dataSource.show = false;
+      dataSource.name = `urban-flood-zones:${scenario.id}`;
+
+      if (!this.isCurrentUrbanLoad(loadVersion, viewer)) {
+        dataSource.entities.removeAll();
+        return;
+      }
+
+      const zoneEntities = styleUrbanFloodZoneDataSource(dataSource);
+
+      if (!this.isCurrentUrbanLoad(loadVersion, viewer)) {
+        dataSource.entities.removeAll();
+        return;
+      }
+
+      await viewer.dataSources.add(dataSource);
+
+      if (!this.isCurrentUrbanLoad(loadVersion, viewer)) {
+        if (!viewer.isDestroyed() && viewer.dataSources.contains(dataSource)) {
+          viewer.dataSources.remove(dataSource, true);
+        }
+        return;
+      }
+
+      this.urbanDataSources.add(dataSource);
+      zoneEntities.forEach((entity, zoneId) => {
+        this.urbanFloodZoneEntities.set(zoneId, entity);
+      });
+      dataSource.show = true;
+    } catch (loadError: unknown) {
+      if (dataSource && !viewer.isDestroyed()) {
+        if (viewer.dataSources.contains(dataSource)) {
+          viewer.dataSources.remove(dataSource, true);
+        } else {
+          dataSource.entities.removeAll();
+        }
+      }
+
+      if (this.isCurrentUrbanLoad(loadVersion, viewer)) {
+        console.warn("Unable to load urban resilience flood zone GeoJSON.", loadError);
+      }
+    }
+  }
+
+  private async loadUrbanProperties(
+    loadVersion: number,
+    viewer: Cesium.Viewer,
+    scenario: UrbanResilienceScenario,
+  ): Promise<void> {
+    let dataSource: Cesium.GeoJsonDataSource | null = null;
+
+    try {
+      dataSource = await Cesium.GeoJsonDataSource.load(scenario.propertyDataUrl);
+      dataSource.show = false;
+      dataSource.name = `urban-properties:${scenario.id}`;
+
+      if (!this.isCurrentUrbanLoad(loadVersion, viewer)) {
+        dataSource.entities.removeAll();
+        return;
+      }
+
+      const propertyEntities = styleUrbanPropertyDataSource(dataSource);
+
+      if (!this.isCurrentUrbanLoad(loadVersion, viewer)) {
+        dataSource.entities.removeAll();
+        return;
+      }
+
+      await viewer.dataSources.add(dataSource);
+
+      if (!this.isCurrentUrbanLoad(loadVersion, viewer)) {
+        if (!viewer.isDestroyed() && viewer.dataSources.contains(dataSource)) {
+          viewer.dataSources.remove(dataSource, true);
+        }
+        return;
+      }
+
+      this.urbanDataSources.add(dataSource);
+      propertyEntities.forEach((entity, propertyId) => {
+        this.urbanPropertyEntities.set(propertyId, entity);
+      });
+      dataSource.show = true;
+      this.applySelectionStyles();
+    } catch (loadError: unknown) {
+      if (dataSource && !viewer.isDestroyed()) {
+        if (viewer.dataSources.contains(dataSource)) {
+          viewer.dataSources.remove(dataSource, true);
+        } else {
+          dataSource.entities.removeAll();
+        }
+      }
+
+      if (this.isCurrentUrbanLoad(loadVersion, viewer)) {
+        console.warn("Unable to load urban resilience property GeoJSON.", loadError);
+      }
+    }
+  }
+
+  private async loadOptionalUrbanOsmBuildings(
+    loadVersion: number,
+    viewer: Cesium.Viewer,
+  ): Promise<void> {
+    let tileset: Cesium.Cesium3DTileset | null = null;
+
+    try {
+      tileset = await createOptionalOsmBuildings();
+
+      if (!tileset) {
+        return;
+      }
+
+      if (!this.isCurrentUrbanLoad(loadVersion, viewer)) {
+        tileset.destroy();
+        return;
+      }
+
+      viewer.scene.primitives.add(tileset);
+
+      if (!this.isCurrentUrbanLoad(loadVersion, viewer)) {
+        viewer.scene.primitives.remove(tileset);
+        return;
+      }
+
+      this.urbanTilesets.add(tileset);
+    } catch {
+      if (tileset && !tileset.isDestroyed()) {
+        if (!viewer.isDestroyed() && viewer.scene.primitives.contains(tileset)) {
+          viewer.scene.primitives.remove(tileset);
+        } else {
+          tileset.destroy();
+        }
+      }
+
+      if (this.isCurrentUrbanLoad(loadVersion, viewer)) {
+        console.warn(
+          "Optional Cesium OSM Buildings context unavailable; continuing with local urban resilience layers.",
+        );
+      }
+    }
+  }
+
+  private clearUrbanLayers(): void {
+    const viewer = this.viewer;
+
+    if (viewer && !viewer.isDestroyed()) {
+      this.urbanDataSources.forEach((dataSource) => {
+        if (viewer.dataSources.contains(dataSource)) {
+          viewer.dataSources.remove(dataSource, true);
+        }
+      });
+      this.urbanEntities.forEach((entity) => {
+        viewer.entities.remove(entity);
+      });
+      this.urbanTilesets.forEach((tileset) => {
+        if (viewer.scene.primitives.contains(tileset)) {
+          viewer.scene.primitives.remove(tileset);
+        }
+      });
+    }
+
+    this.urbanDataSources.clear();
+    this.urbanEntities.clear();
+    this.urbanTilesets.clear();
+    this.urbanPropertyEntities.clear();
+    this.urbanFloodZoneEntities.clear();
+  }
+
   private applySelectionStyles(): void {
     this.pointEntities.forEach((entity, pointId) => {
       const point = this.measurementPoints.get(pointId);
@@ -451,6 +707,13 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       applyDisasterPropertyVisualState(
         entity,
         this.selectedEntityIds.disasterPropertyId === propertyId,
+      );
+    });
+
+    this.urbanPropertyEntities.forEach((entity, propertyId) => {
+      applyUrbanPropertyVisualState(
+        entity,
+        this.selectedEntityIds.urbanPropertyId === propertyId,
       );
     });
   }
@@ -504,8 +767,24 @@ export class CesiumViewerAdapter implements ViewerAdapter {
               );
             })
           : undefined;
+      const urbanPropertyPick =
+        !disasterPropertyPick && this.urbanPropertyEntities.size > 0
+          ? this.viewer.scene.drillPick(event.position).find((candidate) => {
+              const candidateEntity = candidate.id as
+                | Cesium.Entity
+                | undefined;
+
+              return (
+                candidateEntity?.properties?.entityType?.getValue() ===
+                  "urbanProperty" &&
+                !(candidate.primitive instanceof Cesium.LabelCollection)
+              );
+            })
+          : undefined;
       const pickedObject =
-        disasterPropertyPick ?? this.viewer.scene.pick(event.position);
+        disasterPropertyPick ??
+        urbanPropertyPick ??
+        this.viewer.scene.pick(event.position);
 
       if (!Cesium.defined(pickedObject) || !Cesium.defined(pickedObject.id)) {
         return;
@@ -519,6 +798,10 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       const disasterPropertyId =
         entity.properties?.disasterPropertyId?.getValue();
       const disasterPropertyAttributes = parseDisasterPropertyAttributes(
+        entity.properties?.getValue(),
+      );
+      const urbanPropertyId = entity.properties?.urbanPropertyId?.getValue();
+      const urbanPropertyAttributes = parseUrbanPropertyAttributes(
         entity.properties?.getValue(),
       );
       const modularKind = entity.properties?.modularKind?.getValue() as
@@ -546,6 +829,19 @@ export class CesiumViewerAdapter implements ViewerAdapter {
           type: "disasterProperty",
           id: disasterPropertyId,
           attributes: disasterPropertyAttributes,
+        });
+      }
+
+      if (
+        entityType === "urbanProperty" &&
+        typeof urbanPropertyId === "string" &&
+        urbanPropertyAttributes?.property_id === urbanPropertyId &&
+        !(pickedObject.primitive instanceof Cesium.LabelCollection)
+      ) {
+        this.onEntitySelected({
+          type: "urbanProperty",
+          id: urbanPropertyId,
+          attributes: urbanPropertyAttributes,
         });
       }
 

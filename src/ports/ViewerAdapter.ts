@@ -9,6 +9,11 @@ import type {
   DisasterPropertyAttributes,
   DisasterResilienceScenario,
 } from "../types/disasterResilience";
+import type {
+  UrbanCameraTarget,
+  UrbanPropertyAttributes,
+  UrbanResilienceScenario,
+} from "../types/urbanResilience";
 
 export type ViewerSelection =
   | { type: "measurementPoint"; id: string }
@@ -19,6 +24,11 @@ export type ViewerSelection =
       id: string;
       attributes: DisasterPropertyAttributes;
     }
+  | {
+      type: "urbanProperty";
+      id: string;
+      attributes: UrbanPropertyAttributes;
+    }
   | { type: "globeLocation"; lat: number; lon: number };
 
 export interface ViewerSelectedEntityIds {
@@ -26,6 +36,7 @@ export interface ViewerSelectedEntityIds {
   modelAnnotationId?: string | null;
   modularEntityId?: string | null;
   disasterPropertyId?: string | null;
+  urbanPropertyId?: string | null;
 }
 
 export interface ViewerAdapter {
@@ -34,6 +45,9 @@ export interface ViewerAdapter {
   renderModularScenario(scenario: ModularHousingScenario | null): void;
   renderDisasterScenario(
     scenario: DisasterResilienceScenario | null,
+  ): Promise<void>;
+  renderUrbanResilienceScenario(
+    scenario: UrbanResilienceScenario | null,
   ): Promise<void>;
   updateMeasurementPoint(point: MeasurementPointConfig): void;
   flyToProject(config: ProjectConfig): void;
@@ -45,6 +59,11 @@ export interface ViewerAdapter {
   flyToDisasterTarget(
     scenario: DisasterResilienceScenario,
     target: DisasterCameraTarget,
+    selectedPropertyId: string | null,
+  ): void;
+  flyToUrbanResilienceTarget(
+    scenario: UrbanResilienceScenario,
+    target: UrbanCameraTarget,
     selectedPropertyId: string | null,
   ): void;
   setLocationPickMode(enabled: boolean): void;

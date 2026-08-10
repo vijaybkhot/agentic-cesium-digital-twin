@@ -1,0 +1,38 @@
+import type { UrbanResourceType, UrbanRiskLevel, UrbanRouteStatus } from "../../types/urbanResilience";
+
+export const URBAN_RESILIENCE_DISCLAIMER =
+  "Research prototype. Property risk levels are a zone-based classification " +
+  "derived from public FEMA National Flood Hazard Layer data and OpenStreetMap " +
+  "building footprints. This is not an official flood determination, insurance " +
+  "requirement, evacuation order, or real shelter list. For official " +
+  "information consult FEMA's Flood Map Service Center (msc.fema.gov), your " +
+  "local floodplain administrator, and official Louisiana / parish emergency " +
+  "management guidance.";
+
+export const URBAN_RISK_LEVELS = [
+  "Low",
+  "Moderate",
+  "High",
+] as const satisfies readonly UrbanRiskLevel[];
+
+export const URBAN_ROUTE_STATUSES = [
+  "open",
+  "at-risk",
+  "not-recommended",
+] as const satisfies readonly UrbanRouteStatus[];
+
+export const URBAN_RESOURCE_TYPES = [
+  "staging-reference",
+] as const satisfies readonly UrbanResourceType[];
+
+export function isUrbanRiskLevel(value: unknown): value is UrbanRiskLevel {
+  return typeof value === "string" && URBAN_RISK_LEVELS.some((level) => level === value);
+}
+
+export function isUrbanRouteStatus(value: unknown): value is UrbanRouteStatus {
+  return typeof value === "string" && URBAN_ROUTE_STATUSES.some((status) => status === value);
+}
+
+export function isUrbanResourceType(value: unknown): value is UrbanResourceType {
+  return typeof value === "string" && URBAN_RESOURCE_TYPES.some((type) => type === value);
+}

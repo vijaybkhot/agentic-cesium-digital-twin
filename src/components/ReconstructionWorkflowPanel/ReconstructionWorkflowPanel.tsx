@@ -37,6 +37,7 @@ interface ReconstructionWorkflowPanelProps {
   onOpenExistingDemo: () => void;
   onOpenModularDemo: () => void;
   onOpenDisasterDemo: () => void;
+  onOpenUrbanResilienceDemo: () => void;
 }
 
 function getJobMessage(job: ReconstructionJob | null): string {
@@ -87,6 +88,7 @@ export function ReconstructionWorkflowPanel({
   onOpenExistingDemo,
   onOpenModularDemo,
   onOpenDisasterDemo,
+  onOpenUrbanResilienceDemo,
 }: ReconstructionWorkflowPanelProps) {
   const completedAsset = config.modelAssets?.[0] ?? null;
   const viewerSupport = completedAsset
@@ -227,6 +229,13 @@ export function ReconstructionWorkflowPanel({
               onClick={onOpenDisasterDemo}
             >
               Disaster Resilience Demo
+            </button>
+            <button
+              className="panel-button"
+              type="button"
+              onClick={onOpenUrbanResilienceDemo}
+            >
+              Urban Resilience Demo (Grand Isle & Port Fourchon)
             </button>
           </div>
         </>

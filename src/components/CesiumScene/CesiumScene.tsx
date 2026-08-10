@@ -12,6 +12,10 @@ import type {
   DisasterCameraTarget,
   DisasterResilienceScenario,
 } from "../../types/disasterResilience";
+import type {
+  UrbanCameraTarget,
+  UrbanResilienceScenario,
+} from "../../types/urbanResilience";
 import type { ProjectConfig } from "../../types/projectConfig";
 
 interface CesiumSceneProps {
@@ -22,13 +26,18 @@ interface CesiumSceneProps {
   selectedModelAnnotationId?: string | null;
   selectedModularEntityId?: string | null;
   selectedDisasterPropertyId?: string | null;
+  selectedUrbanPropertyId?: string | null;
   modularScenario?: ModularHousingScenario | null;
   disasterScenario?: DisasterResilienceScenario | null;
+  urbanScenario?: UrbanResilienceScenario | null;
   modularFocusTarget?: ModularCameraTarget | null;
   modularFocusVersion?: number;
   disasterFocusTarget?: DisasterCameraTarget | null;
   disasterFocusPropertyId?: string | null;
   disasterFocusVersion?: number;
+  urbanFocusTarget?: UrbanCameraTarget | null;
+  urbanFocusPropertyId?: string | null;
+  urbanFocusVersion?: number;
   focusProjectVersion?: number;
   focusModelAssetId?: string | null;
   focusModelVersion?: number;
@@ -51,13 +60,18 @@ export function CesiumScene({
   selectedModelAnnotationId = null,
   selectedModularEntityId = null,
   selectedDisasterPropertyId = null,
+  selectedUrbanPropertyId = null,
   modularScenario = null,
   disasterScenario = null,
+  urbanScenario = null,
   modularFocusTarget = null,
   modularFocusVersion = 0,
   disasterFocusTarget = null,
   disasterFocusPropertyId = null,
   disasterFocusVersion = 0,
+  urbanFocusTarget = null,
+  urbanFocusPropertyId = null,
+  urbanFocusVersion = 0,
   focusProjectVersion = 0,
   focusModelAssetId = null,
   focusModelVersion = 0,
@@ -132,6 +146,24 @@ export function CesiumScene({
   }, [config.projectId, disasterScenario]);
 
   useEffect(() => {
+    const adapter = adapterRef.current;
+
+    if (!adapter) {
+      return;
+    }
+
+    void adapter.renderUrbanResilienceScenario(urbanScenario).catch((loadError) => {
+      console.warn("Unable to update urban resilience layers.", loadError);
+    });
+
+    return () => {
+      void adapter.renderUrbanResilienceScenario(null).catch((cleanupError) => {
+        console.warn("Unable to clear urban resilience layers.", cleanupError);
+      });
+    };
+  }, [config.projectId, urbanScenario]);
+
+  useEffect(() => {
     adapterRef.current?.setLocationPickMode(locationPickEnabled);
   }, [locationPickEnabled]);
 
@@ -141,12 +173,14 @@ export function CesiumScene({
       modelAnnotationId: selectedModelAnnotationId,
       modularEntityId: selectedModularEntityId,
       disasterPropertyId: selectedDisasterPropertyId,
+      urbanPropertyId: selectedUrbanPropertyId,
     });
   }, [
     selectedMeasurementPointId,
     selectedModelAnnotationId,
     selectedModularEntityId,
     selectedDisasterPropertyId,
+    selectedUrbanPropertyId,
   ]);
 
   useEffect(() => {
@@ -184,6 +218,16 @@ export function CesiumScene({
     disasterFocusPropertyId,
     disasterFocusVersion,
   ]);
+
+  useEffect(() => {
+    if (urbanScenario && urbanFocusTarget && urbanFocusVersion > 0) {
+      adapterRef.current?.flyToUrbanResilienceTarget(
+        urbanScenario,
+        urbanFocusTarget,
+        urbanFocusPropertyId,
+      );
+    }
+  }, [urbanScenario, urbanFocusTarget, urbanFocusPropertyId, urbanFocusVersion]);
 
   return <div ref={containerRef} className="cesium-container" />;
 }
