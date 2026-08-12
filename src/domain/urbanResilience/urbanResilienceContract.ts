@@ -13,6 +13,7 @@ export const URBAN_RISK_LEVELS = [
   "Low",
   "Moderate",
   "High",
+  "Unknown",
 ] as const satisfies readonly UrbanRiskLevel[];
 
 export const URBAN_ROUTE_STATUSES = [

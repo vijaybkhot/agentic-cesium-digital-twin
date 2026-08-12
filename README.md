@@ -150,8 +150,8 @@ npm run validate:urban-resilience-data
 ```
 
 Property `risk_level` is a FEMA-zone-based classification (VE/V -> High;
-other SFHA zones -> Moderate; outside the mapped SFHA or a known data-coverage
-gap -> Low), not a computed hydraulic model. See
+other SFHA zones -> Moderate; mapped outside the SFHA -> Low; and missing or
+undetermined FEMA coverage -> Unknown), not a computed hydraulic model. See
 `docs/decisions/006-urban-resilience-real-data-guardrails.md` for the full
 data-sourcing and safety-framing rationale.
 

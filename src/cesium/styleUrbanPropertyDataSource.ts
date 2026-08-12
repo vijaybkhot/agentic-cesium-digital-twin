@@ -16,6 +16,7 @@ export const urbanRiskColors: Readonly<Record<UrbanRiskLevel, Cesium.Color>> = {
   Low: Cesium.Color.fromCssColorString(urbanResilienceVisualColors.riskLow),
   Moderate: Cesium.Color.fromCssColorString(urbanResilienceVisualColors.riskModerate),
   High: Cesium.Color.fromCssColorString(urbanResilienceVisualColors.riskHigh),
+  Unknown: Cesium.Color.fromCssColorString(urbanResilienceVisualColors.riskUnknown),
 };
 
 export const unknownUrbanRiskColor = Cesium.Color.fromCssColorString(
@@ -32,7 +33,7 @@ export function getUrbanPropertyVisualStyle(value: unknown): UrbanPropertyVisual
   if (isUrbanRiskLevel(value)) {
     return {
       color: urbanRiskColors[value],
-      label: `${value} risk`,
+      label: value === "Unknown" ? "FEMA coverage unavailable" : `${value} risk`,
       riskLevel: value,
     };
   }

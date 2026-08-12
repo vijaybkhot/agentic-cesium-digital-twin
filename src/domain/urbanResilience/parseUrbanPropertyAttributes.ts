@@ -29,7 +29,7 @@ export function parseUrbanPropertyAttributes(value: unknown): UrbanPropertyAttri
   }
 
   if (
-    typeof value.sfha !== "boolean" ||
+    (typeof value.sfha !== "boolean" && value.sfha !== null) ||
     !Number.isFinite(value.building_height_m) ||
     (value.building_height_m as number) <= 0 ||
     !Number.isFinite(value.osm_way_id) ||

@@ -51,10 +51,10 @@ selections.
 zone-based proxy, not a fabricated number: FEMA Zone V/VE (coastal
 high-hazard, wave action) maps to `High`; other Special Flood Hazard Area
 zones (A/AE/AH/AO/AR/A99) map to `Moderate`; areas outside the mapped SFHA,
-or where the digitized NFHL has a coverage gap (a known real condition
-found in the Port Fourchon area during data collection), map to `Low` with
-an explicit confidence note flagging the coverage gap rather than implying
-a confirmed low-risk determination.
+map to `Low`; and locations where the digitized NFHL has a coverage gap or
+undetermined Zone D designation map to `Unknown`. The Port Fourchon coverage
+gap is shown in neutral gray and must not imply a confirmed low-risk
+determination.
 
 **Safety framing.** Every property, route, and resource carries a
 disclaimer distinguishing this research classification from an official

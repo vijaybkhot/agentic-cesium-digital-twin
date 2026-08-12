@@ -64,7 +64,13 @@ export function UrbanPropertyDashboard({
         </div>
         <div>
           <dt>Special Flood Hazard Area</dt>
-          <dd>{attributes.sfha ? "Yes" : "No"}</dd>
+          <dd>
+            {attributes.sfha === null
+              ? "Not available — FEMA coverage gap"
+              : attributes.sfha
+                ? "Yes"
+                : "No"}
+          </dd>
         </div>
         <div>
           <dt>Occupancy type</dt>

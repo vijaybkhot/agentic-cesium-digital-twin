@@ -24,7 +24,7 @@ export function UrbanMapLegend() {
           />
           <span>
             <strong>Low risk</strong>
-            <small>Outside the mapped FEMA Special Flood Hazard Area, or no coverage</small>
+            <small>Mapped outside the FEMA Special Flood Hazard Area</small>
           </span>
         </li>
         <li>
@@ -47,6 +47,17 @@ export function UrbanMapLegend() {
           <span>
             <strong>High risk</strong>
             <small>FEMA Zone V / VE (coastal high-hazard, wave action)</small>
+          </span>
+        </li>
+        <li>
+          <span
+            className="urban-map-legend-symbol urban-map-legend-property"
+            style={swatchStyle(urbanResilienceVisualColors.riskUnknown)}
+            aria-hidden="true"
+          />
+          <span>
+            <strong>Unknown — coverage unavailable</strong>
+            <small>No FEMA NFHL polygon was available; this is not a Low-risk finding</small>
           </span>
         </li>
         <li>

@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 const DATA_DIR = "public/data/urban-resilience";
 const REGION_BOUNDS = { minLat: 29.0, maxLat: 29.65, minLon: -90.45, maxLon: -89.9 };
 const VALID_ZONE_CODES = new Set(["V", "VE", "A", "AE", "AH", "AO", "AR", "A99", "D", "X", "Unmapped"]);
-const VALID_RISK_LEVELS = new Set(["Low", "Moderate", "High"]);
+const VALID_RISK_LEVELS = new Set(["Low", "Moderate", "High", "Unknown"]);
 
 function assertInRegion(lon, lat, context) {
   assert.ok(
@@ -21,6 +21,7 @@ function expectedRiskLevel(zoneCode) {
 
   if (zone === "V" || zone === "VE") return "High";
   if (["A", "AE", "AH", "AO", "AR", "A99"].includes(zone)) return "Moderate";
+  if (zone === "D" || zone === "UNMAPPED") return "Unknown";
   return "Low";
 }
 
@@ -62,6 +63,18 @@ async function validateProperties() {
 
     assert.ok(VALID_ZONE_CODES.has(properties.flood_zone_code), `${properties.property_id}: unexpected flood_zone_code ${properties.flood_zone_code}`);
     assert.ok(VALID_RISK_LEVELS.has(properties.risk_level), `${properties.property_id}: invalid risk_level`);
+    assert.equal(
+      properties.risk_level,
+      expectedRiskLevel(properties.flood_zone_code),
+      `${properties.property_id}: risk_level does not match its FEMA zone classification rule`,
+    );
+    assert.equal(
+      properties.sfha,
+      properties.risk_level === "Unknown"
+        ? null
+        : properties.risk_level === "High" || properties.risk_level === "Moderate",
+      `${properties.property_id}: sfha does not match its mapped/unknown classification`,
+    );
     assert.ok(
       Number.isFinite(properties.building_height_m) && properties.building_height_m > 0,
       `${properties.property_id}: invalid building_height_m`,
@@ -76,14 +89,6 @@ async function validateProperties() {
       /(research|data gap|coverage gap|undetermined)/i,
       `${properties.property_id}: confidence_note must carry a research/uncertainty caveat`,
     );
-
-    if (properties.flood_zone_code !== "Unmapped") {
-      assert.equal(
-        properties.risk_level,
-        expectedRiskLevel(properties.flood_zone_code),
-        `${properties.property_id}: risk_level does not match its FEMA zone classification rule`,
-      );
-    }
 
     const ring = feature.geometry.coordinates[0];
     assert.ok(Array.isArray(ring) && ring.length >= 4, `${properties.property_id}: polygon ring incomplete`);

@@ -1,4 +1,4 @@
-export type UrbanRiskLevel = "Low" | "Moderate" | "High";
+export type UrbanRiskLevel = "Low" | "Moderate" | "High" | "Unknown";
 
 export type UrbanCameraTarget = "overall" | "flood" | "selected-property";
 
@@ -20,7 +20,7 @@ export interface UrbanPropertyAttributes {
   address_label: string;
   occupancy_type: string;
   flood_zone_code: string;
-  sfha: boolean;
+  sfha: boolean | null;
   risk_level: UrbanRiskLevel;
   recommended_action: string;
   data_source: string;
@@ -33,7 +33,7 @@ export interface UrbanFloodZoneAttributes {
   id: string;
   flood_zone_code: string;
   zone_subtype: string | null;
-  sfha: boolean;
+  sfha: boolean | null;
   risk_level: UrbanRiskLevel;
   static_bfe_ft: number | null;
 }

@@ -27,8 +27,10 @@ const RECOMMENDED_ACTION_BY_RISK = {
     "Area (1% annual chance flood zone). Treat as a prompt to review official " +
     "FEMA flood maps and household hurricane preparedness guidance.",
   Low: "Research-tier classification: outside the mapped FEMA Special Flood " +
-    "Hazard Area, or data is unavailable for this location (see confidence " +
-    "note). Still consult official sources before making decisions.",
+    "Hazard Area. Still consult official sources before making decisions.",
+  Unknown: "FEMA NFHL coverage was unavailable or undetermined for this " +
+    "location. No risk tier is assigned; consult official FEMA and local " +
+    "floodplain-management sources before making decisions.",
 };
 
 const OCCUPANCY_LABELS = {
@@ -130,7 +132,7 @@ function classifyFemaZone(zoneCode) {
   }
 
   if (zone === "D") {
-    return { riskLevel: "Low", sfha: false, undetermined: true };
+    return { riskLevel: "Unknown", sfha: null, undetermined: true };
   }
 
   return { riskLevel: "Low", sfha: false };
@@ -197,7 +199,7 @@ function buildPropertyFeatures(buildingElements, floodZoneFeatures, idPrefix) {
     const zoneCode = matchedZone?.properties?.FLD_ZONE ?? null;
     const classification = matchedZone
       ? classifyFemaZone(zoneCode)
-      : { riskLevel: "Low", sfha: false, dataGap: true };
+      : { riskLevel: "Unknown", sfha: null, dataGap: true };
 
     features.push({
       type: "Feature",

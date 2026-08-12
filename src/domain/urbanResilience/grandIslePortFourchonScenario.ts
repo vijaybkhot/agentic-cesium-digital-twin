@@ -45,8 +45,9 @@ export const grandIslePortFourchonScenario: UrbanResilienceScenario = {
       message:
         "Each property's risk level is a zone-based proxy: FEMA Zone V/VE " +
         "(coastal high-hazard, wave action) maps to High; other Special " +
-        "Flood Hazard Area zones map to Moderate; areas outside the mapped " +
-        "SFHA (or lacking coverage) map to Low pending official review.",
+        "Flood Hazard Area zones map to Moderate; mapped areas outside the " +
+        "SFHA map to Low; and missing or undetermined FEMA coverage maps to " +
+        "Unknown rather than implying a low-risk finding.",
       timestamp: "2026-08-10T16:32:00Z",
     },
     {
