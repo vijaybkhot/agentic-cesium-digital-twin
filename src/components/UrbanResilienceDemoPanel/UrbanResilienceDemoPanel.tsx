@@ -12,7 +12,8 @@ import "./UrbanResilienceDemoPanel.css";
 interface UrbanResilienceDemoPanelProps {
   scenario: UrbanResilienceScenario;
   selectedProperty: SelectedUrbanProperty | null;
-  osmBuildingsConfigured: boolean;
+  ionTokenConfigured: boolean;
+  osmBuildingsEnabled: boolean;
   onFocusTarget: (target: UrbanCameraTarget) => void;
   onNewProject: () => void;
   onOpenExistingDemo: () => void;
@@ -27,7 +28,8 @@ function formatCoordinate(value: number): string {
 export function UrbanResilienceDemoPanel({
   scenario,
   selectedProperty,
-  osmBuildingsConfigured,
+  ionTokenConfigured,
+  osmBuildingsEnabled,
   onFocusTarget,
   onNewProject,
   onOpenExistingDemo,
@@ -100,23 +102,26 @@ export function UrbanResilienceDemoPanel({
       <UrbanTwinEventFeed events={scenario.events} />
 
       <section className="urban-resilience-demo-section">
-        <h2>Optional 3D building context</h2>
+        <h2>3D context</h2>
         <p
           className={`urban-osm-context-status ${
-            osmBuildingsConfigured
+            !osmBuildingsEnabled
+              ? "urban-osm-context-status-local"
+              : ionTokenConfigured
               ? "urban-osm-context-status-configured"
-              : "urban-osm-context-status-local"
+              : "urban-osm-context-status-unavailable"
           }`}
           role="status"
         >
-          {osmBuildingsConfigured
-            ? "Ion token detected — OSM Buildings context requested"
-            : "No ion token — local-only fallback active"}
+          {!osmBuildingsEnabled
+            ? "Additional 3D context: Off"
+            : ionTokenConfigured
+              ? "Additional 3D context: On"
+              : "Additional 3D context is unavailable"}
         </p>
         <p className="urban-osm-context-copy">
-          When available, Cesium OSM Buildings provide subdued neighborhood context only. They
-          are not the risk-classified property data -- the colored real building footprints
-          remain authoritative and selectable.
+          Colored buildings show the FEMA-zone classification. Optional
+          surrounding buildings provide visual context only.
         </p>
       </section>
 

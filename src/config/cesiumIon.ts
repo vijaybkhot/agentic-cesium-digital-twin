@@ -7,3 +7,10 @@ export function getCesiumIonAccessToken(): string | null {
 export function hasCesiumIonAccessToken(): boolean {
   return getCesiumIonAccessToken() !== null;
 }
+
+export function isUrbanOsmBuildingsEnabled(): boolean {
+  return (
+    import.meta.env.VITE_ENABLE_URBAN_OSM_BUILDINGS?.trim().toLowerCase() ===
+    "true"
+  );
+}

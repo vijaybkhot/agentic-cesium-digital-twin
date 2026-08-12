@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CesiumScene } from "../components/CesiumScene/CesiumScene";
-import { hasCesiumIonAccessToken } from "../config/cesiumIon";
+import {
+  hasCesiumIonAccessToken,
+  isUrbanOsmBuildingsEnabled,
+} from "../config/cesiumIon";
 import { DisasterResilienceDemoPanel } from "../components/DisasterResilienceDemoPanel/DisasterResilienceDemoPanel";
 import { ImageIntakePanel } from "../components/ImageIntakePanel/ImageIntakePanel";
 import { ModularHousingDemoPanel } from "../components/ModularHousingDemoPanel/ModularHousingDemoPanel";
@@ -591,7 +594,8 @@ export function AppShell() {
         <UrbanResilienceDemoPanel
           scenario={urbanScenario}
           selectedProperty={selectedUrbanProperty}
-          osmBuildingsConfigured={hasCesiumIonAccessToken()}
+          ionTokenConfigured={hasCesiumIonAccessToken()}
+          osmBuildingsEnabled={isUrbanOsmBuildingsEnabled()}
           onFocusTarget={focusUrbanTarget}
           onNewProject={startNewProject}
           onOpenExistingDemo={() => void openExistingDemo()}

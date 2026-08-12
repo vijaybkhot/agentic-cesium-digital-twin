@@ -11,6 +11,7 @@ import type {
 } from "../../types/projectConfig";
 import { flyToProject as flyViewerToProject } from "../../cesium/cameraControls";
 import { createCesiumViewer } from "../../cesium/createCesiumViewer";
+import { isUrbanOsmBuildingsEnabled } from "../../config/cesiumIon";
 import { createFacilityBoundary } from "../../cesium/createFacilityBoundary";
 import { createFacilityBuilding } from "../../cesium/createFacilityBuilding";
 import { createDisasterFloodLayer } from "../../cesium/createDisasterFloodLayer";
@@ -280,7 +281,9 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     );
     resourceEntities.forEach((entity) => this.urbanEntities.add(entity));
     routeEntities.forEach((entity) => this.urbanEntities.add(entity));
-    void this.loadOptionalUrbanOsmBuildings(loadVersion, viewer);
+    if (isUrbanOsmBuildingsEnabled()) {
+      void this.loadOptionalUrbanOsmBuildings(loadVersion, viewer);
+    }
 
     await Promise.all([
       this.loadUrbanFloodZones(loadVersion, viewer, scenario),
