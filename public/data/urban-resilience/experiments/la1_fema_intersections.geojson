@@ -1,0 +1,5990 @@
+{
+  "type": "FeatureCollection",
+  "name": "Experimental original OSM LA-1 ways with FEMA NFHL relationships",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-12660190",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 12660190,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.0826391,
+            29.1901931
+          ],
+          [
+            -90.0817911,
+            29.190352
+          ],
+          [
+            -90.081584,
+            29.1903908
+          ],
+          [
+            -90.0814118,
+            29.1904298
+          ],
+          [
+            -90.0812531,
+            29.1904695
+          ],
+          [
+            -90.0810772,
+            29.1905301
+          ],
+          [
+            -90.080909,
+            29.190597
+          ],
+          [
+            -90.0806527,
+            29.190719
+          ],
+          [
+            -90.0804301,
+            29.1908454
+          ],
+          [
+            -90.0800934,
+            29.1910717
+          ],
+          [
+            -90.079483,
+            29.191562
+          ],
+          [
+            -90.0790951,
+            29.1918766
+          ],
+          [
+            -90.0787765,
+            29.1921181
+          ],
+          [
+            -90.0784678,
+            29.1923369
+          ],
+          [
+            -90.0778565,
+            29.1927589
+          ],
+          [
+            -90.0772372,
+            29.1931762
+          ],
+          [
+            -90.0765881,
+            29.1936116
+          ],
+          [
+            -90.0759677,
+            29.1940188
+          ],
+          [
+            -90.075698,
+            29.194198
+          ],
+          [
+            -90.075547,
+            29.1943012
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-12666265",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 12666265,
+        "name": "South Bayou Drive",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.2589578,
+            29.3693436
+          ],
+          [
+            -90.259031,
+            29.369542
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-12666560",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 12666560,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.0826391,
+            29.1901931
+          ],
+          [
+            -90.0833766,
+            29.1900654
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-12666943",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 12666943,
+        "name": "West Main Street",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3803039,
+            29.5700339
+          ],
+          [
+            -90.3806861,
+            29.5702014
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-12669902",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 12669902,
+        "name": "South Bayou Drive",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.259031,
+            29.369542
+          ],
+          [
+            -90.2591948,
+            29.3700656
+          ],
+          [
+            -90.2592279,
+            29.3701715
+          ],
+          [
+            -90.2592915,
+            29.3704101
+          ],
+          [
+            -90.2593034,
+            29.3704432
+          ],
+          [
+            -90.2593282,
+            29.3706156
+          ],
+          [
+            -90.2594146,
+            29.3711425
+          ],
+          [
+            -90.2594741,
+            29.371653
+          ],
+          [
+            -90.2596092,
+            29.3727031
+          ],
+          [
+            -90.2596163,
+            29.3732429
+          ],
+          [
+            -90.2595777,
+            29.3737984
+          ],
+          [
+            -90.2595723,
+            29.3738962
+          ],
+          [
+            -90.2595216,
+            29.3745492
+          ],
+          [
+            -90.2594862,
+            29.375008
+          ],
+          [
+            -90.25948,
+            29.3751032
+          ],
+          [
+            -90.2594728,
+            29.3752336
+          ],
+          [
+            -90.2594646,
+            29.3754923
+          ],
+          [
+            -90.2594972,
+            29.3759589
+          ],
+          [
+            -90.2595243,
+            29.3761561
+          ],
+          [
+            -90.2595592,
+            29.37631
+          ],
+          [
+            -90.2596268,
+            29.3766503
+          ],
+          [
+            -90.2596337,
+            29.3766923
+          ],
+          [
+            -90.259681,
+            29.376888
+          ],
+          [
+            -90.2597535,
+            29.3773065
+          ],
+          [
+            -90.259833,
+            29.377778
+          ],
+          [
+            -90.2599597,
+            29.3788319
+          ],
+          [
+            -90.2601093,
+            29.3804016
+          ],
+          [
+            -90.2600701,
+            29.3806623
+          ],
+          [
+            -90.2597772,
+            29.3810684
+          ],
+          [
+            -90.259696,
+            29.3812314
+          ],
+          [
+            -90.2596362,
+            29.3814184
+          ],
+          [
+            -90.2596546,
+            29.3816201
+          ],
+          [
+            -90.2597051,
+            29.3819152
+          ],
+          [
+            -90.2599329,
+            29.3827917
+          ],
+          [
+            -90.2600624,
+            29.3831978
+          ],
+          [
+            -90.2602265,
+            29.3836454
+          ],
+          [
+            -90.2603137,
+            29.3838653
+          ],
+          [
+            -90.2603889,
+            29.3840243
+          ],
+          [
+            -90.2606418,
+            29.3845493
+          ],
+          [
+            -90.2608999,
+            29.3850228
+          ],
+          [
+            -90.2610438,
+            29.3852229
+          ],
+          [
+            -90.2614174,
+            29.3856568
+          ],
+          [
+            -90.2615537,
+            29.3858165
+          ],
+          [
+            -90.2618739,
+            29.386187
+          ],
+          [
+            -90.2622175,
+            29.3866064
+          ],
+          [
+            -90.2625007,
+            29.386948
+          ],
+          [
+            -90.2627478,
+            29.3872176
+          ],
+          [
+            -90.26316,
+            29.387647
+          ],
+          [
+            -90.2634296,
+            29.3879302
+          ],
+          [
+            -90.2637074,
+            29.3882254
+          ],
+          [
+            -90.2640838,
+            29.3885584
+          ],
+          [
+            -90.2647856,
+            29.3892215
+          ],
+          [
+            -90.2650164,
+            29.3894551
+          ],
+          [
+            -90.2650422,
+            29.3894811
+          ],
+          [
+            -90.2651476,
+            29.3895874
+          ],
+          [
+            -90.2653945,
+            29.3898572
+          ],
+          [
+            -90.2656459,
+            29.390108
+          ],
+          [
+            -90.2659593,
+            29.3904615
+          ],
+          [
+            -90.2661385,
+            29.3906336
+          ],
+          [
+            -90.2666698,
+            29.3911111
+          ],
+          [
+            -90.2669867,
+            29.3913815
+          ],
+          [
+            -90.2672565,
+            29.391593
+          ],
+          [
+            -90.2674059,
+            29.3917169
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-12670166",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 12670166,
+        "name": "South Bayou Drive",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.2674059,
+            29.3917169
+          ],
+          [
+            -90.2675566,
+            29.3918396
+          ],
+          [
+            -90.2677012,
+            29.3919822
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-12670476",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 12670476,
+        "name": "North Bayou Drive",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.2677012,
+            29.3919822
+          ],
+          [
+            -90.2681768,
+            29.3923477
+          ],
+          [
+            -90.2687026,
+            29.392812
+          ],
+          [
+            -90.2688315,
+            29.3929223
+          ],
+          [
+            -90.2690455,
+            29.3931008
+          ],
+          [
+            -90.2692131,
+            29.393267
+          ],
+          [
+            -90.2692384,
+            29.393291
+          ],
+          [
+            -90.2693054,
+            29.3933546
+          ],
+          [
+            -90.2694408,
+            29.3934819
+          ],
+          [
+            -90.2694663,
+            29.3935058
+          ],
+          [
+            -90.269627,
+            29.3936528
+          ],
+          [
+            -90.2698169,
+            29.3938479
+          ],
+          [
+            -90.2698834,
+            29.3939162
+          ],
+          [
+            -90.2701004,
+            29.3941275
+          ],
+          [
+            -90.2702484,
+            29.3942791
+          ],
+          [
+            -90.2703659,
+            29.3943897
+          ],
+          [
+            -90.2704354,
+            29.3944656
+          ],
+          [
+            -90.2705258,
+            29.394557
+          ],
+          [
+            -90.2706315,
+            29.3946612
+          ],
+          [
+            -90.2707838,
+            29.3948613
+          ],
+          [
+            -90.2708056,
+            29.39489
+          ],
+          [
+            -90.2710086,
+            29.3951562
+          ],
+          [
+            -90.2711001,
+            29.3952868
+          ],
+          [
+            -90.2712672,
+            29.3954919
+          ],
+          [
+            -90.271548,
+            29.3958694
+          ],
+          [
+            -90.2718365,
+            29.3962511
+          ],
+          [
+            -90.271963,
+            29.3964185
+          ],
+          [
+            -90.2720821,
+            29.3965919
+          ],
+          [
+            -90.272162,
+            29.3967094
+          ],
+          [
+            -90.2723388,
+            29.3970587
+          ],
+          [
+            -90.2724502,
+            29.3972768
+          ],
+          [
+            -90.2727178,
+            29.3979817
+          ],
+          [
+            -90.2727408,
+            29.3980634
+          ],
+          [
+            -90.2727994,
+            29.3982202
+          ],
+          [
+            -90.272889,
+            29.3984785
+          ],
+          [
+            -90.2729865,
+            29.3987185
+          ],
+          [
+            -90.2730682,
+            29.3989644
+          ],
+          [
+            -90.2731093,
+            29.399102
+          ],
+          [
+            -90.2732091,
+            29.3994196
+          ],
+          [
+            -90.2732894,
+            29.3998598
+          ],
+          [
+            -90.2733284,
+            29.4001412
+          ],
+          [
+            -90.2733934,
+            29.4009289
+          ],
+          [
+            -90.2734432,
+            29.4014595
+          ],
+          [
+            -90.2734781,
+            29.4023168
+          ],
+          [
+            -90.2735124,
+            29.4029319
+          ],
+          [
+            -90.2735536,
+            29.4034725
+          ],
+          [
+            -90.2735817,
+            29.4038855
+          ],
+          [
+            -90.2736173,
+            29.4044168
+          ],
+          [
+            -90.2736514,
+            29.4047594
+          ],
+          [
+            -90.2736718,
+            29.4051488
+          ],
+          [
+            -90.2736866,
+            29.4053864
+          ],
+          [
+            -90.2737183,
+            29.4058117
+          ],
+          [
+            -90.2737501,
+            29.4061008
+          ],
+          [
+            -90.2737691,
+            29.4061689
+          ],
+          [
+            -90.2738261,
+            29.406528
+          ],
+          [
+            -90.2739213,
+            29.4068888
+          ],
+          [
+            -90.2740137,
+            29.4071372
+          ],
+          [
+            -90.2741758,
+            29.4075151
+          ],
+          [
+            -90.2742833,
+            29.40775
+          ],
+          [
+            -90.2744157,
+            29.4080104
+          ],
+          [
+            -90.2745207,
+            29.4082377
+          ],
+          [
+            -90.2746757,
+            29.4085149
+          ],
+          [
+            -90.2747923,
+            29.4087111
+          ],
+          [
+            -90.2749558,
+            29.408955
+          ],
+          [
+            -90.2751059,
+            29.4091745
+          ],
+          [
+            -90.275303,
+            29.4094272
+          ],
+          [
+            -90.2755335,
+            29.4097385
+          ],
+          [
+            -90.2758511,
+            29.4101324
+          ],
+          [
+            -90.2760214,
+            29.4103027
+          ],
+          [
+            -90.2761732,
+            29.4104471
+          ],
+          [
+            -90.2763333,
+            29.4105923
+          ],
+          [
+            -90.2764308,
+            29.4106734
+          ],
+          [
+            -90.276446,
+            29.41068
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-75777157",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 75777157,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3884295,
+            29.5701892
+          ],
+          [
+            -90.3890929,
+            29.5704462
+          ],
+          [
+            -90.3894612,
+            29.5706337
+          ],
+          [
+            -90.3896461,
+            29.5707774
+          ],
+          [
+            -90.3897418,
+            29.5709041
+          ],
+          [
+            -90.3897982,
+            29.5710151
+          ],
+          [
+            -90.3898269,
+            29.5711218
+          ],
+          [
+            -90.3898375,
+            29.571225
+          ],
+          [
+            -90.3898269,
+            29.5713196
+          ],
+          [
+            -90.3898008,
+            29.5714555
+          ],
+          [
+            -90.3896276,
+            29.5719921
+          ],
+          [
+            -90.3892391,
+            29.5731844
+          ],
+          [
+            -90.3892081,
+            29.5732984
+          ],
+          [
+            -90.3891967,
+            29.5734087
+          ],
+          [
+            -90.3892125,
+            29.5735255
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-89763083",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 89763083,
+        "name": "South Bayou Drive",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.2576349,
+            29.3669683
+          ],
+          [
+            -90.2576544,
+            29.3670466
+          ],
+          [
+            -90.2578624,
+            29.3673611
+          ],
+          [
+            -90.2583353,
+            29.3680297
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-89763090",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 89763090,
+        "name": "West Main Street",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3404857,
+            29.546067
+          ],
+          [
+            -90.3407632,
+            29.546277
+          ],
+          [
+            -90.341697,
+            29.5469636
+          ],
+          [
+            -90.3419916,
+            29.547169
+          ],
+          [
+            -90.3421429,
+            29.5472718
+          ],
+          [
+            -90.3434913,
+            29.548211
+          ],
+          [
+            -90.3435999,
+            29.5482867
+          ],
+          [
+            -90.3436477,
+            29.54832
+          ],
+          [
+            -90.3437357,
+            29.5483813
+          ],
+          [
+            -90.3438752,
+            29.5484785
+          ],
+          [
+            -90.3441236,
+            29.5486515
+          ],
+          [
+            -90.3441548,
+            29.5486732
+          ],
+          [
+            -90.3451333,
+            29.5494015
+          ],
+          [
+            -90.3473658,
+            29.5510836
+          ],
+          [
+            -90.3474564,
+            29.55115
+          ],
+          [
+            -90.3478533,
+            29.5514326
+          ],
+          [
+            -90.3495663,
+            29.5527059
+          ],
+          [
+            -90.350406,
+            29.5534225
+          ],
+          [
+            -90.350892,
+            29.5538861
+          ],
+          [
+            -90.3510945,
+            29.5540909
+          ],
+          [
+            -90.3514174,
+            29.5544388
+          ],
+          [
+            -90.3516588,
+            29.5547041
+          ],
+          [
+            -90.3517446,
+            29.5547962
+          ],
+          [
+            -90.3520609,
+            29.5551747
+          ],
+          [
+            -90.3522071,
+            29.5553603
+          ],
+          [
+            -90.3526804,
+            29.5559581
+          ],
+          [
+            -90.3530143,
+            29.5564217
+          ],
+          [
+            -90.3533374,
+            29.5568172
+          ],
+          [
+            -90.3536161,
+            29.5571911
+          ],
+          [
+            -90.3542442,
+            29.5579545
+          ],
+          [
+            -90.3545607,
+            29.5583432
+          ],
+          [
+            -90.3548873,
+            29.5586865
+          ],
+          [
+            -90.3554477,
+            29.5592687
+          ],
+          [
+            -90.3556896,
+            29.5594925
+          ],
+          [
+            -90.3559012,
+            29.5596883
+          ],
+          [
+            -90.356241,
+            29.5599696
+          ],
+          [
+            -90.3569065,
+            29.5604555
+          ],
+          [
+            -90.3571017,
+            29.5605897
+          ],
+          [
+            -90.3574616,
+            29.5608282
+          ],
+          [
+            -90.3580469,
+            29.5612144
+          ],
+          [
+            -90.3585356,
+            29.5615446
+          ],
+          [
+            -90.3589902,
+            29.5618048
+          ],
+          [
+            -90.3597117,
+            29.5621515
+          ],
+          [
+            -90.3599846,
+            29.562279
+          ],
+          [
+            -90.361158,
+            29.5628348
+          ],
+          [
+            -90.3618782,
+            29.5631751
+          ],
+          [
+            -90.3624383,
+            29.5634328
+          ],
+          [
+            -90.362791,
+            29.5636014
+          ],
+          [
+            -90.3632434,
+            29.5638122
+          ],
+          [
+            -90.3635302,
+            29.5639389
+          ],
+          [
+            -90.3637469,
+            29.5640347
+          ],
+          [
+            -90.3645951,
+            29.5643673
+          ],
+          [
+            -90.3650959,
+            29.564571
+          ],
+          [
+            -90.3653208,
+            29.5646641
+          ],
+          [
+            -90.3656991,
+            29.5648076
+          ],
+          [
+            -90.3662322,
+            29.565016
+          ],
+          [
+            -90.3665742,
+            29.5651589
+          ],
+          [
+            -90.3670077,
+            29.5653241
+          ],
+          [
+            -90.3671962,
+            29.5654024
+          ],
+          [
+            -90.3678734,
+            29.5656895
+          ],
+          [
+            -90.3683972,
+            29.5659163
+          ],
+          [
+            -90.3693207,
+            29.5663393
+          ],
+          [
+            -90.3705539,
+            29.566892
+          ],
+          [
+            -90.3725939,
+            29.5675083
+          ],
+          [
+            -90.3731823,
+            29.5676789
+          ],
+          [
+            -90.3745484,
+            29.5681249
+          ],
+          [
+            -90.3749483,
+            29.5682491
+          ],
+          [
+            -90.3755461,
+            29.5684313
+          ],
+          [
+            -90.3760564,
+            29.5685869
+          ],
+          [
+            -90.3763724,
+            29.5686739
+          ],
+          [
+            -90.3767093,
+            29.5687789
+          ],
+          [
+            -90.3775234,
+            29.5690244
+          ],
+          [
+            -90.3776191,
+            29.5690526
+          ],
+          [
+            -90.3783666,
+            29.5692916
+          ],
+          [
+            -90.3789536,
+            29.5694848
+          ],
+          [
+            -90.3792713,
+            29.569603
+          ],
+          [
+            -90.3794638,
+            29.5696815
+          ],
+          [
+            -90.3796873,
+            29.569767
+          ],
+          [
+            -90.3801505,
+            29.5699684
+          ],
+          [
+            -90.3803039,
+            29.5700339
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-129827442",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 129827442,
+        "name": "Gateway to the Gulf Expressway",
+        "ref": "LA 1",
+        "highway_type": "primary",
+        "study_areas": [
+          "Port Fourchon query window"
+        ],
+        "fema_source_queries": [
+          "Port Fourchon query window"
+        ],
+        "fema_coverage_status": "unavailable",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "FEMA NFHL features were not available from the current study-area query.",
+        "interpretation": "FEMA relationship: Unknown. FEMA NFHL features were not available from the current study-area query. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.1783671,
+            29.1581724
+          ],
+          [
+            -90.1784079,
+            29.1579954
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-141166069",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 141166069,
+        "name": "South Bayou Drive",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.2583353,
+            29.3680297
+          ],
+          [
+            -90.2584605,
+            29.3682422
+          ],
+          [
+            -90.2587314,
+            29.3687842
+          ],
+          [
+            -90.2589578,
+            29.3693436
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-141166070",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 141166070,
+        "name": "South Bayou Drive",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.2583353,
+            29.3680297
+          ],
+          [
+            -90.2583599,
+            29.3679185
+          ],
+          [
+            -90.2583894,
+            29.367857
+          ],
+          [
+            -90.2584146,
+            29.3678211
+          ],
+          [
+            -90.2585117,
+            29.3677285
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-146018595",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 146018595,
+        "name": "LA Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [],
+        "fema_source_queries": [
+          "Grand Isle query window"
+        ],
+        "fema_coverage_status": "partial",
+        "intersects_mapped_flood_hazard": true,
+        "fema_zones": [
+          "VE"
+        ],
+        "fema_relationship_reason": "The road centerline intersects mapped FEMA zone(s): VE in polygon geometry returned by Grand Isle query window. The complete OSM way is not contained within that query window, so FEMA coverage is partial.",
+        "interpretation": "This indicates intersection with mapped FEMA flood-hazard information. It does not indicate current flooding, closure, passability, or safe travel conditions.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.0395069,
+            29.2044548
+          ],
+          [
+            -90.0392828,
+            29.2043703
+          ],
+          [
+            -90.0391387,
+            29.2043364
+          ],
+          [
+            -90.0389938,
+            29.2043024
+          ],
+          [
+            -90.0387904,
+            29.2042822
+          ],
+          [
+            -90.0386089,
+            29.2042795
+          ],
+          [
+            -90.038415,
+            29.204301
+          ],
+          [
+            -90.0382064,
+            29.2043389
+          ],
+          [
+            -90.037979,
+            29.2044083
+          ],
+          [
+            -90.0377537,
+            29.2045089
+          ],
+          [
+            -90.0375137,
+            29.2046542
+          ],
+          [
+            -90.0374583,
+            29.204705
+          ],
+          [
+            -90.0371698,
+            29.2049699
+          ],
+          [
+            -90.0369292,
+            29.2051956
+          ],
+          [
+            -90.0359757,
+            29.2060664
+          ],
+          [
+            -90.0350903,
+            29.206879
+          ],
+          [
+            -90.0344393,
+            29.2074988
+          ],
+          [
+            -90.0342861,
+            29.2076436
+          ],
+          [
+            -90.0339526,
+            29.2079403
+          ],
+          [
+            -90.0338741,
+            29.2080136
+          ],
+          [
+            -90.0335058,
+            29.2083703
+          ],
+          [
+            -90.0334572,
+            29.2084172
+          ],
+          [
+            -90.0331197,
+            29.208716
+          ],
+          [
+            -90.032937,
+            29.2088839
+          ],
+          [
+            -90.0324339,
+            29.2093379
+          ],
+          [
+            -90.032031,
+            29.2096937
+          ],
+          [
+            -90.0319185,
+            29.2097863
+          ],
+          [
+            -90.0317095,
+            29.2099528
+          ],
+          [
+            -90.0312117,
+            29.2103483
+          ],
+          [
+            -90.0307729,
+            29.2106638
+          ],
+          [
+            -90.0305383,
+            29.2108413
+          ],
+          [
+            -90.0302479,
+            29.2110461
+          ],
+          [
+            -90.0298482,
+            29.2113357
+          ],
+          [
+            -90.029188,
+            29.211804
+          ],
+          [
+            -90.0286532,
+            29.2121906
+          ],
+          [
+            -90.0283883,
+            29.2123828
+          ],
+          [
+            -90.028275,
+            29.2124747
+          ],
+          [
+            -90.0278968,
+            29.2127491
+          ],
+          [
+            -90.0275586,
+            29.2129928
+          ],
+          [
+            -90.027236,
+            29.213233
+          ],
+          [
+            -90.0270159,
+            29.2133973
+          ],
+          [
+            -90.0266428,
+            29.2136604
+          ],
+          [
+            -90.0260318,
+            29.2141107
+          ],
+          [
+            -90.0249159,
+            29.2149037
+          ],
+          [
+            -90.0246708,
+            29.2150737
+          ],
+          [
+            -90.0238832,
+            29.2156497
+          ],
+          [
+            -90.0230786,
+            29.2162251
+          ],
+          [
+            -90.0224679,
+            29.2166858
+          ],
+          [
+            -90.022178,
+            29.21688
+          ],
+          [
+            -90.0219923,
+            29.2170109
+          ],
+          [
+            -90.0214907,
+            29.2173288
+          ],
+          [
+            -90.0209947,
+            29.2176402
+          ],
+          [
+            -90.0204867,
+            29.217964
+          ],
+          [
+            -90.0199675,
+            29.2182733
+          ],
+          [
+            -90.0194567,
+            29.2185846
+          ],
+          [
+            -90.0189564,
+            29.2188972
+          ],
+          [
+            -90.018745,
+            29.219026
+          ],
+          [
+            -90.018653,
+            29.219087
+          ],
+          [
+            -90.0184684,
+            29.2191954
+          ],
+          [
+            -90.0177027,
+            29.2196691
+          ],
+          [
+            -90.0162406,
+            29.2205041
+          ],
+          [
+            -90.0154491,
+            29.2209587
+          ],
+          [
+            -90.0147958,
+            29.2213279
+          ],
+          [
+            -90.0143013,
+            29.2216294
+          ],
+          [
+            -90.0135302,
+            29.2220703
+          ],
+          [
+            -90.0125871,
+            29.2226006
+          ],
+          [
+            -90.0121943,
+            29.2228473
+          ],
+          [
+            -90.0118256,
+            29.2230422
+          ],
+          [
+            -90.010795,
+            29.223632
+          ],
+          [
+            -90.0104918,
+            29.2238024
+          ],
+          [
+            -90.0096908,
+            29.2242653
+          ],
+          [
+            -90.0088941,
+            29.2247383
+          ],
+          [
+            -90.0079641,
+            29.2252689
+          ],
+          [
+            -90.0079303,
+            29.2252882
+          ],
+          [
+            -90.0076918,
+            29.2254242
+          ],
+          [
+            -90.0070277,
+            29.2257998
+          ],
+          [
+            -90.00605,
+            29.226354
+          ],
+          [
+            -90.0051108,
+            29.2268764
+          ],
+          [
+            -90.0043022,
+            29.2273621
+          ],
+          [
+            -90.0035008,
+            29.2278139
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-146018613",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 146018613,
+        "name": "LA Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [],
+        "fema_source_queries": [
+          "Grand Isle query window"
+        ],
+        "fema_coverage_status": "partial",
+        "intersects_mapped_flood_hazard": true,
+        "fema_zones": [
+          "VE"
+        ],
+        "fema_relationship_reason": "The road centerline intersects mapped FEMA zone(s): VE in polygon geometry returned by Grand Isle query window. The complete OSM way is not contained within that query window, so FEMA coverage is partial.",
+        "interpretation": "This indicates intersection with mapped FEMA flood-hazard information. It does not indicate current flooding, closure, passability, or safe travel conditions.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.0497445,
+            29.2107324
+          ],
+          [
+            -90.0495116,
+            29.210614
+          ],
+          [
+            -90.0492848,
+            29.2104738
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-164519825",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 164519825,
+        "name": "West 5th Street",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3806861,
+            29.5702014
+          ],
+          [
+            -90.3808882,
+            29.5697916
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-323705369",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 323705369,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.0833766,
+            29.1900654
+          ],
+          [
+            -90.0844236,
+            29.1898848
+          ],
+          [
+            -90.0849463,
+            29.1897884
+          ],
+          [
+            -90.0853602,
+            29.1897055
+          ],
+          [
+            -90.0857009,
+            29.1896199
+          ],
+          [
+            -90.0859513,
+            29.1895385
+          ],
+          [
+            -90.0862936,
+            29.1893836
+          ],
+          [
+            -90.0865036,
+            29.1892818
+          ],
+          [
+            -90.0868381,
+            29.189074
+          ],
+          [
+            -90.0873204,
+            29.1887751
+          ],
+          [
+            -90.0875584,
+            29.1886149
+          ],
+          [
+            -90.0878385,
+            29.188441
+          ],
+          [
+            -90.0880983,
+            29.188274
+          ],
+          [
+            -90.0883659,
+            29.1881151
+          ],
+          [
+            -90.088691,
+            29.1879005
+          ],
+          [
+            -90.0890909,
+            29.1876628
+          ],
+          [
+            -90.0894487,
+            29.1874971
+          ],
+          [
+            -90.0897132,
+            29.1873993
+          ],
+          [
+            -90.0900601,
+            29.1873178
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-323705370",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 323705370,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.075547,
+            29.1943012
+          ],
+          [
+            -90.07518,
+            29.19453
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-323705371",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 323705371,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.0900601,
+            29.1873178
+          ],
+          [
+            -90.0910138,
+            29.187186
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-323705372",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 323705372,
+        "name": "LA Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [],
+        "fema_source_queries": [
+          "Grand Isle query window"
+        ],
+        "fema_coverage_status": "partial",
+        "intersects_mapped_flood_hazard": true,
+        "fema_zones": [
+          "VE"
+        ],
+        "fema_relationship_reason": "The road centerline intersects mapped FEMA zone(s): VE in polygon geometry returned by Grand Isle query window. The complete OSM way is not contained within that query window, so FEMA coverage is partial.",
+        "interpretation": "This indicates intersection with mapped FEMA flood-hazard information. It does not indicate current flooding, closure, passability, or safe travel conditions.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.0586865,
+            29.205194
+          ],
+          [
+            -90.057991,
+            29.205572
+          ],
+          [
+            -90.0573813,
+            29.2059271
+          ],
+          [
+            -90.056777,
+            29.206272
+          ],
+          [
+            -90.056289,
+            29.206602
+          ],
+          [
+            -90.055999,
+            29.206857
+          ],
+          [
+            -90.0558938,
+            29.2069731
+          ],
+          [
+            -90.055709,
+            29.207187
+          ],
+          [
+            -90.0555076,
+            29.2074398
+          ],
+          [
+            -90.054901,
+            29.208181
+          ],
+          [
+            -90.0545136,
+            29.2086442
+          ],
+          [
+            -90.0541992,
+            29.2090245
+          ],
+          [
+            -90.0539007,
+            29.209376
+          ],
+          [
+            -90.0532884,
+            29.2101112
+          ],
+          [
+            -90.053089,
+            29.2103266
+          ],
+          [
+            -90.0529389,
+            29.2104676
+          ],
+          [
+            -90.0527617,
+            29.2106087
+          ],
+          [
+            -90.0525714,
+            29.2107247
+          ],
+          [
+            -90.0523487,
+            29.2108311
+          ],
+          [
+            -90.0521126,
+            29.2109207
+          ],
+          [
+            -90.0518635,
+            29.2109819
+          ],
+          [
+            -90.0516339,
+            29.2110161
+          ],
+          [
+            -90.051445,
+            29.21103
+          ],
+          [
+            -90.0513496,
+            29.2110293
+          ],
+          [
+            -90.0510494,
+            29.211027
+          ],
+          [
+            -90.0507687,
+            29.2110071
+          ],
+          [
+            -90.050529,
+            29.210964
+          ],
+          [
+            -90.0502783,
+            29.2109151
+          ],
+          [
+            -90.0500093,
+            29.2108357
+          ],
+          [
+            -90.0497445,
+            29.2107324
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-323705373",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 323705373,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [
+          "Port Fourchon query window"
+        ],
+        "fema_source_queries": [
+          "Port Fourchon query window"
+        ],
+        "fema_coverage_status": "unavailable",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "FEMA NFHL features were not available from the current study-area query.",
+        "interpretation": "FEMA relationship: Unknown. FEMA NFHL features were not available from the current study-area query. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.0910138,
+            29.187186
+          ],
+          [
+            -90.0918808,
+            29.1870639
+          ],
+          [
+            -90.0923769,
+            29.1869832
+          ],
+          [
+            -90.0927069,
+            29.1869073
+          ],
+          [
+            -90.0930325,
+            29.1867892
+          ],
+          [
+            -90.0933593,
+            29.1866355
+          ],
+          [
+            -90.0936684,
+            29.186453
+          ],
+          [
+            -90.094222,
+            29.186068
+          ],
+          [
+            -90.0974163,
+            29.1840555
+          ],
+          [
+            -90.0998152,
+            29.1826321
+          ],
+          [
+            -90.1003318,
+            29.182355
+          ],
+          [
+            -90.1008834,
+            29.1820785
+          ],
+          [
+            -90.1012991,
+            29.181915
+          ],
+          [
+            -90.1017116,
+            29.1817904
+          ],
+          [
+            -90.1022304,
+            29.1816823
+          ],
+          [
+            -90.1028159,
+            29.1816006
+          ],
+          [
+            -90.1037885,
+            29.181469
+          ],
+          [
+            -90.1042994,
+            29.1813762
+          ],
+          [
+            -90.1048055,
+            29.1812557
+          ],
+          [
+            -90.1058813,
+            29.1809841
+          ],
+          [
+            -90.1065968,
+            29.1808428
+          ],
+          [
+            -90.1121332,
+            29.1797959
+          ],
+          [
+            -90.1138229,
+            29.1794725
+          ],
+          [
+            -90.1158285,
+            29.1790535
+          ],
+          [
+            -90.1181621,
+            29.1785352
+          ],
+          [
+            -90.1255712,
+            29.1766808
+          ],
+          [
+            -90.1281261,
+            29.1760602
+          ],
+          [
+            -90.1313251,
+            29.1752566
+          ],
+          [
+            -90.1347817,
+            29.1743619
+          ],
+          [
+            -90.1361534,
+            29.1739663
+          ],
+          [
+            -90.1422224,
+            29.1721133
+          ],
+          [
+            -90.1499037,
+            29.1697411
+          ],
+          [
+            -90.1527936,
+            29.1688551
+          ],
+          [
+            -90.1536527,
+            29.1685523
+          ],
+          [
+            -90.1546015,
+            29.1681905
+          ],
+          [
+            -90.159085,
+            29.1663719
+          ],
+          [
+            -90.1635703,
+            29.164542
+          ],
+          [
+            -90.1646616,
+            29.164051
+          ],
+          [
+            -90.1738389,
+            29.1596344
+          ],
+          [
+            -90.1760314,
+            29.1585737
+          ],
+          [
+            -90.1766768,
+            29.1582626
+          ],
+          [
+            -90.1768681,
+            29.1581805
+          ],
+          [
+            -90.177028,
+            29.1581211
+          ],
+          [
+            -90.1771841,
+            29.1580685
+          ],
+          [
+            -90.1773669,
+            29.1580198
+          ],
+          [
+            -90.1775283,
+            29.1579895
+          ],
+          [
+            -90.1776833,
+            29.1579705
+          ],
+          [
+            -90.1778733,
+            29.1579607
+          ],
+          [
+            -90.1780526,
+            29.1579609
+          ],
+          [
+            -90.1781994,
+            29.1579711
+          ],
+          [
+            -90.1784079,
+            29.1579954
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-325455586",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 325455586,
+        "name": "Gateway to the Gulf Expressway",
+        "ref": "LA 1",
+        "highway_type": "primary",
+        "study_areas": [
+          "Port Fourchon query window"
+        ],
+        "fema_source_queries": [
+          "Port Fourchon query window"
+        ],
+        "fema_coverage_status": "unavailable",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "FEMA NFHL features were not available from the current study-area query.",
+        "interpretation": "FEMA relationship: Unknown. FEMA NFHL features were not available from the current study-area query. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.177675,
+            29.1613298
+          ],
+          [
+            -90.1778352,
+            29.1605675
+          ],
+          [
+            -90.1783671,
+            29.1581724
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-325856244",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 325856244,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "primary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.242173,
+            29.3329208
+          ],
+          [
+            -90.2422363,
+            29.333144
+          ],
+          [
+            -90.2423347,
+            29.3334026
+          ],
+          [
+            -90.2424235,
+            29.3336251
+          ],
+          [
+            -90.2432391,
+            29.3355767
+          ],
+          [
+            -90.2434791,
+            29.3361198
+          ],
+          [
+            -90.2449272,
+            29.338935
+          ],
+          [
+            -90.2461943,
+            29.3413984
+          ],
+          [
+            -90.2462986,
+            29.3415804
+          ],
+          [
+            -90.2463598,
+            29.3416807
+          ],
+          [
+            -90.2463992,
+            29.3417441
+          ],
+          [
+            -90.2465367,
+            29.3419653
+          ],
+          [
+            -90.2466681,
+            29.3420747
+          ],
+          [
+            -90.2467646,
+            29.3421964
+          ],
+          [
+            -90.246881,
+            29.3423567
+          ],
+          [
+            -90.2469852,
+            29.3425554
+          ],
+          [
+            -90.2470997,
+            29.3429808
+          ],
+          [
+            -90.2470877,
+            29.3436218
+          ],
+          [
+            -90.2471761,
+            29.3442079
+          ],
+          [
+            -90.2472305,
+            29.3444494
+          ],
+          [
+            -90.2475905,
+            29.3460491
+          ],
+          [
+            -90.2480331,
+            29.348016
+          ],
+          [
+            -90.2482388,
+            29.34893
+          ],
+          [
+            -90.2484356,
+            29.3498044
+          ],
+          [
+            -90.2486341,
+            29.3506942
+          ],
+          [
+            -90.2487181,
+            29.3510708
+          ],
+          [
+            -90.2487821,
+            29.3513576
+          ],
+          [
+            -90.248832,
+            29.3515698
+          ],
+          [
+            -90.248886,
+            29.3517553
+          ],
+          [
+            -90.248945,
+            29.3519246
+          ],
+          [
+            -90.2490179,
+            29.3521201
+          ],
+          [
+            -90.2491154,
+            29.3523521
+          ],
+          [
+            -90.2492047,
+            29.3525484
+          ],
+          [
+            -90.2503604,
+            29.3548906
+          ],
+          [
+            -90.2505757,
+            29.355327
+          ],
+          [
+            -90.2516916,
+            29.3575978
+          ],
+          [
+            -90.2526941,
+            29.359617
+          ],
+          [
+            -90.2528046,
+            29.3598395
+          ],
+          [
+            -90.2529797,
+            29.3601845
+          ],
+          [
+            -90.2531348,
+            29.3604591
+          ],
+          [
+            -90.2532884,
+            29.3607201
+          ],
+          [
+            -90.2534611,
+            29.3609764
+          ],
+          [
+            -90.2535968,
+            29.3611745
+          ],
+          [
+            -90.2536698,
+            29.3612811
+          ],
+          [
+            -90.2548794,
+            29.3629954
+          ],
+          [
+            -90.2556726,
+            29.3641229
+          ],
+          [
+            -90.2561195,
+            29.3647758
+          ],
+          [
+            -90.2562817,
+            29.3650143
+          ],
+          [
+            -90.2568185,
+            29.3657959
+          ],
+          [
+            -90.2573047,
+            29.3665033
+          ],
+          [
+            -90.2574221,
+            29.3666656
+          ],
+          [
+            -90.2575441,
+            29.3668261
+          ],
+          [
+            -90.2576349,
+            29.3669683
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-325921285",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 325921285,
+        "name": "West Main Street",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.276446,
+            29.41068
+          ],
+          [
+            -90.2766401,
+            29.4108433
+          ],
+          [
+            -90.2767847,
+            29.4109454
+          ],
+          [
+            -90.277155,
+            29.411225
+          ],
+          [
+            -90.2774811,
+            29.4114466
+          ],
+          [
+            -90.2781148,
+            29.4119096
+          ],
+          [
+            -90.2783415,
+            29.4120734
+          ],
+          [
+            -90.2787905,
+            29.4124077
+          ],
+          [
+            -90.2792988,
+            29.412765
+          ],
+          [
+            -90.2796043,
+            29.4129924
+          ],
+          [
+            -90.2799881,
+            29.4132587
+          ],
+          [
+            -90.2801023,
+            29.4133373
+          ],
+          [
+            -90.2805909,
+            29.4136937
+          ],
+          [
+            -90.2811881,
+            29.4141227
+          ],
+          [
+            -90.2814909,
+            29.4143458
+          ],
+          [
+            -90.2821073,
+            29.4148626
+          ],
+          [
+            -90.2823241,
+            29.4150342
+          ],
+          [
+            -90.2825462,
+            29.4152386
+          ],
+          [
+            -90.2828065,
+            29.4154682
+          ],
+          [
+            -90.2831748,
+            29.4158127
+          ],
+          [
+            -90.283275,
+            29.4159152
+          ],
+          [
+            -90.2833528,
+            29.415987
+          ],
+          [
+            -90.2835165,
+            29.4161436
+          ],
+          [
+            -90.283647,
+            29.4162622
+          ],
+          [
+            -90.2839626,
+            29.416554
+          ],
+          [
+            -90.2844972,
+            29.4170664
+          ],
+          [
+            -90.2846589,
+            29.4172221
+          ],
+          [
+            -90.2849088,
+            29.4174628
+          ],
+          [
+            -90.285194,
+            29.4176969
+          ],
+          [
+            -90.2853965,
+            29.4178916
+          ],
+          [
+            -90.2855456,
+            29.4180287
+          ],
+          [
+            -90.285827,
+            29.4183039
+          ],
+          [
+            -90.2867328,
+            29.4191359
+          ],
+          [
+            -90.2870542,
+            29.4194397
+          ],
+          [
+            -90.2873505,
+            29.4197034
+          ],
+          [
+            -90.2877312,
+            29.4200415
+          ],
+          [
+            -90.2882567,
+            29.420522
+          ],
+          [
+            -90.2884674,
+            29.4207108
+          ],
+          [
+            -90.2886883,
+            29.4209225
+          ],
+          [
+            -90.2894569,
+            29.4216247
+          ],
+          [
+            -90.2900202,
+            29.4221334
+          ],
+          [
+            -90.2903935,
+            29.4224686
+          ],
+          [
+            -90.2907953,
+            29.4228401
+          ],
+          [
+            -90.2910958,
+            29.4231132
+          ],
+          [
+            -90.2913549,
+            29.423366
+          ],
+          [
+            -90.2918239,
+            29.4238435
+          ],
+          [
+            -90.291936,
+            29.4239586
+          ],
+          [
+            -90.2922054,
+            29.4242486
+          ],
+          [
+            -90.292353,
+            29.4244073
+          ],
+          [
+            -90.292585,
+            29.4246703
+          ],
+          [
+            -90.292809,
+            29.4249233
+          ],
+          [
+            -90.292971,
+            29.4251073
+          ],
+          [
+            -90.29303,
+            29.4251733
+          ],
+          [
+            -90.293083,
+            29.4252333
+          ],
+          [
+            -90.2937168,
+            29.4261319
+          ],
+          [
+            -90.2939142,
+            29.4264469
+          ],
+          [
+            -90.2944962,
+            29.4272937
+          ],
+          [
+            -90.2948415,
+            29.4278389
+          ],
+          [
+            -90.2949771,
+            29.4280676
+          ],
+          [
+            -90.295137,
+            29.4283643
+          ],
+          [
+            -90.2952661,
+            29.4285975
+          ],
+          [
+            -90.2954219,
+            29.4288756
+          ],
+          [
+            -90.29561,
+            29.4292181
+          ],
+          [
+            -90.2958724,
+            29.4296999
+          ],
+          [
+            -90.2960176,
+            29.4299664
+          ],
+          [
+            -90.2961829,
+            29.4302532
+          ],
+          [
+            -90.2963308,
+            29.4305623
+          ],
+          [
+            -90.2965213,
+            29.4309963
+          ],
+          [
+            -90.2967168,
+            29.4314421
+          ],
+          [
+            -90.2968988,
+            29.4318806
+          ],
+          [
+            -90.2971131,
+            29.432396
+          ],
+          [
+            -90.2972255,
+            29.4326415
+          ],
+          [
+            -90.2973122,
+            29.43284
+          ],
+          [
+            -90.2974295,
+            29.4331243
+          ],
+          [
+            -90.2975107,
+            29.4333164
+          ],
+          [
+            -90.2977172,
+            29.4337856
+          ],
+          [
+            -90.2978455,
+            29.4340758
+          ],
+          [
+            -90.2978974,
+            29.4342029
+          ],
+          [
+            -90.2981871,
+            29.4349127
+          ],
+          [
+            -90.2982971,
+            29.4351919
+          ],
+          [
+            -90.2984738,
+            29.4356116
+          ],
+          [
+            -90.2985742,
+            29.4358418
+          ],
+          [
+            -90.2987616,
+            29.4362846
+          ],
+          [
+            -90.2988992,
+            29.436607
+          ],
+          [
+            -90.2991083,
+            29.4370934
+          ],
+          [
+            -90.299231,
+            29.43738
+          ],
+          [
+            -90.2994958,
+            29.4380465
+          ],
+          [
+            -90.2999245,
+            29.4392509
+          ],
+          [
+            -90.3002946,
+            29.4403329
+          ],
+          [
+            -90.3003497,
+            29.4404972
+          ],
+          [
+            -90.3004209,
+            29.4407017
+          ],
+          [
+            -90.3004957,
+            29.4409218
+          ],
+          [
+            -90.3005828,
+            29.4411821
+          ],
+          [
+            -90.3007661,
+            29.4417307
+          ],
+          [
+            -90.300909,
+            29.4421457
+          ],
+          [
+            -90.3010295,
+            29.4424955
+          ],
+          [
+            -90.3010773,
+            29.4426156
+          ],
+          [
+            -90.3011913,
+            29.4429625
+          ],
+          [
+            -90.3012437,
+            29.4431203
+          ],
+          [
+            -90.3012998,
+            29.4432893
+          ],
+          [
+            -90.3014121,
+            29.4435818
+          ],
+          [
+            -90.3015673,
+            29.4439648
+          ],
+          [
+            -90.3017075,
+            29.4442637
+          ],
+          [
+            -90.3017771,
+            29.4444145
+          ],
+          [
+            -90.3019858,
+            29.4448849
+          ],
+          [
+            -90.3021157,
+            29.4451641
+          ],
+          [
+            -90.3023227,
+            29.4456182
+          ],
+          [
+            -90.3025516,
+            29.4461365
+          ],
+          [
+            -90.3026969,
+            29.4464686
+          ],
+          [
+            -90.3028402,
+            29.4468448
+          ],
+          [
+            -90.302878,
+            29.4469522
+          ],
+          [
+            -90.3029417,
+            29.44711
+          ],
+          [
+            -90.3031189,
+            29.4476074
+          ],
+          [
+            -90.3032124,
+            29.4478536
+          ],
+          [
+            -90.3034135,
+            29.4483874
+          ],
+          [
+            -90.3035393,
+            29.4487295
+          ],
+          [
+            -90.3036573,
+            29.4490346
+          ],
+          [
+            -90.3037619,
+            29.4493329
+          ],
+          [
+            -90.303822,
+            29.4494971
+          ],
+          [
+            -90.3039195,
+            29.4497591
+          ],
+          [
+            -90.3040386,
+            29.4500905
+          ],
+          [
+            -90.3041194,
+            29.4502979
+          ],
+          [
+            -90.3042028,
+            29.4505374
+          ],
+          [
+            -90.3042987,
+            29.4508128
+          ],
+          [
+            -90.3043855,
+            29.4510224
+          ],
+          [
+            -90.3045286,
+            29.4513682
+          ],
+          [
+            -90.3046518,
+            29.451659
+          ],
+          [
+            -90.3047393,
+            29.4518533
+          ],
+          [
+            -90.3048943,
+            29.4521934
+          ],
+          [
+            -90.3050801,
+            29.4525979
+          ],
+          [
+            -90.3053085,
+            29.4530867
+          ],
+          [
+            -90.3055148,
+            29.4535069
+          ],
+          [
+            -90.3057474,
+            29.4539646
+          ],
+          [
+            -90.3059062,
+            29.4542721
+          ],
+          [
+            -90.3060618,
+            29.4545529
+          ],
+          [
+            -90.3061781,
+            29.4547806
+          ],
+          [
+            -90.3062616,
+            29.4549284
+          ],
+          [
+            -90.3066544,
+            29.4556446
+          ],
+          [
+            -90.3070494,
+            29.4563081
+          ],
+          [
+            -90.3077889,
+            29.4577303
+          ],
+          [
+            -90.3082153,
+            29.4585134
+          ],
+          [
+            -90.3082909,
+            29.4586498
+          ],
+          [
+            -90.308594,
+            29.4591894
+          ],
+          [
+            -90.3092992,
+            29.4603611
+          ],
+          [
+            -90.3098533,
+            29.4612431
+          ],
+          [
+            -90.3102613,
+            29.4618982
+          ],
+          [
+            -90.310519,
+            29.4623123
+          ],
+          [
+            -90.3107601,
+            29.4627324
+          ],
+          [
+            -90.3109304,
+            29.463107
+          ],
+          [
+            -90.3115892,
+            29.4645154
+          ],
+          [
+            -90.3119709,
+            29.4653727
+          ],
+          [
+            -90.3120138,
+            29.465493
+          ],
+          [
+            -90.3121168,
+            29.465738
+          ],
+          [
+            -90.3121988,
+            29.4659431
+          ],
+          [
+            -90.312216,
+            29.4659862
+          ],
+          [
+            -90.3124411,
+            29.4665394
+          ],
+          [
+            -90.3127034,
+            29.4672395
+          ],
+          [
+            -90.312814,
+            29.4675298
+          ],
+          [
+            -90.3129764,
+            29.4679399
+          ],
+          [
+            -90.3132819,
+            29.468692
+          ],
+          [
+            -90.3138708,
+            29.4700376
+          ],
+          [
+            -90.3142084,
+            29.4706406
+          ],
+          [
+            -90.3147506,
+            29.471569
+          ],
+          [
+            -90.3150357,
+            29.4720628
+          ],
+          [
+            -90.3152137,
+            29.4723403
+          ],
+          [
+            -90.315417,
+            29.4726816
+          ],
+          [
+            -90.3156518,
+            29.4730741
+          ],
+          [
+            -90.3158257,
+            29.4733373
+          ],
+          [
+            -90.3160977,
+            29.4736541
+          ],
+          [
+            -90.3164582,
+            29.4740161
+          ],
+          [
+            -90.3167335,
+            29.4743287
+          ],
+          [
+            -90.3170934,
+            29.4747083
+          ],
+          [
+            -90.3172441,
+            29.4748606
+          ],
+          [
+            -90.3178196,
+            29.4754861
+          ],
+          [
+            -90.3180859,
+            29.4757891
+          ],
+          [
+            -90.318338,
+            29.4760675
+          ],
+          [
+            -90.3187661,
+            29.4765821
+          ],
+          [
+            -90.319049,
+            29.476938
+          ],
+          [
+            -90.3191891,
+            29.4770985
+          ],
+          [
+            -90.3196814,
+            29.4777097
+          ],
+          [
+            -90.3201206,
+            29.478247
+          ],
+          [
+            -90.3206194,
+            29.4788963
+          ],
+          [
+            -90.3209278,
+            29.4794098
+          ],
+          [
+            -90.3210303,
+            29.4795846
+          ],
+          [
+            -90.3213581,
+            29.4801683
+          ],
+          [
+            -90.3216406,
+            29.4806787
+          ],
+          [
+            -90.3217219,
+            29.4808175
+          ],
+          [
+            -90.3219321,
+            29.4811676
+          ],
+          [
+            -90.3220643,
+            29.4814026
+          ],
+          [
+            -90.3224069,
+            29.4820214
+          ],
+          [
+            -90.3228468,
+            29.4828793
+          ],
+          [
+            -90.3229092,
+            29.4830233
+          ],
+          [
+            -90.3230208,
+            29.4833091
+          ],
+          [
+            -90.3233827,
+            29.4841796
+          ],
+          [
+            -90.3235466,
+            29.4845143
+          ],
+          [
+            -90.3236366,
+            29.4846983
+          ],
+          [
+            -90.3237742,
+            29.4850031
+          ],
+          [
+            -90.3239232,
+            29.4852901
+          ],
+          [
+            -90.3241242,
+            29.4856956
+          ],
+          [
+            -90.3242806,
+            29.4859989
+          ],
+          [
+            -90.3243739,
+            29.4861806
+          ],
+          [
+            -90.3244937,
+            29.4863784
+          ],
+          [
+            -90.3245817,
+            29.4865237
+          ],
+          [
+            -90.324716,
+            29.4867381
+          ],
+          [
+            -90.3247472,
+            29.486788
+          ],
+          [
+            -90.3250847,
+            29.4872823
+          ],
+          [
+            -90.3253385,
+            29.4876386
+          ],
+          [
+            -90.3257856,
+            29.4882713
+          ],
+          [
+            -90.3265149,
+            29.489314
+          ],
+          [
+            -90.3267556,
+            29.4896477
+          ],
+          [
+            -90.3268901,
+            29.4898325
+          ],
+          [
+            -90.3270337,
+            29.4901041
+          ],
+          [
+            -90.3275826,
+            29.4908845
+          ],
+          [
+            -90.328046,
+            29.491536
+          ],
+          [
+            -90.3284518,
+            29.4920836
+          ],
+          [
+            -90.3285769,
+            29.4922898
+          ],
+          [
+            -90.3288882,
+            29.4929363
+          ],
+          [
+            -90.329079,
+            29.4934275
+          ],
+          [
+            -90.3292521,
+            29.4939848
+          ],
+          [
+            -90.3292859,
+            29.4940901
+          ],
+          [
+            -90.329433,
+            29.4945962
+          ],
+          [
+            -90.3294785,
+            29.4947956
+          ],
+          [
+            -90.329543,
+            29.495114
+          ],
+          [
+            -90.3296245,
+            29.4958621
+          ],
+          [
+            -90.32972,
+            29.4968159
+          ],
+          [
+            -90.329737,
+            29.49739
+          ],
+          [
+            -90.3295876,
+            29.4991285
+          ],
+          [
+            -90.3295058,
+            29.5002355
+          ],
+          [
+            -90.3294423,
+            29.5009038
+          ],
+          [
+            -90.3294178,
+            29.5013257
+          ],
+          [
+            -90.3293886,
+            29.5015909
+          ],
+          [
+            -90.3293438,
+            29.5023139
+          ],
+          [
+            -90.3292862,
+            29.5032424
+          ],
+          [
+            -90.3292872,
+            29.5033792
+          ],
+          [
+            -90.3293665,
+            29.5044072
+          ],
+          [
+            -90.3293904,
+            29.5045236
+          ],
+          [
+            -90.3295757,
+            29.5054276
+          ],
+          [
+            -90.3299009,
+            29.5064674
+          ],
+          [
+            -90.3300762,
+            29.5070281
+          ],
+          [
+            -90.3302027,
+            29.5074791
+          ],
+          [
+            -90.3302573,
+            29.5076273
+          ],
+          [
+            -90.3304646,
+            29.5081904
+          ],
+          [
+            -90.3307623,
+            29.508845
+          ],
+          [
+            -90.3310498,
+            29.5093924
+          ],
+          [
+            -90.3313973,
+            29.5100189
+          ],
+          [
+            -90.3315033,
+            29.5102333
+          ],
+          [
+            -90.3316417,
+            29.5104769
+          ],
+          [
+            -90.3318935,
+            29.5109513
+          ],
+          [
+            -90.3327131,
+            29.5124976
+          ],
+          [
+            -90.3329185,
+            29.5128668
+          ],
+          [
+            -90.3329963,
+            29.5130054
+          ],
+          [
+            -90.3331082,
+            29.513222
+          ],
+          [
+            -90.3332538,
+            29.5135009
+          ],
+          [
+            -90.3335165,
+            29.5141006
+          ],
+          [
+            -90.3336549,
+            29.5145062
+          ],
+          [
+            -90.3337687,
+            29.5148662
+          ],
+          [
+            -90.3338156,
+            29.5150361
+          ],
+          [
+            -90.3339653,
+            29.5157805
+          ],
+          [
+            -90.3340492,
+            29.5162693
+          ],
+          [
+            -90.3341039,
+            29.516614
+          ],
+          [
+            -90.3342089,
+            29.517404
+          ],
+          [
+            -90.3342746,
+            29.5179548
+          ],
+          [
+            -90.3343345,
+            29.518383
+          ],
+          [
+            -90.3343837,
+            29.5187954
+          ],
+          [
+            -90.3344138,
+            29.5190865
+          ],
+          [
+            -90.3344661,
+            29.5196836
+          ],
+          [
+            -90.3345067,
+            29.5201536
+          ],
+          [
+            -90.3345376,
+            29.520642
+          ],
+          [
+            -90.3346113,
+            29.5213108
+          ],
+          [
+            -90.3347293,
+            29.5219981
+          ],
+          [
+            -90.3348002,
+            29.5224114
+          ],
+          [
+            -90.3348499,
+            29.5226771
+          ],
+          [
+            -90.3349069,
+            29.5229677
+          ],
+          [
+            -90.33511,
+            29.5239073
+          ],
+          [
+            -90.3352298,
+            29.524474
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-325987038",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 325987038,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3898994,
+            29.5739598
+          ],
+          [
+            -90.3907411,
+            29.574159
+          ],
+          [
+            -90.3917542,
+            29.5743785
+          ],
+          [
+            -90.3920426,
+            29.574427
+          ],
+          [
+            -90.3929137,
+            29.5746099
+          ],
+          [
+            -90.3932112,
+            29.5746724
+          ],
+          [
+            -90.3942609,
+            29.5748469
+          ],
+          [
+            -90.3954645,
+            29.5750015
+          ],
+          [
+            -90.3961027,
+            29.5750834
+          ],
+          [
+            -90.3964931,
+            29.5751349
+          ],
+          [
+            -90.3979468,
+            29.5753314
+          ],
+          [
+            -90.3990293,
+            29.5754882
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-326351521",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 326351521,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3824732,
+            29.5681411
+          ],
+          [
+            -90.3826614,
+            29.5681635
+          ],
+          [
+            -90.3828232,
+            29.5682065
+          ],
+          [
+            -90.3851852,
+            29.5690418
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-326351522",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 326351522,
+        "name": "West Main Street",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3808882,
+            29.5697916
+          ],
+          [
+            -90.381074,
+            29.5694297
+          ],
+          [
+            -90.3815438,
+            29.5685795
+          ],
+          [
+            -90.3816244,
+            29.5684665
+          ],
+          [
+            -90.3817653,
+            29.5683555
+          ],
+          [
+            -90.3819271,
+            29.5682645
+          ],
+          [
+            -90.3820011,
+            29.5682305
+          ],
+          [
+            -90.3822372,
+            29.5681561
+          ],
+          [
+            -90.3824732,
+            29.5681411
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-326351523",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 326351523,
+        "name": "West Main Street",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3808882,
+            29.5697916
+          ],
+          [
+            -90.3808115,
+            29.5698747
+          ],
+          [
+            -90.380728,
+            29.569945
+          ],
+          [
+            -90.3806082,
+            29.5699941
+          ],
+          [
+            -90.3804924,
+            29.5700199
+          ],
+          [
+            -90.3803039,
+            29.5700339
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-455598748",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 455598748,
+        "name": "Gateway to the Gulf Expressway",
+        "ref": "LA 1",
+        "highway_type": "primary",
+        "study_areas": [
+          "Port Fourchon query window"
+        ],
+        "fema_source_queries": [
+          "Port Fourchon query window"
+        ],
+        "fema_coverage_status": "unavailable",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "FEMA NFHL features were not available from the current study-area query.",
+        "interpretation": "FEMA relationship: Unknown. FEMA NFHL features were not available from the current study-area query. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.197806,
+            29.2361857
+          ],
+          [
+            -90.1975202,
+            29.2351778
+          ],
+          [
+            -90.186766,
+            29.1964492
+          ],
+          [
+            -90.177802,
+            29.1641291
+          ],
+          [
+            -90.1776599,
+            29.1633533
+          ],
+          [
+            -90.1776147,
+            29.1626244
+          ],
+          [
+            -90.1775985,
+            29.162125
+          ],
+          [
+            -90.1776196,
+            29.1617154
+          ],
+          [
+            -90.177675,
+            29.1613298
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-456710253",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 456710253,
+        "name": "Gateway to the Gulf Expressway",
+        "ref": "LA 1",
+        "highway_type": "primary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.2178286,
+            29.2576504
+          ],
+          [
+            -90.2175354,
+            29.2578378
+          ],
+          [
+            -90.2160682,
+            29.2590172
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-456710257",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 456710257,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "primary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.2157368,
+            29.2593241
+          ],
+          [
+            -90.2160119,
+            29.2598839
+          ],
+          [
+            -90.2164058,
+            29.2607087
+          ],
+          [
+            -90.2172132,
+            29.2624342
+          ],
+          [
+            -90.218524,
+            29.2652082
+          ],
+          [
+            -90.2197368,
+            29.2677438
+          ],
+          [
+            -90.2198356,
+            29.2679457
+          ],
+          [
+            -90.2199337,
+            29.2681388
+          ],
+          [
+            -90.2200273,
+            29.2683068
+          ],
+          [
+            -90.2201584,
+            29.2685248
+          ],
+          [
+            -90.2203015,
+            29.2687374
+          ],
+          [
+            -90.2204293,
+            29.2689152
+          ],
+          [
+            -90.2205442,
+            29.2690535
+          ],
+          [
+            -90.2206961,
+            29.2692248
+          ],
+          [
+            -90.2245369,
+            29.2733507
+          ],
+          [
+            -90.2247009,
+            29.273539
+          ],
+          [
+            -90.224855,
+            29.2737298
+          ],
+          [
+            -90.2250601,
+            29.2740037
+          ],
+          [
+            -90.2268271,
+            29.2765828
+          ],
+          [
+            -90.227055,
+            29.2769474
+          ],
+          [
+            -90.2272331,
+            29.2772574
+          ],
+          [
+            -90.2283533,
+            29.2794224
+          ],
+          [
+            -90.2290403,
+            29.2807784
+          ],
+          [
+            -90.2291628,
+            29.2810646
+          ],
+          [
+            -90.2292702,
+            29.2813582
+          ],
+          [
+            -90.2293707,
+            29.2816633
+          ],
+          [
+            -90.229901,
+            29.283771
+          ],
+          [
+            -90.2323075,
+            29.2927245
+          ],
+          [
+            -90.2323791,
+            29.2929794
+          ],
+          [
+            -90.232458,
+            29.2932422
+          ],
+          [
+            -90.2325516,
+            29.293528
+          ],
+          [
+            -90.2326471,
+            29.2937972
+          ],
+          [
+            -90.232783,
+            29.2941424
+          ],
+          [
+            -90.2347116,
+            29.2989928
+          ],
+          [
+            -90.2347918,
+            29.2992081
+          ],
+          [
+            -90.234864,
+            29.2994306
+          ],
+          [
+            -90.23492,
+            29.2996447
+          ],
+          [
+            -90.2349763,
+            29.2998936
+          ],
+          [
+            -90.2350092,
+            29.3001198
+          ],
+          [
+            -90.2350244,
+            29.3003205
+          ],
+          [
+            -90.2350318,
+            29.3005273
+          ],
+          [
+            -90.2350327,
+            29.3007801
+          ],
+          [
+            -90.2349001,
+            29.3051027
+          ],
+          [
+            -90.2349025,
+            29.3053173
+          ],
+          [
+            -90.2349199,
+            29.3055438
+          ],
+          [
+            -90.2349406,
+            29.3057744
+          ],
+          [
+            -90.23497,
+            29.3060003
+          ],
+          [
+            -90.2356209,
+            29.3099328
+          ],
+          [
+            -90.2356574,
+            29.3100965
+          ],
+          [
+            -90.2357109,
+            29.3103223
+          ],
+          [
+            -90.2357744,
+            29.3105909
+          ],
+          [
+            -90.2358426,
+            29.3108489
+          ],
+          [
+            -90.2369066,
+            29.3144115
+          ],
+          [
+            -90.2377869,
+            29.3173566
+          ],
+          [
+            -90.2379132,
+            29.3177517
+          ],
+          [
+            -90.2380509,
+            29.3181242
+          ],
+          [
+            -90.2405495,
+            29.3241607
+          ],
+          [
+            -90.2406155,
+            29.3243403
+          ],
+          [
+            -90.2406777,
+            29.3245349
+          ],
+          [
+            -90.2407221,
+            29.3246998
+          ],
+          [
+            -90.240766,
+            29.3248847
+          ],
+          [
+            -90.2408035,
+            29.325094
+          ],
+          [
+            -90.2412346,
+            29.3281888
+          ],
+          [
+            -90.2414331,
+            29.3295439
+          ],
+          [
+            -90.2414924,
+            29.3298543
+          ],
+          [
+            -90.2415662,
+            29.3301997
+          ],
+          [
+            -90.2417873,
+            29.3311958
+          ],
+          [
+            -90.242087,
+            29.3325563
+          ],
+          [
+            -90.242173,
+            29.3329208
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-456710264",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 456710264,
+        "name": "Gateway to the Gulf Expressway",
+        "ref": "LA 1",
+        "highway_type": "primary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.2160682,
+            29.2590172
+          ],
+          [
+            -90.215988,
+            29.259072
+          ],
+          [
+            -90.2159314,
+            29.2591258
+          ],
+          [
+            -90.2158868,
+            29.2592112
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-456711804",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 456711804,
+        "name": "Gateway to the Gulf Expressway",
+        "ref": "LA 1",
+        "highway_type": "primary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.2161283,
+            29.2590784
+          ],
+          [
+            -90.2168358,
+            29.2585124
+          ],
+          [
+            -90.2171389,
+            29.2582637
+          ],
+          [
+            -90.2175802,
+            29.2579125
+          ],
+          [
+            -90.2178286,
+            29.2576504
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-851544977",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 851544977,
+        "name": "Gateway to the Gulf Expressway",
+        "ref": "LA 1",
+        "highway_type": "primary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.2030419,
+            29.2452396
+          ],
+          [
+            -90.2039596,
+            29.2458091
+          ],
+          [
+            -90.2047335,
+            29.2462299
+          ],
+          [
+            -90.2053449,
+            29.2465138
+          ],
+          [
+            -90.206116,
+            29.2468123
+          ],
+          [
+            -90.2069938,
+            29.2470986
+          ],
+          [
+            -90.2082978,
+            29.2474582
+          ],
+          [
+            -90.2098794,
+            29.2478717
+          ],
+          [
+            -90.2119433,
+            29.2484516
+          ],
+          [
+            -90.2146834,
+            29.2492039
+          ],
+          [
+            -90.2164463,
+            29.2496686
+          ],
+          [
+            -90.2174546,
+            29.2499344
+          ],
+          [
+            -90.2192603,
+            29.2504615
+          ],
+          [
+            -90.2196159,
+            29.2505748
+          ],
+          [
+            -90.2199489,
+            29.2506939
+          ],
+          [
+            -90.220237,
+            29.250806
+          ],
+          [
+            -90.2205476,
+            29.2509436
+          ],
+          [
+            -90.2208437,
+            29.2510849
+          ],
+          [
+            -90.2212742,
+            29.2513345
+          ],
+          [
+            -90.2217137,
+            29.2516
+          ],
+          [
+            -90.2222857,
+            29.2519789
+          ],
+          [
+            -90.2225233,
+            29.2521385
+          ],
+          [
+            -90.2234508,
+            29.2528678
+          ],
+          [
+            -90.2234894,
+            29.252949
+          ],
+          [
+            -90.2234864,
+            29.2530095
+          ],
+          [
+            -90.2234697,
+            29.2530613
+          ],
+          [
+            -90.2234246,
+            29.2531171
+          ],
+          [
+            -90.2211846,
+            29.2549547
+          ],
+          [
+            -90.2178286,
+            29.2576504
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-934498770",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 934498770,
+        "name": "Gateway to the Gulf Expressway",
+        "ref": "LA 1",
+        "highway_type": "primary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.197806,
+            29.2361857
+          ],
+          [
+            -90.1980278,
+            29.236963
+          ],
+          [
+            -90.1983975,
+            29.238224
+          ],
+          [
+            -90.1989454,
+            29.240109
+          ],
+          [
+            -90.1995079,
+            29.2413739
+          ],
+          [
+            -90.200286,
+            29.2425695
+          ],
+          [
+            -90.200802,
+            29.2432203
+          ],
+          [
+            -90.2017414,
+            29.2441722
+          ],
+          [
+            -90.2024789,
+            29.2448132
+          ],
+          [
+            -90.2030419,
+            29.2452396
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-934498775",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 934498775,
+        "name": "Gateway to the Gulf Expressway",
+        "ref": "LA 1",
+        "highway_type": "primary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.2158868,
+            29.2592112
+          ],
+          [
+            -90.2158137,
+            29.2592662
+          ],
+          [
+            -90.2157368,
+            29.2593241
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-988682140",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 988682140,
+        "name": "West Main Street",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3352298,
+            29.524474
+          ],
+          [
+            -90.3353681,
+            29.5253215
+          ],
+          [
+            -90.3357375,
+            29.5268925
+          ],
+          [
+            -90.3359194,
+            29.5277295
+          ],
+          [
+            -90.3360039,
+            29.5281057
+          ],
+          [
+            -90.3360774,
+            29.5284481
+          ],
+          [
+            -90.3362316,
+            29.5291692
+          ],
+          [
+            -90.3363691,
+            29.5298012
+          ],
+          [
+            -90.3365227,
+            29.5305184
+          ],
+          [
+            -90.3366951,
+            29.5314497
+          ],
+          [
+            -90.3368025,
+            29.5321558
+          ],
+          [
+            -90.3368364,
+            29.5323492
+          ],
+          [
+            -90.3368705,
+            29.5326932
+          ],
+          [
+            -90.3369099,
+            29.5331201
+          ],
+          [
+            -90.3369701,
+            29.5337914
+          ],
+          [
+            -90.3369996,
+            29.5341951
+          ],
+          [
+            -90.337005,
+            29.5343841
+          ],
+          [
+            -90.3369846,
+            29.5345597
+          ],
+          [
+            -90.3369565,
+            29.534722
+          ],
+          [
+            -90.3369215,
+            29.5348672
+          ],
+          [
+            -90.3363675,
+            29.5366704
+          ],
+          [
+            -90.3362591,
+            29.5370035
+          ],
+          [
+            -90.3360789,
+            29.5375702
+          ],
+          [
+            -90.3359304,
+            29.5381385
+          ],
+          [
+            -90.3358496,
+            29.5386968
+          ],
+          [
+            -90.3358238,
+            29.5388877
+          ],
+          [
+            -90.3358185,
+            29.5392189
+          ],
+          [
+            -90.3359,
+            29.539821
+          ],
+          [
+            -90.3360234,
+            29.5403087
+          ],
+          [
+            -90.3361373,
+            29.5406098
+          ],
+          [
+            -90.3361887,
+            29.540743
+          ],
+          [
+            -90.3363772,
+            29.5411048
+          ],
+          [
+            -90.3366229,
+            29.541477
+          ],
+          [
+            -90.3367196,
+            29.5416435
+          ],
+          [
+            -90.3368382,
+            29.5418309
+          ],
+          [
+            -90.3369296,
+            29.5419587
+          ],
+          [
+            -90.3370499,
+            29.5421418
+          ],
+          [
+            -90.3371312,
+            29.5422807
+          ],
+          [
+            -90.3372303,
+            29.5424014
+          ],
+          [
+            -90.3374626,
+            29.5427253
+          ],
+          [
+            -90.3376668,
+            29.5429736
+          ],
+          [
+            -90.3377579,
+            29.5430876
+          ],
+          [
+            -90.3378168,
+            29.5431605
+          ],
+          [
+            -90.3380804,
+            29.543474
+          ],
+          [
+            -90.3382878,
+            29.5437228
+          ],
+          [
+            -90.3386342,
+            29.5441382
+          ],
+          [
+            -90.3390982,
+            29.5446736
+          ],
+          [
+            -90.3394869,
+            29.5451222
+          ],
+          [
+            -90.3398986,
+            29.545578
+          ],
+          [
+            -90.340024,
+            29.5456974
+          ],
+          [
+            -90.340264,
+            29.5458943
+          ],
+          [
+            -90.3404857,
+            29.546067
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-1063770041",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 1063770041,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3894626,
+            29.5738207
+          ],
+          [
+            -90.389591,
+            29.5738754
+          ],
+          [
+            -90.3898994,
+            29.5739598
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-1063770043",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 1063770043,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3892125,
+            29.5735255
+          ],
+          [
+            -90.389245,
+            29.5736079
+          ],
+          [
+            -90.3892949,
+            29.5736848
+          ],
+          [
+            -90.3893668,
+            29.5737566
+          ],
+          [
+            -90.3894626,
+            29.5738207
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-1064469029",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 1064469029,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3990293,
+            29.5754882
+          ],
+          [
+            -90.3997202,
+            29.5756056
+          ],
+          [
+            -90.4008676,
+            29.5758661
+          ],
+          [
+            -90.4026345,
+            29.5763252
+          ],
+          [
+            -90.4032626,
+            29.5764877
+          ],
+          [
+            -90.4044749,
+            29.5768403
+          ],
+          [
+            -90.4051663,
+            29.5770539
+          ],
+          [
+            -90.4057567,
+            29.5772353
+          ],
+          [
+            -90.406198,
+            29.5773797
+          ],
+          [
+            -90.4084722,
+            29.5780865
+          ],
+          [
+            -90.4108226,
+            29.5788242
+          ],
+          [
+            -90.4121031,
+            29.5792228
+          ],
+          [
+            -90.4127265,
+            29.5794169
+          ],
+          [
+            -90.4132477,
+            29.5795948
+          ],
+          [
+            -90.4137346,
+            29.5798164
+          ],
+          [
+            -90.4143106,
+            29.5801057
+          ],
+          [
+            -90.4144357,
+            29.5801686
+          ],
+          [
+            -90.4148034,
+            29.5803533
+          ],
+          [
+            -90.416533,
+            29.5812133
+          ],
+          [
+            -90.4176399,
+            29.5817225
+          ],
+          [
+            -90.4181811,
+            29.5819444
+          ],
+          [
+            -90.418382,
+            29.5820174
+          ],
+          [
+            -90.4187506,
+            29.5821513
+          ],
+          [
+            -90.4213207,
+            29.582987
+          ],
+          [
+            -90.4219219,
+            29.5831674
+          ],
+          [
+            -90.4227401,
+            29.5834131
+          ],
+          [
+            -90.4232388,
+            29.5835372
+          ],
+          [
+            -90.4238111,
+            29.5836651
+          ],
+          [
+            -90.4241844,
+            29.5837458
+          ],
+          [
+            -90.4247659,
+            29.5838436
+          ],
+          [
+            -90.425629,
+            29.5840049
+          ],
+          [
+            -90.4264466,
+            29.5841404
+          ],
+          [
+            -90.4304679,
+            29.5846714
+          ],
+          [
+            -90.4311473,
+            29.5847492
+          ],
+          [
+            -90.4325554,
+            29.5849219
+          ],
+          [
+            -90.4332063,
+            29.5849807
+          ],
+          [
+            -90.4352801,
+            29.5851616
+          ],
+          [
+            -90.4357357,
+            29.5852145
+          ],
+          [
+            -90.4363139,
+            29.5853529
+          ],
+          [
+            -90.4378618,
+            29.5857124
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-1153400439",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 1153400439,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3851852,
+            29.5690418
+          ],
+          [
+            -90.3856355,
+            29.5692011
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-1153400440",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 1153400440,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "secondary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.3856355,
+            29.5692011
+          ],
+          [
+            -90.3884295,
+            29.5701892
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-1265943557",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 1265943557,
+        "name": "Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [],
+        "fema_source_queries": [
+          "Grand Isle query window"
+        ],
+        "fema_coverage_status": "partial",
+        "intersects_mapped_flood_hazard": true,
+        "fema_zones": [
+          "VE"
+        ],
+        "fema_relationship_reason": "The road centerline intersects mapped FEMA zone(s): VE in polygon geometry returned by Grand Isle query window. The complete OSM way is not contained within that query window, so FEMA coverage is partial.",
+        "interpretation": "This indicates intersection with mapped FEMA flood-hazard information. It does not indicate current flooding, closure, passability, or safe travel conditions.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -89.9717829,
+            29.2456169
+          ],
+          [
+            -89.9677204,
+            29.247967
+          ],
+          [
+            -89.967162,
+            29.2483206
+          ],
+          [
+            -89.9661982,
+            29.2491086
+          ],
+          [
+            -89.965643,
+            29.2495618
+          ],
+          [
+            -89.9654546,
+            29.2497156
+          ],
+          [
+            -89.9648706,
+            29.2501917
+          ],
+          [
+            -89.961073,
+            29.2532934
+          ],
+          [
+            -89.9608183,
+            29.2535307
+          ],
+          [
+            -89.9607704,
+            29.2537061
+          ],
+          [
+            -89.96078,
+            29.2538732
+          ],
+          [
+            -89.9608119,
+            29.2540263
+          ],
+          [
+            -89.9609109,
+            29.2543047
+          ],
+          [
+            -89.9620903,
+            29.2568595
+          ],
+          [
+            -89.9621494,
+            29.2570029
+          ],
+          [
+            -89.9621772,
+            29.2570702
+          ],
+          [
+            -89.9622437,
+            29.2572149
+          ],
+          [
+            -89.9622911,
+            29.2573172
+          ],
+          [
+            -89.9624282,
+            29.2576453
+          ],
+          [
+            -89.9624486,
+            29.2577566
+          ],
+          [
+            -89.9624921,
+            29.2579933
+          ],
+          [
+            -89.9625214,
+            29.2583673
+          ],
+          [
+            -89.9624867,
+            29.2587815
+          ],
+          [
+            -89.962441,
+            29.2591262
+          ],
+          [
+            -89.9624218,
+            29.2594248
+          ],
+          [
+            -89.9624303,
+            29.2595825
+          ],
+          [
+            -89.9624515,
+            29.2597375
+          ],
+          [
+            -89.9626392,
+            29.2601877
+          ],
+          [
+            -89.9626785,
+            29.2602146
+          ],
+          [
+            -89.9628224,
+            29.2603133
+          ],
+          [
+            -89.9631173,
+            29.2604584
+          ],
+          [
+            -89.9632825,
+            29.2605196
+          ],
+          [
+            -89.9635041,
+            29.2606018
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-1429136319",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 1429136319,
+        "name": "LA Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [],
+        "fema_source_queries": [
+          "Grand Isle query window"
+        ],
+        "fema_coverage_status": "partial",
+        "intersects_mapped_flood_hazard": true,
+        "fema_zones": [
+          "VE"
+        ],
+        "fema_relationship_reason": "The road centerline intersects mapped FEMA zone(s): VE in polygon geometry returned by Grand Isle query window. The complete OSM way is not contained within that query window, so FEMA coverage is partial.",
+        "interpretation": "This indicates intersection with mapped FEMA flood-hazard information. It does not indicate current flooding, closure, passability, or safe travel conditions.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.0492848,
+            29.2104738
+          ],
+          [
+            -90.0401277,
+            29.2048145
+          ],
+          [
+            -90.0395069,
+            29.2044548
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-1429136320",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 1429136320,
+        "name": "LA Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [],
+        "fema_source_queries": [
+          "Grand Isle query window"
+        ],
+        "fema_coverage_status": "partial",
+        "intersects_mapped_flood_hazard": true,
+        "fema_zones": [
+          "VE"
+        ],
+        "fema_relationship_reason": "The road centerline intersects mapped FEMA zone(s): VE in polygon geometry returned by Grand Isle query window. The complete OSM way is not contained within that query window, so FEMA coverage is partial.",
+        "interpretation": "This indicates intersection with mapped FEMA flood-hazard information. It does not indicate current flooding, closure, passability, or safe travel conditions.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.0708435,
+            29.1973139
+          ],
+          [
+            -90.06726,
+            29.199594
+          ],
+          [
+            -90.065986,
+            29.200389
+          ],
+          [
+            -90.065391,
+            29.200792
+          ],
+          [
+            -90.064147,
+            29.201583
+          ],
+          [
+            -90.0630148,
+            29.2023747
+          ],
+          [
+            -90.0609001,
+            29.2039023
+          ],
+          [
+            -90.0604449,
+            29.2042091
+          ],
+          [
+            -90.059967,
+            29.204498
+          ],
+          [
+            -90.0586865,
+            29.205194
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-1429136321",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 1429136321,
+        "name": "LA Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [],
+        "fema_source_queries": [],
+        "fema_coverage_status": "not-queried",
+        "intersects_mapped_flood_hazard": null,
+        "fema_zones": [],
+        "fema_relationship_reason": "This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows.",
+        "interpretation": "FEMA relationship: Unknown. This OSM way lies outside the current Grand Isle and Port Fourchon FEMA query windows. No conclusion about current flooding, closure, passability, or safe travel conditions can be made.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.07518,
+            29.19453
+          ],
+          [
+            -90.0750338,
+            29.1946245
+          ],
+          [
+            -90.074745,
+            29.194808
+          ],
+          [
+            -90.074119,
+            29.195215
+          ],
+          [
+            -90.0738205,
+            29.1954074
+          ],
+          [
+            -90.0734234,
+            29.1956703
+          ],
+          [
+            -90.0721871,
+            29.1964548
+          ],
+          [
+            -90.0714677,
+            29.1969167
+          ],
+          [
+            -90.0708435,
+            29.1973139
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-1446588987",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 1446588987,
+        "name": "LA Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [
+          "Grand Isle query window"
+        ],
+        "fema_source_queries": [
+          "Grand Isle query window"
+        ],
+        "fema_coverage_status": "partial",
+        "intersects_mapped_flood_hazard": true,
+        "fema_zones": [
+          "VE"
+        ],
+        "fema_relationship_reason": "The road centerline intersects mapped FEMA zone(s): VE in polygon geometry returned by Grand Isle query window. The complete OSM way is not contained within that query window, so FEMA coverage is partial.",
+        "interpretation": "This indicates intersection with mapped FEMA flood-hazard information. It does not indicate current flooding, closure, passability, or safe travel conditions.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -90.0035008,
+            29.2278139
+          ],
+          [
+            -90.0027347,
+            29.2282302
+          ],
+          [
+            -90.002068,
+            29.2286042
+          ],
+          [
+            -90.0014065,
+            29.2289625
+          ],
+          [
+            -90.000736,
+            29.2293226
+          ],
+          [
+            -90.0001764,
+            29.2296226
+          ],
+          [
+            -89.9999065,
+            29.2297742
+          ],
+          [
+            -89.9998785,
+            29.2297899
+          ],
+          [
+            -89.9995648,
+            29.2299642
+          ],
+          [
+            -89.9990447,
+            29.2302604
+          ],
+          [
+            -89.9987162,
+            29.2304544
+          ],
+          [
+            -89.9983109,
+            29.2307009
+          ],
+          [
+            -89.9975696,
+            29.2311489
+          ],
+          [
+            -89.9972567,
+            29.2313422
+          ],
+          [
+            -89.9967392,
+            29.2316303
+          ],
+          [
+            -89.9961931,
+            29.231915
+          ],
+          [
+            -89.9960667,
+            29.2319779
+          ],
+          [
+            -89.9948522,
+            29.2325294
+          ],
+          [
+            -89.9942892,
+            29.2327858
+          ],
+          [
+            -89.9938162,
+            29.232987
+          ],
+          [
+            -89.9927956,
+            29.2334254
+          ],
+          [
+            -89.9917848,
+            29.2338572
+          ],
+          [
+            -89.9914975,
+            29.2339857
+          ],
+          [
+            -89.9910875,
+            29.2341987
+          ],
+          [
+            -89.9905487,
+            29.2345127
+          ],
+          [
+            -89.9900158,
+            29.2348674
+          ],
+          [
+            -89.9895727,
+            29.2351772
+          ],
+          [
+            -89.9888424,
+            29.2356944
+          ],
+          [
+            -89.9880545,
+            29.2362544
+          ],
+          [
+            -89.9875287,
+            29.236599
+          ],
+          [
+            -89.9870909,
+            29.2368392
+          ],
+          [
+            -89.9865719,
+            29.2370755
+          ],
+          [
+            -89.9863733,
+            29.2371641
+          ],
+          [
+            -89.9860597,
+            29.2373059
+          ],
+          [
+            -89.9855068,
+            29.2375757
+          ],
+          [
+            -89.985023,
+            29.2378454
+          ],
+          [
+            -89.984541,
+            29.2381388
+          ],
+          [
+            -89.9840242,
+            29.2384519
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "experimental-la1-osm-way-1446588988",
+        "feature_kind": "experimental-la1-fema-segment",
+        "osm_way_id": 1446588988,
+        "name": "LA Highway 1",
+        "ref": "LA 1",
+        "highway_type": "tertiary",
+        "study_areas": [
+          "Grand Isle query window"
+        ],
+        "fema_source_queries": [
+          "Grand Isle query window"
+        ],
+        "fema_coverage_status": "partial",
+        "intersects_mapped_flood_hazard": true,
+        "fema_zones": [
+          "VE"
+        ],
+        "fema_relationship_reason": "The road centerline intersects mapped FEMA zone(s): VE in polygon geometry returned by Grand Isle query window. The complete OSM way is not contained within that query window, so FEMA coverage is partial.",
+        "interpretation": "This indicates intersection with mapped FEMA flood-hazard information. It does not indicate current flooding, closure, passability, or safe travel conditions.",
+        "osm_source": "OpenStreetMap Overpass API LA 1 way geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Original OSM way LineString tested against FEMA NFHL Polygon/MultiPolygon geometry; no road-safety or passability analysis."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -89.9840242,
+            29.2384519
+          ],
+          [
+            -89.9835165,
+            29.238765
+          ],
+          [
+            -89.983053,
+            29.2390502
+          ],
+          [
+            -89.9829501,
+            29.2391135
+          ],
+          [
+            -89.9825281,
+            29.2393675
+          ],
+          [
+            -89.9820441,
+            29.239659
+          ],
+          [
+            -89.9816978,
+            29.2398595
+          ],
+          [
+            -89.98135,
+            29.2400656
+          ],
+          [
+            -89.9810197,
+            29.2402689
+          ],
+          [
+            -89.9800017,
+            29.2408606
+          ],
+          [
+            -89.9795326,
+            29.2411251
+          ],
+          [
+            -89.9790092,
+            29.2414314
+          ],
+          [
+            -89.9780117,
+            29.2420121
+          ],
+          [
+            -89.9773559,
+            29.242388
+          ],
+          [
+            -89.9768086,
+            29.242711
+          ],
+          [
+            -89.9717829,
+            29.2456169
+          ]
+        ]
+      }
+    }
+  ]
+}
