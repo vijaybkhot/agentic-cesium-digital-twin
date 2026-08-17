@@ -11,6 +11,7 @@ import type {
 } from "../types/disasterResilience";
 import type {
   UrbanCameraTarget,
+  UrbanLa1FemaSegmentAttributes,
   UrbanPropertyAttributes,
   UrbanResilienceScenario,
 } from "../types/urbanResilience";
@@ -29,6 +30,11 @@ export type ViewerSelection =
       id: string;
       attributes: UrbanPropertyAttributes;
     }
+  | {
+      type: "urbanLa1FemaSegment";
+      id: string;
+      attributes: UrbanLa1FemaSegmentAttributes;
+    }
   | { type: "globeLocation"; lat: number; lon: number };
 
 export interface ViewerSelectedEntityIds {
@@ -37,6 +43,7 @@ export interface ViewerSelectedEntityIds {
   modularEntityId?: string | null;
   disasterPropertyId?: string | null;
   urbanPropertyId?: string | null;
+  urbanLa1FemaSegmentId?: string | null;
 }
 
 export interface ViewerAdapter {
@@ -49,6 +56,8 @@ export interface ViewerAdapter {
   renderUrbanResilienceScenario(
     scenario: UrbanResilienceScenario | null,
   ): Promise<void>;
+  renderUrbanLa1FemaExperiment(dataUrl: string | null): Promise<void>;
+  setUrbanResponseRoutesVisible(visible: boolean): void;
   updateMeasurementPoint(point: MeasurementPointConfig): void;
   flyToProject(config: ProjectConfig): void;
   flyToModelAsset(assetId: string): void;

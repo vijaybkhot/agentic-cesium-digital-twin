@@ -31,6 +31,7 @@ import type {
 } from "../types/disasterResilience";
 import type {
   UrbanCameraTarget,
+  SelectedUrbanLa1FemaSegment,
   SelectedUrbanProperty,
 } from "../types/urbanResilience";
 import { useProjectState } from "./useProjectState";
@@ -89,6 +90,10 @@ export function AppShell() {
     useState<SelectedDisasterProperty | null>(null);
   const [selectedUrbanProperty, setSelectedUrbanProperty] =
     useState<SelectedUrbanProperty | null>(null);
+  const [selectedUrbanLa1FemaSegment, setSelectedUrbanLa1FemaSegment] =
+    useState<SelectedUrbanLa1FemaSegment | null>(null);
+  const [urbanLa1FemaExperimentEnabled, setUrbanLa1FemaExperimentEnabled] =
+    useState(false);
   const [modularScenario, setModularScenario] = useState(
     mockModularHousingScenario,
   );
@@ -220,6 +225,8 @@ export function AppShell() {
   const openExistingDemo = useCallback(async () => {
     const navigationVersion = navigationVersionRef.current + 1;
     navigationVersionRef.current = navigationVersion;
+    setUrbanLa1FemaExperimentEnabled(false);
+    setSelectedUrbanLa1FemaSegment(null);
 
     try {
       await loadExistingDemo();
@@ -231,6 +238,7 @@ export function AppShell() {
       setSelectedModularEntity(null);
       setSelectedDisasterProperty(null);
       setSelectedUrbanProperty(null);
+      setSelectedUrbanLa1FemaSegment(null);
       setModularFocusRequest(null);
       setDisasterFocusRequest(null);
       setUrbanFocusRequest(null);
@@ -248,6 +256,8 @@ export function AppShell() {
     setSelectedModularEntity(null);
     setSelectedDisasterProperty(null);
     setSelectedUrbanProperty(null);
+    setSelectedUrbanLa1FemaSegment(null);
+    setUrbanLa1FemaExperimentEnabled(false);
     setModularFocusRequest(null);
     setDisasterFocusRequest(null);
     setUrbanFocusRequest(null);
@@ -263,6 +273,8 @@ export function AppShell() {
     setSelectedModularEntity(null);
     setSelectedDisasterProperty(null);
     setSelectedUrbanProperty(null);
+    setSelectedUrbanLa1FemaSegment(null);
+    setUrbanLa1FemaExperimentEnabled(false);
     setDisasterFocusRequest(null);
     setUrbanFocusRequest(null);
     setModularFocusRequest((currentRequest) => ({
@@ -281,6 +293,8 @@ export function AppShell() {
     setSelectedModularEntity(null);
     setSelectedDisasterProperty(null);
     setSelectedUrbanProperty(null);
+    setSelectedUrbanLa1FemaSegment(null);
+    setUrbanLa1FemaExperimentEnabled(false);
     setModularFocusRequest(null);
     setUrbanFocusRequest(null);
     setDisasterScenario(mockDisasterResilienceScenario);
@@ -302,6 +316,8 @@ export function AppShell() {
     setSelectedModularEntity(null);
     setSelectedDisasterProperty(null);
     setSelectedUrbanProperty(null);
+    setSelectedUrbanLa1FemaSegment(null);
+    setUrbanLa1FemaExperimentEnabled(false);
     setModularFocusRequest(null);
     setDisasterFocusRequest(null);
     setDisasterScenario(mockDisasterResilienceScenario);
@@ -438,6 +454,11 @@ export function AppShell() {
               ? selectedUrbanProperty?.propertyId ?? null
               : null
           }
+          selectedUrbanLa1FemaSegmentId={
+            mode === "urban-resilience-demo"
+              ? selectedUrbanLa1FemaSegment?.segmentId ?? null
+              : null
+          }
           modularScenario={
             mode === "modular-demo" ? modularScenario : null
           }
@@ -446,6 +467,14 @@ export function AppShell() {
           }
           urbanScenario={
             mode === "urban-resilience-demo" ? urbanScenario : null
+          }
+          urbanLa1FemaExperimentDataUrl={
+            mode === "urban-resilience-demo" && urbanLa1FemaExperimentEnabled
+              ? urbanScenario.experimentalLa1FemaDataUrl
+              : null
+          }
+          urbanResponseRoutesVisible={
+            mode !== "urban-resilience-demo" || !urbanLa1FemaExperimentEnabled
           }
           modularFocusTarget={
             mode === "modular-demo" ? modularFocusRequest?.target ?? null : null
@@ -516,6 +545,14 @@ export function AppShell() {
                   propertyId: selection.id,
                   attributes: selection.attributes,
                 });
+                setSelectedUrbanLa1FemaSegment(null);
+                setIsPanelVisible(true);
+              } else if (selection.type === "urbanLa1FemaSegment") {
+                setSelectedUrbanLa1FemaSegment({
+                  segmentId: selection.id,
+                  attributes: selection.attributes,
+                });
+                setSelectedUrbanProperty(null);
                 setIsPanelVisible(true);
               }
               return;
@@ -594,9 +631,18 @@ export function AppShell() {
         <UrbanResilienceDemoPanel
           scenario={urbanScenario}
           selectedProperty={selectedUrbanProperty}
+          selectedLa1FemaSegment={selectedUrbanLa1FemaSegment}
+          la1FemaExperimentEnabled={urbanLa1FemaExperimentEnabled}
           ionTokenConfigured={hasCesiumIonAccessToken()}
           osmBuildingsEnabled={isUrbanOsmBuildingsEnabled()}
           onFocusTarget={focusUrbanTarget}
+          onLa1FemaExperimentEnabledChange={(enabled) => {
+            setUrbanLa1FemaExperimentEnabled(enabled);
+
+            if (!enabled) {
+              setSelectedUrbanLa1FemaSegment(null);
+            }
+          }}
           onNewProject={startNewProject}
           onOpenExistingDemo={() => void openExistingDemo()}
           onOpenModularDemo={openModularDemo}

@@ -6,6 +6,12 @@ export type UrbanRouteStatus = "open" | "at-risk" | "not-recommended";
 
 export type UrbanResourceType = "staging-reference";
 
+export type UrbanFemaCoverageStatus =
+  | "available"
+  | "partial"
+  | "unavailable"
+  | "not-queried";
+
 export interface UrbanCoordinate {
   /** Latitude in decimal degrees. */
   lat: number;
@@ -66,6 +72,30 @@ export interface SelectedUrbanProperty {
   attributes: UrbanPropertyAttributes;
 }
 
+export interface UrbanLa1FemaSegmentAttributes {
+  id: string;
+  feature_kind: "experimental-la1-fema-segment";
+  osm_way_id: number;
+  name: string;
+  ref: string;
+  highway_type: string;
+  study_areas: string[];
+  fema_source_queries: string[];
+  fema_coverage_status: UrbanFemaCoverageStatus;
+  intersects_mapped_flood_hazard: boolean | null;
+  fema_zones: string[];
+  fema_relationship_reason: string;
+  interpretation: string;
+  osm_source: string;
+  fema_source: string;
+  processing_method: string;
+}
+
+export interface SelectedUrbanLa1FemaSegment {
+  segmentId: string;
+  attributes: UrbanLa1FemaSegmentAttributes;
+}
+
 export interface UrbanResilienceScenario {
   id: string;
   name: string;
@@ -74,6 +104,7 @@ export interface UrbanResilienceScenario {
   propertyDataUrl: string;
   floodZoneDataUrl: string;
   responseDataUrl: string;
+  experimentalLa1FemaDataUrl: string;
   routes: UrbanResponseRoute[];
   resources: UrbanResourceSite[];
   events: UrbanTwinEvent[];
