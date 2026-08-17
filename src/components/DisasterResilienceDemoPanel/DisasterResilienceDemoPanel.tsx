@@ -17,6 +17,7 @@ interface DisasterResilienceDemoPanelProps {
   onNewProject: () => void;
   onOpenExistingDemo: () => void;
   onOpenModularDemo: () => void;
+  onOpenUrbanResilienceDemo: () => void;
 }
 
 function formatCoordinate(value: number): string {
@@ -35,6 +36,7 @@ export function DisasterResilienceDemoPanel({
   onNewProject,
   onOpenExistingDemo,
   onOpenModularDemo,
+  onOpenUrbanResilienceDemo,
 }: DisasterResilienceDemoPanelProps) {
   return (
     <aside className="disaster-resilience-demo-panel">
@@ -260,6 +262,13 @@ export function DisasterResilienceDemoPanel({
           onClick={onOpenModularDemo}
         >
           Open modular housing demo
+        </button>
+        <button
+          className="panel-button"
+          type="button"
+          onClick={onOpenUrbanResilienceDemo}
+        >
+          Open urban resilience demo
         </button>
       </div>
     </aside>

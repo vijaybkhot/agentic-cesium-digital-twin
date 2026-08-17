@@ -26,6 +26,7 @@ interface SidePanelProps {
   onNewProject: () => void;
   onOpenModularDemo: () => void;
   onOpenDisasterDemo: () => void;
+  onOpenUrbanResilienceDemo: () => void;
   onClearSelection: () => void;
   onResetPosition: () => void;
   onApplyMeasurementUpdate: (
@@ -52,6 +53,7 @@ export function SidePanel({
   onNewProject,
   onOpenModularDemo,
   onOpenDisasterDemo,
+  onOpenUrbanResilienceDemo,
   onClearSelection,
   onResetPosition,
   onApplyMeasurementUpdate,
@@ -126,6 +128,9 @@ export function SidePanel({
           </button>
           <button className="panel-button" type="button" onClick={onOpenDisasterDemo}>
             Disaster demo
+          </button>
+          <button className="panel-button" type="button" onClick={onOpenUrbanResilienceDemo}>
+            Urban resilience demo
           </button>
           <button className="panel-button" type="button" onClick={onHide}>
             Hide

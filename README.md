@@ -28,6 +28,9 @@ This version demonstrates the Cesium visualization and interaction layer. It is 
 - Cesium-native modular factory, route, station, zone, and module rendering
 - Reconstruction handoff contract examples for future pipeline integration
 - PLY/point-cloud output awareness with conversion guidance for Cesium rendering
+- Urban resilience demo mode using real OpenStreetMap building footprints and
+  real FEMA flood-zone data for Grand Isle and Port Fourchon, Louisiana, with
+  a real LA Highway 1 response corridor and regional staging references
 
 ## Why This Matters
 
@@ -105,6 +108,14 @@ factory, route, station, zone, and module entities without new binary assets.
 The current shell is not connected to real AI, robotics, factory, logistics, or
 construction-site systems.
 
+Select `Open urban resilience demo` to view a property-centered coastal
+disaster risk and response scenario for Grand Isle and Port Fourchon,
+Louisiana, built from real open data (OpenStreetMap building footprints and
+FEMA National Flood Hazard Layer flood-zone classifications). See
+[Urban Resilience Demo](#urban-resilience-demo-grand-isle--port-fourchon-louisiana)
+below for how to regenerate the underlying dataset. This is a research
+classification, not an official flood determination or evacuation order.
+
 Build the project:
 
 ```bash
@@ -123,6 +134,26 @@ During local development, `public/project_config.json` is loaded only when
 `Open existing demo` is selected. To test config changes, edit values such as
 `projectName`, facility coordinates, boundary coordinates, measurement point
 readings, or belief thresholds, refresh the browser, and open the existing demo.
+
+## Urban Resilience Demo (Grand Isle & Port Fourchon, Louisiana)
+
+The urban resilience demo renders real building footprints and real FEMA
+flood-zone classifications, generated offline (not fetched live from the
+browser) into a committed static GeoJSON dataset under
+`public/data/urban-resilience/`. To regenerate that dataset from current
+upstream sources:
+
+```bash
+npm run fetch:urban-resilience-data   # OpenStreetMap Overpass + FEMA NFHL -> scripts/.cache/
+npm run build:urban-resilience-data   # join/classify -> public/data/urban-resilience/*.geojson
+npm run validate:urban-resilience-data
+```
+
+Property `risk_level` is a FEMA-zone-based classification (VE/V -> High;
+other SFHA zones -> Moderate; mapped outside the SFHA -> Low; and missing or
+undetermined FEMA coverage -> Unknown), not a computed hydraulic model. See
+`docs/decisions/006-urban-resilience-real-data-guardrails.md` for the full
+data-sourcing and safety-framing rationale.
 
 ## Current Project Status
 
@@ -149,6 +180,10 @@ Completed:
 - POC 4C PLY output awareness and local sample test guidance
 - POC 4D local PLY-to-GLB conversion spike documentation and script
 - POC 4H browser-only GPS/EXIF readiness and site-distance checks for image intake
+- Urban resilience demo mode using real OpenStreetMap building footprints and
+  real FEMA National Flood Hazard Layer flood-zone classifications for Grand
+  Isle and Port Fourchon, Louisiana, with a real LA Highway 1 response
+  corridor and regional staging references
 
 In progress / planned:
 
@@ -237,6 +272,10 @@ These are intended research directions, not claims about completed system capabi
 - Image intake readiness is rule-based and local-only
 - No persisted state yet
 - Not a production decommissioning system
+- Urban resilience property risk levels are a FEMA zone-based classification,
+  not a certified flood study, computed hydraulic model, or official
+  determination; response routes/resources are illustrative, not live or
+  official emergency data
 
 ## Repository Structure
 
@@ -245,6 +284,8 @@ The project is being organized into a cleaner viewer architecture:
 ```text
 public/
   project_config.json        Static mock project configuration
+  data/urban-resilience/     Generated real building/flood-zone/response GeoJSON
+                              (see npm run build:urban-resilience-data)
 
 src/
   app/                       Application state and shell composition
