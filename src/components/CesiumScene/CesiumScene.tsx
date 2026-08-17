@@ -27,9 +27,12 @@ interface CesiumSceneProps {
   selectedModularEntityId?: string | null;
   selectedDisasterPropertyId?: string | null;
   selectedUrbanPropertyId?: string | null;
+  selectedUrbanLa1FemaSegmentId?: string | null;
   modularScenario?: ModularHousingScenario | null;
   disasterScenario?: DisasterResilienceScenario | null;
   urbanScenario?: UrbanResilienceScenario | null;
+  urbanLa1FemaExperimentDataUrl?: string | null;
+  urbanResponseRoutesVisible?: boolean;
   modularFocusTarget?: ModularCameraTarget | null;
   modularFocusVersion?: number;
   disasterFocusTarget?: DisasterCameraTarget | null;
@@ -61,9 +64,12 @@ export function CesiumScene({
   selectedModularEntityId = null,
   selectedDisasterPropertyId = null,
   selectedUrbanPropertyId = null,
+  selectedUrbanLa1FemaSegmentId = null,
   modularScenario = null,
   disasterScenario = null,
   urbanScenario = null,
+  urbanLa1FemaExperimentDataUrl = null,
+  urbanResponseRoutesVisible = true,
   modularFocusTarget = null,
   modularFocusVersion = 0,
   disasterFocusTarget = null,
@@ -164,6 +170,32 @@ export function CesiumScene({
   }, [config.projectId, urbanScenario]);
 
   useEffect(() => {
+    adapterRef.current?.setUrbanResponseRoutesVisible(
+      urbanResponseRoutesVisible,
+    );
+  }, [config.projectId, urbanResponseRoutesVisible, urbanScenario]);
+
+  useEffect(() => {
+    const adapter = adapterRef.current;
+
+    if (!adapter) {
+      return;
+    }
+
+    void adapter
+      .renderUrbanLa1FemaExperiment(urbanLa1FemaExperimentDataUrl)
+      .catch((loadError) => {
+        console.warn("Unable to update experimental LA-1/FEMA layer.", loadError);
+      });
+
+    return () => {
+      void adapter.renderUrbanLa1FemaExperiment(null).catch((cleanupError) => {
+        console.warn("Unable to clear experimental LA-1/FEMA layer.", cleanupError);
+      });
+    };
+  }, [config.projectId, urbanLa1FemaExperimentDataUrl]);
+
+  useEffect(() => {
     adapterRef.current?.setLocationPickMode(locationPickEnabled);
   }, [locationPickEnabled]);
 
@@ -174,6 +206,7 @@ export function CesiumScene({
       modularEntityId: selectedModularEntityId,
       disasterPropertyId: selectedDisasterPropertyId,
       urbanPropertyId: selectedUrbanPropertyId,
+      urbanLa1FemaSegmentId: selectedUrbanLa1FemaSegmentId,
     });
   }, [
     selectedMeasurementPointId,
@@ -181,6 +214,7 @@ export function CesiumScene({
     selectedModularEntityId,
     selectedDisasterPropertyId,
     selectedUrbanPropertyId,
+    selectedUrbanLa1FemaSegmentId,
   ]);
 
   useEffect(() => {

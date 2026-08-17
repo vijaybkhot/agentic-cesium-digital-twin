@@ -1,4 +1,9 @@
-import type { UrbanResourceType, UrbanRiskLevel, UrbanRouteStatus } from "../../types/urbanResilience";
+import type {
+  UrbanFemaCoverageStatus,
+  UrbanResourceType,
+  UrbanRiskLevel,
+  UrbanRouteStatus,
+} from "../../types/urbanResilience";
 
 export const URBAN_RESILIENCE_DISCLAIMER =
   "Research prototype. Property risk levels are a zone-based classification " +
@@ -26,6 +31,13 @@ export const URBAN_RESOURCE_TYPES = [
   "staging-reference",
 ] as const satisfies readonly UrbanResourceType[];
 
+export const URBAN_FEMA_COVERAGE_STATUSES = [
+  "available",
+  "partial",
+  "unavailable",
+  "not-queried",
+] as const satisfies readonly UrbanFemaCoverageStatus[];
+
 export function isUrbanRiskLevel(value: unknown): value is UrbanRiskLevel {
   return typeof value === "string" && URBAN_RISK_LEVELS.some((level) => level === value);
 }
@@ -36,4 +48,13 @@ export function isUrbanRouteStatus(value: unknown): value is UrbanRouteStatus {
 
 export function isUrbanResourceType(value: unknown): value is UrbanResourceType {
   return typeof value === "string" && URBAN_RESOURCE_TYPES.some((type) => type === value);
+}
+
+export function isUrbanFemaCoverageStatus(
+  value: unknown,
+): value is UrbanFemaCoverageStatus {
+  return (
+    typeof value === "string" &&
+    URBAN_FEMA_COVERAGE_STATUSES.some((status) => status === value)
+  );
 }

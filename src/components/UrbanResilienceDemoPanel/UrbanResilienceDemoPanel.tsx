@@ -2,7 +2,9 @@ import type {
   UrbanCameraTarget,
   UrbanResilienceScenario,
   SelectedUrbanProperty,
+  SelectedUrbanLa1FemaSegment,
 } from "../../types/urbanResilience";
+import { UrbanLa1FemaExperimentPanel } from "./UrbanLa1FemaExperimentPanel";
 import { UrbanMapLegend } from "./UrbanMapLegend";
 import { UrbanPropertyDashboard } from "./UrbanPropertyDashboard";
 import { UrbanResponseContextList } from "./UrbanResponseContextList";
@@ -12,9 +14,12 @@ import "./UrbanResilienceDemoPanel.css";
 interface UrbanResilienceDemoPanelProps {
   scenario: UrbanResilienceScenario;
   selectedProperty: SelectedUrbanProperty | null;
+  selectedLa1FemaSegment: SelectedUrbanLa1FemaSegment | null;
+  la1FemaExperimentEnabled: boolean;
   ionTokenConfigured: boolean;
   osmBuildingsEnabled: boolean;
   onFocusTarget: (target: UrbanCameraTarget) => void;
+  onLa1FemaExperimentEnabledChange: (enabled: boolean) => void;
   onNewProject: () => void;
   onOpenExistingDemo: () => void;
   onOpenModularDemo: () => void;
@@ -28,9 +33,12 @@ function formatCoordinate(value: number): string {
 export function UrbanResilienceDemoPanel({
   scenario,
   selectedProperty,
+  selectedLa1FemaSegment,
+  la1FemaExperimentEnabled,
   ionTokenConfigured,
   osmBuildingsEnabled,
   onFocusTarget,
+  onLa1FemaExperimentEnabledChange,
   onNewProject,
   onOpenExistingDemo,
   onOpenModularDemo,
@@ -93,6 +101,12 @@ export function UrbanResilienceDemoPanel({
         scenarioName={scenario.name}
         disclaimer={scenario.disclaimer}
         selectedProperty={selectedProperty}
+      />
+
+      <UrbanLa1FemaExperimentPanel
+        enabled={la1FemaExperimentEnabled}
+        selectedSegment={selectedLa1FemaSegment}
+        onEnabledChange={onLa1FemaExperimentEnabledChange}
       />
 
       <UrbanResponseContextList routes={scenario.routes} resources={scenario.resources} />
