@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
+import { resolve } from 'node:path'
 
 const cesiumSource = 'node_modules/cesium/Build/Cesium'
 const cesiumBaseUrl = 'cesiumStatic'
@@ -17,5 +18,16 @@ export default defineConfig({
   ],
   define: {
     CESIUM_BASE_URL: JSON.stringify(`/${cesiumBaseUrl}`),
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(import.meta.dirname, 'index.html'),
+        arcgisUrbanResilience: resolve(
+          import.meta.dirname,
+          'experiments/arcgis-urban-resilience/index.html',
+        ),
+      },
+    },
   },
 })
