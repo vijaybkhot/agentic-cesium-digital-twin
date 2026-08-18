@@ -3,8 +3,10 @@ import type {
   UrbanResilienceScenario,
   SelectedUrbanProperty,
   SelectedUrbanLa1FemaSegment,
+  SelectedUrbanFacility,
 } from "../../types/urbanResilience";
 import { UrbanLa1FemaExperimentPanel } from "./UrbanLa1FemaExperimentPanel";
+import { UrbanFacilityExperimentPanel } from "./UrbanFacilityExperimentPanel";
 import { UrbanMapLegend } from "./UrbanMapLegend";
 import { UrbanPropertyDashboard } from "./UrbanPropertyDashboard";
 import { UrbanResponseContextList } from "./UrbanResponseContextList";
@@ -15,11 +17,14 @@ interface UrbanResilienceDemoPanelProps {
   scenario: UrbanResilienceScenario;
   selectedProperty: SelectedUrbanProperty | null;
   selectedLa1FemaSegment: SelectedUrbanLa1FemaSegment | null;
+  selectedFacility: SelectedUrbanFacility | null;
   la1FemaExperimentEnabled: boolean;
+  facilityExperimentEnabled: boolean;
   ionTokenConfigured: boolean;
   osmBuildingsEnabled: boolean;
   onFocusTarget: (target: UrbanCameraTarget) => void;
   onLa1FemaExperimentEnabledChange: (enabled: boolean) => void;
+  onFacilityExperimentEnabledChange: (enabled: boolean) => void;
   onNewProject: () => void;
   onOpenExistingDemo: () => void;
   onOpenModularDemo: () => void;
@@ -34,11 +39,14 @@ export function UrbanResilienceDemoPanel({
   scenario,
   selectedProperty,
   selectedLa1FemaSegment,
+  selectedFacility,
   la1FemaExperimentEnabled,
+  facilityExperimentEnabled,
   ionTokenConfigured,
   osmBuildingsEnabled,
   onFocusTarget,
   onLa1FemaExperimentEnabledChange,
+  onFacilityExperimentEnabledChange,
   onNewProject,
   onOpenExistingDemo,
   onOpenModularDemo,
@@ -107,6 +115,12 @@ export function UrbanResilienceDemoPanel({
         enabled={la1FemaExperimentEnabled}
         selectedSegment={selectedLa1FemaSegment}
         onEnabledChange={onLa1FemaExperimentEnabledChange}
+      />
+
+      <UrbanFacilityExperimentPanel
+        enabled={facilityExperimentEnabled}
+        selectedFacility={selectedFacility}
+        onEnabledChange={onFacilityExperimentEnabledChange}
       />
 
       <UrbanResponseContextList routes={scenario.routes} resources={scenario.resources} />

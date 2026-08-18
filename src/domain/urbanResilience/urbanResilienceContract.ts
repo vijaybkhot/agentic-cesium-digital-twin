@@ -1,5 +1,7 @@
 import type {
   UrbanFemaCoverageStatus,
+  UrbanFacilityCategory,
+  UrbanFacilityType,
   UrbanResourceType,
   UrbanRiskLevel,
   UrbanRouteStatus,
@@ -38,6 +40,18 @@ export const URBAN_FEMA_COVERAGE_STATUSES = [
   "not-queried",
 ] as const satisfies readonly UrbanFemaCoverageStatus[];
 
+export const URBAN_FACILITY_CATEGORIES = [
+  "public-safety",
+  "community",
+] as const satisfies readonly UrbanFacilityCategory[];
+
+export const URBAN_FACILITY_TYPES = [
+  "fire_station",
+  "police",
+  "townhall",
+  "school",
+] as const satisfies readonly UrbanFacilityType[];
+
 export function isUrbanRiskLevel(value: unknown): value is UrbanRiskLevel {
   return typeof value === "string" && URBAN_RISK_LEVELS.some((level) => level === value);
 }
@@ -56,5 +70,21 @@ export function isUrbanFemaCoverageStatus(
   return (
     typeof value === "string" &&
     URBAN_FEMA_COVERAGE_STATUSES.some((status) => status === value)
+  );
+}
+
+export function isUrbanFacilityCategory(
+  value: unknown,
+): value is UrbanFacilityCategory {
+  return (
+    typeof value === "string" &&
+    URBAN_FACILITY_CATEGORIES.some((category) => category === value)
+  );
+}
+
+export function isUrbanFacilityType(value: unknown): value is UrbanFacilityType {
+  return (
+    typeof value === "string" &&
+    URBAN_FACILITY_TYPES.some((facilityType) => facilityType === value)
   );
 }
