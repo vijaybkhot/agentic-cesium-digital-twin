@@ -76,6 +76,24 @@ function pointInPolygon(point, polygonCoordinates) {
   return !holes.some((hole) => pointInRing(point, hole));
 }
 
+export function pointIntersectsGeometry(point, geometry) {
+  if (!Array.isArray(point) || point.length < 2 || !geometry) {
+    return false;
+  }
+
+  if (geometry.type === "Polygon" && Array.isArray(geometry.coordinates)) {
+    return pointInPolygon(point, geometry.coordinates);
+  }
+
+  if (geometry.type === "MultiPolygon" && Array.isArray(geometry.coordinates)) {
+    return geometry.coordinates.some((polygonCoordinates) =>
+      pointInPolygon(point, polygonCoordinates),
+    );
+  }
+
+  return false;
+}
+
 function lineIntersectsPolygonCoordinates(lineCoordinates, polygonCoordinates) {
   for (let lineIndex = 1; lineIndex < lineCoordinates.length; lineIndex += 1) {
     const lineStart = lineCoordinates[lineIndex - 1];
@@ -109,6 +127,65 @@ export function lineStringIntersectsGeometry(lineCoordinates, geometry) {
   }
 
   return false;
+}
+
+export function polygonIntersectsGeometry(polygonCoordinates, geometry) {
+  if (!Array.isArray(polygonCoordinates) || polygonCoordinates.length === 0 || !geometry) {
+    return false;
+  }
+
+  if (
+    polygonCoordinates.some((ring) =>
+      lineStringIntersectsGeometry(ring, geometry),
+    )
+  ) {
+    return true;
+  }
+
+  const targetPolygons =
+    geometry.type === "Polygon"
+      ? [geometry.coordinates]
+      : geometry.type === "MultiPolygon"
+        ? geometry.coordinates
+        : [];
+
+  return targetPolygons.some((targetPolygon) => {
+    const targetPoint = targetPolygon?.[0]?.[0];
+    return Array.isArray(targetPoint) && pointInPolygon(targetPoint, polygonCoordinates);
+  });
+}
+
+export function geometryWithinBbox(geometry, [south, west, north, east]) {
+  if (!geometry || !Array.isArray(geometry.coordinates)) {
+    return false;
+  }
+
+  const positions = [];
+
+  function collectCoordinates(value) {
+    if (
+      Array.isArray(value) &&
+      value.length >= 2 &&
+      Number.isFinite(value[0]) &&
+      Number.isFinite(value[1])
+    ) {
+      positions.push(value);
+      return;
+    }
+
+    if (Array.isArray(value)) {
+      value.forEach(collectCoordinates);
+    }
+  }
+
+  collectCoordinates(geometry.coordinates);
+
+  return (
+    positions.length > 0 &&
+    positions.every(
+      ([lon, lat]) => lon >= west && lon <= east && lat >= south && lat <= north,
+    )
+  );
 }
 
 export function lineStringIntersectsBbox(lineCoordinates, [south, west, north, east]) {
