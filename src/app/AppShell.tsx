@@ -32,6 +32,7 @@ import type {
 import type {
   UrbanCameraTarget,
   SelectedUrbanLa1FemaSegment,
+  SelectedUrbanFacility,
   SelectedUrbanProperty,
 } from "../types/urbanResilience";
 import { useProjectState } from "./useProjectState";
@@ -92,7 +93,11 @@ export function AppShell() {
     useState<SelectedUrbanProperty | null>(null);
   const [selectedUrbanLa1FemaSegment, setSelectedUrbanLa1FemaSegment] =
     useState<SelectedUrbanLa1FemaSegment | null>(null);
+  const [selectedUrbanFacility, setSelectedUrbanFacility] =
+    useState<SelectedUrbanFacility | null>(null);
   const [urbanLa1FemaExperimentEnabled, setUrbanLa1FemaExperimentEnabled] =
+    useState(false);
+  const [urbanFacilityExperimentEnabled, setUrbanFacilityExperimentEnabled] =
     useState(false);
   const [modularScenario, setModularScenario] = useState(
     mockModularHousingScenario,
@@ -227,6 +232,8 @@ export function AppShell() {
     navigationVersionRef.current = navigationVersion;
     setUrbanLa1FemaExperimentEnabled(false);
     setSelectedUrbanLa1FemaSegment(null);
+    setUrbanFacilityExperimentEnabled(false);
+    setSelectedUrbanFacility(null);
 
     try {
       await loadExistingDemo();
@@ -239,6 +246,7 @@ export function AppShell() {
       setSelectedDisasterProperty(null);
       setSelectedUrbanProperty(null);
       setSelectedUrbanLa1FemaSegment(null);
+      setSelectedUrbanFacility(null);
       setModularFocusRequest(null);
       setDisasterFocusRequest(null);
       setUrbanFocusRequest(null);
@@ -257,7 +265,9 @@ export function AppShell() {
     setSelectedDisasterProperty(null);
     setSelectedUrbanProperty(null);
     setSelectedUrbanLa1FemaSegment(null);
+    setSelectedUrbanFacility(null);
     setUrbanLa1FemaExperimentEnabled(false);
+    setUrbanFacilityExperimentEnabled(false);
     setModularFocusRequest(null);
     setDisasterFocusRequest(null);
     setUrbanFocusRequest(null);
@@ -274,7 +284,9 @@ export function AppShell() {
     setSelectedDisasterProperty(null);
     setSelectedUrbanProperty(null);
     setSelectedUrbanLa1FemaSegment(null);
+    setSelectedUrbanFacility(null);
     setUrbanLa1FemaExperimentEnabled(false);
+    setUrbanFacilityExperimentEnabled(false);
     setDisasterFocusRequest(null);
     setUrbanFocusRequest(null);
     setModularFocusRequest((currentRequest) => ({
@@ -294,7 +306,9 @@ export function AppShell() {
     setSelectedDisasterProperty(null);
     setSelectedUrbanProperty(null);
     setSelectedUrbanLa1FemaSegment(null);
+    setSelectedUrbanFacility(null);
     setUrbanLa1FemaExperimentEnabled(false);
+    setUrbanFacilityExperimentEnabled(false);
     setModularFocusRequest(null);
     setUrbanFocusRequest(null);
     setDisasterScenario(mockDisasterResilienceScenario);
@@ -317,7 +331,9 @@ export function AppShell() {
     setSelectedDisasterProperty(null);
     setSelectedUrbanProperty(null);
     setSelectedUrbanLa1FemaSegment(null);
+    setSelectedUrbanFacility(null);
     setUrbanLa1FemaExperimentEnabled(false);
+    setUrbanFacilityExperimentEnabled(false);
     setModularFocusRequest(null);
     setDisasterFocusRequest(null);
     setDisasterScenario(mockDisasterResilienceScenario);
@@ -459,6 +475,11 @@ export function AppShell() {
               ? selectedUrbanLa1FemaSegment?.segmentId ?? null
               : null
           }
+          selectedUrbanFacilityId={
+            mode === "urban-resilience-demo"
+              ? selectedUrbanFacility?.facilityId ?? null
+              : null
+          }
           modularScenario={
             mode === "modular-demo" ? modularScenario : null
           }
@@ -471,6 +492,11 @@ export function AppShell() {
           urbanLa1FemaExperimentDataUrl={
             mode === "urban-resilience-demo" && urbanLa1FemaExperimentEnabled
               ? urbanScenario.experimentalLa1FemaDataUrl
+              : null
+          }
+          urbanFacilityExperimentDataUrl={
+            mode === "urban-resilience-demo" && urbanFacilityExperimentEnabled
+              ? urbanScenario.experimentalFacilityDataUrl
               : null
           }
           urbanResponseRoutesVisible={
@@ -546,6 +572,7 @@ export function AppShell() {
                   attributes: selection.attributes,
                 });
                 setSelectedUrbanLa1FemaSegment(null);
+                setSelectedUrbanFacility(null);
                 setIsPanelVisible(true);
               } else if (selection.type === "urbanLa1FemaSegment") {
                 setSelectedUrbanLa1FemaSegment({
@@ -553,6 +580,15 @@ export function AppShell() {
                   attributes: selection.attributes,
                 });
                 setSelectedUrbanProperty(null);
+                setSelectedUrbanFacility(null);
+                setIsPanelVisible(true);
+              } else if (selection.type === "urbanFacility") {
+                setSelectedUrbanFacility({
+                  facilityId: selection.id,
+                  attributes: selection.attributes,
+                });
+                setSelectedUrbanProperty(null);
+                setSelectedUrbanLa1FemaSegment(null);
                 setIsPanelVisible(true);
               }
               return;
@@ -632,7 +668,9 @@ export function AppShell() {
           scenario={urbanScenario}
           selectedProperty={selectedUrbanProperty}
           selectedLa1FemaSegment={selectedUrbanLa1FemaSegment}
+          selectedFacility={selectedUrbanFacility}
           la1FemaExperimentEnabled={urbanLa1FemaExperimentEnabled}
+          facilityExperimentEnabled={urbanFacilityExperimentEnabled}
           ionTokenConfigured={hasCesiumIonAccessToken()}
           osmBuildingsEnabled={isUrbanOsmBuildingsEnabled()}
           onFocusTarget={focusUrbanTarget}
@@ -641,6 +679,13 @@ export function AppShell() {
 
             if (!enabled) {
               setSelectedUrbanLa1FemaSegment(null);
+            }
+          }}
+          onFacilityExperimentEnabledChange={(enabled) => {
+            setUrbanFacilityExperimentEnabled(enabled);
+
+            if (!enabled) {
+              setSelectedUrbanFacility(null);
             }
           }}
           onNewProject={startNewProject}

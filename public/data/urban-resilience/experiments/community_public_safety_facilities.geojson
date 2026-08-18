@@ -1,0 +1,261 @@
+{
+  "type": "FeatureCollection",
+  "name": "Community/public-safety facilities with conservative FEMA relationships",
+  "metadata": {
+    "areaResults": [
+      {
+        "id": "grand-isle",
+        "name": "Grand Isle facility query window",
+        "osmResultCount": 4,
+        "generatedFeatureCount": 4,
+        "femaFeatureCount": 7
+      },
+      {
+        "id": "port-fourchon",
+        "name": "Port Fourchon facility query window",
+        "osmResultCount": 0,
+        "generatedFeatureCount": 0,
+        "femaFeatureCount": 0
+      }
+    ],
+    "limitation": "Port Fourchon returned no matching OSM facility records. Absence from OpenStreetMap does not prove that facilities are absent."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "facility_id": "osm-node-367132153",
+        "feature_kind": "community-public-safety-facility",
+        "facility_category": "public-safety",
+        "facility_type": "fire_station",
+        "facility_type_label": "Fire station",
+        "name": "Grand Isle Fire Department",
+        "address_label": "Not mapped in OSM",
+        "osm_element_type": "node",
+        "osm_id": 367132153,
+        "osm_classification_key": "amenity",
+        "osm_classification_value": "fire_station",
+        "osm_tags_json": "{\"addr:state\":\"LA\",\"amenity\":\"fire_station\",\"ele\":\"2\",\"gnis:feature_id\":\"2332384\",\"name\":\"Grand Isle Fire Department\",\"source\":\"USGS Geonames\"}",
+        "study_area": "Grand Isle facility query window",
+        "fema_coverage_status": "available",
+        "intersects_mapped_flood_hazard": true,
+        "fema_zones": [
+          "VE"
+        ],
+        "fema_relationship_reason": "The facility geometry intersects mapped FEMA zone(s): VE in polygon geometry returned for the Grand Isle facility query window.",
+        "interpretation": "Mapped FEMA hazard overlap. This describes a geographic relationship only; it does not indicate current flooding, closure, availability, operational status, vulnerability, criticality, safety, or emergency-service availability.",
+        "osm_source": "OpenStreetMap Overpass API community/public-safety facility geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Point facility geometry tested against FEMA NFHL Polygon/MultiPolygon geometry; no operational, safety, or availability analysis."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.9987268,
+          29.2308198
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "facility_id": "osm-node-367133144",
+        "feature_kind": "community-public-safety-facility",
+        "facility_category": "public-safety",
+        "facility_type": "police",
+        "facility_type_label": "Police",
+        "name": "Grand Isle Police Department",
+        "address_label": "170 Ludwig Lane",
+        "osm_element_type": "node",
+        "osm_id": 367133144,
+        "osm_classification_key": "amenity",
+        "osm_classification_value": "police",
+        "osm_tags_json": "{\"addr:city\":\"Grand Isle\",\"addr:housenumber\":\"170\",\"addr:postcode\":\"70358\",\"addr:state\":\"LA\",\"addr:street\":\"Ludwig Lane\",\"amenity\":\"police\",\"ele\":\"1\",\"gnis:feature_id\":\"2334197\",\"name\":\"Grand Isle Police Department\",\"source\":\"USGS Geonames\",\"website\":\"http://www.grandislepd.com/portal/\"}",
+        "study_area": "Grand Isle facility query window",
+        "fema_coverage_status": "available",
+        "intersects_mapped_flood_hazard": true,
+        "fema_zones": [
+          "VE"
+        ],
+        "fema_relationship_reason": "The facility geometry intersects mapped FEMA zone(s): VE in polygon geometry returned for the Grand Isle facility query window.",
+        "interpretation": "Mapped FEMA hazard overlap. This describes a geographic relationship only; it does not indicate current flooding, closure, availability, operational status, vulnerability, criticality, safety, or emergency-service availability.",
+        "osm_source": "OpenStreetMap Overpass API community/public-safety facility geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Point facility geometry tested against FEMA NFHL Polygon/MultiPolygon geometry; no operational, safety, or availability analysis."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.9980412,
+          29.2339013
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "facility_id": "osm-way-924797034",
+        "feature_kind": "community-public-safety-facility",
+        "facility_category": "community",
+        "facility_type": "townhall",
+        "facility_type_label": "Town hall",
+        "name": "Town of Grand Isle",
+        "address_label": "170 Ludwig Lane",
+        "osm_element_type": "way",
+        "osm_id": 924797034,
+        "osm_classification_key": "amenity",
+        "osm_classification_value": "townhall",
+        "osm_tags_json": "{\"addr:city\":\"Grand Isle\",\"addr:housenumber\":\"170\",\"addr:postcode\":\"70358\",\"addr:state\":\"LA\",\"addr:street\":\"Ludwig Lane\",\"amenity\":\"townhall\",\"building\":\"yes\",\"heritage\":\"2\",\"heritage:operator\":\"nrhp\",\"heritage:website\":\"https://www.nps.gov/subjects/nationalregister/index.htm\",\"historic\":\"maritime\",\"nrhp:criteria\":\"A, C\",\"nrhp:inscription_date\":\"2018-12-04\",\"old_name\":\"United States Coast Guard Station No. 79\",\"protection_title\":\"Town of Grand Isle\",\"ref:nrhp\":\"100003195\",\"source_ref\":\"NRHP\",\"website\":\"https://www.townofgrandisle.com/government/\"}",
+        "study_area": "Grand Isle facility query window",
+        "fema_coverage_status": "available",
+        "intersects_mapped_flood_hazard": true,
+        "fema_zones": [
+          "VE"
+        ],
+        "fema_relationship_reason": "The facility geometry intersects mapped FEMA zone(s): VE in polygon geometry returned for the Grand Isle facility query window.",
+        "interpretation": "Mapped FEMA hazard overlap. This describes a geographic relationship only; it does not indicate current flooding, closure, availability, operational status, vulnerability, criticality, safety, or emergency-service availability.",
+        "osm_source": "OpenStreetMap Overpass API community/public-safety facility geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Polygon facility geometry tested against FEMA NFHL Polygon/MultiPolygon geometry; no operational, safety, or availability analysis."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -89.9980898,
+              29.2339265
+            ],
+            [
+              -89.9980544,
+              29.2338665
+            ],
+            [
+              -89.998088,
+              29.2338514
+            ],
+            [
+              -89.9980686,
+              29.2338185
+            ],
+            [
+              -89.9980438,
+              29.2338296
+            ],
+            [
+              -89.9979565,
+              29.2336817
+            ],
+            [
+              -89.9978263,
+              29.2337402
+            ],
+            [
+              -89.9979302,
+              29.2339161
+            ],
+            [
+              -89.9979513,
+              29.2339066
+            ],
+            [
+              -89.9979606,
+              29.2339221
+            ],
+            [
+              -89.9979905,
+              29.2339712
+            ],
+            [
+              -89.9980898,
+              29.2339265
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "facility_id": "osm-way-924801527",
+        "feature_kind": "community-public-safety-facility",
+        "facility_category": "community",
+        "facility_type": "school",
+        "facility_type_label": "School",
+        "name": "Grand Isle High School",
+        "address_label": "Not mapped in OSM",
+        "osm_element_type": "way",
+        "osm_id": 924801527,
+        "osm_classification_key": "amenity",
+        "osm_classification_value": "school",
+        "osm_tags_json": "{\"amenity\":\"school\",\"ele\":\"1\",\"gnis:feature_id\":\"557478\",\"name\":\"Grand Isle High School\"}",
+        "study_area": "Grand Isle facility query window",
+        "fema_coverage_status": "available",
+        "intersects_mapped_flood_hazard": true,
+        "fema_zones": [
+          "VE"
+        ],
+        "fema_relationship_reason": "The facility geometry intersects mapped FEMA zone(s): VE in polygon geometry returned for the Grand Isle facility query window.",
+        "interpretation": "Mapped FEMA hazard overlap. This describes a geographic relationship only; it does not indicate current flooding, closure, availability, operational status, vulnerability, criticality, safety, or emergency-service availability.",
+        "osm_source": "OpenStreetMap Overpass API community/public-safety facility geometry (ODbL)",
+        "fema_source": "FEMA National Flood Hazard Layer MapServer layer 28",
+        "processing_method": "Polygon facility geometry tested against FEMA NFHL Polygon/MultiPolygon geometry; no operational, safety, or availability analysis."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -89.9973375,
+              29.2325625
+            ],
+            [
+              -89.9980246,
+              29.2319809
+            ],
+            [
+              -89.9992695,
+              29.2329052
+            ],
+            [
+              -89.9993355,
+              29.2329767
+            ],
+            [
+              -89.9993495,
+              29.2330321
+            ],
+            [
+              -89.999312,
+              29.2331565
+            ],
+            [
+              -89.999122,
+              29.233346
+            ],
+            [
+              -89.9989247,
+              29.233555
+            ],
+            [
+              -89.9987085,
+              29.2337439
+            ],
+            [
+              -89.998632,
+              29.2338035
+            ],
+            [
+              -89.9982891,
+              29.2340082
+            ],
+            [
+              -89.9973375,
+              29.2325625
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

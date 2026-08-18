@@ -12,6 +12,10 @@ export type UrbanFemaCoverageStatus =
   | "unavailable"
   | "not-queried";
 
+export type UrbanFacilityCategory = "public-safety" | "community";
+
+export type UrbanFacilityType = "fire_station" | "police" | "townhall" | "school";
+
 export interface UrbanCoordinate {
   /** Latitude in decimal degrees. */
   lat: number;
@@ -96,6 +100,35 @@ export interface SelectedUrbanLa1FemaSegment {
   attributes: UrbanLa1FemaSegmentAttributes;
 }
 
+export interface UrbanFacilityAttributes {
+  facility_id: string;
+  feature_kind: "community-public-safety-facility";
+  facility_category: UrbanFacilityCategory;
+  facility_type: UrbanFacilityType;
+  facility_type_label: string;
+  name: string;
+  address_label: string;
+  osm_element_type: "node" | "way";
+  osm_id: number;
+  osm_classification_key: "amenity";
+  osm_classification_value: UrbanFacilityType;
+  osm_tags_json: string;
+  study_area: string;
+  fema_coverage_status: UrbanFemaCoverageStatus;
+  intersects_mapped_flood_hazard: boolean | null;
+  fema_zones: string[];
+  fema_relationship_reason: string;
+  interpretation: string;
+  osm_source: string;
+  fema_source: string;
+  processing_method: string;
+}
+
+export interface SelectedUrbanFacility {
+  facilityId: string;
+  attributes: UrbanFacilityAttributes;
+}
+
 export interface UrbanResilienceScenario {
   id: string;
   name: string;
@@ -105,6 +138,7 @@ export interface UrbanResilienceScenario {
   floodZoneDataUrl: string;
   responseDataUrl: string;
   experimentalLa1FemaDataUrl: string;
+  experimentalFacilityDataUrl: string;
   routes: UrbanResponseRoute[];
   resources: UrbanResourceSite[];
   events: UrbanTwinEvent[];

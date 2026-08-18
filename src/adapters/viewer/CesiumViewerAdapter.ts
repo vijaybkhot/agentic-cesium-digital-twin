@@ -65,6 +65,11 @@ import {
   applyUrbanLa1FemaSegmentVisualState,
   styleUrbanLa1FemaDataSource,
 } from "../../cesium/styleUrbanLa1FemaDataSource";
+import { parseUrbanFacilityAttributes } from "../../domain/urbanResilience/parseUrbanFacilityAttributes";
+import {
+  applyUrbanFacilityVisualState,
+  styleUrbanFacilityDataSource,
+} from "../../cesium/styleUrbanFacilityDataSource";
 
 type SelectionHandler = (selection: ViewerSelection) => void;
 
@@ -82,16 +87,19 @@ export class CesiumViewerAdapter implements ViewerAdapter {
   private readonly disasterPropertyEntities = new Map<string, Cesium.Entity>();
   private readonly urbanDataSources = new Set<Cesium.DataSource>();
   private readonly urbanLa1FemaDataSources = new Set<Cesium.DataSource>();
+  private readonly urbanFacilityDataSources = new Set<Cesium.DataSource>();
   private readonly urbanEntities = new Set<Cesium.Entity>();
   private readonly urbanResponseRouteEntities = new Set<Cesium.Entity>();
   private readonly urbanTilesets = new Set<Cesium.Cesium3DTileset>();
   private readonly urbanPropertyEntities = new Map<string, Cesium.Entity>();
   private readonly urbanFloodZoneEntities = new Map<string, Cesium.Entity>();
   private readonly urbanLa1FemaSegmentEntities = new Map<string, Cesium.Entity>();
+  private readonly urbanFacilityEntities = new Map<string, Cesium.Entity>();
   private readonly measurementPoints = new Map<string, MeasurementPointConfig>();
   private disasterLoadVersion = 0;
   private urbanLoadVersion = 0;
   private urbanLa1FemaLoadVersion = 0;
+  private urbanFacilityLoadVersion = 0;
   private selectedEntityIds: ViewerSelectedEntityIds = {};
 
   constructor(
@@ -369,6 +377,70 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     }
   }
 
+  async renderUrbanFacilityExperiment(dataUrl: string | null): Promise<void> {
+    const loadVersion = this.urbanFacilityLoadVersion + 1;
+    this.urbanFacilityLoadVersion = loadVersion;
+    const viewer = this.viewer;
+
+    this.clearUrbanFacilityExperiment();
+
+    if (!dataUrl || !viewer || viewer.isDestroyed()) {
+      return;
+    }
+
+    let dataSource: Cesium.GeoJsonDataSource | null = null;
+
+    try {
+      dataSource = await Cesium.GeoJsonDataSource.load(dataUrl);
+      dataSource.show = false;
+      dataSource.name = "community-public-safety-facilities";
+
+      if (!this.isCurrentUrbanFacilityLoad(loadVersion, viewer)) {
+        dataSource.entities.removeAll();
+        return;
+      }
+
+      const facilityEntities = styleUrbanFacilityDataSource(dataSource);
+
+      if (facilityEntities.size !== dataSource.entities.values.length) {
+        throw new Error("Facility GeoJSON contains an invalid or unsupported feature.");
+      }
+
+      if (!this.isCurrentUrbanFacilityLoad(loadVersion, viewer)) {
+        dataSource.entities.removeAll();
+        return;
+      }
+
+      await viewer.dataSources.add(dataSource);
+
+      if (!this.isCurrentUrbanFacilityLoad(loadVersion, viewer)) {
+        if (!viewer.isDestroyed() && viewer.dataSources.contains(dataSource)) {
+          viewer.dataSources.remove(dataSource, true);
+        }
+        return;
+      }
+
+      this.urbanFacilityDataSources.add(dataSource);
+      facilityEntities.forEach((entity, facilityId) => {
+        this.urbanFacilityEntities.set(facilityId, entity);
+      });
+      dataSource.show = true;
+      this.applySelectionStyles();
+    } catch (loadError: unknown) {
+      if (dataSource && !viewer.isDestroyed()) {
+        if (viewer.dataSources.contains(dataSource)) {
+          viewer.dataSources.remove(dataSource, true);
+        } else {
+          dataSource.entities.removeAll();
+        }
+      }
+
+      if (this.isCurrentUrbanFacilityLoad(loadVersion, viewer)) {
+        console.warn("Unable to load community/public-safety facility GeoJSON.", loadError);
+      }
+    }
+  }
+
   setUrbanResponseRoutesVisible(visible: boolean): void {
     this.urbanResponseRouteEntities.forEach((entity) => {
       entity.show = visible;
@@ -465,6 +537,8 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.clearUrbanLayers();
     this.urbanLa1FemaLoadVersion += 1;
     this.clearUrbanLa1FemaExperiment();
+    this.urbanFacilityLoadVersion += 1;
+    this.clearUrbanFacilityExperiment();
 
     if (this.clickHandler && !this.clickHandler.isDestroyed()) {
       this.clickHandler.destroy();
@@ -487,12 +561,14 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.disasterPropertyEntities.clear();
     this.urbanDataSources.clear();
     this.urbanLa1FemaDataSources.clear();
+    this.urbanFacilityDataSources.clear();
     this.urbanEntities.clear();
     this.urbanResponseRouteEntities.clear();
     this.urbanTilesets.clear();
     this.urbanPropertyEntities.clear();
     this.urbanFloodZoneEntities.clear();
     this.urbanLa1FemaSegmentEntities.clear();
+    this.urbanFacilityEntities.clear();
     this.measurementPoints.clear();
   }
 
@@ -590,6 +666,17 @@ export class CesiumViewerAdapter implements ViewerAdapter {
   ): boolean {
     return (
       loadVersion === this.urbanLa1FemaLoadVersion &&
+      this.viewer === viewer &&
+      !viewer.isDestroyed()
+    );
+  }
+
+  private isCurrentUrbanFacilityLoad(
+    loadVersion: number,
+    viewer: Cesium.Viewer,
+  ): boolean {
+    return (
+      loadVersion === this.urbanFacilityLoadVersion &&
       this.viewer === viewer &&
       !viewer.isDestroyed()
     );
@@ -789,6 +876,21 @@ export class CesiumViewerAdapter implements ViewerAdapter {
     this.urbanLa1FemaSegmentEntities.clear();
   }
 
+  private clearUrbanFacilityExperiment(): void {
+    const viewer = this.viewer;
+
+    if (viewer && !viewer.isDestroyed()) {
+      this.urbanFacilityDataSources.forEach((dataSource) => {
+        if (viewer.dataSources.contains(dataSource)) {
+          viewer.dataSources.remove(dataSource, true);
+        }
+      });
+    }
+
+    this.urbanFacilityDataSources.clear();
+    this.urbanFacilityEntities.clear();
+  }
+
   private applySelectionStyles(): void {
     this.pointEntities.forEach((entity, pointId) => {
       const point = this.measurementPoints.get(pointId);
@@ -849,6 +951,20 @@ export class CesiumViewerAdapter implements ViewerAdapter {
         );
       }
     });
+
+    this.urbanFacilityEntities.forEach((entity, facilityId) => {
+      const attributes = parseUrbanFacilityAttributes(
+        entity.properties?.getValue(),
+      );
+
+      if (attributes) {
+        applyUrbanFacilityVisualState(
+          entity,
+          attributes,
+          this.selectedEntityIds.urbanFacilityId === facilityId,
+        );
+      }
+    });
   }
 
   private attachSelectionHandler(): void {
@@ -900,8 +1016,21 @@ export class CesiumViewerAdapter implements ViewerAdapter {
               );
             })
           : undefined;
+      const urbanFacilityPick =
+        !disasterPropertyPick && this.urbanFacilityEntities.size > 0
+          ? this.viewer.scene.drillPick(event.position).find((candidate) => {
+              const candidateEntity = candidate.id as Cesium.Entity | undefined;
+
+              return (
+                candidateEntity?.properties?.entityType?.getValue() ===
+                "urbanFacility"
+              );
+            })
+          : undefined;
       const urbanPropertyPick =
-        !disasterPropertyPick && this.urbanPropertyEntities.size > 0
+        !disasterPropertyPick &&
+        !urbanFacilityPick &&
+        this.urbanPropertyEntities.size > 0
           ? this.viewer.scene.drillPick(event.position).find((candidate) => {
               const candidateEntity = candidate.id as
                 | Cesium.Entity
@@ -916,6 +1045,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
           : undefined;
       const urbanLa1FemaSegmentPick =
         !disasterPropertyPick &&
+        !urbanFacilityPick &&
         !urbanPropertyPick &&
         this.urbanLa1FemaSegmentEntities.size > 0
           ? this.viewer.scene.drillPick(event.position).find((candidate) => {
@@ -929,6 +1059,7 @@ export class CesiumViewerAdapter implements ViewerAdapter {
           : undefined;
       const pickedObject =
         disasterPropertyPick ??
+        urbanFacilityPick ??
         urbanPropertyPick ??
         urbanLa1FemaSegmentPick ??
         this.viewer.scene.pick(event.position);
@@ -954,6 +1085,10 @@ export class CesiumViewerAdapter implements ViewerAdapter {
       const urbanLa1FemaSegmentId =
         entity.properties?.urbanLa1FemaSegmentId?.getValue();
       const urbanLa1FemaSegmentAttributes = parseUrbanLa1FemaSegmentAttributes(
+        entity.properties?.getValue(),
+      );
+      const urbanFacilityId = entity.properties?.urbanFacilityId?.getValue();
+      const urbanFacilityAttributes = parseUrbanFacilityAttributes(
         entity.properties?.getValue(),
       );
       const modularKind = entity.properties?.modularKind?.getValue() as
@@ -1006,6 +1141,18 @@ export class CesiumViewerAdapter implements ViewerAdapter {
           type: "urbanLa1FemaSegment",
           id: urbanLa1FemaSegmentId,
           attributes: urbanLa1FemaSegmentAttributes,
+        });
+      }
+
+      if (
+        entityType === "urbanFacility" &&
+        typeof urbanFacilityId === "string" &&
+        urbanFacilityAttributes?.facility_id === urbanFacilityId
+      ) {
+        this.onEntitySelected({
+          type: "urbanFacility",
+          id: urbanFacilityId,
+          attributes: urbanFacilityAttributes,
         });
       }
 

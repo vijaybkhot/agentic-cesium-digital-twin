@@ -15,7 +15,10 @@
     "build:urban-resilience-data": "node scripts/buildUrbanResiliencePropertyData.mjs",
     "validate:urban-resilience-data": "node scripts/validateUrbanResilienceData.mjs",
     "build:urban-resilience-la1-fema-experiment": "node scripts/buildUrbanResilienceLa1FemaExperiment.mjs",
-    "validate:urban-resilience-la1-fema-experiment": "node scripts/validateUrbanResilienceLa1FemaExperiment.mjs"
+    "validate:urban-resilience-la1-fema-experiment": "node scripts/validateUrbanResilienceLa1FemaExperiment.mjs",
+    "fetch:urban-resilience-facility-data": "node scripts/fetchUrbanResilienceFacilitySourceData.mjs",
+    "build:urban-resilience-facility-data": "node scripts/buildUrbanResilienceFacilityExperiment.mjs",
+    "validate:urban-resilience-facility-data": "node scripts/validateUrbanResilienceFacilityExperiment.mjs"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
