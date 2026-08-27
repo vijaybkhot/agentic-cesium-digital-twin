@@ -16,6 +16,12 @@ export type UrbanFacilityCategory = "public-safety" | "community";
 
 export type UrbanFacilityType = "fire_station" | "police" | "townhall" | "school";
 
+export type UrbanGroundElevationStatus = "available" | "unavailable";
+
+export type UrbanGroundElevationEntityKind =
+  | "building"
+  | "community-public-safety-facility";
+
 export interface UrbanCoordinate {
   /** Latitude in decimal degrees. */
   lat: number;
@@ -129,6 +135,39 @@ export interface SelectedUrbanFacility {
   attributes: UrbanFacilityAttributes;
 }
 
+export interface UrbanGroundElevationAttributes {
+  entity_key: string;
+  entity_kind: UrbanGroundElevationEntityKind;
+  entity_id: string;
+  display_label: string;
+  property_id: string | null;
+  facility_id: string | null;
+  osm_element_type: "node" | "way";
+  osm_id: number;
+  query_longitude: number;
+  query_latitude: number;
+  representative_point_method: string;
+  elevation_status: UrbanGroundElevationStatus;
+  ground_elevation_m: number | null;
+  elevation_units: "meters";
+  elevation_source: string;
+  source_dataset: string;
+  elevation_service_endpoint: string;
+  elevation_service_version: string;
+  query_wkid: number;
+  elevation_raster_id: number | null;
+  service_reported_resolution: number | null;
+  resolution_note: string;
+  source_acquisition_date: string | null;
+  source_acquisition_date_raw: string | null;
+  retrieved_at: string | null;
+  horizontal_reference_note: string;
+  vertical_reference_note: string;
+  accuracy_note: string;
+  interpretation_note: string;
+  unavailable_reason: string | null;
+}
+
 export interface UrbanResilienceScenario {
   id: string;
   name: string;
@@ -139,6 +178,7 @@ export interface UrbanResilienceScenario {
   responseDataUrl: string;
   experimentalLa1FemaDataUrl: string;
   experimentalFacilityDataUrl: string;
+  experimentalGroundElevationDataUrl: string;
   routes: UrbanResponseRoute[];
   resources: UrbanResourceSite[];
   events: UrbanTwinEvent[];

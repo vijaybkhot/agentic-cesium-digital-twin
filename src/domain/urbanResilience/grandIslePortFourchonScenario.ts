@@ -22,6 +22,8 @@ export const grandIslePortFourchonScenario: UrbanResilienceScenario = {
     "/data/urban-resilience/experiments/la1_fema_intersections.geojson",
   experimentalFacilityDataUrl:
     "/data/urban-resilience/experiments/community_public_safety_facilities.geojson",
+  experimentalGroundElevationDataUrl:
+    "/data/urban-resilience/experiments/grand_isle_ground_elevation_sample.geojson",
   routes: [],
   resources: [],
   events: [
