@@ -1,8 +1,15 @@
-import type { SelectedUrbanFacility } from "../../types/urbanResilience";
+import type { UrbanGroundElevationLookupStatus } from "../../domain/urbanResilience/loadUrbanGroundElevationSample";
+import type {
+  SelectedUrbanFacility,
+  UrbanGroundElevationAttributes,
+} from "../../types/urbanResilience";
+import { UrbanGroundElevationDetails } from "./UrbanGroundElevationDetails";
 
 interface UrbanFacilityExperimentPanelProps {
   enabled: boolean;
   selectedFacility: SelectedUrbanFacility | null;
+  groundElevationLookupStatus: UrbanGroundElevationLookupStatus;
+  groundElevation?: UrbanGroundElevationAttributes;
   onEnabledChange: (enabled: boolean) => void;
 }
 
@@ -28,6 +35,8 @@ function formatRelationship(value: boolean | null): string {
 export function UrbanFacilityExperimentPanel({
   enabled,
   selectedFacility,
+  groundElevationLookupStatus,
+  groundElevation,
   onEnabledChange,
 }: UrbanFacilityExperimentPanelProps) {
   const attributes = selectedFacility?.attributes;
@@ -90,6 +99,10 @@ export function UrbanFacilityExperimentPanel({
             <div><dt>Processing method</dt><dd>{attributes.processing_method}</dd></div>
             <div><dt>Interpretation</dt><dd>{attributes.interpretation}</dd></div>
           </dl>
+          <UrbanGroundElevationDetails
+            lookupStatus={groundElevationLookupStatus}
+            record={groundElevation}
+          />
         </>
       )}
     </section>

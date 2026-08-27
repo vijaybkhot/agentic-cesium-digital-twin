@@ -1,10 +1,17 @@
 import { isUrbanRiskLevel } from "../../domain/urbanResilience/urbanResilienceContract";
-import type { SelectedUrbanProperty } from "../../types/urbanResilience";
+import type { UrbanGroundElevationLookupStatus } from "../../domain/urbanResilience/loadUrbanGroundElevationSample";
+import type {
+  SelectedUrbanProperty,
+  UrbanGroundElevationAttributes,
+} from "../../types/urbanResilience";
+import { UrbanGroundElevationDetails } from "./UrbanGroundElevationDetails";
 
 interface UrbanPropertyDashboardProps {
   scenarioName: string;
   disclaimer: string;
   selectedProperty: SelectedUrbanProperty | null;
+  groundElevationLookupStatus: UrbanGroundElevationLookupStatus;
+  groundElevation?: UrbanGroundElevationAttributes;
 }
 
 function displayText(value: unknown): string {
@@ -15,6 +22,8 @@ export function UrbanPropertyDashboard({
   scenarioName,
   disclaimer,
   selectedProperty,
+  groundElevationLookupStatus,
+  groundElevation,
 }: UrbanPropertyDashboardProps) {
   if (!selectedProperty) {
     return (
@@ -89,6 +98,11 @@ export function UrbanPropertyDashboard({
           <dd>{displayText(attributes.confidence_note)}</dd>
         </div>
       </dl>
+
+      <UrbanGroundElevationDetails
+        lookupStatus={groundElevationLookupStatus}
+        record={groundElevation}
+      />
 
       <p className="urban-property-dashboard-disclaimer" role="note">
         {disclaimer}

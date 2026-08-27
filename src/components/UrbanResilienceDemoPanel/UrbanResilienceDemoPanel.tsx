@@ -1,5 +1,11 @@
+import { useEffect, useState } from "react";
+import {
+  loadUrbanGroundElevationSample,
+  type UrbanGroundElevationLookupStatus,
+} from "../../domain/urbanResilience/loadUrbanGroundElevationSample";
 import type {
   UrbanCameraTarget,
+  UrbanGroundElevationAttributes,
   UrbanResilienceScenario,
   SelectedUrbanProperty,
   SelectedUrbanLa1FemaSegment,
@@ -35,6 +41,11 @@ function formatCoordinate(value: number): string {
   return value.toFixed(5);
 }
 
+interface UrbanGroundElevationLookupState {
+  status: UrbanGroundElevationLookupStatus;
+  records: Map<string, UrbanGroundElevationAttributes>;
+}
+
 export function UrbanResilienceDemoPanel({
   scenario,
   selectedProperty,
@@ -52,6 +63,48 @@ export function UrbanResilienceDemoPanel({
   onOpenModularDemo,
   onOpenDisasterDemo,
 }: UrbanResilienceDemoPanelProps) {
+  const [groundElevationLookup, setGroundElevationLookup] =
+    useState<UrbanGroundElevationLookupState>({
+      status: "loading",
+      records: new Map(),
+    });
+
+  useEffect(() => {
+    const controller = new AbortController();
+    setGroundElevationLookup({ status: "loading", records: new Map() });
+
+    void loadUrbanGroundElevationSample(
+      scenario.experimentalGroundElevationDataUrl,
+      controller.signal,
+    )
+      .then((records) => {
+        if (controller.signal.aborted) {
+          return;
+        }
+
+        setGroundElevationLookup({ status: "ready", records });
+      })
+      .catch((error: unknown) => {
+        if (controller.signal.aborted) {
+          return;
+        }
+
+        console.warn("Unable to load the local ground-elevation sample.", error);
+        setGroundElevationLookup({ status: "unavailable", records: new Map() });
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, [scenario.experimentalGroundElevationDataUrl]);
+
+  const selectedPropertyGroundElevation = selectedProperty
+    ? groundElevationLookup.records.get(`property:${selectedProperty.propertyId}`)
+    : undefined;
+  const selectedFacilityGroundElevation = selectedFacility
+    ? groundElevationLookup.records.get(`facility:${selectedFacility.facilityId}`)
+    : undefined;
+
   return (
     <aside className="urban-resilience-demo-panel">
       <div className="urban-resilience-demo-heading">
@@ -109,6 +162,8 @@ export function UrbanResilienceDemoPanel({
         scenarioName={scenario.name}
         disclaimer={scenario.disclaimer}
         selectedProperty={selectedProperty}
+        groundElevationLookupStatus={groundElevationLookup.status}
+        groundElevation={selectedPropertyGroundElevation}
       />
 
       <UrbanLa1FemaExperimentPanel
@@ -120,6 +175,8 @@ export function UrbanResilienceDemoPanel({
       <UrbanFacilityExperimentPanel
         enabled={facilityExperimentEnabled}
         selectedFacility={selectedFacility}
+        groundElevationLookupStatus={groundElevationLookup.status}
+        groundElevation={selectedFacilityGroundElevation}
         onEnabledChange={onFacilityExperimentEnabledChange}
       />
 
