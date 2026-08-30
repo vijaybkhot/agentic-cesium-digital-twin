@@ -373,6 +373,20 @@ Spatial overlap describes a geographic relationship only. It must not be
 converted into an unsupported statement about current hazard or operational
 condition.
 
+## Contributing, conduct, and security
+
+Contributions are welcome when they preserve the repository's research,
+provenance, privacy, and scientific-interpretation boundaries. Before opening
+an issue or pull request, review the following policies:
+
+- [Contributing Guidelines](CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Security Policy](SECURITY.md)
+
+Security vulnerabilities, exposed credentials, and sensitive-data concerns
+must not be posted in public issues. Use the private reporting process in the
+Security Policy.
+
 ## Repository structure
 
 ```text
@@ -431,14 +445,17 @@ Release-readiness work is tracked in GitHub:
 - [#76 — Add one-command validation and pull-request CI](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/76)
 - [#89 — Open-Source Ecosystem Readiness tracker](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/89)
 
-Current licensing and attribution documents:
+Current licensing, attribution, and community documents:
 
 - [Apache License 2.0](LICENSE)
 - [Project notice](NOTICE)
 - [Third-Party Notices](THIRD_PARTY_NOTICES.md)
+- [Contributing Guidelines](CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Security Policy](SECURITY.md)
 
-When the remaining policies are approved and added, this section should also
-link directly to `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`.
+The policies provide the current contribution workflow and private reporting
+channels without promising production support or institutional response.
 
 ## Research context
 
