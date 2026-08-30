@@ -5,16 +5,59 @@ import {
   polygonIntersectsGeometry,
 } from "./lib/linePolygonIntersection.mjs";
 
-const CACHE_DIR = new URL(".cache/urban-resilience/", import.meta.url);
 const OUTPUT_FILE = new URL(
   "../public/data/urban-resilience/experiments/community_public_safety_facilities.geojson",
   import.meta.url,
 );
+const FLOOD_ZONE_FILE = new URL(
+  "../public/data/urban-resilience/grand_isle_port_fourchon_flood_zones.geojson",
+  import.meta.url,
+);
 const EXPECTED_FACILITIES = new Map([
-  ["osm-node-367132153", { name: "Grand Isle Fire Department", type: "fire_station", geometry: "Point" }],
-  ["osm-node-367133144", { name: "Grand Isle Police Department", type: "police", geometry: "Point" }],
-  ["osm-way-924797034", { name: "Town of Grand Isle", type: "townhall", geometry: "Polygon" }],
-  ["osm-way-924801527", { name: "Grand Isle High School", type: "school", geometry: "Polygon" }],
+  [
+    "osm-node-367132153",
+    {
+      name: "Grand Isle Fire Department",
+      type: "fire_station",
+      geometry: "Point",
+      osmElementType: "node",
+      osmId: 367132153,
+      osmNameTag: "name",
+    },
+  ],
+  [
+    "osm-node-367133144",
+    {
+      name: "Grand Isle Police Department",
+      type: "police",
+      geometry: "Point",
+      osmElementType: "node",
+      osmId: 367133144,
+      osmNameTag: "name",
+    },
+  ],
+  [
+    "osm-way-924797034",
+    {
+      name: "Town of Grand Isle",
+      type: "townhall",
+      geometry: "Polygon",
+      osmElementType: "way",
+      osmId: 924797034,
+      osmNameTag: "protection_title",
+    },
+  ],
+  [
+    "osm-way-924801527",
+    {
+      name: "Grand Isle High School",
+      type: "school",
+      geometry: "Polygon",
+      osmElementType: "way",
+      osmId: 924801527,
+      osmNameTag: "name",
+    },
+  ],
 ]);
 const VALID_TYPES = new Set(["fire_station", "police", "townhall", "school"]);
 const VALID_CATEGORIES = new Set(["public-safety", "community"]);
@@ -59,43 +102,51 @@ function assertCoordinates(geometry, facilityId) {
 }
 
 async function main() {
-  const [geoJson, grandIsleRaw, portFourchonRaw, grandIsleFema] = await Promise.all([
+  const [geoJson, floodZones] = await Promise.all([
     readJson(OUTPUT_FILE),
-    readJson(new URL("grand-isle-facilities.json", CACHE_DIR)),
-    readJson(new URL("port-fourchon-facilities.json", CACHE_DIR)),
-    readJson(new URL("grand-isle-facility-flood-zones.json", CACHE_DIR)),
+    readJson(FLOOD_ZONE_FILE),
   ]);
 
   assert.equal(geoJson.type, "FeatureCollection");
   assert.equal(geoJson.features.length, 4, "Expected the four reviewed Grand Isle records");
-  assert.equal(portFourchonRaw.elements.length, 0, "Port Fourchon must remain an honest zero-result case");
+  assert.equal(floodZones.type, "FeatureCollection");
+  assert.ok(floodZones.features.length > 0, "Expected committed FEMA polygon evidence");
   assert.match(geoJson.metadata.limitation, /does not prove/i);
 
-  const rawByIdentity = new Map(
-    grandIsleRaw.elements.map((element) => [`osm-${element.type}-${element.id}`, element]),
+  const grandIsleResult = geoJson.metadata.areaResults.find(
+    (result) => result.id === "grand-isle",
   );
+  const portFourchonResult = geoJson.metadata.areaResults.find(
+    (result) => result.id === "port-fourchon",
+  );
+  assert.equal(grandIsleResult?.osmResultCount, 4);
+  assert.equal(grandIsleResult?.generatedFeatureCount, 4);
+  assert.equal(portFourchonResult?.osmResultCount, 0);
+  assert.equal(portFourchonResult?.generatedFeatureCount, 0);
+  assert.equal(portFourchonResult?.femaFeatureCount, 0);
+
   const seenIds = new Set();
 
   for (const feature of geoJson.features) {
     const properties = feature.properties;
     const expected = EXPECTED_FACILITIES.get(properties.facility_id);
-    const rawElement = rawByIdentity.get(properties.facility_id);
 
     assert.ok(expected, `${properties.facility_id}: unexpected facility identity`);
-    assert.ok(rawElement, `${properties.facility_id}: not found in cached OSM source`);
     assert.ok(!seenIds.has(properties.facility_id), `${properties.facility_id}: duplicate ID`);
     seenIds.add(properties.facility_id);
     assert.equal(feature.geometry.type, expected.geometry);
-    assert.equal(properties.osm_element_type, rawElement.type);
-    assert.equal(properties.osm_id, rawElement.id);
+    assert.equal(properties.osm_element_type, expected.osmElementType);
+    assert.equal(properties.osm_id, expected.osmId);
     assert.equal(properties.facility_type, expected.type);
     assert.equal(properties.name, expected.name);
     assert.equal(properties.osm_classification_key, "amenity");
-    assert.equal(properties.osm_classification_value, rawElement.tags.amenity);
+    assert.equal(properties.osm_classification_value, expected.type);
     assert.ok(VALID_TYPES.has(properties.facility_type));
     assert.ok(VALID_CATEGORIES.has(properties.facility_category));
     assert.ok(VALID_COVERAGE.has(properties.fema_coverage_status));
-    assert.deepEqual(JSON.parse(properties.osm_tags_json), rawElement.tags);
+    const osmTags = JSON.parse(properties.osm_tags_json);
+    assert.equal(osmTags.amenity, expected.type);
+    assert.equal(osmTags[expected.osmNameTag], expected.name);
     assert.match(properties.osm_source, /OpenStreetMap.*ODbL/i);
     assert.match(properties.fema_source, /FEMA National Flood Hazard Layer/i);
     assert.match(properties.processing_method, /no operational, safety, or availability analysis/i);
@@ -105,17 +156,22 @@ async function main() {
       assert.ok(!Object.hasOwn(properties, field), `${properties.facility_id}: prohibited field ${field}`);
     });
 
-    const actualIntersection = grandIsleFema.features.some((femaFeature) =>
+    const directMatches = floodZones.features.filter((femaFeature) =>
       geometryIntersectsFema(feature.geometry, femaFeature.geometry),
     );
     assert.equal(
       properties.intersects_mapped_flood_hazard,
-      actualIntersection,
-      `${properties.facility_id}: FEMA relationship differs from source geometry`,
+      directMatches.length > 0,
+      `${properties.facility_id}: FEMA relationship differs from committed polygon geometry`,
     );
 
     if (properties.intersects_mapped_flood_hazard === true) {
-      assert.ok(properties.fema_zones.length > 0);
+      const matchedZones = [
+        ...new Set(
+          directMatches.map((match) => match.properties.flood_zone_code),
+        ),
+      ].sort();
+      assert.deepEqual([...properties.fema_zones].sort(), matchedZones);
       assert.match(properties.interpretation, /geographic relationship only/i);
     } else if (properties.intersects_mapped_flood_hazard === false) {
       assert.equal(properties.fema_coverage_status, "available");

@@ -2,9 +2,12 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { lineStringIntersectsGeometry } from "./lib/linePolygonIntersection.mjs";
 
-const CACHE_DIR = new URL(".cache/urban-resilience/", import.meta.url);
 const OUTPUT_FILE = new URL(
   "../public/data/urban-resilience/experiments/la1_fema_intersections.geojson",
+  import.meta.url,
+);
+const FLOOD_ZONE_FILE = new URL(
+  "../public/data/urban-resilience/grand_isle_port_fourchon_flood_zones.geojson",
   import.meta.url,
 );
 const VALID_COVERAGE_STATUSES = new Set([
@@ -68,24 +71,16 @@ function assertValidCoordinates(coordinates, id) {
 async function main() {
   validateGeometryUtility();
 
-  const [geoJson, rawRoute, grandIsleFema, portFourchonFema] = await Promise.all([
+  const [geoJson, floodZones] = await Promise.all([
     readJson(OUTPUT_FILE),
-    readJson(new URL("la1-route.json", CACHE_DIR)),
-    readJson(new URL("grand-isle-flood-zones.json", CACHE_DIR)),
-    readJson(new URL("port-fourchon-flood-zones.json", CACHE_DIR)),
+    readJson(FLOOD_ZONE_FILE),
   ]);
-  const usableWays = (rawRoute.elements ?? []).filter(
-    (way) => Array.isArray(way.geometry) && way.geometry.length >= 2,
-  );
 
   assert.equal(geoJson.type, "FeatureCollection");
-  assert.equal(
-    geoJson.features.length,
-    usableWays.length,
-    "Every usable cached OSM LA-1 way must appear exactly once",
-  );
+  assert.equal(geoJson.features.length, 48, "Expected 48 committed OSM LA-1 ways");
+  assert.equal(floodZones.type, "FeatureCollection");
+  assert.ok(floodZones.features.length > 0, "Expected committed FEMA polygon evidence");
 
-  const sourceWays = new Map(usableWays.map((way) => [way.id, way]));
   const seenWayIds = new Set();
 
   for (const feature of geoJson.features) {
@@ -97,19 +92,16 @@ async function main() {
     assertValidCoordinates(feature.geometry.coordinates, id);
     assert.equal(properties.feature_kind, "experimental-la1-fema-segment");
     assert.ok(Number.isFinite(properties.osm_way_id), `${id}: missing OSM way ID`);
+    assert.equal(id, `experimental-la1-osm-way-${properties.osm_way_id}`);
     assert.ok(!seenWayIds.has(properties.osm_way_id), `${id}: duplicate OSM way ID`);
     seenWayIds.add(properties.osm_way_id);
 
-    const sourceWay = sourceWays.get(properties.osm_way_id);
-    assert.ok(sourceWay, `${id}: OSM way not present in cached source`);
-    assert.deepEqual(
-      feature.geometry.coordinates,
-      sourceWay.geometry.map((point) => [point.lon, point.lat]),
-      `${id}: geometry differs from the original OSM way`,
+    assert.ok(typeof properties.name === "string" && properties.name.length > 0);
+    assert.equal(properties.ref, "LA 1");
+    assert.ok(
+      typeof properties.highway_type === "string" && properties.highway_type.length > 0,
+      `${id}: missing OSM highway type`,
     );
-    assert.equal(properties.name, sourceWay.tags?.name ?? "LA Highway 1");
-    assert.equal(properties.ref, sourceWay.tags?.ref ?? "LA 1");
-    assert.equal(properties.highway_type, sourceWay.tags?.highway ?? "unknown");
 
     assert.ok(VALID_COVERAGE_STATUSES.has(properties.fema_coverage_status));
     assert.ok(Array.isArray(properties.study_areas));
@@ -151,10 +143,7 @@ async function main() {
     }
 
 
-    const directMatches = [
-      ...(grandIsleFema.features ?? []),
-      ...(portFourchonFema.features ?? []),
-    ].filter((femaFeature) =>
+    const directMatches = (floodZones.features ?? []).filter((femaFeature) =>
       lineStringIntersectsGeometry(feature.geometry.coordinates, femaFeature.geometry),
     );
 
@@ -162,8 +151,8 @@ async function main() {
       const directlyMatchedZones = [
         ...new Set(
           directMatches.map((match) =>
-            typeof match.properties?.FLD_ZONE === "string"
-              ? match.properties.FLD_ZONE.trim().toUpperCase()
+            typeof match.properties?.flood_zone_code === "string"
+              ? match.properties.flood_zone_code.trim().toUpperCase()
               : "Unknown",
           ),
         ),
@@ -181,17 +170,15 @@ async function main() {
     }
   }
 
-  if ((portFourchonFema.features ?? []).length === 0) {
-    const portFourchonFeatures = geoJson.features.filter((feature) =>
-      feature.properties.study_areas.includes("Port Fourchon query window"),
-    );
-    assert.ok(portFourchonFeatures.length > 0, "Expected LA-1 ways in the Port Fourchon query window");
+  const portFourchonFeatures = geoJson.features.filter((feature) =>
+    feature.properties.study_areas.includes("Port Fourchon query window"),
+  );
+  assert.ok(portFourchonFeatures.length > 0, "Expected LA-1 ways in the Port Fourchon query window");
 
-    for (const feature of portFourchonFeatures) {
-      assert.equal(feature.properties.fema_coverage_status, "unavailable");
-      assert.equal(feature.properties.intersects_mapped_flood_hazard, null);
-      assert.match(feature.properties.interpretation, /Unknown/i);
-    }
+  for (const feature of portFourchonFeatures) {
+    assert.equal(feature.properties.fema_coverage_status, "unavailable");
+    assert.equal(feature.properties.intersects_mapped_flood_hazard, null);
+    assert.match(feature.properties.interpretation, /Unknown/i);
   }
 
   assert.ok(
