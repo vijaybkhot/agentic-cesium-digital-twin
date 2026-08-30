@@ -457,6 +457,7 @@ assets retain their respective terms.
 - [Security Policy](SECURITY.md)
 - [Architecture](docs/architecture.md)
 - [Roadmap](ROADMAP.md)
+- [Minimum Open-Source Release Audit](docs/open-source-release/minimum-release-audit.md)
 - [Open-Source Ecosystem Readiness tracker](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/89)
 
 The neutral contributor attribution does not claim Louisiana State University
