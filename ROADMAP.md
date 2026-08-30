@@ -1,63 +1,131 @@
 # Roadmap
 
-## POC 0: Existing Cesium Decision-Support Viewer
+Status labels in this document mean:
 
-- Single-file Vite + CesiumJS frontend POC.
-- Hardcoded facility, boundary, measurement points, belief logic, and side panel behavior.
+- **Implemented prototype** — present and usable in this repository, but not
+  production-ready.
+- **Implemented documentation** — a contract, decision, or handoff description
+  is present, but the external system it describes may not be integrated.
+- **Mock/experimental** — present for research or demonstration and not an
+  operational integration.
+- **External—not integrated** — documented work exists outside the connected
+  application path.
+- **Planned** — not implemented in this repository.
 
-## POC 1: Config-Driven React/TypeScript Cesium Viewer
+## POC 0: Existing Cesium decision-support viewer
 
-- React + TypeScript migration.
-- Project rendered from `public/project_config.json`.
-- Cesium-specific rendering isolated behind an adapter.
+**Implemented prototype**
+
+- Original Vite/CesiumJS facility viewer concept.
+- Controlled boundary, measurement points, belief logic, and side-panel
+  behavior.
+
+## POC 1: Config-driven React/TypeScript Cesium viewer
+
+**Implemented prototype**
+
+- React and TypeScript application shell.
+- Project configuration loaded from `public/project_config.json` for the
+  controlled-facility demo.
+- Cesium rendering isolated behind `ViewerAdapter`.
 - Domain logic separated from rendering.
-- Mock agent interface added for future provider swaps.
+- Provider interfaces established for future external integrations.
 
-## POC 2: Image Intake and Audit Agent
+## POC 2: Image intake and agent boundary
 
-- Add frontend image intake workflow.
-- Add backend API boundary.
-- Add agent-assisted completeness checks for image sets and project metadata.
-- Keep provider implementations behind `AgentProvider`.
+### Browser image-readiness review
 
-## POC 2A: Browser Image Readiness Review
+**Implemented prototype**
 
-- Inspect local image dimensions and sizes without uploading files.
-- Inspect GPS/EXIF availability locally in the browser as an advisory signal.
+- Select local images without uploading them.
+- Inspect dimensions, file size, and GPS/EXIF availability in the browser.
 - Apply deterministic readiness rules.
-- Present mock assistant guidance for an initial reconstruction trial.
+- Display guidance through the current mock assistant boundary.
 
-## POC 3: Reconstruction Integration
+### Real agent and backend intake
 
-- POC 3A: Render a local GLB model asset from `project_config.json`.
-- POC 3B: Add model-local inspection annotations using standardized ENU coordinates.
-- POC 4E: Link model annotations to existing measurement points.
-- POC 3D: Simulate project setup, image readiness, reconstruction job states, and model handoff in the browser.
-- POC 4A: Define the reconstruction handoff contract before connecting a real backend.
-- POC 4B: Document Ehsan's current JPG-to-PLY reconstruction pipeline.
-- POC 4C: Recognize PLY/point-cloud output as pipeline-native data and document the conversion path before raw rendering.
-- POC 4D: Add a local PLY-to-GLB conversion spike using Blender while keeping sample/generated assets local-only.
-- POC 4H: Add browser-only GPS/EXIF readiness checks before real pipeline handoff.
-- Add real backend reconstruction job orchestration.
-- Implement a real `ReconstructionProvider`.
-- Visualize reconstruction outputs as tilesets/models in Cesium.
-- Track reconstruction state and provenance in the project audit trail.
+**Planned**
 
-## POC 4: Research Extension Demos
+- Connect a backend API for controlled uploads and persisted project state.
+- Implement a real `AgentProvider` behind the existing interface.
+- Add provider-backed completeness checks without moving deterministic rules
+  into an LLM.
 
-The reusable config-driven viewer also hosts several additive, self-contained
-demo modes that reuse the POC 1 Cesium adapter without changing the
-`project_config.json` contract (see `docs/decisions/005-modular-housing-demo-guardrails.md`):
+## POC 3: Reconstruction integration
 
-- Modular housing proposal demo (`modular-demo`): typed mock scenario data for
-  a distributed factory/logistics/construction-site digital twin concept.
-- Property-specific disaster resilience demo (`disaster-demo`): a fully
-  fictional, guardrailed flood/property/response scenario used to validate the
-  property-risk-and-response visualization pattern.
-- Urban resilience demo (`urban-resilience-demo`): the same visualization
-  pattern applied to **real data** for Grand Isle and Port Fourchon,
-  Louisiana -- real OpenStreetMap building footprints, real FEMA National
-  Flood Hazard Layer flood-zone classifications, and a real LA Highway 1
-  response corridor. See
-  `docs/decisions/006-urban-resilience-real-data-guardrails.md` for the data
-  sourcing, risk-classification methodology, and research-only framing.
+### Current repository capabilities
+
+- **Implemented prototype:** Render local GLB model assets from project
+  configuration.
+- **Implemented prototype:** Add model-local inspection annotations using ENU
+  coordinates and link them to measurement points.
+- **Mock/experimental:** Simulate reconstruction job states and hand off the
+  bundled sample GLB.
+- **Implemented documentation:** Define reconstruction request, status, error,
+  and output contracts.
+- **Implemented documentation:** Record the external JPG-to-PLY pipeline and
+  PLY output expectations.
+- **Mock/experimental:** Provide a local Blender PLY-to-GLB conversion spike;
+  sample and generated user assets remain local-only.
+
+### External and future reconstruction work
+
+- **External—not integrated:** Real COLMAP/JPG-to-PLY reconstruction work.
+- **Planned:** Backend reconstruction job orchestration.
+- **Planned:** A real `ReconstructionProvider` implementation.
+- **Planned:** Stable PLY-to-GLB or PLY-to-3D-Tiles processing.
+- **Planned:** Provenance and persisted audit history for returned models.
+
+## POC 4: Research extension demos
+
+These modes reuse the viewer boundary while retaining independent domain
+contracts.
+
+- **Mock/experimental:** Modular-housing proposal demo with typed factory,
+  logistics, construction, status, camera, and event data.
+- **Mock/experimental:** Property-specific disaster-resilience demo with
+  fictional properties, mock flood depth, route, shelter, and decision-support
+  information. It is not emergency guidance.
+- **Implemented research prototype:** Urban-resilience demo using real public
+  OSM geometry, available FEMA NFHL polygons, and a small USGS 3DEP elevation
+  sample for Grand Isle, Port Fourchon, and selected LA-1 study areas.
+- **Mock/experimental:** ArcGIS SceneView portability client consuming selected
+  committed urban GeoJSON without recomputing classifications.
+
+The optional LA-1 experiment reports mapped FEMA relationships and coverage
+status only. Its OSM way geometry is real public data, but it does not report
+current flooding, closure, passability, safe travel, or evacuation suitability.
+Unavailable Port Fourchon FEMA evidence remains `Unknown`.
+
+See the [modular-housing guardrails](docs/decisions/005-modular-housing-demo-guardrails.md)
+and [urban-resilience guardrails](docs/decisions/006-urban-resilience-real-data-guardrails.md).
+
+## Open-source release readiness
+
+### Implemented
+
+- Apache License 2.0 and neutral project stewardship record.
+- Centralized third-party software, data, service, and asset notices.
+- Contributor, conduct, and security policies.
+- One-command local validation and pull-request/main GitHub Actions checks.
+- Public landing-page, architecture, and roadmap status alignment.
+
+### Tracked follow-up work
+
+- Complete the minimum-release audit and advisor handoff.
+- Add scholarly citation metadata and an archived release.
+- Add focused scientific-geometry unit tests.
+- Add screenshots and a reproducible demonstration walkthrough.
+- Publish a longer NSF-oriented architecture and use-case brief.
+- Improve dependency, code-security, accessibility, and release automation.
+
+See the [Open-Source Ecosystem Readiness tracker](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/89).
+
+## Longer-term research directions
+
+- Provider-backed agent assistance that outputs validated structured state.
+- Real reconstruction-provider integration and durable project provenance.
+- More rigorous building/FEMA spatial-association comparisons.
+- Broader verified FEMA coverage along selected LA-1 study corridors.
+- Portable scenario and data contracts for additional viewer clients.
+- Secure, auditable interaction among multiple digital twins.

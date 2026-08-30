@@ -1,160 +1,218 @@
 # Agent-Assisted Cesium Digital Twin Research Prototype
 
-This repository contains an early research prototype for config-driven
-geospatial digital-twin visualization and decision-support experiments. It
-combines a React/TypeScript application, CesiumJS rendering, viewer-independent
-domain contracts, offline public-data processing scripts, and an isolated
-ArcGIS portability experiment.
+[![Validation](https://github.com/vijaybkhot/agentic-cesium-digital-twin/actions/workflows/validation.yml/badge.svg)](https://github.com/vijaybkhot/agentic-cesium-digital-twin/actions/workflows/validation.yml)
+[Apache License 2.0](LICENSE)
 
-The project is a **research prototype**, not a production digital-twin system.
-It does not currently include a real LLM agent, a connected COLMAP
-reconstruction backend, live sensors, operational emergency data, or persisted
-project state. The repository is publicly accessible and is being prepared for
-an approved open-source release; see
-[Open-source release preparation](#open-source-release-preparation).
+This repository is an Apache-2.0-licensed research prototype for config-driven
+geospatial digital-twin visualization and interoperability experiments. It
+combines a React/TypeScript application, CesiumJS rendering, viewer-independent
+domain contracts, local public-data processing, and an isolated ArcGIS
+visualization-portability experiment.
+
+The project is **not a complete production digital-twin pipeline**. It has no
+real LLM agent, connected COLMAP reconstruction backend, live sensor or
+emergency feed, authentication, database, or persisted project state. Mock,
+experimental, external, and planned capabilities are identified explicitly
+throughout this document.
+
+## At a glance
+
+- Five isolated application modes share one React/Cesium viewer boundary.
+- Typed contracts keep domain state separate from Cesium-specific rendering.
+- Manual Node.js pipelines acquire, build, and validate OSM, FEMA, and USGS
+  research artifacts before viewers consume committed GeoJSON.
+- CesiumJS and an isolated ArcGIS SceneView consume selected common local data.
+- Provider interfaces represent future agent and reconstruction integration;
+  the implementations in this repository are mock or local-only.
+- `npm run validate` checks all committed datasets, TypeScript, and the Vite
+  production build locally and in GitHub Actions.
 
 ## Research purpose
 
-The prototype explores a reusable boundary between source data, offline
-processing, structured digital-twin state, and visualization clients. The
-viewer should consume validated configuration or GeoJSON rather than asking an
-LLM or browser session to generate viewer code or recompute scientific spatial
-relationships.
+The prototype investigates a reusable boundary between source acquisition,
+scientific processing, structured digital-twin state, and visualization
+clients. A viewer should consume validated configuration or GeoJSON rather
+than asking an LLM or browser session to generate rendering code or recompute
+scientific spatial relationships.
 
-The current research questions include:
+Current research questions include:
 
 - Can one viewer architecture support controlled-facility, construction,
   disaster-resilience, and urban-resilience scenarios without mixing their
   domain contracts?
-- Can agent or reconstruction providers be replaced behind typed interfaces
-  without rewriting the Cesium renderer?
-- Can the same processed public-data artifacts be consumed by both CesiumJS and
-  ArcGIS clients?
-- How should uncertainty, incomplete data coverage, provenance, and
-  non-operational safety language be represented in a digital-twin interface?
+- Can future agent or reconstruction providers be replaced behind typed
+  interfaces without rewriting the Cesium renderer?
+- Can the same processed public-data artifacts be presented through both
+  CesiumJS and ArcGIS clients?
+- How should uncertainty, incomplete coverage, provenance, and
+  non-operational safety language appear in a digital-twin interface?
+
+## Proposed role in STC-DT
+
+This project is intended to represent the **Urban Digital Twin
+Interoperability** component of a proposed umbrella ecosystem named
+**Socio-Technical Cyberinfrastructure for Digital Twins (STC-DT)**. Its
+current contribution is a research testbed for geospatial-data integration,
+typed viewer boundaries, scientific provenance, visualization portability,
+and reproducible local datasets.
+
+This repository does not currently implement an umbrella-level STC-DT
+integration. The proposed role describes a research direction, not completed
+technical integration, institutional ownership, deployment, certification, or
+endorsement.
 
 ## Implementation status
 
 | Component | Status | Current behavior |
 | --- | --- | --- |
-| CesiumJS viewer | Implemented prototype | Renders config-driven assets and isolated scenario-specific entities through a viewer adapter. |
-| Project and image intake | Browser-only prototype | Inspects selected local image metadata and applies deterministic readiness rules without uploading the files. |
-| Reconstruction workflow | Mock | Simulates queued, running, and completed states, then returns a bundled sample GLB. |
-| Real COLMAP reconstruction | External and not integrated | Handoff contracts and expected JPG/PLY inputs and outputs are documented, but no backend is connected. |
-| Agent layer | Interface and mock implementation | A provider boundary exists; no real LLM provider is called. |
-| Model visualization | Implemented prototype | Displays configured GLB assets, local annotations, and measurement links. Raw PLY is not rendered directly. |
-| Urban public-data processing | Implemented research workflow | Offline Node scripts process OpenStreetMap, FEMA NFHL, and USGS 3DEP source data into committed local GeoJSON. |
-| ArcGIS viewer | Isolated portability experiment | Loads selected processed urban GeoJSON without recomputing project relationships. |
+| CesiumJS viewer | Implemented prototype | Renders config-driven assets and isolated scenario entities through a viewer adapter. |
+| Project and image intake | Implemented browser prototype | Reviews selected local-image metadata and deterministic readiness rules without uploading the files. |
+| Reconstruction workflow | Mock | Simulates queued, running, and completed states and returns a bundled sample GLB. |
+| Real COLMAP reconstruction | External—not integrated | Handoff contracts and expected JPG/PLY inputs and outputs are documented, but no backend is connected. |
+| Agent layer | Mock and interface boundary | `AgentProvider` exists, but no real LLM or model provider is called. |
+| Model visualization | Implemented prototype | Displays configured GLB assets, model-local annotations, and measurement links. Raw PLY is not rendered directly. |
+| Urban public-data pipeline | Implemented research workflow | Manual Node scripts acquire and process OSM, FEMA NFHL, and USGS 3DEP information into validated local artifacts. |
+| ArcGIS SceneView | Experimental | An isolated client renders selected urban GeoJSON without recomputing project classifications. |
 | Backend, authentication, database, and persistence | Not implemented | These remain future integration work. |
-| Live sensors and operational emergency feeds | Not implemented | The current application must not be used for operational decisions. |
+| Live sensors and operational emergency feeds | Not implemented | The application must not be used for operational or emergency decisions. |
 
 ## Demonstration modes
 
-The main application keeps five modes isolated in `src/app/AppShell.tsx`.
+The main application keeps five modes isolated in
+[`src/app/AppShell.tsx`](src/app/AppShell.tsx).
 
 ### 1. New-project and image-intake workflow
 
-A browser-only workflow for entering a project location, selecting local
-images, reviewing deterministic metadata checks, and running a mock
-reconstruction lifecycle. Selected images remain local to the browser. The
-completed mock job displays the bundled Cesium Milk Truck GLB; it does not run
-COLMAP or photogrammetry.
+An implemented browser-only workflow for entering a project location,
+selecting local images, reviewing deterministic metadata checks, and running a
+mock reconstruction lifecycle. Selected images remain local to the browser.
+The completed mock job displays the bundled Cesium Milk Truck GLB; it does not
+run COLMAP or photogrammetry.
 
 ### 2. Existing controlled-facility demo
 
-A mock facility scene with a controlled-area boundary, measurement points,
-Low/Medium/High belief states, editable readings, manual overrides,
-recommendations, audit history, a sample model, and model-linked annotations.
-The mode loads `public/project_config.json` only when explicitly opened.
+An implemented mock facility scene with a controlled-area boundary,
+measurement points, Low/Medium/High belief states, editable readings, manual
+overrides, recommendations, audit history, a sample model, and model-linked
+annotations. This mode loads `public/project_config.json` only when explicitly
+opened.
 
-### 3. Modular housing demo
+### 3. Modular-housing demo
 
-A separate proposal-oriented mock scenario containing a factory, modular
+An implemented proposal-oriented mock scenario containing a factory, modular
 units, a logistics route, staging and construction areas, status actions,
 camera controls, and an event feed. It is not connected to real factories,
 robotics, logistics systems, or construction operations.
 
 ### 4. Property-specific disaster-resilience demo
 
-A fully fictional Baton Rouge-area scenario with six synthetic properties, a
-mock HEC-RAS-style flood-depth volume, a fictional shelter, a mock route,
-camera presets, a resident-facing dashboard, and a multi-twin event feed.
+An implemented but fully fictional Baton Rouge-area scenario with six
+synthetic properties, a mock HEC-RAS-style flood-depth volume, a fictional
+shelter, a mock route, camera presets, a resident-facing dashboard, and a
+multi-twin event feed.
 
-The six property footprints are synthetic and are deliberately not aligned
-with real parcels, roads, buildings, or private addresses. The flood layer is
-not HEC-RAS output, current flooding, a forecast, or emergency guidance.
+The property footprints are not aligned with real parcels, roads, buildings,
+or private addresses. The flood layer is not HEC-RAS output, current flooding,
+a forecast, or emergency guidance.
 
 > **Demonstration only. Not for real emergency use.**
 
 ### 5. Urban-resilience demo
 
-A real-public-data research scenario for Grand Isle, Port Fourchon, and parts
-of the Louisiana Highway 1 corridor. It uses processed OpenStreetMap building,
-road, and facility geometry; FEMA National Flood Hazard Layer polygons; and a
-small USGS 3DEP ground-elevation sample.
+An implemented research scenario using real public-data geometry for Grand
+Isle, Port Fourchon, and parts of the Louisiana Highway 1 corridor. It uses
+processed OpenStreetMap building, road, and facility records; available FEMA
+National Flood Hazard Layer polygons; and a small USGS 3DEP ground-elevation
+sample.
 
-The mode includes optional LA-1/FEMA, community/public-safety facility, and
-ground-elevation experiments. These report mapped spatial relationships and
-data-coverage status only. They do not report current flooding, road
-passability, facility operation, structural vulnerability, or evacuation
-suitability.
+Optional experiments cover LA-1/FEMA relationships, four reviewed Grand Isle
+community/public-safety facilities, and representative ground elevation.
+These report mapped spatial relationships and coverage status only. They do
+not report current flooding, road passability, facility operation, structural
+vulnerability, or evacuation suitability. Missing or unavailable evidence
+remains `Unknown`.
 
-### ArcGIS portability experiment
+### ArcGIS visualization-portability experiment
 
-The separate page at
-`/experiments/arcgis-urban-resilience/` tests whether selected processed urban
-GeoJSON can be rendered in an ArcGIS SceneView. It is a portability experiment,
-not a replacement application and not an independent scientific-processing
-pipeline.
+The separate page at `/experiments/arcgis-urban-resilience/` tests whether
+selected processed urban GeoJSON can be rendered in an ArcGIS SceneView. It is
+an experimental visualization client, not a replacement application or an
+independent FEMA/OSM scientific-processing pipeline.
 
 ## Architecture
 
-The primary data path is:
+External public-data acquisition and local scientific processing occur
+upstream of both viewers:
 
 ```text
-Public or project source data
-        |
-        v
-Offline acquisition and processing
-        |
-        v
-Validated local JSON / GeoJSON / model references
-        |
-        v
-Viewer-independent types and domain contracts
-        |
-        +-----------------------+
-        |                       |
-        v                       v
-   CesiumJS viewer       ArcGIS experiment
+External public sources
+OSM Overpass / FEMA NFHL / USGS 3DEP
+                 |
+                 v
+Manual network acquisition scripts
+                 |
+                 v
+Ignored raw cache under scripts/.cache/
+                 |
+                 v
+Local build and spatial-processing scripts
+                 |
+                 v
+Committed JSON / GeoJSON artifacts
+                 |
+                 v
+Local validators and CI
+                 |
+          +------+------+
+          |             |
+          v             v
+   CesiumJS viewer   ArcGIS experiment
 ```
 
-The intended future reconstruction path is:
+The project/reconstruction path is separate:
 
 ```text
-Images
-  -> deterministic intake checks
-  -> future reconstruction provider
-  -> PLY or other pipeline-native output
-  -> GLB or 3D Tiles conversion
-  -> geospatial placement and visualization
+Project configuration / local image review
+                 |
+                 v
+Typed provider and domain boundaries
+                 |
+                 v
+Mock reconstruction provider today
+                 |
+                 v
+Future external reconstruction integration
 ```
 
-Only the intake checks, mock provider lifecycle, sample-GLB handoff, and a
-local Blender conversion spike are represented in this repository today. A
-real reconstruction service is not connected.
+CI validates committed artifacts and builds the application without calling
+OSM, FEMA, USGS, Cesium ion, or ArcGIS services. Cesium and ArcGIS render
+derived attributes but do not recompute FEMA classifications.
 
-The code uses small ports for the external boundaries:
+The principal external boundaries are:
 
 - `AgentProvider`
 - `ProjectConfigRepository`
 - `ReconstructionProvider`
 - `ViewerAdapter`
 
-Cesium-specific imports remain concentrated under `src/cesium` and the Cesium
-viewer adapter. See [Architecture](docs/architecture.md), the
-[project-config schema](docs/project-config-schema.md), and the
+Cesium imports remain concentrated under `src/cesium` and the Cesium viewer
+adapter. See the [architecture note](docs/architecture.md),
+[project-config schema](docs/project-config-schema.md), and
 [reconstruction handshake](docs/reconstruction-pipeline-handshake.md).
+
+## Example inputs and outputs
+
+| Example | Role | Interpretation |
+| --- | --- | --- |
+| [`public/project_config.json`](public/project_config.json) | Config-driven viewer input | Local controlled-facility demonstration configuration. |
+| [Fictional disaster property GeoJSON](public/examples/disaster_resilience_properties.geojson) | Mock scenario input | Six synthetic properties; not validated hazard data. |
+| [`public/data/urban-resilience/`](public/data/urban-resilience/) | Generated research artifacts | Committed OSM/FEMA/USGS-derived GeoJSON consumed by viewers. |
+| [`docs/examples/`](docs/examples/) | Reconstruction contract examples | Example request, status, error, and output payloads; not a connected service. |
+| [Bundled sample GLB](public/models/CesiumMilkTruck.glb) | Mock viewer output | Demonstrates model handoff and placement; not a project reconstruction. |
+
+Current outputs are browser-rendered scenes, selectable details, validation
+logs, and contract examples. The repository does not currently produce a real
+photogrammetric reconstruction through its browser workflow.
 
 ## Technical stack
 
@@ -164,41 +222,42 @@ viewer adapter. See [Architecture](docs/architecture.md), the
 - CesiumJS
 - ArcGIS Maps SDK for JavaScript for one isolated experiment
 - Local JSON and GeoJSON
-- Offline Node.js acquisition, processing, and validation scripts
+- Node.js acquisition, processing, and validation scripts
 
 ## Quick start
 
-### Prerequisites
+### Requirements
 
 - Git
-- Node.js `22.12.0` or newer
+- Node.js `22.12.0` for the reproducible project configuration
 - npm, included with Node.js
 - A browser with WebGL support
 
-The repository pins `22.12.0` in `.nvmrc`. On macOS or Linux with `nvm`, run:
+The repository pins Node `22.12.0` in `.nvmrc`. On macOS or Linux with `nvm`:
 
 ```bash
-nvm use
-```
-
-NVM for Windows does not automatically use `.nvmrc`; select the version
-explicitly in an Administrator PowerShell session when changing versions:
-
-```powershell
-nvm use 22.12.0
-```
-
-Ordinary `node`, `npm`, build, and development commands do not require an
-Administrator terminal.
-
-### Install and run
-
-```powershell
 git clone https://github.com/vijaybkhot/agentic-cesium-digital-twin.git
 cd agentic-cesium-digital-twin
+nvm use
 npm ci
 npm run dev
 ```
+
+NVM for Windows does not automatically read `.nvmrc`. Select the pinned
+version explicitly before installing dependencies:
+
+```powershell
+git clone https://github.com/vijaybkhot/agentic-cesium-digital-twin.git
+Set-Location agentic-cesium-digital-twin
+nvm use 22.12.0
+npm ci
+npm run dev
+```
+
+If the version is not installed, run `nvm install 22.12.0` first. Depending on
+the NVM for Windows installation, changing the active Node version may require
+an Administrator PowerShell session. Ordinary Node, npm, build, and
+development commands do not require an Administrator terminal.
 
 Open the URL printed by Vite, normally:
 
@@ -212,30 +271,27 @@ The isolated ArcGIS experiment is normally available at:
 http://localhost:5173/experiments/arcgis-urban-resilience/
 ```
 
-Build and preview the production bundle:
+Build and preview the production bundle with:
 
-```powershell
+```bash
 npm run build
 npm run preview
 ```
 
-Cesium static workers, widgets, assets, and third-party files are copied from
-the installed Cesium package by `vite-plugin-static-copy`.
-
 ## Optional environment configuration
 
-The base Cesium application can run without a private token by using Cesium's
-bundled Natural Earth imagery. Copy `.env.example` to `.env.local` only when
+The base application and local research layers run without private
+credentials. Copy `.env.example` to the ignored `.env.local` file only when
 optional services are needed:
-
-```powershell
-Copy-Item .env.example .env.local
-```
-
-macOS and Linux equivalent:
 
 ```bash
 cp .env.example .env.local
+```
+
+Windows PowerShell equivalent:
+
+```powershell
+Copy-Item .env.example .env.local
 ```
 
 Available variables are:
@@ -248,43 +304,48 @@ VITE_ARCGIS_API_KEY=
 
 - `VITE_CESIUM_ION_ACCESS_TOKEN` enables optional Cesium ion imagery and
   contextual OSM Buildings.
-- `VITE_ENABLE_URBAN_OSM_BUILDINGS` is off by default because the urban demo
-  already renders selectable, risk-classified local OSM-derived footprints.
-- `VITE_ARCGIS_API_KEY` enables optional basemap and elevation services in the
-  isolated ArcGIS experiment.
+- `VITE_ENABLE_URBAN_OSM_BUILDINGS` remains off by default because the urban
+  demo already renders selectable OSM-derived footprints.
+- `VITE_ARCGIS_API_KEY` enables optional ArcGIS basemap and elevation
+  services.
 
-Restrict keys to the required services and approved HTTP referrers. Never
+Restrict credentials to necessary services and approved HTTP referrers. Never
 commit `.env.local`, API keys, Cesium ion tokens, or ArcGIS credentials.
 
-## Validation
+## Validation and testing
 
-Run the complete local validation sequence with one command:
+Run the complete committed-data and production-build validation sequence:
 
-```powershell
+```bash
 npm run validate
 ```
 
-This runs all five committed-data validators followed by the TypeScript and
-Vite production build. It does not fetch OSM, FEMA, USGS, Cesium ion, or
-ArcGIS data and does not require an API key or repository secret. External
-source acquisition and artifact regeneration remain separate manual
-workflows.
+The command validates:
 
-GitHub Actions runs the same command for every pull request and every push to
-`main` using Node.js 22 and a clean `npm ci` installation. Existing protobuf
-dynamic-evaluation and Vite bundle-size notices are known non-blocking build
-warnings. They are not suppressed, and any validator, TypeScript, or build
-failure still fails validation.
+- the USGS ground-elevation sample;
+- the base urban-resilience artifacts;
+- the facility/FEMA experiment;
+- the LA-1/FEMA experiment;
+- the fictional disaster data;
+- TypeScript compilation and the Vite production build.
+
+The [GitHub Actions workflow](.github/workflows/validation.yml) runs the same
+command for every pull request and push to `main` using Node 22 and `npm ci`.
+It requires no repository secret and does not fetch new OSM, FEMA, USGS,
+Cesium ion, or ArcGIS data.
+
+Existing protobuf dynamic-evaluation and Vite bundle-size notices are known
+non-blocking warnings. They are not suppressed; a validator, TypeScript, or
+build failure still fails the workflow.
 
 ## Public-data processing
 
-The browser consumes committed, processed GeoJSON under
-`public/data/urban-resilience/`. Source acquisition is deliberately separated
-from browser visualization.
+The browser consumes committed artifacts under `public/data/urban-resilience/`.
+Acquisition, artifact generation, and validation remain separate commands.
 
 ### Base urban dataset
 
-```powershell
+```bash
 npm run fetch:urban-resilience-data
 npm run build:urban-resilience-data
 npm run validate:urban-resilience-data
@@ -292,14 +353,14 @@ npm run validate:urban-resilience-data
 
 ### LA-1/FEMA relationship experiment
 
-```powershell
+```bash
 npm run build:urban-resilience-la1-fema-experiment
 npm run validate:urban-resilience-la1-fema-experiment
 ```
 
 ### Community/public-safety facility experiment
 
-```powershell
+```bash
 npm run fetch:urban-resilience-facility-data
 npm run build:urban-resilience-facility-data
 npm run validate:urban-resilience-facility-data
@@ -307,28 +368,26 @@ npm run validate:urban-resilience-facility-data
 
 ### USGS 3DEP ground-elevation sample
 
-```powershell
+```bash
 npm run fetch:urban-resilience-elevation-sample
 npm run build:urban-resilience-elevation-sample
 npm run validate:urban-resilience-elevation-sample
 ```
 
-The `fetch:*` commands require network access and write raw service responses
-under ignored `scripts/.cache/`. Generated, validated GeoJSON under
-`public/data/` is committed so viewers do not need to contact scientific data
-services at browser runtime. Upstream services and source data can change, so a
-regenerated dataset must be reviewed rather than treated as a mechanical
-replacement.
+`fetch:*` commands require network access and write raw responses under the
+ignored `scripts/.cache/` directory. Generated GeoJSON is reviewed, validated,
+and committed so the viewers and CI do not need to contact scientific data
+services. Upstream services can change; regenerated output requires review.
 
 ## Data sources and interpretation boundaries
 
 | Source | Project use | Important limitation |
 | --- | --- | --- |
-| OpenStreetMap / Overpass | Building footprints, road ways, and mapped community/public-safety facilities | OSM may be incomplete. Building footprints are not legal parcels, and absence from OSM does not prove real-world absence. |
-| FEMA National Flood Hazard Layer | Mapped flood-hazard polygons used in zone-based research relationships | FEMA polygons are not current floodwater, forecast depth, road condition, evacuation guidance, or a project-generated hydraulic model. |
+| OpenStreetMap / Overpass | Building footprints, road ways, and mapped community/public-safety facilities | OSM may be incomplete. Footprints are not legal parcels, and absence from OSM does not prove real-world absence. |
+| FEMA National Flood Hazard Layer | Mapped flood-hazard polygons used for zone-based research relationships | FEMA polygons are not current floodwater, forecast depth, road condition, evacuation guidance, or a project-generated hydraulic model. |
 | USGS 3DEP | Estimated/interpolated ground elevation at representative sample coordinates | The value is not building height, floor elevation, flood depth, FEMA Base Flood Elevation, or a site-specific survey. |
 | Fictional local data | Property-specific disaster-resilience demonstration | Synthetic geometry and mock values must not be associated with real residents or operational decisions. |
-| Cesium ion and ArcGIS services | Optional visual context | Visual context is not project-derived scientific evidence and can be unavailable when credentials are absent. |
+| Cesium ion and ArcGIS services | Optional visual context | Visual context is not project-derived scientific evidence and can be unavailable without credentials. |
 
 Detailed source, licensing, asset, and service attribution is centralized in
 [Third-Party Notices](THIRD_PARTY_NOTICES.md).
@@ -338,57 +397,32 @@ The urban property classification is a zone-based research classification:
 - FEMA V/VE zones map to `High`.
 - Other mapped Special Flood Hazard Area zones map to `Moderate`.
 - A supported mapped-outside-SFHA result maps to `Low`.
-- Missing, incomplete, unavailable, or undetermined coverage maps to `Unknown`.
+- Missing, incomplete, unavailable, or undetermined coverage maps to
+  `Unknown`.
 
 `Unknown` must never be converted to `Low`. A mapped non-intersection must not
 be described as no flood risk. See the
-[urban-resilience real-data guardrails](docs/decisions/006-urban-resilience-real-data-guardrails.md).
+[urban-resilience guardrails](docs/decisions/006-urban-resilience-real-data-guardrails.md).
 
 ## Safety and scientific limitations
 
-### Prototype limitations
-
-- Frontend-only application
-- No backend API, authentication, database, or persisted state
-- No live sensor, facility-operation, traffic, or emergency feed
-- No production security or availability guarantees
-
-### Agent and reconstruction limitations
-
-- No real LLM agent or model-provider integration
-- No connected image-upload or COLMAP reconstruction service
-- Mock reconstruction uses browser timers and a bundled sample GLB
-- Raw PLY requires conversion before the current Cesium viewer can display it
-- The Blender PLY-to-GLB tool is a local conversion spike, not a browser feature
-
-### Disaster and urban-resilience limitations
-
-- Not an official FEMA flood determination or insurance requirement
-- Not current flooding, forecast inundation, or storm-surge depth
-- Not road closure, passability, safe-travel, or evacuation guidance
-- Not an authoritative shelter or community-facility inventory
-- Not facility availability, operational status, criticality, or vulnerability
-- Not building-floor elevation or structural elevation
+- Research prototype only; not a production or emergency-management system.
+- Not an official FEMA flood determination or insurance requirement.
+- Not current flooding, forecast inundation, or storm-surge depth.
+- Not road closure, passability, safe-travel, or evacuation guidance.
+- Not an authoritative shelter or community-facility inventory.
+- Not facility availability, operation, criticality, or vulnerability.
+- Not building-floor elevation, finished-floor elevation, or structural
+  elevation.
 - Not a substitute for a certified flood study, hydraulic model, survey, or
-  emergency-management system
+  emergency-management system.
+- No backend API, authentication, database, persistence, or availability
+  guarantee.
+- No connected image upload, LLM agent, or COLMAP service.
 
-Spatial overlap describes a geographic relationship only. It must not be
-converted into an unsupported statement about current hazard or operational
-condition.
-
-## Contributing, conduct, and security
-
-Contributions are welcome when they preserve the repository's research,
-provenance, privacy, and scientific-interpretation boundaries. Before opening
-an issue or pull request, review the following policies:
-
-- [Contributing Guidelines](CONTRIBUTING.md)
-- [Code of Conduct](CODE_OF_CONDUCT.md)
-- [Security Policy](SECURITY.md)
-
-Security vulnerabilities, exposed credentials, and sensitive-data concerns
-must not be posted in public issues. Use the private reporting process in the
-Security Policy.
+Spatial overlap describes a geographic relationship with available mapped
+information only. It must not be converted into a claim about current hazard,
+operation, availability, or safety.
 
 ## Repository structure
 
@@ -403,66 +437,48 @@ src/
   ports/          Interfaces for external providers and viewers
   types/          Shared TypeScript contracts
 
-scripts/          Offline acquisition, processing, geometry, and validation scripts
+scripts/          Acquisition, processing, geometry, and validation scripts
 public/data/      Committed generated JSON and GeoJSON consumed by viewers
-public/models/    Approved viewer-ready sample model assets
+public/models/    Approved viewer-ready sample assets
 experiments/      Alternate experiment HTML entry points
 docs/             Architecture, decisions, contracts, evidence, and research notes
 ```
 
-## Roadmap
-
-Near-term work focuses on open-source release readiness, reproducibility,
-scientific test coverage, and clearer contributor boundaries. Longer-term
-research directions include:
-
-- Real reconstruction-provider integration
-- Stable PLY-to-GLB or PLY-to-3D-Tiles processing
-- Agent-assisted structured project configuration
-- More rigorous building/FEMA spatial-association comparisons
-- Broader verified FEMA coverage along selected LA-1 study corridors
-- Portable scenario and data contracts for additional viewers
-- Secure, auditable interaction among multiple digital twins
-
-See the [project roadmap](ROADMAP.md) and the
-[Open-Source Ecosystem Readiness tracker](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/89).
-
-## Open-source release preparation
+## Governance and open-source release
 
 Project-authored source code and documentation are provided under the
 [Apache License 2.0](LICENSE). Third-party software, data, services, and model
-assets retain their respective terms, as documented in
-[Third-Party Notices](THIRD_PARTY_NOTICES.md).
+assets retain their respective terms.
 
-The license and neutral contributor attribution do not claim Louisiana State
-University ownership, sponsorship, certification, or endorsement. The
-repository currently remains under the maintainer's GitHub account and may be
-transferred later if the contributors and any applicable institution establish
-a different stewardship arrangement.
-
-Release-readiness work is tracked in GitHub:
-
-- [#72 — Confirm ownership and add the approved license](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/72)
-- [#74 — Centralize data provenance and third-party attribution](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/74)
-- [#75 — Add contributor, conduct, and security policies](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/75)
-- [#76 — Add one-command validation and pull-request CI](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/76)
-- [#89 — Open-Source Ecosystem Readiness tracker](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/89)
-
-Current licensing, attribution, and community documents:
-
-- [Apache License 2.0](LICENSE)
 - [Project notice](NOTICE)
 - [Third-Party Notices](THIRD_PARTY_NOTICES.md)
 - [Contributing Guidelines](CONTRIBUTING.md)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security Policy](SECURITY.md)
+- [Architecture](docs/architecture.md)
+- [Roadmap](ROADMAP.md)
+- [Open-Source Ecosystem Readiness tracker](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/89)
 
-The policies provide the current contribution workflow and private reporting
-channels without promising production support or institutional response.
+The neutral contributor attribution does not claim Louisiana State University
+ownership, sponsorship, certification, or endorsement. Repository stewardship
+can be updated later if contributors and any applicable institution establish
+a different arrangement.
 
-## Research context
+## Publications and citation
 
-This prototype supports an exploratory research direction discussed with
+No project-specific archival publication, `CITATION.cff`, or archived software
+release is claimed at this stage. Citation metadata and release archiving are
+tracked in [Issue #79](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/79).
+Until then, reference the repository URL and the exact Git commit used.
+
+## Contributors and research context
+
+Git history and the
+[GitHub contributors page](https://github.com/vijaybkhot/agentic-cesium-digital-twin/graphs/contributors)
+provide the contribution record. Contributions should follow the
+[Contributing Guidelines](CONTRIBUTING.md).
+
+The prototype supports an exploratory research direction discussed with
 Professor Yong-Cheol Lee at Louisiana State University concerning rapid
 digital-twin generation, geospatial visualization, urban resilience, and
 agent-assisted workflows. References to future collaboration or ecosystem
