@@ -412,10 +412,16 @@ See the [project roadmap](ROADMAP.md) and the
 
 ## Open-source release preparation
 
-The repository is public, but an approved open-source license has not yet been
-added. Until the contributors and any applicable institutional owner approve a
-license, public availability of the source code should not be interpreted as
-permission to modify or redistribute it.
+Project-authored source code and documentation are provided under the
+[Apache License 2.0](LICENSE). Third-party software, data, services, and model
+assets retain their respective terms, as documented in
+[Third-Party Notices](THIRD_PARTY_NOTICES.md).
+
+The license and neutral contributor attribution do not claim Louisiana State
+University ownership, sponsorship, certification, or endorsement. The
+repository currently remains under the maintainer's GitHub account and may be
+transferred later if the contributors and any applicable institution establish
+a different stewardship arrangement.
 
 Release-readiness work is tracked in GitHub:
 
@@ -425,10 +431,14 @@ Release-readiness work is tracked in GitHub:
 - [#76 — Add one-command validation and pull-request CI](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/76)
 - [#89 — Open-Source Ecosystem Readiness tracker](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/89)
 
-Current third-party data, software, service, and model attribution is recorded
-in [Third-Party Notices](THIRD_PARTY_NOTICES.md). When the remaining documents
-are approved and added, this section should also link directly to `LICENSE`,
-`CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`.
+Current licensing and attribution documents:
+
+- [Apache License 2.0](LICENSE)
+- [Project notice](NOTICE)
+- [Third-Party Notices](THIRD_PARTY_NOTICES.md)
+
+When the remaining policies are approved and added, this section should also
+link directly to `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`.
 
 ## Research context
 
