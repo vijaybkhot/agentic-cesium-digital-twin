@@ -2,61 +2,140 @@
 
 ## Overview
 
-The viewer is config-driven. A `ProjectConfig` describes the scene center,
-camera, optional site marker and facility, belief rules, measurement points,
-model assets, and annotations. The React app passes either a static demo config
-or an in-memory workflow config through the same Cesium adapter.
+The application is a frontend research prototype organized around typed
+domain contracts and ports. A shared React shell selects one isolated mode and
+passes configuration or scenario state to a Cesium viewer adapter. The ArcGIS
+experiment is a separate visualization entry point that consumes selected
+committed urban GeoJSON.
 
-## Application Modes
+There is no production backend, database, real LLM provider, or connected
+reconstruction service in this repository.
 
-- New-project workflow: starts with a globe and setup panel, then adds a site
-  marker and finally a returned model asset.
-- Existing demo: loads `public/project_config.json` and preserves the facility,
-  measurement, image intake, belief-state, model, and annotation features.
-- Planned modular housing demo: will remain a separate proposal-demo mode for a
-  factory, logistics, and construction-site digital twin scenario. Its first
-  implementation should use typed mock scenario data and modular-specific
-  Cesium entities instead of replacing `project_config.json` or reusing
-  decommissioning measurement fields.
+## Application modes
 
-The mock reconstruction provider follows the same port intended for a future
-backend provider. Its timers and sample GLB can be replaced without changing
-Cesium rendering.
+The main application currently implements five modes:
 
-The modular housing demo guardrails are recorded in
-`docs/decisions/005-modular-housing-demo-guardrails.md`.
+- **New-project workflow — implemented browser prototype.** Reviews project
+  location and local image metadata, then runs a mock reconstruction lifecycle.
+- **Existing controlled-facility demo — implemented mock scenario.** Loads
+  `public/project_config.json` and renders facility, measurement, belief,
+  model, and annotation features.
+- **Modular-housing demo — implemented mock proposal scenario.** Uses a typed
+  modular-specific contract and entities without changing the project-config
+  schema or reusing controlled-facility measurements.
+- **Property-specific disaster-resilience demo — implemented fictional
+  scenario.** Uses synthetic properties, mock flood and response information,
+  and prominent emergency-use limitations.
+- **Urban-resilience demo — implemented research scenario.** Uses committed
+  OSM/FEMA/USGS-derived artifacts and conservative coverage and interpretation
+  rules.
 
-## Why Config-Driven
+The isolated ArcGIS page is an **experimental visualization client**, not a
+sixth main mode and not an independent spatial-processing pipeline.
 
-Future agents should generate structured project configuration, not rewrite Cesium rendering code. This keeps the agent boundary stable and makes the renderer deterministic.
+## Configuration and scenario boundaries
 
-## Ports And Adapters
+`ProjectConfig` describes the shared controlled-facility/viewer shell,
+including scene center, camera, optional site marker and facility, belief
+rules, measurements, models, and annotations.
 
-The app defines small interfaces in `src/ports`:
+The modular, disaster-resilience, and urban-resilience modes use independent
+viewer-neutral scenario contracts. They reuse the viewer boundary but do not
+extend `project_config.json` with unrelated domain fields.
+
+## Public-data pipeline
+
+Urban source acquisition and scientific processing occur before visualization:
+
+```text
+OSM Overpass / FEMA NFHL / USGS 3DEP
+                 |
+                 v
+Manual network fetch scripts
+                 |
+                 v
+Ignored scripts/.cache/ responses
+                 |
+                 v
+Local build and spatial-processing scripts
+                 |
+                 v
+Committed JSON / GeoJSON
+                 |
+                 v
+Validators and GitHub Actions
+                 |
+          +------+------+
+          |             |
+          v             v
+      CesiumJS      ArcGIS experiment
+```
+
+The viewers do not recompute FEMA classifications. CI reads committed local
+artifacts and does not call OSM, FEMA, USGS, Cesium ion, or ArcGIS services.
+
+## Ports and adapters
+
+The application defines small external boundaries in `src/ports`:
 
 - `AgentProvider`
 - `ProjectConfigRepository`
 - `ReconstructionProvider`
 - `ViewerAdapter`
 
-Adapters implement these interfaces:
+Current adapters include:
 
-- `StaticJsonProjectConfigRepository` loads `/project_config.json`.
-- `MockAgentProvider` prepares the future agent boundary without calling a real model.
-- `CesiumViewerAdapter` owns the Cesium viewer instance.
-- `MockColmapReconstructionProvider` simulates queued, running, and completed
-  reconstruction states and returns a typed model asset.
+- `StaticJsonProjectConfigRepository`, which loads `/project_config.json` only
+  for the existing controlled-facility demo;
+- `MockAgentProvider`, which exercises the agent boundary without calling a
+  real model;
+- `MockColmapReconstructionProvider`, which simulates job states and returns a
+  bundled sample asset;
+- `CesiumViewerAdapter`, which owns the Cesium viewer and mode-specific entity
+  lifecycles.
 
-## Cesium Isolation
+These interfaces make future provider replacement possible; they do not imply
+that a real agent, backend, or reconstruction system is already integrated.
 
-Only `src/cesium` and `src/adapters/viewer` import from `cesium`. Domain services and React components use project types and callbacks instead of raw Cesium APIs.
+## Viewer isolation
 
-## Why The Agent Generates Config
+Cesium-specific imports remain concentrated under `src/cesium` and
+`src/adapters/viewer`. Domain services and React components exchange project
+types and callbacks rather than raw Cesium objects.
 
-The future agent can translate conversation, images, survey notes, or backend data into a stable JSON shape. The viewer can then render, validate, and update state without coupling to any one model provider.
+The ArcGIS SceneView source remains under `src/experiments` with a separate
+HTML entry point. It consumes upstream classifications already stored in local
+GeoJSON and does not alter the Cesium implementation.
 
-## Why Vite + React + TypeScript
+## Reconstruction boundary
 
-Vite keeps this POC lightweight and fast. React makes the side panel and state flow easier to maintain than direct DOM mutation. TypeScript gives useful boundaries for config, providers, reconstruction jobs, and viewer adapters.
+The current browser workflow performs deterministic image-readiness checks and
+uses a mock provider. The intended future path is:
 
-Next.js is not needed yet because this project has no server-rendered pages, routing, authentication, backend API, or deployment-specific full-stack requirements.
+```text
+Images
+  -> deterministic intake checks
+  -> future reconstruction provider
+  -> PLY or other pipeline-native output
+  -> GLB or 3D Tiles conversion
+  -> geospatial placement and visualization
+```
+
+Real COLMAP work is external and not connected. The repository documents
+handoff contracts, recognizes PLY output, and includes a local Blender
+conversion spike, but it does not run a production reconstruction pipeline.
+
+## Why configuration instead of generated viewer code
+
+A future agent should produce structured project configuration, not rewrite
+viewer code. Stable contracts keep rendering deterministic, testable, and
+independent of a particular model provider.
+
+## Why Vite, React, and TypeScript
+
+Vite provides a lightweight development and production-build workflow. React
+supports panel and mode state, while TypeScript defines boundaries for project
+configuration, scenarios, providers, reconstruction jobs, and viewer adapters.
+
+Next.js is not required because the current project has no server-rendered
+pages, authentication, backend API, or deployment-specific full-stack layer.
