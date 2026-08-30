@@ -184,6 +184,38 @@ export function UrbanResilienceDemoPanel({
 
       <UrbanMapLegend />
 
+      <section
+        className="urban-resilience-demo-section urban-data-attribution"
+        aria-labelledby="urban-data-attribution-title"
+      >
+        <h2 id="urban-data-attribution-title">Data attribution</h2>
+        <p>
+          <a
+            href="https://www.openstreetmap.org/copyright"
+            target="_blank"
+            rel="noreferrer"
+          >
+            © OpenStreetMap contributors (ODbL)
+          </a>
+          <span aria-hidden="true"> · </span>
+          <a
+            href="https://www.fema.gov/flood-maps/national-flood-hazard-layer"
+            target="_blank"
+            rel="noreferrer"
+          >
+            FEMA NFHL
+          </a>
+          <span aria-hidden="true"> · </span>
+          <a
+            href="https://www.usgs.gov/3d-elevation-program"
+            target="_blank"
+            rel="noreferrer"
+          >
+            USGS 3DEP
+          </a>
+        </p>
+      </section>
+
       <UrbanTwinEventFeed events={scenario.events} />
 
       <section className="urban-resilience-demo-section">
