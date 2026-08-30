@@ -79,17 +79,20 @@ maintenance impact.
 Run the complete current validation sequence before requesting review:
 
 ```bash
-npm run validate:urban-resilience-elevation-sample
-npm run validate:urban-resilience-data
-npm run validate:urban-resilience-facility-data
-npm run validate:urban-resilience-la1-fema-experiment
-npm run validate:disaster-data
-npm run build
+npm run validate
 git diff --check
 ```
 
-These commands validate committed local artifacts and build the application.
-They do not fetch new OSM, FEMA, or USGS source responses.
+The npm command runs the elevation-sample, urban-resilience, facility,
+LA-1/FEMA, and fictional disaster-data validators, followed by the TypeScript
+and Vite production build. It validates committed local artifacts and does
+not fetch OSM, FEMA, USGS, Cesium ion, or ArcGIS source responses. It requires
+no API key or repository secret.
+
+GitHub Actions runs the same command from a clean checkout for every pull
+request and push to `main`. Existing protobuf dynamic-evaluation and Vite
+bundle-size notices are documented non-blocking warnings; do not suppress
+real validator, TypeScript, or build failures.
 
 If a command cannot be run, state that limitation in the pull request rather
 than marking it as passed. When viewer behavior changes, manually exercise all

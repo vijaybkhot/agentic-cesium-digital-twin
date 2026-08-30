@@ -258,20 +258,23 @@ commit `.env.local`, API keys, Cesium ion tokens, or ArcGIS credentials.
 
 ## Validation
 
-The current complete local validation sequence is:
+Run the complete local validation sequence with one command:
 
 ```powershell
-npm run validate:urban-resilience-elevation-sample
-npm run validate:urban-resilience-data
-npm run validate:urban-resilience-facility-data
-npm run validate:urban-resilience-la1-fema-experiment
-npm run validate:disaster-data
-npm run build
+npm run validate
 ```
 
-These commands validate committed local artifacts and build the application;
-they do not fetch new OSM, FEMA, or USGS responses. A future release ticket
-tracks consolidating them into one CI command.
+This runs all five committed-data validators followed by the TypeScript and
+Vite production build. It does not fetch OSM, FEMA, USGS, Cesium ion, or
+ArcGIS data and does not require an API key or repository secret. External
+source acquisition and artifact regeneration remain separate manual
+workflows.
+
+GitHub Actions runs the same command for every pull request and every push to
+`main` using Node.js 22 and a clean `npm ci` installation. Existing protobuf
+dynamic-evaluation and Vite bundle-size notices are known non-blocking build
+warnings. They are not suppressed, and any validator, TypeScript, or build
+failure still fails validation.
 
 ## Public-data processing
 

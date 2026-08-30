@@ -11,6 +11,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "validate": "npm run validate:urban-resilience-elevation-sample && npm run validate:urban-resilience-data && npm run validate:urban-resilience-facility-data && npm run validate:urban-resilience-la1-fema-experiment && npm run validate:disaster-data && npm run build",
     "validate:disaster-data": "node scripts/validateDisasterResilienceData.mjs",
     "fetch:urban-resilience-data": "node scripts/fetchUrbanResilienceSourceData.mjs",
     "build:urban-resilience-data": "node scripts/buildUrbanResiliencePropertyData.mjs",
