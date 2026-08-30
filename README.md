@@ -327,6 +327,9 @@ replacement.
 | Fictional local data | Property-specific disaster-resilience demonstration | Synthetic geometry and mock values must not be associated with real residents or operational decisions. |
 | Cesium ion and ArcGIS services | Optional visual context | Visual context is not project-derived scientific evidence and can be unavailable when credentials are absent. |
 
+Detailed source, licensing, asset, and service attribution is centralized in
+[Third-Party Notices](THIRD_PARTY_NOTICES.md).
+
 The urban property classification is a zone-based research classification:
 
 - FEMA V/VE zones map to `High`.
@@ -422,9 +425,10 @@ Release-readiness work is tracked in GitHub:
 - [#76 — Add one-command validation and pull-request CI](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/76)
 - [#89 — Open-Source Ecosystem Readiness tracker](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/89)
 
-When those documents are approved and added, this section should link directly
-to `LICENSE`, `THIRD_PARTY_NOTICES.md`, `CONTRIBUTING.md`,
-`CODE_OF_CONDUCT.md`, and `SECURITY.md`.
+Current third-party data, software, service, and model attribution is recorded
+in [Third-Party Notices](THIRD_PARTY_NOTICES.md). When the remaining documents
+are approved and added, this section should also link directly to `LICENSE`,
+`CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`.
 
 ## Research context
 
