@@ -9,6 +9,9 @@ authors:
     given-names: Vijay
     email: vijaysinh.khot@gmail.com
     affiliation: Louisiana State University
+  - family-names: Lee
+    given-names: Yong-Cheol
+    affiliation: Louisiana State University
 version: 0.1.0
 repository-code: https://github.com/vijaybkhot/urban-digital-twin-interoperability
 url: https://github.com/vijaybkhot/urban-digital-twin-interoperability

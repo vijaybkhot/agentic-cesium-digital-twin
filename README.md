@@ -477,15 +477,20 @@ a different arrangement.
 ## Publications and citation
 
 Machine-readable software citation metadata is provided in
-[`CITATION.cff`](CITATION.cff). After the initial release is published, GitHub's
-**Cite this repository** control can export the citation in common formats.
-Always cite the exact software version or Git commit used in research.
+[`CITATION.cff`](CITATION.cff). GitHub's **Cite this repository** control can
+export the citation in common formats. Always cite the exact software version
+or Git commit used in research.
 
-Version `0.1.0` metadata is being prepared in
-[Issue #79](https://github.com/vijaybkhot/urban-digital-twin-interoperability/issues/79).
-Until that release is published, reference the repository URL and the exact Git
-commit used. No project-specific archival publication or DOI is claimed at this
-stage.
+Suggested citation for the initial release:
+
+> Khot, V., and Lee, Y.-C. (2026). *Urban Digital Twin Interoperability
+> Research Prototype* (Version 0.1.0) [Computer software]. GitHub.
+> https://github.com/vijaybkhot/urban-digital-twin-interoperability
+
+Release-specific information will be available from the
+[`v0.1.0` release](https://github.com/vijaybkhot/urban-digital-twin-interoperability/releases/tag/v0.1.0)
+after publication. No project-specific archival publication or DOI is claimed
+for this release.
 
 ## Contributors and research context
 
