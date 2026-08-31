@@ -13,16 +13,17 @@ authors:
     given-names: Yong-Cheol
     affiliation: Louisiana State University
 version: 0.1.0
+date-released: 2026-08-31
 repository-code: https://github.com/vijaybkhot/urban-digital-twin-interoperability
 url: https://github.com/vijaybkhot/urban-digital-twin-interoperability
 abstract: >-
-  A research prototype for interoperable urban digital-twin visualization in
-  CesiumJS and ArcGIS, with local OpenStreetMap, FEMA National Flood Hazard
-  Layer, and USGS 3D Elevation Program data-processing and provenance
-  workflows. The repository also contains mock application modes and interface
-  boundaries for future reconstruction and agent integrations. It is not a
-  production system, official hazard determination, or source of emergency
-  guidance.
+  A research prototype for geospatial digital-twin visualization and
+  interoperability experiments using CesiumJS and ArcGIS, with local
+  OpenStreetMap, FEMA National Flood Hazard Layer, and USGS 3D Elevation Program
+  data-processing and provenance workflows. The repository also contains mock
+  application modes and interface boundaries for future reconstruction and
+  agent integrations. It is not a production system, official hazard
+  determination, or source of emergency guidance.
 keywords:
   - digital twin
   - CesiumJS
