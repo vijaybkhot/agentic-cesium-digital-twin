@@ -16,7 +16,7 @@ Do not disclose a suspected vulnerability, exposed credential, or sensitive
 research-data concern in a public issue, discussion, pull request, or commit.
 
 Use the repository's
-[private vulnerability reporting form](https://github.com/vijaybkhot/agentic-cesium-digital-twin/security/advisories/new).
+[private vulnerability reporting form](https://github.com/vijaybkhot/urban-digital-twin-interoperability/security/advisories/new).
 GitHub will create a private repository-security-advisory conversation visible
 to the reporter and repository maintainers.
 

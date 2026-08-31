@@ -40,7 +40,7 @@ async function queryEpqs(longitude, latitude, retries = 3) {
         headers: {
           Accept: "application/json",
           "User-Agent":
-            "agentic-cesium-digital-twin-research/1.0 (USGS 3DEP ground-elevation experiment)",
+            "urban-digital-twin-interoperability-research/1.0 (USGS 3DEP ground-elevation experiment)",
         },
       });
 

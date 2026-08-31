@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: >-
   If you use this research prototype, please cite the software using the
   metadata in this file and reference the exact version or commit used.
-title: Agent-Assisted Cesium Digital Twin Research Prototype
+title: Urban Digital Twin Interoperability Research Prototype
 type: software
 authors:
   - family-names: Khot
@@ -10,8 +10,8 @@ authors:
     email: vijaysinh.khot@gmail.com
     affiliation: Louisiana State University
 version: 0.1.0
-repository-code: https://github.com/vijaybkhot/agentic-cesium-digital-twin
-url: https://github.com/vijaybkhot/agentic-cesium-digital-twin
+repository-code: https://github.com/vijaybkhot/urban-digital-twin-interoperability
+url: https://github.com/vijaybkhot/urban-digital-twin-interoperability
 abstract: >-
   A research prototype for interoperable urban digital-twin visualization in
   CesiumJS and ArcGIS, with local OpenStreetMap, FEMA National Flood Hazard

@@ -119,7 +119,7 @@ and [urban-resilience guardrails](docs/decisions/006-urban-resilience-real-data-
 - Publish a longer NSF-oriented architecture and use-case brief.
 - Improve dependency, code-security, accessibility, and release automation.
 
-See the [Open-Source Ecosystem Readiness tracker](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/89).
+See the [Open-Source Ecosystem Readiness tracker](https://github.com/vijaybkhot/urban-digital-twin-interoperability/issues/89).
 
 ## Longer-term research directions
 
