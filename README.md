@@ -467,10 +467,16 @@ a different arrangement.
 
 ## Publications and citation
 
-No project-specific archival publication, `CITATION.cff`, or archived software
-release is claimed at this stage. Citation metadata and release archiving are
-tracked in [Issue #79](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/79).
-Until then, reference the repository URL and the exact Git commit used.
+Machine-readable software citation metadata is provided in
+[`CITATION.cff`](CITATION.cff). After the initial release is published, GitHub's
+**Cite this repository** control can export the citation in common formats.
+Always cite the exact software version or Git commit used in research.
+
+Version `0.1.0` metadata is being prepared in
+[Issue #79](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/79).
+Until that release is published, reference the repository URL and the exact Git
+commit used. No project-specific archival publication or DOI is claimed at this
+stage.
 
 ## Contributors and research context
 
