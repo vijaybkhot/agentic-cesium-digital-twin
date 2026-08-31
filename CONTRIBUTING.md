@@ -1,9 +1,9 @@
 # Contributing
 
-Thank you for considering a contribution to the Agent-Assisted Cesium Digital
-Twin research prototype. Contributions may include code, documentation,
-tests, reproducibility improvements, data-processing safeguards, or focused
-research experiments.
+Thank you for considering a contribution to the Urban Digital Twin
+Interoperability research prototype. Contributions may include code,
+documentation, tests, reproducibility improvements, data-processing safeguards,
+or focused research experiments.
 
 This repository is an early research prototype, not a production digital-twin
 or emergency-management system. Contributions must keep implemented, mock,

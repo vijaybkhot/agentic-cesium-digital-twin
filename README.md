@@ -1,13 +1,22 @@
-# Agent-Assisted Cesium Digital Twin Research Prototype
+# Urban Digital Twin Interoperability Research Prototype
 
-[![Validation](https://github.com/vijaybkhot/agentic-cesium-digital-twin/actions/workflows/validation.yml/badge.svg)](https://github.com/vijaybkhot/agentic-cesium-digital-twin/actions/workflows/validation.yml)
+[![Validation](https://github.com/vijaybkhot/urban-digital-twin-interoperability/actions/workflows/validation.yml/badge.svg)](https://github.com/vijaybkhot/urban-digital-twin-interoperability/actions/workflows/validation.yml)
 [Apache License 2.0](LICENSE)
+
+An open-source research prototype for geospatial digital-twin interoperability,
+public-data integration, visualization portability, and reusable
+viewer-independent domain boundaries.
 
 This repository is an Apache-2.0-licensed research prototype for config-driven
 geospatial digital-twin visualization and interoperability experiments. It
 combines a React/TypeScript application, CesiumJS rendering, viewer-independent
 domain contracts, local public-data processing, and an isolated ArcGIS
 visualization-portability experiment.
+
+> **Proposed STC-DT component: Urban Digital Twin Interoperability.** This
+> repository is intended to represent the Urban Digital Twin Interoperability
+> component of the proposed Socio-Technical Cyberinfrastructure for Digital
+> Twins ecosystem. The detailed scope and qualification appear below.
 
 The project is **not a complete production digital-twin pipeline**. It has no
 real LLM agent, connected COLMAP reconstruction backend, live sensor or
@@ -236,8 +245,8 @@ photogrammetric reconstruction through its browser workflow.
 The repository pins Node `22.12.0` in `.nvmrc`. On macOS or Linux with `nvm`:
 
 ```bash
-git clone https://github.com/vijaybkhot/agentic-cesium-digital-twin.git
-cd agentic-cesium-digital-twin
+git clone https://github.com/vijaybkhot/urban-digital-twin-interoperability.git
+cd urban-digital-twin-interoperability
 nvm use
 npm ci
 npm run dev
@@ -247,8 +256,8 @@ NVM for Windows does not automatically read `.nvmrc`. Select the pinned
 version explicitly before installing dependencies:
 
 ```powershell
-git clone https://github.com/vijaybkhot/agentic-cesium-digital-twin.git
-Set-Location agentic-cesium-digital-twin
+git clone https://github.com/vijaybkhot/urban-digital-twin-interoperability.git
+Set-Location urban-digital-twin-interoperability
 nvm use 22.12.0
 npm ci
 npm run dev
@@ -458,7 +467,7 @@ assets retain their respective terms.
 - [Architecture](docs/architecture.md)
 - [Roadmap](ROADMAP.md)
 - [Minimum Open-Source Release Audit](docs/open-source-release/minimum-release-audit.md)
-- [Open-Source Ecosystem Readiness tracker](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/89)
+- [Open-Source Ecosystem Readiness tracker](https://github.com/vijaybkhot/urban-digital-twin-interoperability/issues/89)
 
 The neutral contributor attribution does not claim Louisiana State University
 ownership, sponsorship, certification, or endorsement. Repository stewardship
@@ -467,15 +476,26 @@ a different arrangement.
 
 ## Publications and citation
 
-No project-specific archival publication, `CITATION.cff`, or archived software
-release is claimed at this stage. Citation metadata and release archiving are
-tracked in [Issue #79](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/79).
-Until then, reference the repository URL and the exact Git commit used.
+Machine-readable software citation metadata is provided in
+[`CITATION.cff`](CITATION.cff). GitHub's **Cite this repository** control can
+export the citation in common formats. Always cite the exact software version
+or Git commit used in research.
+
+Suggested citation for the initial release:
+
+> Khot, V., and Lee, Y.-C. (2026). *Urban Digital Twin Interoperability
+> Research Prototype* (Version 0.1.0) [Computer software]. GitHub.
+> https://github.com/vijaybkhot/urban-digital-twin-interoperability
+
+Release-specific information will be available from the
+[`v0.1.0` release](https://github.com/vijaybkhot/urban-digital-twin-interoperability/releases/tag/v0.1.0)
+after publication. No project-specific archival publication or DOI is claimed
+for this release.
 
 ## Contributors and research context
 
 Git history and the
-[GitHub contributors page](https://github.com/vijaybkhot/agentic-cesium-digital-twin/graphs/contributors)
+[GitHub contributors page](https://github.com/vijaybkhot/urban-digital-twin-interoperability/graphs/contributors)
 provide the contribution record. Contributions should follow the
 [Contributing Guidelines](CONTRIBUTING.md).
 

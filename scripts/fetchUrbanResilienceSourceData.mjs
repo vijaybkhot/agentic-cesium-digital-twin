@@ -25,7 +25,8 @@ function bboxToEsriEnvelope([south, west, north, east]) {
 
 const REQUEST_HEADERS = {
   Accept: "*/*",
-  "User-Agent": "agentic-cesium-digital-twin-research/1.0 (LSU digital twin research prototype)",
+  "User-Agent":
+    "urban-digital-twin-interoperability-research/1.0 (LSU digital twin research prototype)",
 };
 
 async function fetchWithRetry(url, options, { retries = 5, label } = {}) {

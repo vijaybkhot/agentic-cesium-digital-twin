@@ -23,7 +23,7 @@ const CACHE_DIR = new URL(".cache/urban-resilience/", import.meta.url);
 const REQUEST_HEADERS = {
   Accept: "*/*",
   "User-Agent":
-    "agentic-cesium-digital-twin-research/1.0 (LSU digital twin research prototype)",
+    "urban-digital-twin-interoperability-research/1.0 (LSU digital twin research prototype)",
 };
 
 function bboxToOverpassArgs([south, west, north, east]) {

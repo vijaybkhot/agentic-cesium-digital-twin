@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: >-
+  If you use this research prototype, please cite the software using the
+  metadata in this file and reference the exact version or commit used.
+title: Urban Digital Twin Interoperability Research Prototype
+type: software
+authors:
+  - family-names: Khot
+    given-names: Vijay
+    email: vijaysinh.khot@gmail.com
+    affiliation: Louisiana State University
+  - family-names: Lee
+    given-names: Yong-Cheol
+    affiliation: Louisiana State University
+version: 0.1.0
+date-released: 2026-08-31
+repository-code: https://github.com/vijaybkhot/urban-digital-twin-interoperability
+url: https://github.com/vijaybkhot/urban-digital-twin-interoperability
+abstract: >-
+  A research prototype for geospatial digital-twin visualization and
+  interoperability experiments using CesiumJS and ArcGIS, with local
+  OpenStreetMap, FEMA National Flood Hazard Layer, and USGS 3D Elevation Program
+  data-processing and provenance workflows. The repository also contains mock
+  application modes and interface boundaries for future reconstruction and
+  agent integrations. It is not a production system, official hazard
+  determination, or source of emergency guidance.
+keywords:
+  - digital twin
+  - CesiumJS
+  - ArcGIS
+  - geospatial visualization
+  - OpenStreetMap
+  - FEMA
+  - USGS 3DEP
+  - urban resilience
+  - data provenance
+license: Apache-2.0

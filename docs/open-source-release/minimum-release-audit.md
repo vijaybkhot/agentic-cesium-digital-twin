@@ -2,11 +2,13 @@
 
 Audit date: 2026-08-30
 
-Repository: `vijaybkhot/agentic-cesium-digital-twin`
+Repository: `vijaybkhot/urban-digital-twin-interoperability`
+
+Repository name at the time of this audit: `vijaybkhot/agentic-cesium-digital-twin`
 
 Audited base commit: `b7e837f`
 
-Release ticket: [Issue #77](https://github.com/vijaybkhot/agentic-cesium-digital-twin/issues/77)
+Release ticket: [Issue #77](https://github.com/vijaybkhot/urban-digital-twin-interoperability/issues/77)
 
 ## Outcome
 
@@ -21,6 +23,9 @@ reconstruction backend, or operational AI agent.
 
 The repository-owner browser walkthrough passed on 2026-08-30 with no new
 application errors. The ArcGIS credential-dependent test also passed.
+
+The repository was subsequently renamed before the `v0.1.0` release. Git
+history and the audited project remain continuous.
 
 ## Repository and governance review
 
@@ -203,7 +208,7 @@ Hi Dr. Yong-Cheol Lee,
 
 The Urban Digital Twin Interoperability repository is publicly available at:
 
-https://github.com/vijaybkhot/agentic-cesium-digital-twin
+https://github.com/vijaybkhot/urban-digital-twin-interoperability
 
 The minimum open-source release is licensed under Apache License 2.0 and now
 includes the React/TypeScript Cesium viewer, five demonstration modes, the

@@ -1,7 +1,7 @@
 # Third-Party Notices and Data Attribution
 
 This document identifies third-party software, services, data, and model assets
-used by the Agent-Assisted Cesium Digital Twin research prototype. A project
+used by the Urban Digital Twin Interoperability research prototype. A project
 license applies only to material for which the project contributors or another
 authorized rights holder can grant that license. It does not replace the terms
 that apply to the third-party materials described below.
