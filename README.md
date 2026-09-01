@@ -328,10 +328,10 @@ VITE_ARCGIS_API_KEY=
 
 `VITE_CESIUM_ION_ACCESS_TOKEN` is client-side Vite configuration and is
 therefore visible in the browser. Hosted deployments should use an
-application-specific Cesium ion token with only the minimum required
-public/read permissions and appropriate URL restrictions. Supply the deployed
-token through the hosting provider's environment or configuration settings.
-Never commit a Cesium ion token to the repository.
+application-specific Cesium ion token with only the minimum required scopes
+and appropriate URL restrictions. Supply the deployed token through the
+hosting provider's environment or configuration settings. Never commit a
+Cesium ion token to the repository.
 
 Restrict credentials to necessary services and approved HTTP referrers. Never
 commit `.env.local`, API keys, Cesium ion tokens, or ArcGIS credentials.
