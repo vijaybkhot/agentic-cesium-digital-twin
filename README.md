@@ -24,6 +24,14 @@ emergency feed, authentication, database, or persisted project state. Mock,
 experimental, external, and planned capabilities are identified explicitly
 throughout this document.
 
+## Live research demo
+
+**Demo:** https://urban-digital-twin-interoperability.vercel.app/
+
+The hosted application is a research demonstration only. It is not an
+operational emergency-management system and must not be used for hazard,
+evacuation, routing, safety, or official flood-determination decisions.
+
 ## At a glance
 
 - Five isolated application modes share one React/Cesium viewer boundary.
@@ -289,7 +297,7 @@ npm run preview
 
 ## Optional environment configuration
 
-The base application and local research layers run without private
+The base application and local research layers run without optional service
 credentials. Copy `.env.example` to the ignored `.env.local` file only when
 optional services are needed:
 
@@ -317,6 +325,13 @@ VITE_ARCGIS_API_KEY=
   demo already renders selectable OSM-derived footprints.
 - `VITE_ARCGIS_API_KEY` enables optional ArcGIS basemap and elevation
   services.
+
+`VITE_CESIUM_ION_ACCESS_TOKEN` is client-side Vite configuration and is
+therefore visible in the browser. Hosted deployments should use an
+application-specific Cesium ion token with only the minimum required
+public/read permissions and appropriate URL restrictions. Supply the deployed
+token through the hosting provider's environment or configuration settings.
+Never commit a Cesium ion token to the repository.
 
 Restrict credentials to necessary services and approved HTTP referrers. Never
 commit `.env.local`, API keys, Cesium ion tokens, or ArcGIS credentials.
